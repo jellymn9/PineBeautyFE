@@ -25,7 +25,7 @@ const routes: Array<RouteObject> = [
   },
   { path: "/blog", element: <Blog /> },
   {
-    path: "/profile", // depends on auth, redirects to it in case user is not logged in
+    path: "/profile", // private route
     element: <Profile />,
   },
   {
