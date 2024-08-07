@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import colors from "../../utils/colors";
+import { HorizonalSeparator } from "../../utils/globalStyled";
 
 export const Container = styled.div`
   display: flex;
@@ -19,16 +20,26 @@ export const TopLinksBar = styled.div`
 
 export const ProfileCartBar = styled.div`
   display: flex;
-  justify-items: flex-end;
+  justify-content: flex-end;
   padding: 12px;
+  grid-gap: 6px;
 `;
 
 export const LogoContainer = styled.div`
   padding: 12px;
+  display: flex;
+  justify-content: center;
 `;
 
 export const MainNavBar = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const MainLinksContainer = styled.div`
+  display: flex;
+  grid-gap: 24px;
 `;
 
 export const TopLinksBarSection = styled.div`
@@ -47,7 +58,7 @@ export const BlogLink = styled(Link)`
   text-transform: uppercase;
 `;
 
-export const TopBarLink = styled(BlogLink)`
+export const HeaderLink = styled(BlogLink)`
   color: ${colors.black};
 `;
 
@@ -55,4 +66,8 @@ export const Separator = styled.div`
   height: 12px;
   border: 2px solid ${colors.black};
   border-radius: 6px;
+`;
+
+export const HSeparator = styled(HorizonalSeparator)`
+  margin: 12px 0 12px 0;
 `;
