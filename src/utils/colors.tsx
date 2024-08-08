@@ -3,6 +3,8 @@ const colors = {
   babyPowder: "#fcfbf4",
   olivine: "#92b956",
   black: "#000",
+  white: "#fff",
+  alabaster: "#e7e3da",
 };
 
 export default colors;

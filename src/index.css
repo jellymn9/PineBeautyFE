@@ -1,3 +1,32 @@
+@font-face {
+  font-family: "Cinzel-Black"; /*Can be any text*/
+  src: local("Cinzel-Black"),
+    url("./src/assets/fonts/CinzelDecorative-Black.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Cinzel-Bold"; /*Can be any text*/
+  src: local("Cinzel-Bold"),
+    url("./src/assets/fonts/CinzelDecorative-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Cinzel-Regular"; /*Can be any text*/
+  src: local("Cinzel-Regular"),
+    url("./src/assets/fonts/CinzelDecorative-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "DidactGothic-Regular"; /*Can be any text*/
+  src: local("DidactGothic-Regular"),
+    url("./src/assets/fonts/DidactGothic-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "JosefinSans"; /*Can be any text*/
+  src: local("JosefinSans"),
+    url("./src/assets/fonts/JosefinSans-VariableFont_wght.ttf")
+      format("truetype");
+}
+
 #root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
