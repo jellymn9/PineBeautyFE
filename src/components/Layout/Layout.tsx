@@ -6,11 +6,11 @@ import Footer from "../Footer/Footer";
 function Layout() {
   return (
     <Container>
+      <Header />
       <ContentContainer>
-        <Header />
         <Outlet />
-        <Footer />
       </ContentContainer>
+      <Footer />
     </Container>
   );
 }

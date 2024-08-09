@@ -8,9 +8,9 @@ export const Container = styled.div`
   background-color: ${colors.babyPowder};
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
 export const ContentContainer = styled.div`
   min-width: 900px;
+  flex: 1;
 `;
