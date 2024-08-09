@@ -45,23 +45,23 @@ function Footer() {
       heading: "product tags",
       links: [
         {
-          name: "vegan cosmetics",
+          name: "#vegan cosmetics",
           route: "",
         },
         {
-          name: "organic cosmetics",
+          name: "#organic cosmetics",
           route: "",
         },
         {
-          name: "handmade cosmetics",
+          name: "#handmade cosmetics",
           route: "",
         },
         {
-          name: "summer essentials",
+          name: "#summer essentials",
           route: "",
         },
         {
-          name: "gifts",
+          name: "#gifts",
           route: "",
         },
       ],

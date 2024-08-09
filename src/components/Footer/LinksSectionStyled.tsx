@@ -15,5 +15,15 @@ export const Container = styled.div`
 export const FooterLink = styled(Link)<{
   isTag?: boolean;
 }>`
-  color: ${({ isTag }) => (isTag ? `${colors.olivine}` : `${colors.black}`)};
+  text-decoration: none;
+  color: ${({ isTag }) => (isTag ? `${colors.olivine}` : `${colors.gray}`)};
+`;
+
+export const ProfileParagraph = styled.p`
+  color: ${colors.gray};
+  margin: 0;
+`;
+
+export const InfoItem = styled.span`
+  color: ${colors.gray};
 `;

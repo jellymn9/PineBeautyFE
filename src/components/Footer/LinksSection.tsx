@@ -1,5 +1,10 @@
 import LinkColumn from "./LinkColumn";
-import { Container, FooterLink } from "./LinksSectionStyled";
+import {
+  Container,
+  FooterLink,
+  ProfileParagraph,
+  InfoItem,
+} from "./LinksSectionStyled";
 import ClockSVG from "../../assets/clock.svg?react";
 import EmailSVG from "../../assets/email.svg?react";
 import PhoneSVG from "../../assets/phone.svg?react";
@@ -36,11 +41,11 @@ const LinksSection = ({ linkGroups }: LinkSectionPropsI): JSX.Element => {
     <Container>
       <div>
         <LinkColumn heading={profile.name}>
-          <div>{profile.paragraph}</div>
+          <ProfileParagraph>{profile.paragraph}</ProfileParagraph>
         </LinkColumn>
         <LinkColumn heading={contact.name}>
           {Object.values(contact.info).map((e) => (
-            <span>{e}</span>
+            <InfoItem>{e}</InfoItem>
           ))}
         </LinkColumn>
       </div>
