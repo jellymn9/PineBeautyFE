@@ -1,5 +1,6 @@
 import { RouteObject } from "react-router-dom";
 
+import PageLayout from "./components/Layout/Layout";
 import Home from "./pages/Home/Home";
 import Auth from "./pages/Auth/Auth";
 import Blog from "./pages/Blog/Blog";
@@ -10,24 +11,29 @@ import Profile from "./pages/Profile/Profile";
 import Error from "./pages/Error/error";
 
 const routes: Array<RouteObject> = [
-  { path: "/", element: <Home />, errorElement: <Error /> },
   {
-    path: "/products",
-    element: <Products />,
+    element: <PageLayout />,
+    children: [
+      { path: "/", element: <Home />, errorElement: <Error /> },
+      {
+        path: "/products",
+        element: <Products />,
+      },
+      {
+        path: "/product/:id",
+        element: <Product />,
+      },
+      {
+        path: "/profile", // private route
+        element: <Profile />,
+      },
+    ],
   },
   {
     path: "/cart",
     element: <Cart />,
   },
-  {
-    path: "/product/:id",
-    element: <Product />,
-  },
   { path: "/blog", element: <Blog /> },
-  {
-    path: "/profile", // private route
-    element: <Profile />,
-  },
   {
     element: <Auth />,
     children: [
