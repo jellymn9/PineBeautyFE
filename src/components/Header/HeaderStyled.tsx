@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import colors from "../../utils/colors";
 import { HorizonalSeparator } from "../../utils/globalStyled";
 
-export const Container = styled.div`
+export const Container = styled.header`
   display: flex;
   flex-direction: column;
 `;

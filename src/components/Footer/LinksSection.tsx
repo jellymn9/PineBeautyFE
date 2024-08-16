@@ -1,3 +1,4 @@
+import type { IconNamesT } from "../../utils/types";
 import LinkColumn from "./LinkColumn";
 import {
   Container,
@@ -5,9 +6,7 @@ import {
   ProfileParagraph,
   InfoItem,
 } from "./LinksSectionStyled";
-import ClockSVG from "../../assets/clock.svg?react";
-import EmailSVG from "../../assets/email.svg?react";
-import PhoneSVG from "../../assets/phone.svg?react";
+import Icon from "../Icon/Icon";
 
 export interface LinkGroupI {
   heading: string;
@@ -21,6 +20,11 @@ interface LinkSectionPropsI {
   linkGroups: LinkGroupsT;
 }
 
+interface ContactI {
+  name: string;
+  info: Array<[IconNamesT, string]>;
+}
+
 const LinksSection = ({ linkGroups }: LinkSectionPropsI): JSX.Element => {
   const profile = {
     name: "profile",
@@ -28,13 +32,13 @@ const LinksSection = ({ linkGroups }: LinkSectionPropsI): JSX.Element => {
       "PineBeauty is an online shop that specialises in Serbian natural and organic beauty & wellness products.",
   };
 
-  const contact = {
+  const contact: ContactI = {
     name: "contact",
-    info: {
-      phone: "+00000000",
-      email: "info@info.com",
-      workingHours: "10:00 am - 6:00 pm",
-    },
+    info: [
+      ["phone", "+00000000"],
+      ["email", "info@info.com"],
+      ["clock", "10:00 am - 6:00 pm"],
+    ],
   };
 
   return (
@@ -44,8 +48,11 @@ const LinksSection = ({ linkGroups }: LinkSectionPropsI): JSX.Element => {
           <ProfileParagraph>{profile.paragraph}</ProfileParagraph>
         </LinkColumn>
         <LinkColumn heading={contact.name}>
-          {Object.values(contact.info).map((e) => (
-            <InfoItem>{e}</InfoItem>
+          {contact.info.map(([icon, value]) => (
+            <>
+              <Icon name={icon} width="12px" height="12px" />
+              <InfoItem>{value}</InfoItem>
+            </>
           ))}
         </LinkColumn>
       </div>

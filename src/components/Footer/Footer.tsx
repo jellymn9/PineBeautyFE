@@ -1,7 +1,4 @@
-import InstagramSVG from "../../assets/instagram.svg?react";
-import FacebookSVG from "../../assets/facebook.svg?react";
-import PinterestSVG from "../../assets/pinterest.svg?react";
-
+import Icon from "../Icon/Icon";
 import LinksSection from "./LinksSection";
 import {
   Container,
@@ -115,9 +112,9 @@ function Footer() {
           <button>Join us</button>
         </form>
         <SocialIconsContainer>
-          <InstagramSVG width="32px" height="32px" />
-          <FacebookSVG width="32px" height="32px" />
-          <PinterestSVG width="32px" height="32px" />
+          <Icon name="instagram" width="32px" height="32px" />
+          <Icon name="facebook" width="32px" height="32px" />
+          <Icon name="pinterest" width="32px" height="32px" />
         </SocialIconsContainer>
       </Subscription>
       <LinksSection linkGroups={linkGroups} />

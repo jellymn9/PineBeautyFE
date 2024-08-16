@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import colors from "../../utils/colors";
 
-export const Container = styled.div`
+export const Container = styled.footer`
   display: flex;
   flex-direction: column;
 `;

@@ -1,8 +1,4 @@
-import CartSVG from "../../assets/user.svg?react";
-import UserSVG from "../../assets/cart.svg?react";
-import LogoSVG from "../../assets/logo.svg?react";
-import SearchSVG from "../../assets/search.svg?react";
-
+import Icon from "../Icon/Icon";
 import {
   Container,
   TopLinksBar,
@@ -45,11 +41,11 @@ function Header() {
         </TopLinksBarSection>
       </TopLinksBar>
       <ProfileCartBar>
-        <CartSVG />
-        <UserSVG />
+        <Icon name="cart" width="24px" height="24px" />
+        <Icon name="user" width="24px" height="24px" />
       </ProfileCartBar>
       <LogoContainer>
-        <LogoSVG width="100px" height="100px" />
+        <Icon name="logo" width="100px" height="100px" />
       </LogoContainer>
       <MainNavBar>
         <MainLinksContainer>
@@ -59,7 +55,7 @@ function Header() {
             </HeaderLink>
           ))}
         </MainLinksContainer>
-        <SearchSVG width="22px" height="22px" />
+        <Icon name="search" width="22px" height="22px" />
       </MainNavBar>
       <HSeparator />
     </Container>

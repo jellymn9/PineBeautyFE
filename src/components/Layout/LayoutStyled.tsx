@@ -10,7 +10,7 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled.main`
   min-width: 900px;
   flex: 1;
 `;
