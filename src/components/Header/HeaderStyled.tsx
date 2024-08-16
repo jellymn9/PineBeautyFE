@@ -35,6 +35,7 @@ export const MainNavBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 12px 0 12px;
 `;
 
 export const MainLinksContainer = styled.div`

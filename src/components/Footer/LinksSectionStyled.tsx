@@ -27,3 +27,9 @@ export const ProfileParagraph = styled.p`
 export const InfoItem = styled.span`
   color: ${colors.gray};
 `;
+
+export const InfoItemContainer = styled.div`
+  display: flex;
+  grid-gap: 12px;
+  align-items: center;
+`;

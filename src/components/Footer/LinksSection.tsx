@@ -5,6 +5,7 @@ import {
   FooterLink,
   ProfileParagraph,
   InfoItem,
+  InfoItemContainer,
 } from "./LinksSectionStyled";
 import Icon from "../Icon/Icon";
 
@@ -49,10 +50,10 @@ const LinksSection = ({ linkGroups }: LinkSectionPropsI): JSX.Element => {
         </LinkColumn>
         <LinkColumn heading={contact.name}>
           {contact.info.map(([icon, value]) => (
-            <>
-              <Icon name={icon} width="12px" height="12px" />
+            <InfoItemContainer>
+              <Icon name={icon} width="16px" height="16px" />
               <InfoItem>{value}</InfoItem>
-            </>
+            </InfoItemContainer>
           ))}
         </LinkColumn>
       </div>
