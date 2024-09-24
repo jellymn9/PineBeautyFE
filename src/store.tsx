@@ -2,7 +2,7 @@ import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 
 import productReducer from "./state/reducers/productReducer";
 
-const rootReducer = {
+export const rootReducer = {
   products: productReducer,
 };
 

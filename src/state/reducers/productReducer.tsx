@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+//import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { fetchProducts } from "../../APIs/products";
+import { mapProducts } from "../../helpers/dataMapper";
+import { RawProductT } from "../../utils/types";
 
 export interface initialStateI {
-  products: Array<string>;
+  list: Array<RawProductT>;
   status: "idle" | "pending" | "succeeded" | "failed";
 }
 const initialState: initialStateI = {
-  products: [],
+  list: [],
   status: "idle",
 };
 
@@ -18,8 +20,16 @@ export const fetchProductsThunk = createAsyncThunk(
     console.log("bla bla bla");
     const response = await fetchProducts();
     // The value we return becomes the `fulfilled` action payload
-    return response.data;
+    return mapProducts(response.data);
   }
+  // {
+  //   condition(arg, thunkApi) {
+  //     const postsStatus = productStatusSelector(thunkApi.getState);
+  //     if (postsStatus !== "idle") {
+  //       return false;
+  //     }
+  //   },
+  // }
 );
 
 export const productSlice = createSlice({
@@ -27,9 +37,9 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    getProducts: (state, action: PayloadAction<number>) => {
-      return state;
-    },
+    // getProducts: (state, action: PayloadAction<number>) => {
+    //   return state;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -37,8 +47,8 @@ export const productSlice = createSlice({
         state.status = "pending";
       })
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.products = action.payload;
+        state.status = "succeeded";
+        state.list = action.payload;
       })
       .addCase(fetchProductsThunk.rejected, (state) => {
         state.status = "failed";
@@ -46,5 +56,5 @@ export const productSlice = createSlice({
   },
 });
 
-export const { getProducts } = productSlice.actions;
+//export const { getProducts } = productSlice.actions;
 export default productSlice.reducer;
