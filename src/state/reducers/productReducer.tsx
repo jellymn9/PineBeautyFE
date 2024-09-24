@@ -45,6 +45,14 @@ export const fetchProductsThunk = createAsyncThunk<
       }
     },
   }
+  // {
+  //   condition(arg, thunkApi) {
+  //     const postsStatus = productStatusSelector(thunkApi.getState);
+  //     if (postsStatus !== "idle") {
+  //       return false;
+  //     }
+  //   },
+  // }
 );
 
 export const productSlice = createSlice({
