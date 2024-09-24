@@ -50,7 +50,7 @@ const LinksSection = ({ linkGroups }: LinkSectionPropsI): JSX.Element => {
         </LinkColumn>
         <LinkColumn heading={contact.name}>
           {contact.info.map(([icon, value]) => (
-            <InfoItemContainer>
+            <InfoItemContainer key={value}>
               <Icon name={icon} width="16px" height="16px" />
               <InfoItem>{value}</InfoItem>
             </InfoItemContainer>
