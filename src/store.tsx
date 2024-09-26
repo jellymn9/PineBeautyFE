@@ -13,4 +13,11 @@ export const store = configureStore({
 export type AppStore = typeof store;
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk = ThunkAction<void, RootState, unknown, Action>;
+//export type AppThunk = ThunkAction<void, RootState, unknown, Action>;
+// Define a reusable type describing thunk functions
+export type AppThunk<ThunkReturnType = void> = ThunkAction<
+  ThunkReturnType,
+  RootState,
+  unknown,
+  Action
+>;

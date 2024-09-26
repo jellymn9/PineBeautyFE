@@ -4,6 +4,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchProducts } from "../../APIs/products";
 import { mapProducts } from "../../helpers/dataMapper";
 import { RawProductT } from "../../utils/types";
+import { productStatusSelector } from "../selectors";
+import { RootState } from "../../store";
 
 export interface initialStateI {
   list: Array<RawProductT>;
@@ -14,22 +16,26 @@ const initialState: initialStateI = {
   status: "idle",
 };
 
-export const fetchProductsThunk = createAsyncThunk(
+export const fetchProductsThunk = createAsyncThunk<
+  Array<RawProductT>,
+  void,
+  { state: RootState }
+>(
   "products/fetchProducts",
   async () => {
     console.log("bla bla bla");
     const response = await fetchProducts();
     // The value we return becomes the `fulfilled` action payload
     return mapProducts(response.data);
+  },
+  {
+    condition(arg, thunkApi) {
+      const postsStatus = productStatusSelector(thunkApi.getState());
+      if (postsStatus !== "idle") {
+        return false;
+      }
+    },
   }
-  // {
-  //   condition(arg, thunkApi) {
-  //     const postsStatus = productStatusSelector(thunkApi.getState);
-  //     if (postsStatus !== "idle") {
-  //       return false;
-  //     }
-  //   },
-  // }
 );
 
 export const productSlice = createSlice({
