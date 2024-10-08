@@ -1,11 +1,14 @@
 import { useAppSelector, useAppDispatch } from "../../withTypes";
+
+import ProductsList from "../../components/ProductsList/ProductsList";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
 import {
   productListSelector,
   productStatusSelector,
 } from "../../state/selectors";
+import { Container } from "./ProductsStyled";
 
-function App() {
+function Products() {
   const dispatch = useAppDispatch();
   const productsList = useAppSelector(productListSelector);
   const productsStatus = useAppSelector(productStatusSelector);
@@ -20,15 +23,21 @@ function App() {
   return (
     <div>
       <button onClick={() => dispatch(fetchProductsThunk())}>click me!</button>
-      <div>
-        {productsList.map((product) => {
-          return (
-            <div>
-              <p>{product.name}</p>
-            </div>
-          );
-        })}
-      </div>
+      <Container>
+        <div
+          style={{
+            height: "inherit",
+            width: "200px",
+            backgroundColor: "gray",
+            padding: "20px",
+          }}
+        >
+          Filters
+        </div>
+        <div>
+          <ProductsList products={productsList} />
+        </div>
+      </Container>
       {productsStatus === "failed" ? (
         <div>Fetch products failed!</div>
       ) : (
@@ -38,4 +47,4 @@ function App() {
   );
 }
 
-export default App;
+export default Products;
