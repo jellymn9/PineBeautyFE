@@ -6,6 +6,7 @@ const colors = {
   white: "#fff",
   alabaster: "#e7e3da",
   gray: "#777777",
+  celticBlue: "#2267d8",
 };
 
 export default colors;
