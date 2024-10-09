@@ -13,4 +13,7 @@ export const Container = styled.div`
 export const ContentContainer = styled.main`
   min-width: 900px;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
