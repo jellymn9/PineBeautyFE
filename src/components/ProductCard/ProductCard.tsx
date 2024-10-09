@@ -1,5 +1,5 @@
 import { RawProductT } from "../../utils/types";
-
+import Button from "../Button/Button";
 import {
   Card,
   Name,
@@ -12,6 +12,10 @@ interface ProductCardPropsI {
   product: RawProductT;
 }
 
+const addToCart = () => {
+  return; // come back to this
+};
+
 function ProductCard({ product }: ProductCardPropsI) {
   return (
     <Card>
@@ -19,7 +23,7 @@ function ProductCard({ product }: ProductCardPropsI) {
       <NameAndPriceContainer>
         <Name>{product.name}</Name>
         <Price>{product.price}</Price>
-        <button>Add to cart</button>
+        <Button text="Add to cart" handleClick={addToCart} icon="cart" />
       </NameAndPriceContainer>
     </Card>
   );
