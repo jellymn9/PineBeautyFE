@@ -5,13 +5,19 @@ import colors from "../../utils/colors";
 
 export const Card = styled.div`
   height: auto;
-  max-height: 330px;
+  min-height: 290px;
   width: auto;
   border: 1px solid ${colors.gray};
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+  &:hover {
+    div:nth-child(2) {
+      height: 130px;
+    }
+  }
 `;
 
 export const ProductImage = styled.div`
@@ -31,11 +37,18 @@ export const NameAndPriceContainer = styled.div`
   flex-direction: column;
   align-items: center;
   grid-gap: 12px;
+  background-color: rgba(255, 255, 255, 0.34);
+  height: calc(292px - 210px - 12px - 14px);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transition: height 0.5s;
 `;
 
 export const Name = styled.h3`
-  font-size: 14px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 26px;
+  font-family: JosefinSans;
   margin: 0;
   font-weight: 500;
   text-transform: capitalize;
