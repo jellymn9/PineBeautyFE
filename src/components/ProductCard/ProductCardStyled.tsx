@@ -37,7 +37,7 @@ export const NameAndPriceContainer = styled.div`
   flex-direction: column;
   align-items: center;
   grid-gap: 12px;
-  background-color: rgba(255, 255, 255, 0.34);
+  background-color: ${colors.whiteTransparent1};
   height: calc(292px - 210px - 12px - 14px);
   position: absolute;
   bottom: 0;
