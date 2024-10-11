@@ -3,7 +3,7 @@ import styled from "styled-components";
 import image from "../../assets/productMockupImage.jpg";
 import colors from "../../utils/colors";
 
-export const Card = styled.div`
+export const Card = styled.article`
   height: auto;
   min-height: 290px;
   width: auto;
