@@ -24,5 +24,3 @@ export const SectionDescription = styled.p`
   font-weight: 500;
   font-family: DidactGothic-Regular;
 `;
-
-export const FiltersContainer = styled.nav``;

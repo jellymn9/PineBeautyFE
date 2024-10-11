@@ -8,11 +8,11 @@ import {
 } from "../../state/selectors";
 import {
   Container,
-  FiltersContainer,
   ProductsSection,
   SectionDescription,
   SectionHeading,
 } from "./ProductsStyled";
+import ProductFilters from "../../components/ProductFilters/ProductFilters";
 
 function Products() {
   const dispatch = useAppDispatch();
@@ -32,19 +32,7 @@ function Products() {
 
   return (
     <Container>
-      <FiltersContainer
-        style={{
-          height: "inherit",
-          width: "200px",
-          backgroundColor: "gray",
-          padding: "20px",
-        }}
-      >
-        <button onClick={() => dispatch(fetchProductsThunk())}>
-          click me!
-        </button>
-        Filters
-      </FiltersContainer>
+      <ProductFilters />
       <ProductsSection>
         <SectionHeading>{productsHeading}</SectionHeading>
         <SectionDescription>{productsDescription}</SectionDescription>
@@ -52,6 +40,7 @@ function Products() {
           <ProductsList products={productsList} />
         </div>
       </ProductsSection>
+      <button onClick={() => dispatch(fetchProductsThunk())}>click me!</button>
       {productsStatus === "failed" ? (
         <div>Fetch products failed!</div>
       ) : (

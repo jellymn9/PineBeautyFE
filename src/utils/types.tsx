@@ -38,3 +38,7 @@ export type RawProductT = {
 export type RawProductDataT = {
   products: Array<RawProductT>;
 };
+
+export type ProductCategoriesMappedT = {
+  [k in ProductTypesT]: { name: string; link: string }; //check out in operator for this case!
+};
