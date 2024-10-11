@@ -8,8 +8,6 @@ import {
 } from "./ProductFiltersStyled";
 
 const ProductFilters = function () {
-  //const dummyData = { name: "Product Type", filters };
-
   return (
     <FiltersContainer>
       <FiltersHeading>Product Type</FiltersHeading>
