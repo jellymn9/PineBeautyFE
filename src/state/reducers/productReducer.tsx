@@ -4,20 +4,25 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchProducts } from "../../APIs/products";
 import { mapProducts } from "../../helpers/dataMapper";
 import { RawProductT } from "../../utils/types";
-import { productStatusSelector } from "../selectors";
+import { productsSelector } from "../selectors";
 import { RootState } from "../../store";
 
-export interface initialStateI {
+interface ProductsStateI {
   list: Array<RawProductT>;
+  skip: [number, number];
+  cursor?: string;
+}
+export interface InitialProductsStateI {
+  products: ProductsStateI;
   status: "idle" | "pending" | "succeeded" | "failed";
 }
-const initialState: initialStateI = {
-  list: [],
+const initialState: InitialProductsStateI = {
+  products: { list: [], skip: [0, 0], cursor: undefined },
   status: "idle",
 };
 
 export const fetchProductsThunk = createAsyncThunk<
-  Array<RawProductT>,
+  ProductsStateI,
   void,
   { state: RootState }
 >(
@@ -26,12 +31,16 @@ export const fetchProductsThunk = createAsyncThunk<
     console.log("bla bla bla");
     const response = await fetchProducts();
     // The value we return becomes the `fulfilled` action payload
-    return mapProducts(response.data);
+    return {
+      list: mapProducts(response.data.products),
+      skip: response.data.skip,
+      cursor: response.data.cursor,
+    };
   },
   {
     condition(arg, thunkApi) {
-      const postsStatus = productStatusSelector(thunkApi.getState());
-      if (postsStatus !== "idle") {
+      const { status } = productsSelector(thunkApi.getState());
+      if (status !== "idle") {
         return false;
       }
     },
@@ -54,7 +63,7 @@ export const productSlice = createSlice({
       })
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.list = action.payload;
+        state.products = action.payload;
       })
       .addCase(fetchProductsThunk.rejected, (state) => {
         state.status = "failed";

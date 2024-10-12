@@ -2,10 +2,7 @@ import { useAppSelector, useAppDispatch } from "../../withTypes";
 
 import ProductsList from "../../components/ProductsList/ProductsList";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
-import {
-  productListSelector,
-  productStatusSelector,
-} from "../../state/selectors";
+import { productsSelector } from "../../state/selectors";
 import {
   Container,
   ProductsSection,
@@ -16,15 +13,14 @@ import ProductFilters from "../../components/ProductFilters/ProductFilters";
 
 function Products() {
   const dispatch = useAppDispatch();
-  const productsList = useAppSelector(productListSelector);
-  const productsStatus = useAppSelector(productStatusSelector);
+  const { products, status } = useAppSelector(productsSelector);
 
   // useEffect(() => {}, products);
 
   // const handleProducts = () => {
   //   dispatch(fetchProductsThunk());
   // };
-  console.log("products from component: ", productsList);
+  console.log("products from component: ", products.list);
 
   const productsHeading = "All products";
   const productsDescription =
@@ -34,14 +30,22 @@ function Products() {
     <Container>
       <ProductFilters />
       <ProductsSection>
-        <SectionHeading>{productsHeading}</SectionHeading>
-        <SectionDescription>{productsDescription}</SectionDescription>
-        <div>
-          <ProductsList products={productsList} />
-        </div>
+        {products.list.length ? (
+          <>
+            <SectionHeading>{productsHeading}</SectionHeading>
+            <SectionDescription>{productsDescription}</SectionDescription>
+            <div>
+              <ProductsList products={products.list} />
+            </div>
+          </>
+        ) : (
+          <SectionDescription>
+            There are no products available.
+          </SectionDescription>
+        )}
       </ProductsSection>
       <button onClick={() => dispatch(fetchProductsThunk())}>click me!</button>
-      {productsStatus === "failed" ? (
+      {status === "failed" ? (
         <div>Fetch products failed!</div>
       ) : (
         <div>Fetch data succeeded!</div>
