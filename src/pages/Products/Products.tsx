@@ -1,19 +1,22 @@
 import { useAppSelector, useAppDispatch } from "../../withTypes";
 
-import ProductsList from "../../components/ProductsList/ProductsList";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
 import { productsSelector } from "../../state/selectors";
+import { useScrollLocation } from "../../helpers/customHooks";
+import ProductFilters from "../../components/ProductFilters/ProductFilters";
+import ProductsList from "../../components/ProductsList/ProductsList";
 import {
   Container,
   ProductsSection,
   SectionDescription,
   SectionHeading,
 } from "./ProductsStyled";
-import ProductFilters from "../../components/ProductFilters/ProductFilters";
 
 function Products() {
   const dispatch = useAppDispatch();
   const { products, status } = useAppSelector(productsSelector);
+
+  const triggerDataFetch = useScrollLocation();
 
   // useEffect(() => {}, products);
 
@@ -45,6 +48,11 @@ function Products() {
         )}
       </ProductsSection>
       <button onClick={() => dispatch(fetchProductsThunk())}>click me!</button>
+      {triggerDataFetch ? (
+        <div>SCROLLED TO THE FOOTER</div>
+      ) : (
+        <div>NOT THERE YET </div>
+      )}
       {status === "failed" ? (
         <div>Fetch products failed!</div>
       ) : (
