@@ -11,6 +11,10 @@ export const Container = styled.div`
 `;
 
 export const ContentContainer = styled.main`
-  min-width: 900px;
+  width: 1000px;
+  align-self: center;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 `;
