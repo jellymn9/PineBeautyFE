@@ -10,7 +10,7 @@ function ProductsList({ products }: ProductsListPropsI) {
   return (
     <Container>
       {products.map((product) => (
-        <ProductCard product={product} />
+        <ProductCard product={product} key={product.id} />
       ))}
     </Container>
   );

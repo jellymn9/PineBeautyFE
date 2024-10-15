@@ -14,7 +14,7 @@ const ProductFilters = function () {
       <FiltersList>
         {Object.values(ProductCategories).map((category) => {
           return (
-            <FilterListItem>
+            <FilterListItem key={category.name}>
               <FilterLink href={category.link}>{category.name}</FilterLink>
             </FilterListItem>
           );
