@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchProducts } from "../../APIs/products";
 import { mapProducts } from "../../helpers/dataMapper";
 import { RawProductT } from "../../utils/types";
-import { productsSelector } from "../selectors";
+// import { productsSelector } from "../selectors";
 import { RootState } from "../../store";
 
 interface ProductsStateI {
@@ -36,15 +36,15 @@ export const fetchProductsThunk = createAsyncThunk<
       skip: response.data.skip,
       cursor: response.data.cursor,
     };
-  },
-  {
-    condition(arg, thunkApi) {
-      const { status } = productsSelector(thunkApi.getState());
-      if (status !== "idle") {
-        return false;
-      }
-    },
   }
+  // {
+  //   condition(arg, thunkApi) {
+  //     const { status } = productsSelector(thunkApi.getState());
+  //     if (status !== "idle" && status !== "succeeded") {
+  //       return false;
+  //     }
+  //   },
+  // }
 );
 
 export const productSlice = createSlice({

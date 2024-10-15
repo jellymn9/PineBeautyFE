@@ -1,26 +1,35 @@
-import { useAppSelector, useAppDispatch } from "../../withTypes";
+import { useEffect } from "react";
 
-import ProductsList from "../../components/ProductsList/ProductsList";
+import { useAppSelector, useAppDispatch } from "../../withTypes";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
 import { productsSelector } from "../../state/selectors";
+import { useScrollLocation } from "../../helpers/customHooks";
+import { footerHeight } from "../../utils/constants";
+import ProductFilters from "../../components/ProductFilters/ProductFilters";
+import ProductsList from "../../components/ProductsList/ProductsList";
 import {
   Container,
   ProductsSection,
   SectionDescription,
   SectionHeading,
 } from "./ProductsStyled";
-import ProductFilters from "../../components/ProductFilters/ProductFilters";
 
 function Products() {
   const dispatch = useAppDispatch();
   const { products, status } = useAppSelector(productsSelector);
 
-  // useEffect(() => {}, products);
+  const triggerDataFetch = useScrollLocation(footerHeight);
 
-  // const handleProducts = () => {
-  //   dispatch(fetchProductsThunk());
-  // };
-  console.log("products from component: ", products.list);
+  useEffect(() => {
+    dispatch(fetchProductsThunk());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (triggerDataFetch) {
+      dispatch(fetchProductsThunk());
+    }
+  }, [triggerDataFetch, dispatch]);
 
   const productsHeading = "All products";
   const productsDescription =
@@ -45,6 +54,11 @@ function Products() {
         )}
       </ProductsSection>
       <button onClick={() => dispatch(fetchProductsThunk())}>click me!</button>
+      {triggerDataFetch ? (
+        <div>SCROLLED TO THE FOOTER</div>
+      ) : (
+        <div>NOT THERE YET </div>
+      )}
       {status === "failed" ? (
         <div>Fetch products failed!</div>
       ) : (

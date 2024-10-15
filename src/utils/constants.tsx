@@ -10,3 +10,5 @@ export const ProductCategories: ProductCategoriesMappedT = {
   },
   EAU_DE_TOILETE: { name: "eau de toilete", link: "/" },
 };
+
+export const footerHeight = 452;
