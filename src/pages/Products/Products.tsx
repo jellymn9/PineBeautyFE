@@ -22,6 +22,7 @@ function Products() {
 
   useEffect(() => {
     dispatch(fetchProductsThunk());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchProducts } from "../../APIs/products";
 import { mapProducts } from "../../helpers/dataMapper";
 import { RawProductT } from "../../utils/types";
-import { productsSelector } from "../selectors";
+// import { productsSelector } from "../selectors";
 import { RootState } from "../../store";
 
 interface ProductsStateI {
