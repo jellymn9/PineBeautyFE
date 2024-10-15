@@ -1,8 +1,10 @@
-import { useAppSelector, useAppDispatch } from "../../withTypes";
+import { useEffect } from "react";
 
+import { useAppSelector, useAppDispatch } from "../../withTypes";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
 import { productsSelector } from "../../state/selectors";
 import { useScrollLocation } from "../../helpers/customHooks";
+import { footerHeight } from "../../utils/constants";
 import ProductFilters from "../../components/ProductFilters/ProductFilters";
 import ProductsList from "../../components/ProductsList/ProductsList";
 import {
@@ -16,14 +18,17 @@ function Products() {
   const dispatch = useAppDispatch();
   const { products, status } = useAppSelector(productsSelector);
 
-  const triggerDataFetch = useScrollLocation();
+  const triggerDataFetch = useScrollLocation(footerHeight);
 
-  // useEffect(() => {}, products);
+  useEffect(() => {
+    dispatch(fetchProductsThunk());
+  }, []);
 
-  // const handleProducts = () => {
-  //   dispatch(fetchProductsThunk());
-  // };
-  console.log("products from component: ", products.list);
+  useEffect(() => {
+    if (triggerDataFetch) {
+      dispatch(fetchProductsThunk());
+    }
+  }, [triggerDataFetch, dispatch]);
 
   const productsHeading = "All products";
   const productsDescription =

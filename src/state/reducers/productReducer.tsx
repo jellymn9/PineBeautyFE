@@ -36,19 +36,11 @@ export const fetchProductsThunk = createAsyncThunk<
       skip: response.data.skip,
       cursor: response.data.cursor,
     };
-  },
-  {
-    condition(arg, thunkApi) {
-      const { status } = productsSelector(thunkApi.getState());
-      if (status !== "idle") {
-        return false;
-      }
-    },
   }
   // {
   //   condition(arg, thunkApi) {
-  //     const postsStatus = productStatusSelector(thunkApi.getState);
-  //     if (postsStatus !== "idle") {
+  //     const { status } = productsSelector(thunkApi.getState());
+  //     if (status !== "idle" && status !== "succeeded") {
   //       return false;
   //     }
   //   },
