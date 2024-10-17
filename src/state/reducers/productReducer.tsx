@@ -68,7 +68,6 @@ export const productSlice = createSlice({
       })
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log("payload: ", action.payload);
         state.products = action.payload;
       })
       .addCase(fetchProductsThunk.rejected, (state) => {
