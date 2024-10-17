@@ -53,7 +53,6 @@ function Products() {
           </SectionDescription>
         )}
       </ProductsSection>
-      <button onClick={() => dispatch(fetchProductsThunk())}>click me!</button>
       {triggerDataFetch ? (
         <div>SCROLLED TO THE FOOTER</div>
       ) : (

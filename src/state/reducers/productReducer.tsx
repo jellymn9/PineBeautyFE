@@ -28,7 +28,9 @@ export const fetchProductsThunk = createAsyncThunk<
   "products/fetchProducts",
   async (_, { getState }) => {
     const state = getState();
+
     console.log("bla bla bla");
+
     const response = await fetchProducts({
       isForward: true,
       page: 6,
@@ -45,7 +47,7 @@ export const fetchProductsThunk = createAsyncThunk<
   // {
   //   condition(arg, thunkApi) {
   //     const { status } = productsSelector(thunkApi.getState());
-  //     if (status !== "idle" && status !== "succeeded") {
+  //     if (status !== "pending") {
   //       return false;
   //     }
   //   },
@@ -68,7 +70,9 @@ export const productSlice = createSlice({
       })
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.products = action.payload;
+        state.products.list = state.products.list.concat(action.payload.list);
+        state.products.skip = action.payload.skip;
+        state.products.cursor = action.payload.cursor; // CHANGE!
       })
       .addCase(fetchProductsThunk.rejected, (state) => {
         state.status = "failed";

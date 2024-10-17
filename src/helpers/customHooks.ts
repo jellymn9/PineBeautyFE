@@ -5,7 +5,7 @@ function useScrollLocation(elementHeightFromBottom: number) {
 
   useEffect(() => {
     function handleScroll() {
-      const pointForTrigger = window.innerHeight - elementHeightFromBottom;
+      const pointForTrigger = window.innerHeight - elementHeightFromBottom; // use height other than innerHeight!
       const isTrigger = window.scrollY >= pointForTrigger;
       if (isTrigger !== isPointReached) {
         setIsPointReached(isTrigger);
