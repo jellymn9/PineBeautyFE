@@ -35,10 +35,23 @@ export type RawProductT = {
   productTypeName: ProductTypesT;
 };
 
-export type RawProductDataT = {
-  products: Array<RawProductT>;
-};
-
 export type ProductCategoriesMappedT = {
   [k in ProductTypesT]: { name: string; link: string }; //check out in operator for this case!
+};
+
+export interface FetchProductsParamsI {
+  isForward: boolean;
+  page: number;
+  skip: [number, number];
+  cursor?: string;
+}
+
+export interface FetchProductsData {
+  products: Array<RawProductT>;
+  skip: [number, number];
+  cursor?: string;
+}
+
+export type FetchProductsT = {
+  (p: FetchProductsParamsI): Promise<FetchProductsData>;
 };

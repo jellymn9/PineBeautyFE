@@ -2,9 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 //import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { fetchProducts } from "../../APIs/products";
-import { mapProducts } from "../../helpers/dataMapper";
 import { RawProductT } from "../../utils/types";
-// import { productsSelector } from "../selectors";
+import { metaDataSelector } from "../selectors";
 import { RootState } from "../../store";
 
 interface ProductsStateI {
@@ -27,14 +26,21 @@ export const fetchProductsThunk = createAsyncThunk<
   { state: RootState }
 >(
   "products/fetchProducts",
-  async () => {
+  async (_, { getState }) => {
+    const state = getState();
     console.log("bla bla bla");
-    const response = await fetchProducts();
+    const response = await fetchProducts({
+      isForward: true,
+      page: 6,
+      skip: metaDataSelector(state).skip,
+      cursor: metaDataSelector(state).cursor,
+    });
+    console.log("res ", response);
     // The value we return becomes the `fulfilled` action payload
     return {
-      list: mapProducts(response.data.products),
-      skip: response.data.skip,
-      cursor: response.data.cursor,
+      list: response.products,
+      skip: response.skip,
+      cursor: response.cursor,
     };
   }
   // {
@@ -63,6 +69,7 @@ export const productSlice = createSlice({
       })
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.status = "succeeded";
+        console.log("payload: ", action.payload);
         state.products = action.payload;
       })
       .addCase(fetchProductsThunk.rejected, (state) => {

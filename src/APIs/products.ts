@@ -1,16 +1,23 @@
 import axios from "axios";
 import endpoint from "./endpoints";
 
-import { RawProductDataT } from "../utils/types";
+import { FetchProductsT } from "../utils/types";
 
-export const fetchProducts = async (isForward = true, page = 6) => {
+export const fetchProducts: FetchProductsT = async ({
+  isForward = true,
+  page = 6,
+  skip,
+  cursor,
+}) => {
   return axios
-    .get<{
-      products: RawProductDataT;
-      skip: [number, number];
-      cursor?: string;
-    }>(`${endpoint.products}?isForward=${isForward}&page=${page}`)
-    .then((v) => v)
+    .get(
+      `${endpoint.products}?isForward=${
+        isForward ? "1" : ""
+      }&page=${page}&skip=${skip[0]}&skip=${skip[1]}&cursor=${cursor ?? ""}`
+    )
+    .then(({ data }) => {
+      return data;
+    })
     .catch((e) => {
       console.log("error: ", e);
       throw e;
