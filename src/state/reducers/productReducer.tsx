@@ -35,7 +35,6 @@ export const fetchProductsThunk = createAsyncThunk<
       skip: metaDataSelector(state).skip,
       cursor: metaDataSelector(state).cursor,
     });
-    console.log("res ", response);
     // The value we return becomes the `fulfilled` action payload
     return {
       list: response.products,
