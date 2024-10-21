@@ -10,6 +10,9 @@ export const Container = styled.div`
 
 export const ProductsSection = styled.section`
   width: auto;
+
+  height: 300px;
+  overflow-y: scroll;
 `;
 
 export const SectionHeading = styled.h2`
