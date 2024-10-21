@@ -23,7 +23,7 @@ function Products() {
 
   const { products, status } = useAppSelector(productsSelector);
 
-  const isBottomReached = useElementScroll(productSectionRef, 236);
+  const isBottomReached = useElementScroll(productSectionRef);
 
   useEffect(() => {
     dispatch(fetchProductsThunk());

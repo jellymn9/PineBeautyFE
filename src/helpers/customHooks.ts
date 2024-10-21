@@ -24,7 +24,6 @@ function useScrollLocation(elementHeightFromBottom: number) {
 
 function useElementScroll( // element scroll befavior
   element: RefObject<HTMLElement>,
-  scrollHeightAdjustment = 0,
   heightOverlapThreshold = 70
 ) {
   const [reachBottom, setReachBottom] = useState(false);
@@ -33,13 +32,12 @@ function useElementScroll( // element scroll befavior
     const current = element.current;
     function handleScroll() {
       if (current !== null) {
-        const elementScrollableHeight =
-          current.scrollHeight - scrollHeightAdjustment;
+        const elementScrollableHeight = current.scrollHeight;
+        const elementHeight = current.clientHeight;
         const elementScrolledFromTop = current.scrollTop;
 
-        console.log(elementScrollableHeight, elementScrolledFromTop);
         if (
-          elementScrollableHeight - elementScrolledFromTop <=
+          elementScrollableHeight - elementHeight - elementScrolledFromTop <=
             heightOverlapThreshold &&
           !reachBottom
         ) {
