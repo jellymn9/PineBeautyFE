@@ -1,6 +1,7 @@
 import { RefObject, useEffect, useState } from "react";
 
 function useScrollLocation(elementHeightFromBottom: number) {
+  // window scroll befavior
   const [isPointReached, setIsPointReached] = useState(false);
 
   useEffect(() => {
@@ -24,26 +25,29 @@ function useScrollLocation(elementHeightFromBottom: number) {
   return isPointReached;
 }
 
-function useElementHeight(element: RefObject<HTMLElement>) {
-  const [bla, setBla] = useState(false);
+function useElementScroll( // element scroll befavior
+  element: RefObject<HTMLElement>,
+  scrollHeightAdjustment = 0,
+  heightOverlapAccuracy = 70
+) {
+  const [reachBottom, setReachBottom] = useState(false);
 
   useEffect(() => {
     const current = element.current;
     function handleScroll() {
-      console.log(1);
       if (current !== null) {
-        const elementScrollableHeight = current.scrollHeight - 236;
+        const elementScrollableHeight =
+          current.scrollHeight - scrollHeightAdjustment;
         const elementScrolledFromTop = current.scrollTop;
-        console.log(
-          "tf ",
-          elementScrollableHeight - elementScrolledFromTop <= 70
-        );
-        if (elementScrollableHeight - elementScrolledFromTop <= 70 && !bla) {
-          console.log(2);
-          //dispatch(fetchProductsThunk());
-          setBla(true);
+
+        if (
+          elementScrollableHeight - elementScrolledFromTop <=
+            heightOverlapAccuracy &&
+          !reachBottom
+        ) {
+          setReachBottom(true);
         } else {
-          setBla(false);
+          setReachBottom(false);
         }
       }
     }
@@ -55,7 +59,7 @@ function useElementHeight(element: RefObject<HTMLElement>) {
     };
   });
 
-  return bla;
+  return reachBottom;
 }
 
-export { useScrollLocation, useElementHeight };
+export { useScrollLocation, useElementScroll };

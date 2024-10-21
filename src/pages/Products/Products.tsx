@@ -3,8 +3,7 @@ import { useEffect, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../withTypes";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
 import { productsSelector } from "../../state/selectors";
-import { useElementHeight, useScrollLocation } from "../../helpers/customHooks";
-import { footerHeight } from "../../utils/constants";
+import { useElementScroll } from "../../helpers/customHooks";
 import ProductFilters from "../../components/ProductFilters/ProductFilters";
 import ProductsList from "../../components/ProductsList/ProductsList";
 import {
@@ -22,13 +21,9 @@ function Products() {
   const dispatch = useAppDispatch();
   const productSectionRef = useRef<HTMLElement>(null);
 
-  //const [bla, setBla] = useState(false);
-
   const { products, status } = useAppSelector(productsSelector);
 
-  const triggerDataFetch = useScrollLocation(footerHeight);
-
-  const isBottomReached = useElementHeight(productSectionRef);
+  const isBottomReached = useElementScroll(productSectionRef, 236);
 
   useEffect(() => {
     dispatch(fetchProductsThunk());
@@ -40,26 +35,6 @@ function Products() {
       dispatch(fetchProductsThunk());
     }
   }, [isBottomReached, dispatch]);
-
-  // const handleScroll = () => {
-  //   console.log(1);
-  //   if (productSectionRef.current !== null) {
-  //     const elementScrollableHeight =
-  //       productSectionRef.current.scrollHeight - 236;
-  //     const elementScrolledFromTop = productSectionRef.current.scrollTop;
-  //     console.log(
-  //       "tf ",
-  //       elementScrollableHeight - elementScrolledFromTop <= 70
-  //     );
-  //     if (elementScrollableHeight - elementScrolledFromTop <= 70 && !bla) {
-  //       console.log(2);
-  //       dispatch(fetchProductsThunk());
-  //       setBla(true);
-  //     } else {
-  //       setBla(false);
-  //     }
-  //   }
-  // };
 
   return (
     <Container>
@@ -79,7 +54,7 @@ function Products() {
           </SectionDescription>
         )}
       </ProductsSection>
-      {triggerDataFetch ? (
+      {isBottomReached ? (
         <div>SCROLLED TO THE FOOTER</div>
       ) : (
         <div>NOT THERE YET </div>
