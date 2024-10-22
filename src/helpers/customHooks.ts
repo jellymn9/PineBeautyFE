@@ -22,33 +22,36 @@ function useScrollLocation(elementHeightFromBottom: number) {
   return isPointReached;
 }
 
-function useElementScroll(element: RefObject<HTMLElement>) { // element scroll befavior
+function useElementScroll(element: RefObject<HTMLElement>) {
+  // element scroll befavior
   const [reachBottom, setReachBottom] = useState(false);
 
-  const current = element.current;
-  function handleScroll() {
-    if (current !== null) {
-      const elementScrollableHeight = current.scrollHeight;
-      const elementHeight = current.clientHeight;
-      const elementScrolledFromTop = current.scrollTop;
+  useEffect(() => {
+    const current = element.current;
 
-      if (
-        elementScrollableHeight - elementHeight - elementScrolledFromTop == 0 &&
-        !reachBottom
-      ) {
-        setReachBottom(true);
-      } else {
-        setReachBottom(false);
+    function handleScroll() {
+      if (current !== null) {
+        const elementScrollableHeight = current.scrollHeight;
+        const elementHeight = current.clientHeight;
+        const elementScrolledFromTop = current.scrollTop;
+
+        if (
+          elementScrollableHeight - elementHeight - elementScrolledFromTop ==
+            0 &&
+          !reachBottom
+        ) {
+          setReachBottom(true);
+        } else {
+          setReachBottom(false);
+        }
       }
     }
-  }
-  useEffect(() => {
-    current !== null && current.addEventListener("scroll", handleScroll);
 
+    current !== null && current.addEventListener("scroll", handleScroll);
     return () => {
       current !== null && current.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, [element, reachBottom]);
 
   return reachBottom;
 }
