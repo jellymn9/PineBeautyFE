@@ -22,32 +22,27 @@ function useScrollLocation(elementHeightFromBottom: number) {
   return isPointReached;
 }
 
-function useElementScroll( // element scroll befavior
-  element: RefObject<HTMLElement>,
-  heightOverlapThreshold = 70
-) {
+function useElementScroll(element: RefObject<HTMLElement>) { // element scroll befavior
   const [reachBottom, setReachBottom] = useState(false);
 
-  useEffect(() => {
-    const current = element.current;
-    function handleScroll() {
-      if (current !== null) {
-        const elementScrollableHeight = current.scrollHeight;
-        const elementHeight = current.clientHeight;
-        const elementScrolledFromTop = current.scrollTop;
+  const current = element.current;
+  function handleScroll() {
+    if (current !== null) {
+      const elementScrollableHeight = current.scrollHeight;
+      const elementHeight = current.clientHeight;
+      const elementScrolledFromTop = current.scrollTop;
 
-        if (
-          elementScrollableHeight - elementHeight - elementScrolledFromTop <=
-            heightOverlapThreshold &&
-          !reachBottom
-        ) {
-          setReachBottom(true);
-        } else {
-          setReachBottom(false);
-        }
+      if (
+        elementScrollableHeight - elementHeight - elementScrolledFromTop == 0 &&
+        !reachBottom
+      ) {
+        setReachBottom(true);
+      } else {
+        setReachBottom(false);
       }
     }
-
+  }
+  useEffect(() => {
     current !== null && current.addEventListener("scroll", handleScroll);
 
     return () => {
