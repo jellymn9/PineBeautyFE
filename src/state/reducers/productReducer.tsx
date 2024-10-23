@@ -22,18 +22,18 @@ const initialState: InitialProductsStateI = {
 
 export const fetchProductsThunk = createAsyncThunk<
   ProductsStateI,
-  void,
+  { isForward: boolean; page?: number },
   { state: RootState }
 >(
   "products/fetchProducts",
-  async (_, { getState }) => {
+  async ({ isForward = true, page = 6 }, { getState }) => {
     const state = getState();
 
     console.log("bla bla bla");
 
     const response = await fetchProducts({
-      isForward: true,
-      page: 6,
+      isForward: isForward,
+      page: page,
       skip: metaDataSelector(state).skip,
       cursor: metaDataSelector(state).cursor,
     });
@@ -70,7 +70,7 @@ export const productSlice = createSlice({
       })
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.products.list = state.products.list.concat(action.payload.list);
+        state.products.list = action.payload.list;
         state.products.skip = action.payload.skip;
         state.products.cursor = action.payload.cursor; // CHANGE!
       })

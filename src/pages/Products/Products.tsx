@@ -23,18 +23,21 @@ function Products() {
 
   const { products, status } = useAppSelector(productsSelector);
 
-  const isBottomReached = useElementScroll(productSectionRef);
+  const { reachBottom, reachTop } = useElementScroll(productSectionRef);
 
   useEffect(() => {
-    dispatch(fetchProductsThunk());
+    dispatch(fetchProductsThunk({ isForward: true, page: 8 }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (isBottomReached) {
-      dispatch(fetchProductsThunk());
+    if (reachBottom) {
+      dispatch(fetchProductsThunk({ isForward: true, page: 8 }));
     }
-  }, [isBottomReached, dispatch]);
+    if (reachTop) {
+      dispatch(fetchProductsThunk({ isForward: false, page: 8 }));
+    }
+  }, [reachBottom, reachTop, dispatch]);
 
   return (
     <Container>
@@ -54,7 +57,7 @@ function Products() {
           </SectionDescription>
         )}
       </ProductsSection>
-      {isBottomReached ? (
+      {reachBottom ? (
         <div>SCROLLED TO THE FOOTER</div>
       ) : (
         <div>NOT THERE YET </div>

@@ -15,7 +15,7 @@ export const ProductsSection = styled.section`
   overflow-y: scroll;
 
   &&::-webkit-scrollbar {
-    display: none;
+    //display: none;
   }
 `;
 
