@@ -2,9 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 //import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { fetchProducts } from "../../APIs/products";
-import { mapProducts } from "../../helpers/dataMapper";
 import { RawProductT } from "../../utils/types";
-import { productsSelector } from "../selectors";
+import { metaDataSelector } from "../selectors";
 import { RootState } from "../../store";
 
 interface ProductsStateI {
@@ -23,28 +22,36 @@ const initialState: InitialProductsStateI = {
 
 export const fetchProductsThunk = createAsyncThunk<
   ProductsStateI,
-  void,
+  { isForward: boolean; page?: number },
   { state: RootState }
 >(
   "products/fetchProducts",
-  async () => {
+  async ({ isForward = true, page = 6 }, { getState }) => {
+    const state = getState();
+
     console.log("bla bla bla");
-    const response = await fetchProducts();
+
+    const response = await fetchProducts({
+      isForward: isForward,
+      page: page,
+      skip: metaDataSelector(state).skip,
+      cursor: metaDataSelector(state).cursor,
+    });
     // The value we return becomes the `fulfilled` action payload
     return {
-      list: mapProducts(response.data.products),
-      skip: response.data.skip,
-      cursor: response.data.cursor,
+      list: response.products,
+      skip: response.skip,
+      cursor: response.cursor,
     };
-  },
-  {
-    condition(arg, thunkApi) {
-      const { status } = productsSelector(thunkApi.getState());
-      if (status !== "idle") {
-        return false;
-      }
-    },
   }
+  // {
+  //   condition(arg, thunkApi) {
+  //     const { status } = productsSelector(thunkApi.getState());
+  //     if (status !== "pending") {
+  //       return false;
+  //     }
+  //   },
+  // }
 );
 
 export const productSlice = createSlice({
@@ -63,7 +70,9 @@ export const productSlice = createSlice({
       })
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.products = action.payload;
+        state.products.list = action.payload.list;
+        state.products.skip = action.payload.skip;
+        state.products.cursor = action.payload.cursor; // CHANGE!
       })
       .addCase(fetchProductsThunk.rejected, (state) => {
         state.status = "failed";

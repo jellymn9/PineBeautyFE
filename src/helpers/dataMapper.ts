@@ -1,5 +1,6 @@
-import { RawProductDataT } from "../utils/types";
+// import { RawProductDataT } from "../utils/types";
 
-export function mapProducts(rawData: RawProductDataT) {
-  return rawData.products;
-}
+// export function mapProducts(rawData: RawProductDataT): ProductT {
+//   // to be deleted...
+//   return rawData;
+// }
