@@ -52,6 +52,11 @@ export interface FetchProductsData {
   cursor?: string;
 }
 
+export interface FetchProductsThunkResI
+  extends Omit<FetchProductsData, "products"> {
+  list: FetchProductsData["products"];
+}
+
 export type FetchProductsT = {
   (p: FetchProductsParamsI): Promise<FetchProductsData>;
 };
