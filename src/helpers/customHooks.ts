@@ -23,7 +23,7 @@ function useScrollLocation(elementHeightFromBottom: number) {
 }
 
 function useElementScroll(element: RefObject<HTMLElement>) {
-  // element scroll befavior
+  // element scroll behavior
   const [reachBottom, setReachBottom] = useState(false);
   const [reachTop, setReachTop] = useState(false);
 
@@ -35,12 +35,7 @@ function useElementScroll(element: RefObject<HTMLElement>) {
         const elementScrollableHeight = current.scrollHeight;
         const elementHeight = current.clientHeight;
         const elementScrolledFromTop = current.scrollTop;
-
-        // console.log("elementScrollableHeight: ", elementScrollableHeight);
-        // console.log("elementHeight: ", elementHeight);
-        // console.log("elementScrolledFromTop: ", elementScrolledFromTop);
-
-        // handle scroll top hefavior
+        // handle scroll top behavior
         if (elementScrolledFromTop === 0) {
           console.log(1);
           setReachTop(true);
