@@ -37,7 +37,6 @@ function useElementScroll(element: RefObject<HTMLElement>) {
         const elementScrolledFromTop = current.scrollTop;
         // handle scroll top behavior
         if (elementScrolledFromTop === 0) {
-          console.log(1);
           setReachTop(true);
         } else {
           reachTop && setReachTop(false);
@@ -48,7 +47,6 @@ function useElementScroll(element: RefObject<HTMLElement>) {
             0 &&
           !reachBottom
         ) {
-          console.log(2);
           setReachBottom(true);
         } else {
           setReachBottom(false);
