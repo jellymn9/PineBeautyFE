@@ -10,6 +10,13 @@ export const Container = styled.div`
 
 export const ProductsSection = styled.section`
   width: auto;
+
+  height: 721px;
+  overflow-y: scroll;
+
+  &&::-webkit-scrollbar {
+    //display: none;
+  }
 `;
 
 export const SectionHeading = styled.h2`

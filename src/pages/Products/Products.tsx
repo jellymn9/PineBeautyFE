@@ -1,41 +1,56 @@
-import { useAppSelector, useAppDispatch } from "../../withTypes";
+import { useEffect, useRef } from "react";
 
-import ProductsList from "../../components/ProductsList/ProductsList";
+import { useAppSelector, useAppDispatch } from "../../withTypes";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
-import { productsSelector } from "../../state/selectors";
+import { productsSelector, listProductsSelector } from "../../state/selectors";
+import { useElementScroll } from "../../helpers/customHooks";
+import ProductFilters from "../../components/ProductFilters/ProductFilters";
+import ProductsList from "../../components/ProductsList/ProductsList";
 import {
   Container,
   ProductsSection,
   SectionDescription,
   SectionHeading,
 } from "./ProductsStyled";
-import ProductFilters from "../../components/ProductFilters/ProductFilters";
+
+const productsHeading = "All products";
+const productsDescription =
+  "Searching for a sustainable alternative to liquid shampoo? We ‘ve got you covered! Our solid shampoos and hair soaps are fully biodegradable, 100% natural, and they come with an eco-friendly packaging. We offer a wide range of shampoo bars and hair soaps for all hair types and special needs. Find the right one for you and keep your hair strands healthy and shiny!";
+const pageSize = 6;
 
 function Products() {
   const dispatch = useAppDispatch();
-  const { products, status } = useAppSelector(productsSelector);
+  const productSectionRef = useRef<HTMLElement>(null);
 
-  // useEffect(() => {}, products);
+  const { status } = useAppSelector(productsSelector);
+  const list = useAppSelector(listProductsSelector);
+  const products = list.flat(); // this can be moved to selector but should be momoized!
+  const { reachBottom, reachTop } = useElementScroll(productSectionRef);
 
-  // const handleProducts = () => {
-  //   dispatch(fetchProductsThunk());
-  // };
-  console.log("products from component: ", products.list);
+  useEffect(() => {
+    dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const productsHeading = "All products";
-  const productsDescription =
-    "Searching for a sustainable alternative to liquid shampoo? We ‘ve got you covered! Our solid shampoos and hair soaps are fully biodegradable, 100% natural, and they come with an eco-friendly packaging. We offer a wide range of shampoo bars and hair soaps for all hair types and special needs. Find the right one for you and keep your hair strands healthy and shiny!";
+  useEffect(() => {
+    if (reachBottom) {
+      dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
+    }
+    if (reachTop) {
+      dispatch(fetchProductsThunk({ isForward: false, page: pageSize }));
+    }
+  }, [reachBottom, reachTop, dispatch]);
 
   return (
     <Container>
       <ProductFilters />
-      <ProductsSection>
-        {products.list.length ? (
+      <ProductsSection ref={productSectionRef}>
+        {products.length ? (
           <>
             <SectionHeading>{productsHeading}</SectionHeading>
             <SectionDescription>{productsDescription}</SectionDescription>
             <div>
-              <ProductsList products={products.list} />
+              <ProductsList products={products} />
             </div>
           </>
         ) : (
@@ -44,7 +59,11 @@ function Products() {
           </SectionDescription>
         )}
       </ProductsSection>
-      <button onClick={() => dispatch(fetchProductsThunk())}>click me!</button>
+      {reachBottom ? (
+        <div>SCROLLED TO THE FOOTER</div>
+      ) : (
+        <div>NOT THERE YET </div>
+      )}
       {status === "failed" ? (
         <div>Fetch products failed!</div>
       ) : (
