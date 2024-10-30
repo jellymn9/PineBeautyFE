@@ -19,7 +19,9 @@ const addToCart = () => {
 function ProductCard({ product }: ProductCardPropsI) {
   return (
     <Card>
-      <ProductImage />
+      <a href={"product/" + product.id}>
+        <ProductImage />
+      </a>
       <NameAndPriceContainer>
         <Name>{product.name}</Name>
         <Price>{product.price}</Price>
