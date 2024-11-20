@@ -1,5 +1,7 @@
 import { RouteObject } from "react-router-dom";
 
+import { getSingleProduct } from "./APIs/products";
+
 import PageLayout from "./components/Layout/Layout";
 import Home from "./pages/Home/Home";
 import Auth from "./pages/Auth/Auth";
@@ -21,7 +23,11 @@ const routes: Array<RouteObject> = [
       },
       {
         path: "/product/:id",
+        loader: async ({ params }) => {
+          return await getSingleProduct(params.id);
+        },
         element: <Product />,
+        errorElement: <div>Error element</div>,
       },
       {
         path: "/profile", // private route

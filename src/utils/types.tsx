@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios";
+
 export type IconNamesT =
   | "clock"
   | "email"
@@ -8,7 +10,9 @@ export type IconNamesT =
   | "cart"
   | "user"
   | "logo"
-  | "search";
+  | "search"
+  | "plus"
+  | "minus";
 
 export type ProductsTags =
   | "VEGAN_COSMETICS"
@@ -36,7 +40,7 @@ export type RawProductT = {
 };
 
 export type ProductCategoriesMappedT = {
-  [k in ProductTypesT]: { name: string; link: string }; //check out in operator for this case!
+  [k in ProductTypesT]: { name: string; link: string };
 };
 
 export interface FetchProductsParamsI {
@@ -59,4 +63,12 @@ export interface FetchProductsThunkResI
 
 export type FetchProductsT = {
   (p: FetchProductsParamsI): Promise<FetchProductsData>;
+};
+
+export type GetProductAxiosResT = AxiosResponse<
+  { product: RawProductT },
+  unknown
+>;
+export type GetProductT = {
+  (id?: string): Promise<GetProductAxiosResT>; //Check out AxiosResponse type.
 };
