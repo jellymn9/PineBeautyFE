@@ -1,18 +1,19 @@
 import { AxiosResponse } from "axios";
 
-export type IconNamesT =
-  | "clock"
-  | "email"
-  | "phone"
-  | "instagram"
-  | "facebook"
-  | "pinterest"
-  | "cart"
-  | "user"
-  | "logo"
-  | "search"
-  | "plus"
-  | "minus";
+export type IconNamesT = // turn to enum
+
+    | "clock"
+    | "email"
+    | "phone"
+    | "instagram"
+    | "facebook"
+    | "pinterest"
+    | "cart"
+    | "user"
+    | "logo"
+    | "search"
+    | "plus"
+    | "minus";
 
 export type ProductsTags =
   | "VEGAN_COSMETICS"
@@ -70,5 +71,11 @@ export type GetProductAxiosResT = AxiosResponse<
   unknown
 >;
 export type GetProductT = {
-  (id?: string): Promise<GetProductAxiosResT>; //Check out AxiosResponse type.
+  (id?: string): Promise<GetProductAxiosResT>;
 };
+
+export type CartItemT = {
+  id: string; //product id
+  quantity: number;
+};
+//Pick<RawProductT, "id" | "price">;
