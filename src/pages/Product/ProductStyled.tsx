@@ -17,6 +17,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   grid-gap: 18px;
+  padding-top: 18px;
+  padding-bottom: 18px;
 `;
 
 export const ProductData = styled.div`

@@ -38,7 +38,7 @@ export const MainNavBar = styled.div`
   padding: 0 12px 0 12px;
 `;
 
-export const MainLinksContainer = styled.div`
+export const MainLinksContainer = styled.nav`
   display: flex;
   grid-gap: 24px;
 `;
