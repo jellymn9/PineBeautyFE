@@ -74,8 +74,10 @@ export type GetProductT = {
   (id?: string): Promise<GetProductAxiosResT>;
 };
 
+export type CartProductT = Pick<RawProductT, "id" | "price" | "name" | "image">;
+
 export type CartItemT = {
-  id: string; //product id
+  //product: CartProductT;
+  id: string;
   quantity: number;
 };
-//Pick<RawProductT, "id" | "price">;
