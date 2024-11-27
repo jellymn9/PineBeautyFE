@@ -3,7 +3,7 @@ import endpoint from "./endpoints";
 
 import { FetchProductsT, GetProductT } from "../utils/types";
 
-export const fetchProducts: FetchProductsT = async ({
+export const fetchProducts: FetchProductsT = ({
   isForward = true,
   page = 6,
   skip,
