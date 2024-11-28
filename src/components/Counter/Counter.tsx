@@ -1,12 +1,25 @@
 import Button from "../Button/Button";
 import { Amount, Container } from "./CounterStyled";
 
-const Counter = () => {
+interface CounterPropsI {
+  quantity: number;
+  updateCart: (q: number) => void;
+}
+
+const Counter = ({ quantity, updateCart }: CounterPropsI) => {
+  const increase = () => {
+    updateCart(quantity + 1);
+  };
+
+  const decrease = () => {
+    updateCart(quantity - 1);
+  };
+
   return (
     <Container>
-      <Button icon="minus" handleClick={() => {}} />
-      <Amount>0</Amount>
-      <Button icon="plus" handleClick={() => {}} />
+      <Button icon="minus" handleClick={decrease} disabled={quantity === 0} />
+      <Amount>{quantity}</Amount>
+      <Button icon="plus" handleClick={increase} />
     </Container>
   );
 };

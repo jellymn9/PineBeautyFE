@@ -2,7 +2,10 @@ import { useEffect, useRef } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../withTypes";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
-import { productsSelector, listProductsSelector } from "../../state/selectors";
+import {
+  productsSelector,
+  listProductsSelector,
+} from "../../state/selectors/productSelector";
 import { useElementScroll } from "../../helpers/customHooks";
 import ProductFilters from "../../components/ProductFilters/ProductFilters";
 import ProductsList from "../../components/ProductsList/ProductsList";
@@ -59,11 +62,6 @@ function Products() {
           </SectionDescription>
         )}
       </ProductsSection>
-      {reachBottom ? (
-        <div>SCROLLED TO THE FOOTER</div>
-      ) : (
-        <div>NOT THERE YET </div>
-      )}
       {status === "failed" ? (
         <div>Fetch products failed!</div>
       ) : (
