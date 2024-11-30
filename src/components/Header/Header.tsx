@@ -1,3 +1,4 @@
+import { CartIcon } from "../CartIcon/CartIcon";
 import Icon from "../Icon/Icon";
 import {
   Container,
@@ -41,7 +42,7 @@ function Header() {
         </TopLinksBarSection>
       </TopLinksBar>
       <ProfileCartBar>
-        <Icon name="cart" width="24px" height="24px" />
+        <CartIcon />
         <Icon name="user" width="24px" height="24px" />
       </ProfileCartBar>
       <LogoContainer>
