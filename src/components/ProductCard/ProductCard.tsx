@@ -1,3 +1,4 @@
+import { routes } from "../../utils/constants";
 import { RawProductT } from "../../utils/types";
 import Button from "../Button/Button";
 import {
@@ -19,7 +20,7 @@ const addToCart = () => {
 function ProductCard({ product }: ProductCardPropsI) {
   return (
     <Card>
-      <a href={"product/" + product.id}>
+      <a href={routes.product + product.id}>
         <ProductImage />
       </a>
       <NameAndPriceContainer>

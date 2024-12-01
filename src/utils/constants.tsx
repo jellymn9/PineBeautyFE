@@ -12,3 +12,11 @@ export const ProductCategories: ProductCategoriesMappedT = {
 };
 
 export const footerHeight = 452;
+
+export const routes = {
+  home: "/",
+  products: "/products",
+  product: "/product",
+  cart: "/cart",
+  profile: "/profile",
+};

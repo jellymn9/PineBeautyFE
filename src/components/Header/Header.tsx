@@ -1,3 +1,4 @@
+import { routes } from "../../utils/constants";
 import { CartIcon } from "../CartIcon/CartIcon";
 import Icon from "../Icon/Icon";
 import {
@@ -22,8 +23,8 @@ function Header() {
   const samples = "Free samples";
 
   const navLinks = [
-    { route: "", name: "home" },
-    { route: "", name: "products" },
+    { route: routes.home, name: "home" },
+    { route: routes.products, name: "products" },
     { route: "", name: "offers" },
     { route: "", name: "free samples" },
   ];
