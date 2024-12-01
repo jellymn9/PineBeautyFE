@@ -21,8 +21,8 @@ export const TopLinksBar = styled.div`
 export const ProfileCartBar = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 12px;
-  grid-gap: 6px;
+  padding: 16px 12px 0px 12px;
+  grid-gap: 12px;
 `;
 
 export const LogoContainer = styled.div`
