@@ -9,7 +9,7 @@ export const CartIcon = () => {
   return (
     <CartLink to="/cart">
       <Icon name="cart" width="24px" height="24px" />
-      <CartNumber>{totalQuantity}</CartNumber>
+      {!!totalQuantity && <CartNumber>{totalQuantity}</CartNumber>}
     </CartLink>
   );
 };
