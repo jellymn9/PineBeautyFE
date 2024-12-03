@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { fetchProducts } from "../../APIs/products";
 import { FetchProductsThunkResI, RawProductT } from "../../utils/types";
-import { metaDataSelector } from "../selectors";
+import { metaDataSelector } from "../selectors/productSelector";
 import { RootState } from "../../store";
 
 interface ProductsStateI {

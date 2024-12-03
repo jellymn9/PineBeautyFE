@@ -1,3 +1,5 @@
+import { routes } from "../../utils/constants";
+import { CartIcon } from "../CartIcon/CartIcon";
 import Icon from "../Icon/Icon";
 import {
   Container,
@@ -21,8 +23,8 @@ function Header() {
   const samples = "Free samples";
 
   const navLinks = [
-    { route: "", name: "home" },
-    { route: "", name: "products" },
+    { route: routes.home, name: "home" },
+    { route: routes.products, name: "products" },
     { route: "", name: "offers" },
     { route: "", name: "free samples" },
   ];
@@ -41,7 +43,7 @@ function Header() {
         </TopLinksBarSection>
       </TopLinksBar>
       <ProfileCartBar>
-        <Icon name="cart" width="24px" height="24px" />
+        <CartIcon />
         <Icon name="user" width="24px" height="24px" />
       </ProfileCartBar>
       <LogoContainer>
