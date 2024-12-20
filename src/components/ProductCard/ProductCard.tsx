@@ -20,7 +20,7 @@ const addToCart = () => {
 function ProductCard({ product }: ProductCardPropsI) {
   return (
     <Card>
-      <a href={routes.product + product.id}>
+      <a href={`${routes.product}/${product.id}`}>
         <ProductImage />
       </a>
       <NameAndPriceContainer>
