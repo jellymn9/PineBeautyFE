@@ -24,20 +24,20 @@ function onRender(
   commitTime: unknown
 ) {
   // Aggregate or log render timings...
-  // console.log(
-  //   "id: ",
-  //   id,
-  //   "phase: ",
-  //   phase,
-  //   "actualDuration",
-  //   actualDuration,
-  //   "baseDuration: ",
-  //   baseDuration,
-  //   "startTime: ",
-  //   startTime,
-  //   "commitTime: ",
-  //   commitTime
-  // );
+  console.log(
+    "id: ",
+    id,
+    "phase: ",
+    phase,
+    "actualDuration",
+    actualDuration,
+    "baseDuration: ",
+    baseDuration,
+    "startTime: ",
+    startTime,
+    "commitTime: ",
+    commitTime
+  );
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
