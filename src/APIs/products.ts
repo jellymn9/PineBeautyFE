@@ -26,7 +26,7 @@ export const fetchProducts: FetchProductsT = ({
 
 export const getSingleProduct: GetProductT = async (id?: string) => {
   try {
-    const product = await axios.get(endpoint.products + "/" + id);
+    const product = await apiClient.get(endpoint.products + "/" + id);
 
     return product;
   } catch (e) {
