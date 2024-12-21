@@ -1,9 +1,9 @@
 import apiClient from "../utils/axios";
 import endpoint from "./endpoints";
 
-import { FetchProductsT } from "../utils/types";
+import { FetchProductsT, GetProductT } from "../utils/types";
 
-export const fetchProducts: FetchProductsT = async ({
+export const fetchProducts: FetchProductsT = ({
   isForward = true,
   page = 6,
   skip,
@@ -22,4 +22,15 @@ export const fetchProducts: FetchProductsT = async ({
       console.log("error: ", e);
       throw e;
     });
+};
+
+export const getSingleProduct: GetProductT = async (id?: string) => {
+  try {
+    const product = await apiClient.get(endpoint.products + "/" + id);
+
+    return product;
+  } catch (e) {
+    console.log("error: ", e);
+    throw e;
+  }
 };
