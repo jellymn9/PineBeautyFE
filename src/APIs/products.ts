@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiClient from "../utils/axios";
 import endpoint from "./endpoints";
 
 import { FetchProductsT } from "../utils/types";
@@ -9,7 +9,7 @@ export const fetchProducts: FetchProductsT = async ({
   skip,
   cursor,
 }) => {
-  return axios
+  return apiClient
     .get(
       `${endpoint.products}?isForward=${
         isForward ? "1" : ""

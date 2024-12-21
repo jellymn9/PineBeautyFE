@@ -1,8 +1,8 @@
-const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+//const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 
-console.log("bla: ", import.meta.env.VITE_API_BASE_URL);
+//console.log("bla: ", import.meta.env.VITE_API_BASE_URL);
 
 export default {
-  products: baseURL + "/products",
-  user: baseURL + "/user",
+  products: "/products",
+  user: "/user",
 };
