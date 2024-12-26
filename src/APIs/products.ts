@@ -29,6 +29,7 @@ export const getProducts: GetProductsT = ({
 };
 
 export const getSingleProduct: GetProductT = async (id?: string) => {
+  // fix type later
   try {
     const product = await apiClient.get(endpoint.products + "/" + id);
 
