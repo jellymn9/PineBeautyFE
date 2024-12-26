@@ -1,16 +1,17 @@
 import apiClient from "../utils/axios";
 import endpoint from "./endpoints";
 
-import { FetchProductsT, GetProductT } from "../utils/types";
+import { FetchProductsData, GetProductsT, GetProductT } from "../utils/types";
 
-export const fetchProducts: FetchProductsT = ({
+export const getProducts: GetProductsT = ({
+  // go back to types here!
   isForward = true,
   page = 6,
   skip,
   cursor,
 }) => {
   return apiClient
-    .get(endpoint.products, {
+    .get<FetchProductsData>(endpoint.products, {
       params: {
         isForward: isForward ? "1" : "",
         page,
@@ -19,7 +20,7 @@ export const fetchProducts: FetchProductsT = ({
       },
     })
     .then(({ data }) => {
-      return data.products;
+      return data;
     })
     .catch((e) => {
       console.log("error: ", e);

@@ -62,7 +62,7 @@ export interface FetchProductsThunkResI
   list: FetchProductsData["products"];
 }
 
-export type FetchProductsT = {
+export type GetProductsT = {
   (p: FetchProductsParamsI): Promise<FetchProductsData>;
 };
 
