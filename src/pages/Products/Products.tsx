@@ -30,6 +30,8 @@ function Products() {
   const products = list.flat(); // this can be moved to selector but should be momoized!
   const { reachBottom, reachTop } = useElementScroll(productSectionRef);
 
+  console.log("test p: ", products);
+
   useEffect(() => {
     dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
     // eslint-disable-next-line react-hooks/exhaustive-deps

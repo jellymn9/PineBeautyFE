@@ -10,13 +10,16 @@ export const fetchProducts: FetchProductsT = ({
   cursor,
 }) => {
   return apiClient
-    .get(
-      `${endpoint.products}?isForward=${
-        isForward ? "1" : ""
-      }&page=${page}&skip=${skip[0]}&skip=${skip[1]}&cursor=${cursor ?? ""}`
-    )
+    .get(endpoint.products, {
+      params: {
+        isForward: isForward ? "1" : "",
+        page,
+        skip,
+        cursor: cursor ?? "",
+      },
+    })
     .then(({ data }) => {
-      return data;
+      return data.products;
     })
     .catch((e) => {
       console.log("error: ", e);

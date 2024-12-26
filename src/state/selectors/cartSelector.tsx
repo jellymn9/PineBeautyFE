@@ -9,8 +9,6 @@ export const {
   selectIds: selectItemIds,
 } = cartAdapter.getSelectors((state: RootState) => state.cart);
 
-// INCLUDE createSelector LATER!!
-
 export const totalItemsQuantity = createSelector([selectAllItems], (items) => {
   const quantity = items.reduce<number>((accumulator, currentValue) => {
     return accumulator + currentValue.quantity;
