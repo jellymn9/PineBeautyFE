@@ -1,8 +1,7 @@
 import { RouteObject } from "react-router-dom";
 
-import { getSingleProduct } from "./APIs/products";
-
 import { routes as routesC } from "../src/utils/constants";
+import { getSingleProduct } from "./APIs/products";
 
 import PageLayout from "./components/Layout/Layout";
 import Home from "./pages/Home/Home";

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { routes } from "../../utils/constants";
 import { RawProductT } from "../../utils/types";
 import Button from "../Button/Button";
@@ -20,9 +21,9 @@ const addToCart = () => {
 function ProductCard({ product }: ProductCardPropsI) {
   return (
     <Card>
-      <a href={`${routes.product}/${product.id}`}>
+      <Link to={`${routes.product}/${product.id}`}>
         <ProductImage />
-      </a>
+      </Link>
       <NameAndPriceContainer>
         <Name>{product.name}</Name>
         <Price>{product.price}</Price>
