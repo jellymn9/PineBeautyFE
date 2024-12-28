@@ -1,20 +1,39 @@
-import { Container, Heading, List, Product, Subtotal } from "./CartStyled";
+import { useEffect, useState } from "react";
 
-function App() {
+import { getProductsBatch } from "../../APIs/products";
+import { useAppSelector } from "../../withTypes";
+import { mapQuantityToProducts } from "../../helpers/dataMapper";
+import {
+  selectAllItems,
+  selectItemIds,
+} from "../../state/selectors/cartSelector";
+import { Container, Heading, List, Product, Subtotal } from "./CartStyled";
+import { CartItemT, RawProductT } from "../../utils/types";
+
+function Cart() {
+  const cartProductsIDs = useAppSelector(selectItemIds);
+  const cartItems = useAppSelector(selectAllItems);
+  const [products, setProducts] = useState<Array<RawProductT & CartItemT>>([]);
+
   const title = "Shopping Cart";
-  const list = [
-    { name: "Bla", price: "123" },
-    { name: "Bla 1", price: "123" },
-  ];
+
+  useEffect(() => {
+    const getCartProducts = async () => {
+      const cartProducts = await getProductsBatch(cartProductsIDs);
+
+      setProducts(mapQuantityToProducts(cartProducts, cartItems));
+    };
+    getCartProducts();
+  }, [cartProductsIDs, cartItems]);
 
   return (
     <Container>
       <Heading>{title}</Heading>
       <List>
-        {list.length ? (
+        {!products.length ? (
           <p>There are no products in a cart</p>
         ) : (
-          list.map((product) => (
+          products.map((product) => (
             <Product>
               <h1>{product.name}</h1>
               <span itemProp="price">{product.price}</span>
@@ -35,4 +54,4 @@ function App() {
   );
 }
 
-export default App;
+export default Cart;

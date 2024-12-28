@@ -1,7 +1,12 @@
 import apiClient from "../utils/axios";
 import endpoint from "./endpoints";
 
-import { FetchProductsData, GetProductsT, GetProductT } from "../utils/types";
+import {
+  FetchProductsData,
+  GetProductsT,
+  GetProductT,
+  RawProductT,
+} from "../utils/types";
 
 export const getProducts: GetProductsT = ({
   // go back to types here!
@@ -34,6 +39,20 @@ export const getSingleProduct: GetProductT = async (id?: string) => {
     const product = await apiClient.get(endpoint.products + "/" + id);
 
     return product;
+  } catch (e) {
+    console.log("error: ", e);
+    throw e;
+  }
+};
+
+export const getProductsBatch = async (ids: Array<string>) => {
+  try {
+    const products = await apiClient.post<{ products: Array<RawProductT> }>(
+      endpoint.products,
+      { ids }
+    );
+
+    return products.data?.products;
   } catch (e) {
     console.log("error: ", e);
     throw e;
