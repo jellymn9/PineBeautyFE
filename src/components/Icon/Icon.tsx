@@ -11,6 +11,7 @@ import LogoSVG from "../../assets/logo.svg?react";
 import SearchSVG from "../../assets/search.svg?react";
 import MinusSVG from "../../assets/minus.svg?react";
 import PlusSVG from "../../assets/plus.svg?react";
+import DeleteSVG from "../../assets/delete.svg?react";
 
 interface IconPropsI {
   name: IconNamesT;
@@ -54,6 +55,9 @@ const Icon = function ({ name, width, height }: IconPropsI) {
   }
   if (name === "plus") {
     return <PlusSVG width={width} height={height} />;
+  }
+  if (name === "delete") {
+    return <DeleteSVG width={width} height={height} />;
   }
   return <></>;
 };

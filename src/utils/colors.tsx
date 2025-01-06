@@ -10,6 +10,7 @@ const colors = {
   white: rgbColor(255, 255, 255), // "#fff",
   alabaster: rgbColor(231, 227, 218), //"#e7e3da",
   gray: rgbColor(119, 119, 119), //"#777777",
+  timberwolf: rgbColor(119, 119, 119, 0.34), //"#777777",
   celticBlue: rgbColor(34, 103, 216), //"#2267d8",
   whiteTransparent1: rgbColor(255, 255, 255, 0.34),
   imperialRed: rgbColor(248, 53, 62), //#f8353e

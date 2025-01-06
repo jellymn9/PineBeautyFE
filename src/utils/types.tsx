@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 
 export type IconNamesT = // turn to enum
 
+    | "delete"
     | "clock"
     | "email"
     | "phone"
@@ -34,7 +35,7 @@ export type ProductTypesT =
 export type RawProductT = {
   id: string;
   name: string;
-  price: string;
+  price: number;
   image: string;
   categoryName: ProductCategoriesT;
   productTypeName: ProductTypesT;
@@ -81,3 +82,5 @@ export type CartItemT = {
   id: string;
   quantity: number;
 };
+
+export type CartDetailedProductT = Array<RawProductT & CartItemT>;

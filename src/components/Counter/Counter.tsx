@@ -1,12 +1,24 @@
+import { useAppDispatch } from "../../withTypes";
+import { remove, upsert } from "../../state/reducers/cartReducer";
 import Button from "../Button/Button";
 import { Amount, Container } from "./CounterStyled";
 
 interface CounterPropsI {
   quantity: number;
-  updateCart: (q: number) => void;
+  id: string;
 }
 
-const Counter = ({ quantity, updateCart }: CounterPropsI) => {
+const Counter = ({ id, quantity }: CounterPropsI) => {
+  const dispatch = useAppDispatch();
+
+  const updateCart = (newQuantity: number) => {
+    if (newQuantity) {
+      dispatch(upsert({ id, quantity: newQuantity }));
+    } else {
+      dispatch(remove(id));
+    }
+  };
+
   const increase = () => {
     updateCart(quantity + 1);
   };

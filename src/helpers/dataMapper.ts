@@ -15,6 +15,7 @@ export const mapQuantityToProducts = (
     return {
       ...product,
       quantity: p.quantity,
+      //accPrice: product.price * p.quantity,
     };
   });
 };
