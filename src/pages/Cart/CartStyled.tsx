@@ -9,6 +9,12 @@ export const Container = styled.div`
   padding: 40px 0 80px 0;
 `;
 
+export const InnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  grid-gap: 30px;
+`;
+
 export const Heading = styled.h2`
   font-size: 22px;
   line-height: 32px;

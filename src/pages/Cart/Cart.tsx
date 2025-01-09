@@ -17,6 +17,7 @@ import {
   Container,
   Heading,
   HSeparator,
+  InnerContainer,
   List,
   PriceColName,
   Subtotal,
@@ -66,11 +67,11 @@ function Cart() {
   return (
     <Container>
       <Heading>{title}</Heading>
-      {!loading ? (
+      {loading ? (
         <Loader />
       ) : (
-        <div>
-          {products.length ? (
+        <InnerContainer>
+          {!products.length ? (
             <p>{emptyCart}</p>
           ) : (
             <div>
@@ -89,7 +90,7 @@ function Cart() {
           <ButtonWrapper>
             <Button text="Proceed to checkout" handleClick={() => {}} />
           </ButtonWrapper>
-        </div>
+        </InnerContainer>
       )}
     </Container>
   );
