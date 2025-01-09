@@ -3,6 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import { useAppSelector } from "../../withTypes";
 import { selectItemById } from "../../state/selectors/cartSelector";
 import { GetProductAxiosResT } from "../../utils/types";
+import { formatPrice } from "../../helpers/formatters";
 import Counter from "../../components/Counter/Counter";
 import {
   Container,
@@ -32,7 +33,7 @@ function Product() {
       <ProductData>
         <ProductName>{product.name}</ProductName>
         <ProductDescription>{desc}</ProductDescription>
-        <Price>{product.price}</Price>
+        <Price>{formatPrice(product.price)}</Price>
         <CounterAndAddBtnWrapper>
           <Counter id={productId} quantity={itemInCart?.quantity || 0} />
         </CounterAndAddBtnWrapper>
