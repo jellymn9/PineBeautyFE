@@ -1,3 +1,4 @@
+import { formatPrice } from "../../helpers/formatters";
 import { remove } from "../../state/reducers/cartReducer";
 import { CartItemT, RawProductT } from "../../utils/types";
 import { useAppDispatch } from "../../withTypes";
@@ -10,7 +11,7 @@ import {
   ItemPrice,
   ItemName,
   ActionsContainer,
-  ItemInsideContainer,
+  ItemInnerContainer,
   HSeparator,
 } from "./CartItemStyled";
 
@@ -19,16 +20,16 @@ interface CartItemPropsI {
 }
 
 export const CartItem = ({ product }: CartItemPropsI) => {
-  const { id, price, name, quantity } = product;
+  const { id, price, name, quantity, currency } = product;
 
   const dispatch = useAppDispatch();
 
   return (
     <Item>
-      <ItemInsideContainer>
+      <ItemInnerContainer>
         <ItemImg>img</ItemImg>
         <ItemDetailsAndActions>
-          <ItemName>{name}</ItemName>
+          <ItemName>{name.toLocaleUpperCase()}</ItemName>
           <ActionsContainer>
             <Counter id={id} quantity={quantity} />
             <Button
@@ -38,8 +39,8 @@ export const CartItem = ({ product }: CartItemPropsI) => {
             />
           </ActionsContainer>
         </ItemDetailsAndActions>
-        <ItemPrice>{price}</ItemPrice>
-      </ItemInsideContainer>
+        <ItemPrice>{formatPrice(price, currency)}</ItemPrice>
+      </ItemInnerContainer>
       <HSeparator />
     </Item>
   );

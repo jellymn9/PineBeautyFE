@@ -36,6 +36,7 @@ export type RawProductT = {
   id: string;
   name: string;
   price: number;
+  currency: string;
   image: string;
   categoryName: ProductCategoriesT;
   productTypeName: ProductTypesT;

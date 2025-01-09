@@ -7,9 +7,10 @@ export const Item = styled.li`
   //height: 100px;
 `;
 
-export const ItemInsideContainer = styled.div`
+export const ItemInnerContainer = styled.div`
   display: flex;
   margin: 16px 0;
+  justify-content: space-between;
 `;
 
 export const ItemImg = styled.div`
