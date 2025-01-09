@@ -70,7 +70,7 @@ function Cart() {
         <Loader />
       ) : (
         <div>
-          {!products.length ? (
+          {products.length ? (
             <p>{emptyCart}</p>
           ) : (
             <div>
