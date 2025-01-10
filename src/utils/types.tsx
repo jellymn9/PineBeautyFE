@@ -1,14 +1,20 @@
-export type IconNamesT =
-  | "clock"
-  | "email"
-  | "phone"
-  | "instagram"
-  | "facebook"
-  | "pinterest"
-  | "cart"
-  | "user"
-  | "logo"
-  | "search";
+import { AxiosResponse } from "axios";
+
+export type IconNamesT = // turn to enum
+
+    | "delete"
+    | "clock"
+    | "email"
+    | "phone"
+    | "instagram"
+    | "facebook"
+    | "pinterest"
+    | "cart"
+    | "user"
+    | "logo"
+    | "search"
+    | "plus"
+    | "minus";
 
 export type ProductsTags =
   | "VEGAN_COSMETICS"
@@ -29,14 +35,15 @@ export type ProductTypesT =
 export type RawProductT = {
   id: string;
   name: string;
-  price: string;
+  price: number;
+  currency: string;
   image: string;
   categoryName: ProductCategoriesT;
   productTypeName: ProductTypesT;
 };
 
 export type ProductCategoriesMappedT = {
-  [k in ProductTypesT]: { name: string; link: string }; //check out in operator for this case!
+  [k in ProductTypesT]: { name: string; link: string };
 };
 
 export interface FetchProductsParamsI {
@@ -57,6 +64,24 @@ export interface FetchProductsThunkResI
   list: FetchProductsData["products"];
 }
 
-export type FetchProductsT = {
+export type GetProductsT = {
   (p: FetchProductsParamsI): Promise<FetchProductsData>;
 };
+
+export type GetProductAxiosResT = AxiosResponse<
+  { product: RawProductT },
+  unknown
+>;
+export type GetProductT = {
+  (id?: string): Promise<GetProductAxiosResT>;
+};
+
+export type CartProductT = Pick<RawProductT, "id" | "price" | "name" | "image">;
+
+export type CartItemT = {
+  //product: CartProductT;
+  id: string;
+  quantity: number;
+};
+
+export type CartDetailedProductT = Array<RawProductT & CartItemT>;

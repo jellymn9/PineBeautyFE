@@ -21,8 +21,8 @@ export const TopLinksBar = styled.div`
 export const ProfileCartBar = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 12px;
-  grid-gap: 6px;
+  padding: 16px 12px 0px 12px;
+  grid-gap: 12px;
 `;
 
 export const LogoContainer = styled.div`
@@ -38,7 +38,7 @@ export const MainNavBar = styled.div`
   padding: 0 12px 0 12px;
 `;
 
-export const MainLinksContainer = styled.div`
+export const MainLinksContainer = styled.nav`
   display: flex;
   grid-gap: 24px;
 `;

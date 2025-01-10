@@ -1,4 +1,4 @@
-import type { RootState } from "../store";
+import type { RootState } from "../../store";
 
 export const productsSelector = (state: RootState) => state.products;
 export const listProductsSelector = (state: RootState) =>

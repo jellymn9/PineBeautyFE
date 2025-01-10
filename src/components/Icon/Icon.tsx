@@ -5,10 +5,13 @@ import PhoneSVG from "../../assets/phone.svg?react";
 import InstagramSVG from "../../assets/instagram.svg?react";
 import FacebookSVG from "../../assets/facebook.svg?react";
 import PinterestSVG from "../../assets/pinterest.svg?react";
-import CartSVG from "../../assets/user.svg?react";
-import UserSVG from "../../assets/cart.svg?react";
+import UserSVG from "../../assets/user.svg?react";
+import CartSVG from "../../assets/cart.svg?react";
 import LogoSVG from "../../assets/logo.svg?react";
 import SearchSVG from "../../assets/search.svg?react";
+import MinusSVG from "../../assets/minus.svg?react";
+import PlusSVG from "../../assets/plus.svg?react";
+import DeleteSVG from "../../assets/delete.svg?react";
 
 interface IconPropsI {
   name: IconNamesT;
@@ -46,6 +49,15 @@ const Icon = function ({ name, width, height }: IconPropsI) {
   }
   if (name === "search") {
     return <SearchSVG width={width} height={height} />;
+  }
+  if (name === "minus") {
+    return <MinusSVG width={width} height={height} />;
+  }
+  if (name === "plus") {
+    return <PlusSVG width={width} height={height} />;
+  }
+  if (name === "delete") {
+    return <DeleteSVG width={width} height={height} />;
   }
   return <></>;
 };

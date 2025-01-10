@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../withTypes";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
-import { productsSelector, listProductsSelector } from "../../state/selectors";
+import { listProductsSelector } from "../../state/selectors/productSelector";
 import { useElementScroll } from "../../helpers/customHooks";
 import ProductFilters from "../../components/ProductFilters/ProductFilters";
 import ProductsList from "../../components/ProductsList/ProductsList";
@@ -22,10 +22,11 @@ function Products() {
   const dispatch = useAppDispatch();
   const productSectionRef = useRef<HTMLElement>(null);
 
-  const { status } = useAppSelector(productsSelector);
   const list = useAppSelector(listProductsSelector);
   const products = list.flat(); // this can be moved to selector but should be momoized!
   const { reachBottom, reachTop } = useElementScroll(productSectionRef);
+
+  console.log("test p: ", products);
 
   useEffect(() => {
     dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
@@ -59,16 +60,6 @@ function Products() {
           </SectionDescription>
         )}
       </ProductsSection>
-      {reachBottom ? (
-        <div>SCROLLED TO THE FOOTER</div>
-      ) : (
-        <div>NOT THERE YET </div>
-      )}
-      {status === "failed" ? (
-        <div>Fetch products failed!</div>
-      ) : (
-        <div>Fetch data succeeded!</div>
-      )}
     </Container>
   );
 }
