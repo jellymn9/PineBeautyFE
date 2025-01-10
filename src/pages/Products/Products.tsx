@@ -2,7 +2,10 @@ import { useEffect, useRef } from "react";
 
 import { useAppSelector, useAppDispatch } from "../../withTypes";
 import { fetchProductsThunk } from "../../state/reducers/productReducer";
-import { listProductsSelector } from "../../state/selectors/productSelector";
+import {
+  listProductsSelector,
+  isPendingSelector,
+} from "../../state/selectors/productSelector";
 import { useElementScroll } from "../../helpers/customHooks";
 import ProductFilters from "../../components/ProductFilters/ProductFilters";
 import ProductsList from "../../components/ProductsList/ProductsList";
@@ -12,6 +15,7 @@ import {
   SectionDescription,
   SectionHeading,
 } from "./ProductsStyled";
+import { Loader } from "../../components/Loader/Loader";
 
 const productsHeading = "All products";
 const productsDescription =
@@ -22,19 +26,21 @@ function Products() {
   const dispatch = useAppDispatch();
   const productSectionRef = useRef<HTMLElement>(null);
 
-  const list = useAppSelector(listProductsSelector);
-  const products = list.flat(); // this can be moved to selector but should be momoized!
+  const products = useAppSelector(listProductsSelector);
+  const isLoading = useAppSelector(isPendingSelector);
   const { reachBottom } = useElementScroll(productSectionRef);
+
+  const emptyMessage = "There are no products available.";
 
   console.log("test p: ", products);
 
   useEffect(() => {
     dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (reachBottom) {
+      console.log("Reach bottom: ", reachBottom);
       dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
     }
   }, [reachBottom, dispatch]);
@@ -42,21 +48,21 @@ function Products() {
   return (
     <Container>
       <ProductFilters />
-      <ProductsSection ref={productSectionRef}>
-        {products.length ? (
-          <>
-            <SectionHeading>{productsHeading}</SectionHeading>
-            <SectionDescription>{productsDescription}</SectionDescription>
+      {!products.length && isLoading ? (
+        <Loader />
+      ) : (
+        <ProductsSection ref={productSectionRef}>
+          <SectionHeading>{productsHeading}</SectionHeading>
+          <SectionDescription>{productsDescription}</SectionDescription>
+          {products.length ? (
             <div>
               <ProductsList products={products} />
             </div>
-          </>
-        ) : (
-          <SectionDescription>
-            There are no products available.
-          </SectionDescription>
-        )}
-      </ProductsSection>
+          ) : (
+            <SectionDescription>{emptyMessage}</SectionDescription>
+          )}
+        </ProductsSection>
+      )}
     </Container>
   );
 }

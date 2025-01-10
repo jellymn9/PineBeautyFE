@@ -28,7 +28,6 @@ export const fetchProductsThunk = createAsyncThunk<
   "products/fetchProducts",
   async ({ isForward = true, page = 6 }, { getState }) => {
     const state = getState();
-    const cursor = state.products.products.cursor;
 
     console.log("bla bla bla");
 
@@ -36,7 +35,7 @@ export const fetchProductsThunk = createAsyncThunk<
       isForward: isForward,
       page: page,
       skip: metaDataSelector(state).skip,
-      cursor: cursor, //metaDataSelector(state).cursor,
+      cursor: metaDataSelector(state).cursor,
     });
     return {
       list: response.products,

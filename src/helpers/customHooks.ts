@@ -50,7 +50,7 @@ function useElementScroll(element: RefObject<HTMLElement>) {
     return () => {
       current !== null && current.removeEventListener("scroll", handleScroll);
     };
-  }, [element, reachBottom]);
+  }, [element, element.current, reachBottom]);
 
   return { reachBottom };
 }
