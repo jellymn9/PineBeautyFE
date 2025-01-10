@@ -7,7 +7,7 @@ import { metaDataSelector } from "../selectors/productSelector";
 import { RootState } from "../../store";
 
 interface ProductsStateI {
-  list: [Array<RawProductT>, Array<RawProductT>];
+  list: Array<RawProductT>;
   skip: [number, number];
   cursor?: string;
 }
@@ -16,7 +16,7 @@ export interface InitialProductsStateI {
   status: "idle" | "pending" | "succeeded" | "failed";
 }
 const initialState: InitialProductsStateI = {
-  products: { list: [[], []], skip: [0, 0], cursor: undefined },
+  products: { list: [], skip: [0, 0], cursor: undefined },
   status: "idle",
 };
 
@@ -28,23 +28,16 @@ export const fetchProductsThunk = createAsyncThunk<
   "products/fetchProducts",
   async ({ isForward = true, page = 6 }, { getState }) => {
     const state = getState();
-    const list = state.products.products.list.flat();
+    const cursor = state.products.products.cursor;
 
     console.log("bla bla bla");
-
-    const newCursor = list.length
-      ? isForward
-        ? list[list.length - 1].id
-        : list[0].id
-      : undefined;
 
     const response = await getProducts({
       isForward: isForward,
       page: page,
       skip: metaDataSelector(state).skip,
-      cursor: newCursor, //metaDataSelector(state).cursor,
+      cursor: cursor, //metaDataSelector(state).cursor,
     });
-    // The value we return becomes the `fulfilled` action payload
     return {
       list: response.products,
       skip: response.skip,
@@ -78,21 +71,12 @@ export const productSlice = createSlice({
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.status = "succeeded";
         // Check out immer docs.
-        const isForward = action.meta.arg.isForward;
         if (action.payload.list.length) {
-          if (isForward) {
-            const newList: [Array<RawProductT>, Array<RawProductT>] = [
-              state.products.list[1],
-              action.payload.list,
-            ];
-            state.products.list = newList;
-          } else {
-            const newList: [Array<RawProductT>, Array<RawProductT>] = [
-              action.payload.list,
-              state.products.list[0],
-            ];
-            state.products.list = newList;
-          }
+          const newList: Array<RawProductT> = [
+            ...state.products.list,
+            ...action.payload.list,
+          ];
+          state.products.list = newList;
         }
         state.products.skip = action.payload.skip;
         state.products.cursor = action.payload.cursor;

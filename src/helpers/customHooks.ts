@@ -25,7 +25,6 @@ function useScrollLocation(elementHeightFromBottom: number) {
 function useElementScroll(element: RefObject<HTMLElement>) {
   // element scroll behavior
   const [reachBottom, setReachBottom] = useState(false);
-  const [reachTop, setReachTop] = useState(false);
 
   useEffect(() => {
     const current = element.current;
@@ -35,13 +34,6 @@ function useElementScroll(element: RefObject<HTMLElement>) {
         const elementScrollableHeight = current.scrollHeight;
         const elementHeight = current.clientHeight;
         const elementScrolledFromTop = current.scrollTop;
-        // handle scroll top behavior
-        if (elementScrolledFromTop === 0) {
-          setReachTop(true);
-        } else {
-          reachTop && setReachTop(false);
-        }
-        // handle scroll bottom behavior
         if (
           elementScrollableHeight - elementHeight - elementScrolledFromTop ==
             0 &&
@@ -58,9 +50,9 @@ function useElementScroll(element: RefObject<HTMLElement>) {
     return () => {
       current !== null && current.removeEventListener("scroll", handleScroll);
     };
-  }, [element, reachBottom, reachTop]);
+  }, [element, reachBottom]);
 
-  return { reachBottom, reachTop };
+  return { reachBottom };
 }
 
 export { useScrollLocation, useElementScroll };

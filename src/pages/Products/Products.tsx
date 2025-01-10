@@ -24,7 +24,7 @@ function Products() {
 
   const list = useAppSelector(listProductsSelector);
   const products = list.flat(); // this can be moved to selector but should be momoized!
-  const { reachBottom, reachTop } = useElementScroll(productSectionRef);
+  const { reachBottom } = useElementScroll(productSectionRef);
 
   console.log("test p: ", products);
 
@@ -37,10 +37,7 @@ function Products() {
     if (reachBottom) {
       dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
     }
-    if (reachTop) {
-      dispatch(fetchProductsThunk({ isForward: false, page: pageSize }));
-    }
-  }, [reachBottom, reachTop, dispatch]);
+  }, [reachBottom, dispatch]);
 
   return (
     <Container>
