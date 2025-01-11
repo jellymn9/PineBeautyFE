@@ -11,6 +11,7 @@ export const Container = styled.div`
 export const ProductsSection = styled.section`
   width: auto;
 
+  padding-bottom: 32px;
   height: 721px;
   overflow-y: scroll;
 
