@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useCallback, useEffect, useState } from "react";
 
 function useScrollLocation(elementHeightFromBottom: number) {
   // window scroll befavior
@@ -26,31 +26,33 @@ function useElementScroll(element: RefObject<HTMLElement>) {
   // element scroll behavior
   const [reachBottom, setReachBottom] = useState(false);
 
-  useEffect(() => {
+  const handleScroll = useCallback(() => {
     const current = element.current;
-
-    function handleScroll() {
-      if (current !== null) {
-        const elementScrollableHeight = current.scrollHeight;
-        const elementHeight = current.clientHeight;
-        const elementScrolledFromTop = current.scrollTop;
-        if (
-          elementScrollableHeight - elementHeight - elementScrolledFromTop ==
-            0 &&
-          !reachBottom
-        ) {
-          setReachBottom(true);
-        } else {
-          setReachBottom(false);
-        }
+    if (current !== null) {
+      const elementScrollableHeight = current.scrollHeight;
+      const elementHeight = current.clientHeight;
+      const elementScrolledFromTop = current.scrollTop;
+      if (
+        elementScrollableHeight - elementHeight - elementScrolledFromTop == 0 &&
+        !reachBottom
+      ) {
+        setReachBottom(true);
+      } else if (reachBottom) {
+        setReachBottom(false);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [element.current, reachBottom]);
+
+  useEffect(() => {
+    const current = element.current;
 
     current !== null && current.addEventListener("scroll", handleScroll);
     return () => {
       current !== null && current.removeEventListener("scroll", handleScroll);
     };
-  }, [element, element.current, reachBottom]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [handleScroll]);
 
   return { reachBottom };
 }
