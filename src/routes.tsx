@@ -5,8 +5,8 @@ import { getSingleProduct } from "./APIs/products";
 
 import PageLayout from "./components/Layout/Layout";
 import Home from "./pages/Home/Home";
-import Auth from "./pages/Auth/Auth";
-//import Blog from "./pages/Blog/Blog";
+import SignIn from "./pages/Auth/SignIn/SignIn";
+import SignUp from "./pages/Auth/SignUp/SignUp";
 import Cart from "./pages/Cart/Cart";
 import Product from "./pages/Product/Product";
 import Products from "./pages/Products/Products";
@@ -40,21 +40,14 @@ const routes: Array<RouteObject> = [
       },
     ],
   },
-
-  //{ path: "/blog", element: <Blog /> },
-  //{
-  //element: <Auth />,
-  //children: [
   {
     path: "/login",
-    element: <Auth />, // change element later
+    element: <SignIn />,
   },
   {
     path: "/signin",
-    element: <Auth />, // change element later
+    element: <SignUp />,
   },
-  //],
-  //},
 ];
 
 export default routes;

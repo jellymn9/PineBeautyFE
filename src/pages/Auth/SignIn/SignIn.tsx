@@ -1,13 +1,13 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { FormCustom } from "./AuthStyled";
+import { FormCustom } from "./SignInStyled";
 
 type Inputs = {
   username: string;
   password: string;
 };
 
-function Auth() {
+function SignIn() {
   const {
     register,
     handleSubmit,
@@ -23,19 +23,19 @@ function Auth() {
       <h1>Sign in</h1>
       <FormCustom onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="login-username">Username:</label>
+          <label htmlFor="loginUsername">Username:</label>
           <input
             type="text"
-            id="login-username"
+            id="loginUsername"
             {...register("username", { required: true })}
           />
           {errors.username && <span>This field is required</span>}
         </div>
         <div>
-          <label htmlFor="login-password">Password:</label>
+          <label htmlFor="loginPassword">Password:</label>
           <input
             type="password"
-            id="login-password"
+            id="loginPassword"
             {...register("password", { required: true })}
           />
           {errors.password && <span>This field is required</span>}
@@ -46,4 +46,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default SignIn;
