@@ -41,11 +41,11 @@ const routes: Array<RouteObject> = [
     ],
   },
   {
-    path: "/login",
+    path: routesC.signin,
     element: <SignIn />,
   },
   {
-    path: "/signin",
+    path: routesC.signup,
     element: <SignUp />,
   },
 ];
