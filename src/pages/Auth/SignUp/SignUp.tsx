@@ -18,7 +18,17 @@ const SignUp = () => {
       inputId: "registerUsername",
       register: {
         name: "username",
-        options: { required: "Username field is required" },
+        options: {
+          required: "Username field is required",
+          maxLength: {
+            value: 12,
+            message: "Username must be at most 12 characters",
+          },
+          minLength: {
+            value: 4,
+            message: "Username must be at least 12 characters",
+          },
+        },
       },
     },
     {
@@ -36,7 +46,13 @@ const SignUp = () => {
       inputId: "registerPassword",
       register: {
         name: "password",
-        options: { required: "Username field is required" },
+        options: {
+          required: "Username field is required",
+          minLength: {
+            value: 5,
+            message: "Username must be at least 5 characters",
+          },
+        },
       },
     },
     {
@@ -45,7 +61,13 @@ const SignUp = () => {
       inputId: "registerRepeatPassword",
       register: {
         name: "repeatPassword",
-        options: { required: "Username field is required" },
+        options: {
+          required: "Username field is required",
+          minLength: {
+            value: 5,
+            message: "Username must be at least 5 characters",
+          },
+        },
       },
     },
   ];

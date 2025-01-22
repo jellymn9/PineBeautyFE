@@ -41,9 +41,9 @@ const Form = function <T extends FieldValues>({
     handleSubmit,
     //watch,
     formState: { errors },
-  } = useForm<T>();
+  } = useForm<T>({ mode: "onChange", shouldUseNativeValidation: true });
 
-  //console.log(errors.email);
+  console.log("errors from: ", errors);
 
   return (
     <>
@@ -56,7 +56,7 @@ const Form = function <T extends FieldValues>({
               type={field.inputType}
               id={field.inputId}
               {...register(field.register.name, field.register.options)}
-              aria-invalid={errors[field.inputId] ? "true" : "false"}
+              aria-invalid={errors[field.register.name] ? "true" : "false"}
             />
             {errors[field.register.name] && (
               <FieldError>

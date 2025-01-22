@@ -26,8 +26,19 @@ export const InputCustom = styled.input`
   border: 1px solid ${colors.timberwolf};
   border-radius: 6px;
   font-family: Avenir;
-  &:focus-visible {
-    outline: ${colors.celticBlue} auto 2px;
+
+  &:invalid {
+    outline: ${colors.imperialRed} auto 2px;
+  }
+
+  &:valid {
+    outline: ${colors.olivine} auto 2px;
+  }
+  //   &:focus-visible {
+  //     outline: ${colors.celticBlue} auto 2px;
+  //   }
+  &:focus-visible:invalid {
+    outline: ${colors.imperialRed} auto 2px;
   }
 `;
 
