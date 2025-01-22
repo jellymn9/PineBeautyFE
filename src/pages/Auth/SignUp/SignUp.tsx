@@ -1,88 +1,67 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
-import Button from "../../../components/Button/Button";
-import {
-  AuthFormsContainer,
-  FieldError,
-  FormCustom,
-  FormHeading,
-  InputCustom,
-  LabelCustom,
-  LabelInputWrapper,
-} from "../SignIn/SignInStyled";
+import Form from "../../../components/Form/Form";
+import { AuthFormsContainer } from "../SignIn/SignInStyled";
 
-type Inputs = {
+interface InputsT extends FieldValues {
   username: string;
   email: string;
   password: string;
   repeatPassword: string;
-};
+}
 
 const SignUp = () => {
-  const {
-    register,
-    handleSubmit,
-    //watch,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const formFields = [
+    {
+      label: "Username",
+      inputType: "text",
+      inputId: "registerUsername",
+      register: {
+        name: "username",
+        options: { required: "Username field is required" },
+      },
+    },
+    {
+      label: "Email address",
+      inputType: "email",
+      inputId: "registerEmail",
+      register: {
+        name: "email",
+        options: { required: "Username field is required" },
+      },
+    },
+    {
+      label: "Password",
+      inputType: "password",
+      inputId: "registerPassword",
+      register: {
+        name: "password",
+        options: { required: "Username field is required" },
+      },
+    },
+    {
+      label: "Repeat password",
+      inputType: "password",
+      inputId: "registerRepeatPassword",
+      register: {
+        name: "repeatPassword",
+        options: { required: "Username field is required" },
+      },
+    },
+  ];
 
-  //console.log(watch("username"));
-  console.log(errors.email);
+  const onSubmit: SubmitHandler<InputsT> = (data) => {
+    console.log("Form Data", data);
+  };
 
   return (
     <AuthFormsContainer>
-      <FormHeading>Sign up</FormHeading>
-      <FormCustom onSubmit={handleSubmit(onSubmit)}>
-        <LabelInputWrapper>
-          <LabelCustom htmlFor="registerUsername">Username:</LabelCustom>
-          <InputCustom
-            type="text"
-            id="registerUsername"
-            {...register("username", {
-              required: "Username field is required",
-            })}
-            aria-invalid={errors.username ? "true" : "false"}
-          />
-          {errors.username && (
-            <FieldError>{errors.username.message}</FieldError>
-          )}
-        </LabelInputWrapper>
-        <LabelInputWrapper>
-          <LabelCustom htmlFor="registerEmail">Email address:</LabelCustom>
-          <InputCustom
-            type="email"
-            id="registerEmail"
-            {...register("email", { required: true })}
-          />
-          {errors.email && <FieldError>{errors.email.message}</FieldError>}
-        </LabelInputWrapper>
-        <LabelInputWrapper>
-          <LabelCustom htmlFor="registerPassword">Password:</LabelCustom>
-          <InputCustom
-            type="password"
-            id="registerPassword"
-            {...register("password", { required: true })}
-          />
-          {errors.password && (
-            <FieldError>{errors.password.message}</FieldError>
-          )}
-        </LabelInputWrapper>
-        <LabelInputWrapper>
-          <LabelCustom htmlFor="registerRepeatPassword">
-            Repeat password:
-          </LabelCustom>
-          <InputCustom
-            type="password"
-            id="registerRepeatPassword"
-            {...register("repeatPassword", { required: true })}
-          />
-          {errors.repeatPassword && (
-            <FieldError>{errors.repeatPassword.message}</FieldError>
-          )}
-        </LabelInputWrapper>
-        <Button type="submit" text="Sign Up" />
-      </FormCustom>
+      <Form<InputsT>
+        buttonText="Sign up"
+        heading="Sing up"
+        formFields={formFields}
+        onSubmit={onSubmit}
+      />
     </AuthFormsContainer>
   );
 };
