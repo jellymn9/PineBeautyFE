@@ -1,10 +1,6 @@
-import {
-  useForm,
-  SubmitHandler,
-  RegisterOptions,
-  FieldValues,
-  Path,
-} from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForm, SubmitHandler, FieldValues, Path } from "react-hook-form";
 
 import Button from "../Button/Button";
 import {
@@ -20,7 +16,7 @@ type FormFields<T extends FieldValues> = {
   label: string;
   inputType: string;
   inputId: string;
-  register: { name: Path<T>; options?: RegisterOptions<T, Path<T>> };
+  registerName: Path<T>;
 };
 
 type FormPropsI<T extends FieldValues> = {
@@ -28,6 +24,7 @@ type FormPropsI<T extends FieldValues> = {
   buttonText: string;
   formFields: Array<FormFields<T>>;
   onSubmit: SubmitHandler<T>;
+  schema: yup.ObjectSchema<T>;
 };
 
 const Form = function <T extends FieldValues>({
@@ -35,33 +32,34 @@ const Form = function <T extends FieldValues>({
   formFields,
   buttonText,
   onSubmit,
+  schema,
 }: FormPropsI<T>) {
   const {
     register,
     handleSubmit,
-    //watch,
     formState: { errors },
-  } = useForm<T>({ mode: "onChange", shouldUseNativeValidation: true });
-
-  console.log("errors from: ", errors);
+  } = useForm<T>({
+    mode: "onChange",
+    shouldUseNativeValidation: true,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: yupResolver(schema) as any,
+  });
 
   return (
     <>
       <FormHeading>{heading}</FormHeading>
       <FormCustom onSubmit={handleSubmit(onSubmit)}>
-        {formFields.map((field) => (
+        {formFields.map(({ label, inputType, inputId, registerName }) => (
           <LabelInputWrapper>
-            <LabelCustom htmlFor="registerUsername">{field.label}</LabelCustom>
+            <LabelCustom htmlFor="registerUsername">{label}</LabelCustom>
             <InputCustom
-              type={field.inputType}
-              id={field.inputId}
-              {...register(field.register.name, field.register.options)}
-              aria-invalid={errors[field.register.name] ? "true" : "false"}
+              type={inputType}
+              id={inputId}
+              {...register(registerName)}
+              aria-invalid={errors[register.name] ? "true" : "false"}
             />
-            {errors[field.register.name] && (
-              <FieldError>
-                {String(errors[field.register.name]?.message)}
-              </FieldError>
+            {errors[register.name] && (
+              <FieldError>{String(errors[register.name]?.message)}</FieldError>
             )}
           </LabelInputWrapper>
         ))}
