@@ -45,21 +45,23 @@ const Form = function <T extends FieldValues>({
     resolver: yupResolver(schema) as any,
   });
 
+  console.log("errors: ", errors);
+
   return (
     <>
       <FormHeading>{heading}</FormHeading>
       <FormCustom onSubmit={handleSubmit(onSubmit)}>
         {formFields.map(({ label, inputType, inputId, registerName }) => (
-          <LabelInputWrapper>
+          <LabelInputWrapper key={label}>
             <LabelCustom htmlFor="registerUsername">{label}</LabelCustom>
             <InputCustom
               type={inputType}
               id={inputId}
               {...register(registerName)}
-              aria-invalid={errors[register.name] ? "true" : "false"}
+              aria-invalid={errors[registerName] ? "true" : "false"}
             />
-            {errors[register.name] && (
-              <FieldError>{String(errors[register.name]?.message)}</FieldError>
+            {errors[registerName] && (
+              <FieldError>{String(errors[registerName]?.message)}</FieldError>
             )}
           </LabelInputWrapper>
         ))}

@@ -1,48 +1,55 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import * as yup from "yup";
+import { SubmitHandler } from "react-hook-form";
 
-import { FormCustom } from "./SignInStyled";
+import { AuthFormsContainer } from "./SignInStyled";
+import Form from "../../../components/Form/Form";
 
-type Inputs = {
-  username: string;
-  password: string;
+const signInSchema = yup.object({
+  username: yup
+    .string()
+    .required("Username field is required.")
+    .min(4, "Username must be at least 4 characters.")
+    .max(12, "Username must be at most 12 characters."),
+  password: yup.string().required("Password is required"),
+});
+
+type InputsT = yup.InferType<typeof signInSchema>;
+
+type FormFieldsT = {
+  label: string;
+  inputType: "text" | "password";
+  inputId: string;
+  registerName: keyof InputsT;
 };
 
 function SignIn() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<InputsT> = (data) => console.log(data);
 
-  console.log(watch("username"));
+  const formFields: Array<FormFieldsT> = [
+    {
+      label: "Username",
+      inputType: "text",
+      inputId: "loginUsername",
+      registerName: "username",
+    },
+    {
+      label: "Password",
+      inputType: "password",
+      inputId: "loginPassword",
+      registerName: "password",
+    },
+  ];
 
   return (
-    <div>
-      <h1>Sign in</h1>
-      <FormCustom onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="loginUsername">Username:</label>
-          <input
-            type="text"
-            id="loginUsername"
-            {...register("username", { required: true })}
-          />
-          {errors.username && <span>This field is required</span>}
-        </div>
-        <div>
-          <label htmlFor="loginPassword">Password:</label>
-          <input
-            type="password"
-            id="loginPassword"
-            {...register("password", { required: true })}
-          />
-          {errors.password && <span>This field is required</span>}
-        </div>
-        <input type="submit" />
-      </FormCustom>
-    </div>
+    <AuthFormsContainer>
+      <Form<InputsT>
+        schema={signInSchema}
+        buttonText="Sign in"
+        heading="Sing in"
+        formFields={formFields}
+        onSubmit={onSubmit}
+      />
+    </AuthFormsContainer>
   );
 }
 

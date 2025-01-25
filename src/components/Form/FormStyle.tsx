@@ -50,4 +50,5 @@ export const LabelInputWrapper = styled.div`
 
 export const FieldError = styled.span`
   color: ${colors.imperialRed};
+  font-size: 14px;
 `;
