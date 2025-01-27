@@ -13,10 +13,10 @@ export const Container = styled.div`
 `;
 
 export const FooterLink = styled(Link)<{
-  isTag: boolean;
+  $isTag: boolean;
 }>`
   text-decoration: none;
-  color: ${({ isTag }) => (isTag ? `${colors.olivine}` : `${colors.gray}`)};
+  color: ${(props) => (props.$isTag ? `${colors.olivine}` : `${colors.gray}`)};
 `;
 
 export const ProfileParagraph = styled.p`

@@ -17,7 +17,10 @@ export const LabelCustom = styled.label`
   color: ${colors.gray};
 `;
 
-export const InputCustom = styled.input`
+export const InputCustom = styled.input<{
+  $isValidated: boolean;
+  $customValid?: boolean;
+}>`
   //line-height: 40px;
   padding: 8px 12px;
   font-size: 18px;
@@ -27,19 +30,12 @@ export const InputCustom = styled.input`
   border-radius: 6px;
   font-family: Avenir;
 
-  &:invalid {
-    outline: ${colors.imperialRed} auto 2px;
-  }
-
-  &:valid {
-    outline: ${colors.olivine} auto 2px;
-  }
-  //   &:focus-visible {
-  //     outline: ${colors.celticBlue} auto 2px;
-  //   }
-  &:focus-visible:invalid {
-    outline: ${colors.imperialRed} auto 2px;
-  }
+  outline: ${({ $isValidated, $customValid }) =>
+    !$isValidated
+      ? ` none`
+      : $customValid
+      ? `${colors.olivine} auto 2px`
+      : `${colors.imperialRed} auto 2px`};
 `;
 
 export const LabelInputWrapper = styled.div`

@@ -37,15 +37,15 @@ const Form = function <T extends FieldValues>({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, touchedFields, isSubmitted },
   } = useForm<T>({
-    mode: "onChange",
-    shouldUseNativeValidation: true,
+    mode: "onTouched",
+    //shouldUseNativeValidation: true,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: yupResolver(schema) as any,
   });
 
-  console.log("errors: ", errors);
+  console.log("errors: ", errors, touchedFields);
 
   return (
     <>
@@ -59,6 +59,8 @@ const Form = function <T extends FieldValues>({
               id={inputId}
               {...register(registerName)}
               aria-invalid={errors[registerName] ? "true" : "false"}
+              $isValidated={registerName in touchedFields || isSubmitted}
+              $customValid={!errors[registerName]}
             />
             {errors[registerName] && (
               <FieldError>{String(errors[registerName]?.message)}</FieldError>

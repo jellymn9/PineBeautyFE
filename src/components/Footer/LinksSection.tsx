@@ -60,7 +60,7 @@ const LinksSection = ({ linkGroups }: LinkSectionPropsI): JSX.Element => {
       {linkGroups.map((l) => (
         <LinkColumn heading={l.heading} key={l.heading}>
           {l.links.map((link) => (
-            <FooterLink isTag={l.isTag} to={link.route} key={link.name}>
+            <FooterLink $isTag={l.isTag} to={link.route} key={link.name}>
               {link.name}
             </FooterLink>
           ))}
