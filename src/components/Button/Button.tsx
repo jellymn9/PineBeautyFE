@@ -4,14 +4,25 @@ import { ButtonText, InnerContainer, CustomButton } from "./ButtonStyled";
 
 interface ButtonPropsI {
   text?: string;
-  handleClick: () => void;
+  handleClick?: () => void;
   icon?: IconNamesT;
   disabled?: boolean;
+  type?: "submit" | "reset" | "button";
 }
 
-const Button = function ({ text, handleClick, icon, disabled }: ButtonPropsI) {
+const Button = function ({
+  text,
+  handleClick,
+  icon,
+  disabled,
+  type,
+}: ButtonPropsI) {
   return (
-    <CustomButton onClick={handleClick} disabled={!!disabled}>
+    <CustomButton
+      {...(handleClick && { onClick: handleClick })}
+      disabled={!!disabled}
+      type={type || "button"}
+    >
       {icon ? (
         <InnerContainer>
           <Icon name={icon} width="22px" height="22px" />

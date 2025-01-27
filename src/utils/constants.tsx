@@ -19,4 +19,6 @@ export const routes = {
   product: "/product",
   cart: "/cart",
   profile: "/profile",
+  signin: "/signin",
+  signup: "/signup",
 };
