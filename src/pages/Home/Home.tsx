@@ -4,6 +4,7 @@ import {
   DecorativeSeparator,
   FlagHeading,
   Hero,
+  HeroInnerContainer,
   MainHeading,
   SectionParagraph,
   SustainableAndPure,
@@ -28,9 +29,13 @@ function Home() {
   return (
     <div>
       <Hero>
-        <FlagHeading>{hero.flagHeading}</FlagHeading>
-        <MainHeading>{hero.mainHeading}</MainHeading>
-        <Button text="shop" />
+        <HeroInnerContainer>
+          <div>
+            <FlagHeading>{hero.flagHeading}</FlagHeading>
+            <MainHeading>{hero.mainHeading}</MainHeading>
+          </div>
+          <Button text="shop" />
+        </HeroInnerContainer>
       </Hero>
       <SustainableAndPure>
         <SustainableFlag>{sustainableAndPure.flagHeading}</SustainableFlag>
