@@ -11,7 +11,8 @@ export const Container = styled.div`
 `;
 
 export const ContentContainer = styled.main`
-  width: 1000px;
+  //width: 1000px;
+  width: 100%;
   align-self: center;
   flex: 1;
   display: flex;

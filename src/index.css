@@ -22,6 +22,16 @@
     format("truetype");
 }
 
+@font-face {
+  font-family: "Montserrat-Variable"; /*Can be any text*/
+  src: url("./assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Zurich"; /*Can be any text*/
+  src: url("./assets/fonts/zurich.otf") format("opentype");
+}
+
 #root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
