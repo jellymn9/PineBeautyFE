@@ -1,22 +1,44 @@
 import styled from "styled-components";
 import colors from "../../utils/colors";
+import breakpoints from "../../utils/breakpoints";
 
 export const Hero = styled.div`
   background-image: url("gen3.jpg");
   background-size: cover;
-  padding: 60px 40px;
+  padding: 9vw 3.889vw;
   background-position: bottom;
+  min-height: 466px;
 
-  min-height: 500px;
+  @media screen and (min-width: ${breakpoints.mobile}) {
+  }
+  @media screen and (min-width: ${breakpoints.smallDesktop}) {
+    background-image: url("gen3.jpg");
+    background-size: cover;
+    padding: 9vw 3.889vw;
+    background-position: bottom;
+  }
+  @media screen and (min-width: ${breakpoints.largeDesktop}) {
+  }
 `;
 
-export const FlagHeading = styled.p`
+export const HeroInnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  grid-gap: 60px;
+
+  height: 356px;
+  justify-content: center;
+`;
+
+export const FlagHeading = styled.p<{ marginBottom?: number }>`
+  margin-bottom: ${({ marginBottom }) => marginBottom || 16}px;
   text-transform: uppercase;
   font-family: Montserrat-Variable;
+  font-size: 14px;
 `;
 
 export const MainHeading = styled.h1`
-  font-size: 38px;
+  font-size: 42px;
   font-family: Avenir;
 `;
 
@@ -29,6 +51,14 @@ export const SustainableAndPure = styled.div`
   color: ${colors.whiteTransparent2};
 
   padding: 60px 17vw;
+
+  @media screen and (min-width: ${breakpoints.mobile}) {
+  }
+  @media screen and (min-width: ${breakpoints.smallDesktop}) {
+    padding: 6.944vw 10.833vw;
+  }
+  @media screen and (min-width: ${breakpoints.largeDesktop}) {
+  }
 `;
 
 export const SustainableFlag = styled.p`
