@@ -4,7 +4,7 @@ import colors from "../../utils/colors";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
-  background-color: ${colors.alabaster};
+  background-color: ${colors.ebony};
   padding: 48px 24px 48px 24px;
   display: flex;
   flex-direction: column;
@@ -13,11 +13,9 @@ export const Container = styled.div`
   font-family: DidactGothic-Regular;
 `;
 
-export const FooterLink = styled(Link)<{
-  $isTag: boolean;
-}>`
+export const FooterLink = styled(Link)`
   text-decoration: none;
-  color: ${(props) => (props.$isTag ? `${colors.olivine}` : `${colors.gray}`)};
+  color: ${colors.white};
 `;
 
 export const ProfileParagraph = styled.p`
@@ -26,7 +24,7 @@ export const ProfileParagraph = styled.p`
 `;
 
 export const InfoItem = styled.span`
-  color: ${colors.gray};
+  color: ${colors.white};
 `;
 
 export const InfoItemContainer = styled.div`
@@ -38,5 +36,5 @@ export const InfoItemContainer = styled.div`
 export const HSeparator = styled.div`
   // consider adding this to global style later..
   height: 2px;
-  background-color: ${colors.timberwolf};
+  background-color: ${colors.whiteTransparent1};
 `;
