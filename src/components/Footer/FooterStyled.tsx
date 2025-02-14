@@ -3,12 +3,19 @@ import styled from "styled-components";
 import colors from "../../utils/colors";
 import breakpoints from "../../utils/breakpoints";
 
+export const MainContainer = styled.div`
+  background-color: ${colors.ebony};
+  padding: 48px 24px 0px 24px;
+
+  color: ${colors.white};
+`;
+
 export const Container = styled.footer`
   display: flex;
   flex-direction: column;
-  background-color: ${colors.ebony};
-  padding: 48px 24px 48px 24px;
-  color: ${colors.white};
+
+  padding-bottom: 48px;
+
   grid-gap: 30px;
 
   @media screen and (min-width: ${breakpoints.tablet}) {
@@ -52,4 +59,5 @@ export const SubFooter = styled.div`
 
   font-size: 12px;
   text-transform: uppercase;
+  padding-bottom: 12px;
 `;

@@ -6,10 +6,10 @@ import {
   Container,
   FormHeading,
   InputTemporarily,
+  MainContainer,
   SubFooter,
   Subscription,
 } from "./FooterStyled";
-import Icon from "../Icon/Icon";
 //import Form from "../Form/Form";
 //import { SubmitHandler } from "react-hook-form";
 
@@ -48,24 +48,26 @@ function Footer() {
   //const handleSubsription: SubmitHandler<InputsT> = () => {};
 
   return (
-    <Container>
-      {/* <Form<InputsT>
+    <MainContainer>
+      <Container>
+        {/* <Form<InputsT>
         heading="Subscribe to our newsletter"
         buttonText="send"
         onSubmit={handleSubsription}
         schema={subscribeSchema}
         formFields={formFields}
       /> */}
-      <Subscription>
-        <FormHeading>{formHeading}</FormHeading>
-        <small>{subscribeNote}</small>
-        <InputTemporarily placeholder="your-email@example.com" />
-        <CaptchaInfo>{captchaInfo}</CaptchaInfo>
-      </Subscription>
-      <Icon name="logo" width="100px" height="100px" />
-      <LinksSection />
+        <Subscription>
+          <FormHeading>{formHeading}</FormHeading>
+          <small>{subscribeNote}</small>
+          <InputTemporarily placeholder="your-email@example.com" />
+          <CaptchaInfo>{captchaInfo}</CaptchaInfo>
+        </Subscription>
+
+        <LinksSection />
+      </Container>
       <SubFooter>{subFooter}</SubFooter>
-    </Container>
+    </MainContainer>
   );
 }
 

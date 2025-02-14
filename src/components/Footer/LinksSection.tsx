@@ -109,6 +109,7 @@ const LinksSection = (): JSX.Element => {
 
   return (
     <Container>
+      <Icon name="logo" width="100px" height="100px" />
       <HSeparator />
       <LinkColumn
         heading={contact.name}
