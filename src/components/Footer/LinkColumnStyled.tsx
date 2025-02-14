@@ -15,6 +15,9 @@ export const LinksContainer = styled.div<{ $isOpen: boolean }>`
 `;
 
 export const Heading = styled.h3`
+  font-family: Montserrat-Variable;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   font-size: 18px;
   line-height: 28px;

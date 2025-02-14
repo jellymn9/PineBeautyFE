@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   background-color: ${colors.ebony};
-  padding: 48px 24px 48px 24px;
+  //padding: 48px 24px 48px 24px;
   display: flex;
   flex-direction: column;
-  //grid-template-columns: 190px auto auto auto;
   grid-gap: 24px;
   font-family: DidactGothic-Regular;
 `;

@@ -1,31 +1,55 @@
 import styled from "styled-components";
 
 import colors from "../../utils/colors";
+import breakpoints from "../../utils/breakpoints";
 
 export const Container = styled.footer`
   display: flex;
   flex-direction: column;
+  background-color: ${colors.ebony};
+  padding: 48px 24px 48px 24px;
+  color: ${colors.white};
+  grid-gap: 30px;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    flex-direction: row;
+  }
 `;
 
 export const Subscription = styled.div`
-  display: grid;
-  grid-template-columns: auto auto auto;
-  justify-content: space-evenly;
-  background-color: ${colors.olivine};
-  height: 60px;
-`;
-
-export const FormHeading = styled.p`
-  font-size: 16px;
-  line-height: 26px;
-  margin: 0;
-  text-transform: uppercase;
-  color: ${colors.white};
-  align-self: center;
-`;
-
-export const SocialIconsContainer = styled.div`
+  //max-width: 500px;
+  //width: auto;
   display: flex;
+  flex-direction: column;
   grid-gap: 12px;
-  align-items: center;
+  margin-bottom: 60px;
+
+  font-family: Avenir;
+  font-weight: 400;
+
+  //color: ${colors.white};
+`;
+
+export const FormHeading = styled.h3`
+  font-size: 26px;
+  font-weight: 400;
+`;
+
+export const InputTemporarily = styled.input`
+  height: 26px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid ${colors.whiteTransparent2};
+`;
+
+export const CaptchaInfo = styled.i`
+  font-size: 14px;
+`;
+
+export const SubFooter = styled.div`
+  font-family: Montserrat-Variable; //add this 2 props to global style
+  letter-spacing: 0.02em;
+
+  font-size: 12px;
+  text-transform: uppercase;
 `;
