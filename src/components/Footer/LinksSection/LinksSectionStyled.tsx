@@ -37,3 +37,9 @@ export const HSeparator = styled.div`
   height: 2px;
   background-color: ${colors.whiteTransparent1};
 `;
+
+export const LinksContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  grid-gap: 50px;
+`;

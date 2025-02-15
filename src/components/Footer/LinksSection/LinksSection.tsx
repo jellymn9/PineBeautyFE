@@ -1,8 +1,10 @@
-import { Container } from "./LinksSectionStyled";
+import { useMediaQuery } from "@custom-react-hooks/use-media-query";
+
 import Icon from "../../Icon/Icon";
 import Accordion from "../../Accordion/Accordion";
 import ContactInfo from "../ContactInfo/ContactInfo";
 import LinksList from "../Links/Links";
+import { Container, LinksContainer } from "./LinksSectionStyled";
 
 export interface LinkGroupI {
   heading: string;
@@ -99,10 +101,19 @@ const contactInfo: ContactI = {
 const data = [contactInfo, ...linkGroups];
 
 const LinksSection = (): JSX.Element => {
+  const isTablet = useMediaQuery("(min-width: 768px)");
+  console.log("TEST: ", isTablet);
+
   return (
     <Container>
       <Icon name="logo" width="100px" height="100px" />
-      <Accordion data={data} />
+      {isTablet ? (
+        <LinksContainer>
+          {data.map(({ heading, childComponent }) => childComponent)}
+        </LinksContainer>
+      ) : (
+        <Accordion data={data} />
+      )}
     </Container>
   );
 };

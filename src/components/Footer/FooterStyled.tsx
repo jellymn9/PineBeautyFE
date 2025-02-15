@@ -20,12 +20,12 @@ export const Container = styled.footer`
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     flex-direction: row;
+    //grid-gap: 80px;
+    justify-content: space-between;
   }
 `;
 
 export const Subscription = styled.div`
-  //max-width: 500px;
-  //width: auto;
   display: flex;
   flex-direction: column;
   grid-gap: 12px;
@@ -35,6 +35,11 @@ export const Subscription = styled.div`
   font-weight: 400;
 
   //color: ${colors.white};
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    max-width: 380px;
+    order: 5;
+  }
 `;
 
 export const FormHeading = styled.h3`
