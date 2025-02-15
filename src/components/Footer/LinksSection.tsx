@@ -89,7 +89,6 @@ const linkGroups: LinkGroupsT = [
   },
   {
     heading: termsOfUse.heading,
-    //links: termsOfUse.links,
     childComponent: <LinksList list={termsOfUse.links} />,
   },
 ];

@@ -4,6 +4,8 @@ import {
   Heading,
   MainContainer,
   HSeparator,
+  HeadingInnerContiner,
+  ChevronRightAnim,
 } from "./AccordionStyled";
 
 interface AccordionDataI {
@@ -28,6 +30,7 @@ const Accordion = function ({ data }: AccordionPropsI) {
 
   return (
     <MainContainer>
+      <HSeparator />
       {data.map((singleItem) => (
         <>
           <Container
@@ -35,7 +38,13 @@ const Accordion = function ({ data }: AccordionPropsI) {
             key={singleItem.heading}
           >
             <Heading onClick={() => handleOpen(singleItem.heading)}>
-              {singleItem.heading}
+              <HeadingInnerContiner>
+                {singleItem.heading}
+                <ChevronRightAnim
+                  strokeWidth={1}
+                  $isOpen={singleItem.heading === isOpenId}
+                />
+              </HeadingInnerContiner>
             </Heading>
             {singleItem.childComponent}
           </Container>
