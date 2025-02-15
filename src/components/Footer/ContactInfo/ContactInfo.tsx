@@ -1,6 +1,6 @@
 import { IconNamesT } from "../../../utils/types";
 import Icon from "../../Icon/Icon";
-import { InfoItem, InfoItemContainer } from "../LinksSectionStyled";
+import { Container, InfoItem, InfoItemContainer } from "../LinksSectionStyled";
 
 const info: Array<[IconNamesT, string]> = [
   ["phone", "+00000000"],
@@ -10,14 +10,14 @@ const info: Array<[IconNamesT, string]> = [
 
 const ContactInfo = () => {
   return (
-    <>
+    <Container>
       {info.map(([icon, value]) => (
         <InfoItemContainer>
           <Icon name={icon} width="16px" height="16px" />
           <InfoItem>{value}</InfoItem>
         </InfoItemContainer>
       ))}
-    </>
+    </Container>
   );
 };
 

@@ -6,6 +6,7 @@ import {
   HSeparator,
   HeadingInnerContiner,
   ChevronRightAnim,
+  ChildContainer,
 } from "./AccordionStyled";
 
 interface AccordionDataI {
@@ -46,7 +47,7 @@ const Accordion = function ({ data }: AccordionPropsI) {
                 />
               </HeadingInnerContiner>
             </Heading>
-            {singleItem.childComponent}
+            <ChildContainer>{singleItem.childComponent}</ChildContainer>
           </Container>
           <HSeparator />
         </>

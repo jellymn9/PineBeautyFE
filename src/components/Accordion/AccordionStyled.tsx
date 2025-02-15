@@ -50,3 +50,7 @@ export const ChevronRightAnim = styled(ChevronRight)<{ $isOpen: boolean }>`
     transform: rotate(90deg);
 `}
 `;
+
+export const ChildContainer = styled.div`
+  padding-bottom: 16px;
+`;
