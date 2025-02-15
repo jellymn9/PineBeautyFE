@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import {
   Container,
-  Heading,
+  HeadingContainer,
   MainContainer,
   HSeparator,
   HeadingInnerContiner,
   ChevronRightAnim,
   ChildContainer,
+  Heading,
 } from "./AccordionStyled";
 
 interface AccordionDataI {
@@ -33,24 +34,23 @@ const Accordion = function ({ data }: AccordionPropsI) {
     <MainContainer>
       <HSeparator />
       {data.map((singleItem) => (
-        <>
-          <Container
-            $isOpen={singleItem.heading === isOpenId}
-            key={singleItem.heading}
-          >
-            <Heading onClick={() => handleOpen(singleItem.heading)}>
+        <Fragment key={singleItem.heading}>
+          <Container $isOpen={singleItem.heading === isOpenId}>
+            <HeadingContainer onClick={() => handleOpen(singleItem.heading)}>
               <HeadingInnerContiner>
-                {singleItem.heading}
+                <Heading>{singleItem.heading}</Heading>
                 <ChevronRightAnim
                   strokeWidth={1}
+                  width={22}
+                  height={22}
                   $isOpen={singleItem.heading === isOpenId}
                 />
               </HeadingInnerContiner>
-            </Heading>
+            </HeadingContainer>
             <ChildContainer>{singleItem.childComponent}</ChildContainer>
           </Container>
           <HSeparator />
-        </>
+        </Fragment>
       ))}
     </MainContainer>
   );
