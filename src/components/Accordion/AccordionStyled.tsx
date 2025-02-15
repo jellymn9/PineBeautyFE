@@ -18,14 +18,8 @@ export const Container = styled.div<{ $isOpen: boolean }>`
   ${({ $isOpen }) => $isOpen && `max-height: 600px;`}
 `;
 
-export const Heading = styled.h3`
-  margin: 0;
-  font-family: Montserrat-Variable;
-  font-weight: 400;
-  letter-spacing: 0.06em;
+export const HeadingContainer = styled.div`
   text-transform: uppercase;
-  font-size: 14px;
-  line-height: 24px;
   padding: ${headingPadding}px 0;
   color: ${colors.white};
   height: ${headingHeight}px;
@@ -40,6 +34,15 @@ export const HSeparator = styled.div`
 export const HeadingInnerContiner = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const Heading = styled.h3`
+  margin: 0;
+  font-size: 14px;
+  line-height: ${headingHeight}px;
+  font-family: Montserrat-Variable;
+  font-weight: 400;
+  letter-spacing: 0.06em;
 `;
 
 export const ChevronRightAnim = styled(ChevronRight)<{ $isOpen: boolean }>`

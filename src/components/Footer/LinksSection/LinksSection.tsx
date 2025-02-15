@@ -1,9 +1,8 @@
-//import type { IconNamesT } from "../../utils/types";
 import { Container } from "./LinksSectionStyled";
-import Icon from "../Icon/Icon";
-import Accordion from "../Accordion/Accordion";
-import ContactInfo from "./ContactInfo/ContactInfo";
-import LinksList from "./Links/Links";
+import Icon from "../../Icon/Icon";
+import Accordion from "../../Accordion/Accordion";
+import ContactInfo from "../ContactInfo/ContactInfo";
+import LinksList from "../Links/Links";
 
 export interface LinkGroupI {
   heading: string;
@@ -84,7 +83,6 @@ const termsOfUse = {
 const linkGroups: LinkGroupsT = [
   {
     heading: products.heading,
-    //links: products.links,
     childComponent: <LinksList list={products.links} />,
   },
   {
@@ -93,17 +91,12 @@ const linkGroups: LinkGroupsT = [
   },
 ];
 
-const contact: ContactI = {
+const contactInfo: ContactI = {
   heading: "contact",
-  // info: [
-  //   ["phone", "+00000000"],
-  //   ["email", "info@info.com"],
-  //   ["clock", "10:00 am - 6:00 pm"],
-  // ],
   childComponent: <ContactInfo />,
 };
 
-const data = [contact, ...linkGroups];
+const data = [contactInfo, ...linkGroups];
 
 const LinksSection = (): JSX.Element => {
   return (

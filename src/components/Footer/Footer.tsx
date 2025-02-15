@@ -1,6 +1,6 @@
 //import * as yup from "yup";
 //import Icon from "../Icon/Icon";
-import LinksSection from "./LinksSection";
+import LinksSection from "./LinksSection/LinksSection";
 import {
   CaptchaInfo,
   Container,

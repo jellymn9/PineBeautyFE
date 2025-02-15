@@ -1,19 +1,22 @@
-import { IconNamesT } from "../../../utils/types";
-import Icon from "../../Icon/Icon";
-import { Container, InfoItem, InfoItemContainer } from "../LinksSectionStyled";
+import { Phone, Mail, Clock } from "lucide-react";
+import {
+  Container,
+  InfoItem,
+  InfoItemContainer,
+} from "../LinksSection/LinksSectionStyled";
 
-const info: Array<[IconNamesT, string]> = [
-  ["phone", "+00000000"],
-  ["email", "info@info.com"],
-  ["clock", "10:00 am - 6:00 pm"],
+const info: Array<[JSX.Element, string]> = [
+  [<Phone strokeWidth={1} width={22} height={22} />, "+00000000"],
+  [<Mail strokeWidth={1} width={22} height={22} />, "info@info.com"],
+  [<Clock strokeWidth={1} width={22} height={22} />, "10:00 am - 6:00 pm"],
 ];
 
 const ContactInfo = () => {
   return (
     <Container>
-      {info.map(([icon, value]) => (
-        <InfoItemContainer>
-          <Icon name={icon} width="16px" height="16px" />
+      {info.map(([iconComponent, value]) => (
+        <InfoItemContainer key={value}>
+          {iconComponent}
           <InfoItem>{value}</InfoItem>
         </InfoItemContainer>
       ))}
