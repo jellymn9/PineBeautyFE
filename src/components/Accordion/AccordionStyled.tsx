@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { ChevronRight } from "lucide-react";
 import colors from "../../utils/colors";
 
-const headingHeight = 34;
+const headingHeight = 56;
 
 export const MainContainer = styled.div``;
 
@@ -18,18 +19,33 @@ export const Container = styled.div<{ $isOpen: boolean }>`
 
 export const Heading = styled.h3`
   font-family: Montserrat-Variable;
+
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  font-size: 18px;
-  line-height: 28px;
-  margin: 12px 0 12px 0;
+  font-size: 14px;
+  line-height: 24px;
+  margin: 14px 0;
   color: ${colors.white};
   height: ${headingHeight}px;
 `;
 
 export const HSeparator = styled.div`
   // consider adding this to global style later..
-  height: 2px;
+  height: 1px;
   background-color: ${colors.whiteTransparent1};
+`;
+
+export const HeadingInnerContiner = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const ChevronRightAnim = styled(ChevronRight)<{ $isOpen: boolean }>`
+  transition: transform 0.5s;
+  ${({ $isOpen }) =>
+    $isOpen &&
+    `
+    transform: rotate(90deg);
+`}
 `;
