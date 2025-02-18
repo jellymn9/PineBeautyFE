@@ -1,4 +1,5 @@
 import Button from "../../components/Button/Button";
+import InfoHome from "../../components/InfoHome/InfoHome";
 import {
   Categories,
   DecorativeSeparator,
@@ -49,6 +50,7 @@ function Home() {
         <FlagHeading>categories</FlagHeading>
         <DecorativeSeparator />
       </Categories>
+      <InfoHome />
     </div>
   );
 }
