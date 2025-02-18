@@ -1,6 +1,5 @@
 import { useMediaQuery } from "@custom-react-hooks/use-media-query";
 
-import Icon from "../../Icon/Icon";
 import Accordion from "../../Accordion/Accordion";
 import ContactInfo from "../ContactInfo/ContactInfo";
 import LinksList from "../Links/Links";
@@ -115,7 +114,6 @@ const LinksSection = (): JSX.Element => {
 
   return (
     <Container>
-      <Icon name="logo" width="100px" height="100px" />
       {isTablet ? (
         <LinksContainer>
           {data.map(({ heading, getChildComponent }) =>

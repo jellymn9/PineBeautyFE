@@ -20,8 +20,9 @@ export const Container = styled.footer`
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     flex-direction: row;
-    //grid-gap: 80px;
     justify-content: space-between;
+
+    grid-gap: 11vw;
   }
 `;
 
@@ -34,11 +35,11 @@ export const Subscription = styled.div`
   font-family: Avenir;
   font-weight: 400;
 
-  //color: ${colors.white};
-
   @media screen and (min-width: ${breakpoints.tablet}) {
     max-width: 380px;
     order: 5;
+
+    padding-top: 100px;
   }
 `;
 
@@ -65,4 +66,16 @@ export const SubFooter = styled.div`
   font-size: 12px;
   text-transform: uppercase;
   padding-bottom: 12px;
+`;
+
+export const IconAndLinksContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  grid-gap: 32px;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    grid-gap: 22px;
+
+    width: 100%;
+  }
 `;

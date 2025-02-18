@@ -1,10 +1,12 @@
 //import * as yup from "yup";
 //import Icon from "../Icon/Icon";
+import Icon from "../Icon/Icon";
 import LinksSection from "./LinksSection/LinksSection";
 import {
   CaptchaInfo,
   Container,
   FormHeading,
+  IconAndLinksContainer,
   InputTemporarily,
   MainContainer,
   SubFooter,
@@ -63,8 +65,10 @@ function Footer() {
           <InputTemporarily placeholder="your-email@example.com" />
           <CaptchaInfo>{captchaInfo}</CaptchaInfo>
         </Subscription>
-
-        <LinksSection />
+        <IconAndLinksContainer>
+          <Icon name="logo" width="100px" height="100px" />
+          <LinksSection />
+        </IconAndLinksContainer>
       </Container>
       <SubFooter>{subFooter}</SubFooter>
     </MainContainer>

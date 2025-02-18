@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 import colors from "../../../utils/colors";
 import { Link } from "react-router-dom";
+import breakpoints from "../../../utils/breakpoints";
 
 export const Container = styled.div`
   background-color: ${colors.ebony};
-  //padding: 48px 24px 48px 24px;
-  display: flex;
-  flex-direction: column;
-  grid-gap: 24px;
+
+  // flex-direction: column;
+  // grid-gap: 24px;
   font-family: DidactGothic-Regular;
 `;
 
@@ -42,4 +42,8 @@ export const LinksContainer = styled.div`
   display: flex;
   justify-content: space-between;
   grid-gap: 50px;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    width: auto;
+  }
 `;
