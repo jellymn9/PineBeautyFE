@@ -6,17 +6,14 @@ import ContactInfo from "../ContactInfo/ContactInfo";
 import LinksList from "../Links/Links";
 import { Container, LinksContainer } from "./LinksSectionStyled";
 
-export interface LinkGroupI {
+type LinkComponentF = (heading?: string) => JSX.Element;
+
+interface DataI {
   heading: string;
-  childComponent: JSX.Element;
+  getChildComponent: LinkComponentF;
 }
 
-type LinkGroupsT = Array<LinkGroupI>;
-
-interface ContactI {
-  heading: string;
-  childComponent: JSX.Element;
-}
+type LinkGroupsT = Array<DataI>;
 
 const products = {
   heading: "products",
@@ -85,34 +82,48 @@ const termsOfUse = {
 const linkGroups: LinkGroupsT = [
   {
     heading: products.heading,
-    childComponent: <LinksList list={products.links} />,
+    getChildComponent: (heading = "") => {
+      return <LinksList list={products.links} heading={heading} />;
+    },
   },
   {
     heading: termsOfUse.heading,
-    childComponent: <LinksList list={termsOfUse.links} />,
+    getChildComponent: (heading = "") => (
+      <LinksList list={termsOfUse.links} heading={heading} />
+    ),
   },
 ];
 
-const contactInfo: ContactI = {
+const contactInfo: DataI = {
   heading: "contact",
-  childComponent: <ContactInfo />,
+  getChildComponent: (isHeading = "") => {
+    return <ContactInfo isHeaderShown={!!isHeading} />;
+  },
 };
 
 const data = [contactInfo, ...linkGroups];
+const accordionData = data.map((singleData) => {
+  const { getChildComponent, ...rest } = singleData;
+  return {
+    ...rest,
+    childComponent: getChildComponent(),
+  };
+});
 
 const LinksSection = (): JSX.Element => {
   const isTablet = useMediaQuery("(min-width: 768px)");
-  console.log("TEST: ", isTablet);
 
   return (
     <Container>
       <Icon name="logo" width="100px" height="100px" />
       {isTablet ? (
         <LinksContainer>
-          {data.map(({ heading, childComponent }) => childComponent)}
+          {data.map(({ heading, getChildComponent }) =>
+            getChildComponent(heading)
+          )}
         </LinksContainer>
       ) : (
-        <Accordion data={data} />
+        <Accordion data={accordionData} />
       )}
     </Container>
   );

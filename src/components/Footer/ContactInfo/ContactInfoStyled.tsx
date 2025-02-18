@@ -15,3 +15,10 @@ export const InfoItemContainer = styled.div`
   grid-gap: 12px;
   align-items: center;
 `;
+
+export const Heading = styled.h3`
+  font-family: Montserrat-Variable; //add this 2 props to global style
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+`;
