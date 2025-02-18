@@ -2,8 +2,9 @@ import styled from "styled-components";
 import colors from "../../../utils/colors";
 
 export const Container = styled.div`
-  dispaly: flex;
+  display: flex;
   flex-direction: column;
+  grid-gap: 16px;
 `;
 
 export const InfoItem = styled.span`
