@@ -36,9 +36,9 @@ export const HeadingInnerContiner = styled.div`
   justify-content: space-between;
 `;
 
-export const Heading = styled.h3`
+export const Heading = styled.h4`
   margin: 0;
-  font-size: 14px;
+  //font-size: 14px;
   line-height: ${headingHeight}px;
   font-family: Montserrat-Variable;
   font-weight: 400;

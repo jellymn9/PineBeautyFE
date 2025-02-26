@@ -2,7 +2,15 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import colors from "../../utils/colors";
-import { HorizonalSeparator } from "../../utils/globalStyled";
+//import { HorizonalSeparator } from "../../utils/globalStyles";
+
+export const HorizonalSeparator = styled.div`
+  width: auto;
+  height: 2px;
+  background-color: ${colors.olivine};
+  border: 1px solid ${colors.olivine};
+  border-radius: 2px;
+`;
 
 export const Container = styled.header`
   display: flex;

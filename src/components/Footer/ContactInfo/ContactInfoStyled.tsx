@@ -17,9 +17,7 @@ export const InfoItemContainer = styled.div`
   align-items: center;
 `;
 
-export const Heading = styled.h3`
+export const Heading = styled.h4`
   font-family: Montserrat-Variable; //add this 2 props to global style
-  letter-spacing: 0.02em;
   text-transform: uppercase;
-  font-weight: 400;
 `;
