@@ -4,21 +4,25 @@ import breakpoints from "../../utils/breakpoints";
 export const Container = styled.div`
   display: flex;
   grid-gap: 30px;
-  padding: 36px 0;
+  padding: 36px 30px;
 
   flex-direction: column;
 
   justify-content: center;
+  align-items: center;
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     flex-direction: row;
+
+    align-items: flex-start;
   }
 `;
 
 export const InfoContainer = styled.div`
   display: flex;
   grid-gap: 20px;
-  flex-direction: column;
+  //flex-direction: column;
+  justify-content: center;
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     flex-direction: row;
