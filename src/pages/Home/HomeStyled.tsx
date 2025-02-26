@@ -67,10 +67,11 @@ export const SustainableFlag = styled.p`
   font-family: Montserrat-Variable;
 `;
 
-export const SustainableHeading = styled.h2`
+export const SustainableHeading = styled.h3`
   font-size: 24px;
   font-weight: 400;
   font-family: Avenir;
+  margin: 12px 0;
 `;
 
 export const DecorativeSeparator = styled.div`

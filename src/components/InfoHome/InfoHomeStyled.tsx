@@ -33,12 +33,9 @@ export const TileAndDescContainer = styled.div`
   max-width: 300px;
 `;
 
-export const Title = styled.h3`
+export const Title = styled.h4`
   text-transform: uppercase;
-  margin: 0;
-
-  font-size: 18px;
-  line-height: 28px;
+  margin-bottom: 6px;
 
   font-family: Montserrat-Variable;
   font-weight: 400;
