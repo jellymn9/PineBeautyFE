@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 
 import { store } from "./store";
 import routes from "./routes";
+import { GlobalStyles } from "./utils/globalStyles";
 import "./index.css";
 
 const router = createBrowserRouter(routes);
@@ -44,6 +45,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Profiler id="App" onRender={onRender}>
       <Provider store={store}>
+        <GlobalStyles />
         <RouterProvider router={router} />
       </Provider>
     </Profiler>

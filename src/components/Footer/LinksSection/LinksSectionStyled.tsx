@@ -1,14 +1,12 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import colors from "../../../utils/colors";
-import { Link } from "react-router-dom";
 import breakpoints from "../../../utils/breakpoints";
 
 export const Container = styled.div`
   background-color: ${colors.ebony};
 
-  // flex-direction: column;
-  // grid-gap: 24px;
   font-family: DidactGothic-Regular;
 `;
 
