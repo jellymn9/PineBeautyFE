@@ -2,17 +2,37 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import colors from "../../utils/colors";
-import breakpoints from "../../utils/breakpoints";
-//import { HorizonalSeparator } from "../../utils/globalStyles";
+//import breakpoints from "../../utils/breakpoints";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isSticky: boolean; $isActive: boolean }>`
   display: flex;
   justify-content: space-between;
   padding: 30px 30px;
   background-color: ${colors.white};
+  backdrop-filter: blur(10px);
+  width: 100%;
+
+  ${({ $isSticky }) =>
+    $isSticky &&
+    `
+        background-color: ${colors.whiteTransparent1};
+        position: fixed;
+        top: 0;
+        display: none;
+    `}
+
+  ${({ $isActive }) =>
+    $isActive &&
+    `
+        display: flex;
+  `}
+
+  &:hover {
+    background-color: ${colors.white};
+  }
 `;
 
-export const LinksContainer = styled.div`
+export const LinksContainerNav = styled.nav`
   display: flex;
   grid-gap: 36px;
 
