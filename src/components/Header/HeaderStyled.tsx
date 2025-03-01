@@ -2,18 +2,14 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import colors from "../../utils/colors";
-//import breakpoints from "../../utils/breakpoints";
 
 export const Container = styled.header<{
   $isSticky: boolean;
   $isActive: boolean;
 }>`
-  display: flex;
-  justify-content: space-between;
   padding: 30px 30px;
   background-color: ${colors.white};
   backdrop-filter: blur(10px);
-  width: 100%;
 
   ${({ $isSticky }) =>
     $isSticky &&
@@ -21,18 +17,26 @@ export const Container = styled.header<{
         background-color: ${colors.whiteTransparent1};
         position: fixed;
         top: 0;
+        left: 0;
+        right: 0;
         display: none;
     `}
 
   ${({ $isActive }) =>
     $isActive &&
     `
-        display: flex;
+        display: block;
   `}
 
   &:hover {
     background-color: ${colors.white};
   }
+`;
+
+export const InnerContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export const LinksContainerNav = styled.nav`

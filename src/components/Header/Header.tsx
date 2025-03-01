@@ -7,6 +7,7 @@ import { navLinks } from "../../utils/constants";
 import Icon from "../Icon/Icon";
 import {
   Container,
+  InnerContainer,
   LinksContainerNav,
   LinkStyled,
   MobileContainer,
@@ -70,14 +71,16 @@ function Header() {
         </MobileContainer>
       ) : (
         <Container $isSticky={isStickyHeader} $isActive={isScrollingUp}>
-          <Icon name="logo" width="75px" height="75px" />
-          <LinksContainerNav>
-            {navLinks.map(({ route, nameOrIcon }) => (
-              <LinkStyled to={route} key={route}>
-                {nameOrIcon}
-              </LinkStyled>
-            ))}
-          </LinksContainerNav>
+          <InnerContainer>
+            <Icon name="logo" width="75px" height="75px" />
+            <LinksContainerNav>
+              {navLinks.map(({ route, nameOrIcon }) => (
+                <LinkStyled to={route} key={route}>
+                  {nameOrIcon}
+                </LinkStyled>
+              ))}
+            </LinksContainerNav>
+          </InnerContainer>
         </Container>
       )}
     </>
