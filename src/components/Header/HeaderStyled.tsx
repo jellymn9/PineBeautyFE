@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import colors from "../../utils/colors";
 //import breakpoints from "../../utils/breakpoints";
 
-export const Container = styled.div<{ $isSticky: boolean; $isActive: boolean }>`
+export const Container = styled.header<{
+  $isSticky: boolean;
+  $isActive: boolean;
+}>`
   display: flex;
   justify-content: space-between;
   padding: 30px 30px;
@@ -49,4 +52,11 @@ export const LinkStyled = styled(Link)`
   font-weight: 500;
   font-size: 16px;
   line-height: 26px;
+`;
+
+export const MobileContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 26px 16px;
+  align-items: center;
 `;
