@@ -7,6 +7,7 @@ import { store } from "./store";
 import routes from "./routes";
 import { GlobalStyles } from "./utils/globalStyles";
 import "./index.css";
+import { DrawerProvider } from "./context/DrawerContext";
 
 const router = createBrowserRouter(routes);
 
@@ -44,10 +45,12 @@ function onRender(
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Profiler id="App" onRender={onRender}>
-      <Provider store={store}>
-        <GlobalStyles />
-        <RouterProvider router={router} />
-      </Provider>
+      <DrawerProvider>
+        <Provider store={store}>
+          <GlobalStyles />
+          <RouterProvider router={router} />
+        </Provider>
+      </DrawerProvider>
     </Profiler>
   </React.StrictMode>
 );
