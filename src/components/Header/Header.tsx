@@ -32,16 +32,18 @@ function Header() {
   const [isStickyHeader, setStickyHeader] = useState(false);
 
   const handleScroll = useCallback(() => {
+    const newScrollY = window.scrollY;
+
+    // checks if scroll position is over header height
+    if (newScrollY > 135 && !isStickyHeader) {
+      setStickyHeader(true);
+    } else if (newScrollY < 135 && isStickyHeader) {
+      setStickyHeader(false);
+    }
+
     clearTimeout(timeout.current);
     timeout.current = setTimeout(() => {
-      const newScrollY = window.scrollY;
-
-      if (newScrollY > 135 && !isStickyHeader) {
-        setStickyHeader(true);
-      } else if (newScrollY < 135 && isStickyHeader) {
-        setStickyHeader(false);
-      }
-
+      // checks if user scrolls up or down
       if (newScrollY > currentScrollY.current && isScrollingUp) {
         setScrollingUp(false);
       } else if (newScrollY < currentScrollY.current && !isScrollingUp) {
@@ -49,7 +51,7 @@ function Header() {
       }
 
       currentScrollY.current = newScrollY;
-    }, 1000);
+    }, 10);
   }, [isScrollingUp, isStickyHeader]);
 
   useEffect(() => {
