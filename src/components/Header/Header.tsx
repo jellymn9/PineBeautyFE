@@ -7,6 +7,7 @@ import { navLinks } from "../../utils/constants";
 import Icon from "../Icon/Icon";
 import {
   Container,
+  ContainerBlock,
   InnerContainer,
   LinksContainerNav,
   LinkStyled,
@@ -25,27 +26,30 @@ import { useDrawer } from "../../context/DrawerContext";
 // ];
 
 function Header() {
+  const timeout = useRef(0);
   const currentScrollY = useRef(0);
   const [isScrollingUp, setScrollingUp] = useState(false);
   const [isStickyHeader, setStickyHeader] = useState(false);
 
   const handleScroll = useCallback(() => {
-    //BUG improve further, there is bug when scrolled bit down from main header! Switch to sticky header makes bouncing effect
-    const newScrollY = window.scrollY;
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => {
+      const newScrollY = window.scrollY;
 
-    if (newScrollY > 135 && !isStickyHeader) {
-      setStickyHeader(true);
-    } else if (newScrollY < 135 && isStickyHeader) {
-      setStickyHeader(false);
-    }
+      if (newScrollY > 135 && !isStickyHeader) {
+        setStickyHeader(true);
+      } else if (newScrollY < 135 && isStickyHeader) {
+        setStickyHeader(false);
+      }
 
-    if (newScrollY > currentScrollY.current && isScrollingUp) {
-      setScrollingUp(false);
-    } else if (newScrollY < currentScrollY.current && !isScrollingUp) {
-      setScrollingUp(true);
-    }
+      if (newScrollY > currentScrollY.current && isScrollingUp) {
+        setScrollingUp(false);
+      } else if (newScrollY < currentScrollY.current && !isScrollingUp) {
+        setScrollingUp(true);
+      }
 
-    currentScrollY.current = newScrollY;
+      currentScrollY.current = newScrollY;
+    }, 1000);
   }, [isScrollingUp, isStickyHeader]);
 
   useEffect(() => {
@@ -59,8 +63,7 @@ function Header() {
   const { openDrawer } = useDrawer();
 
   const isTabletOrMobile = useMediaQuery(`(max-width: ${breakpoints.tablet})`);
-  //console.log("1:    ", isTabletOrMobile);
-  //BUG desktop width issue, cart is not falling into view!
+
   return (
     <>
       {isTabletOrMobile ? (
@@ -70,18 +73,23 @@ function Header() {
           <ShoppingCart />
         </MobileContainer>
       ) : (
-        <Container $isSticky={isStickyHeader} $isActive={isScrollingUp}>
-          <InnerContainer>
-            <Icon name="logo" width="75px" height="75px" />
-            <LinksContainerNav>
-              {navLinks.map(({ route, nameOrIcon }) => (
-                <LinkStyled to={route} key={route}>
-                  {nameOrIcon}
+        <ContainerBlock>
+          <Container $isSticky={isStickyHeader} $isActive={isScrollingUp}>
+            <InnerContainer>
+              <Icon name="logo" width="75px" height="75px" />
+              <LinksContainerNav>
+                {navLinks.map(({ route, nameOrIcon }) => (
+                  <LinkStyled to={route} key={route}>
+                    {nameOrIcon}
+                  </LinkStyled>
+                ))}
+                <LinkStyled to={""}>
+                  <ShoppingCart />
                 </LinkStyled>
-              ))}
-            </LinksContainerNav>
-          </InnerContainer>
-        </Container>
+              </LinksContainerNav>
+            </InnerContainer>
+          </Container>
+        </ContainerBlock>
       )}
     </>
   );
