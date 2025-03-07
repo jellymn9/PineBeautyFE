@@ -6,12 +6,15 @@ import { navLinks } from "../../utils/constants";
 //import { routes } from "../../utils/constants";
 import Icon from "../Icon/Icon";
 import {
+  CircleAnimation,
   Container,
   ContainerBlock,
+  HoverBar,
   InnerContainer,
   LinksContainerNav,
   LinkStyled,
   MobileContainer,
+  //NavBarAnimation,
 } from "./HeaderStyled";
 import breakpoints from "../../utils/breakpoints";
 import { useDrawer } from "../../context/DrawerContext";
@@ -30,6 +33,10 @@ function Header() {
   const currentScrollY = useRef(0);
   const [isScrollingUp, setScrollingUp] = useState(false);
   const [isStickyHeader, setStickyHeader] = useState(false);
+
+  const [hoverLinkWidth, setHoverLinkWidth] = useState(0);
+  const [translateStep, setTranslateStep] = useState(0); // consider adding reducer for this
+  const prevOffsetLeft = useRef(0);
 
   const handleScroll = useCallback(() => {
     const newScrollY = window.scrollY;
@@ -51,7 +58,7 @@ function Header() {
       }
 
       currentScrollY.current = newScrollY;
-    }, 10);
+    }, 100);
   }, [isScrollingUp, isStickyHeader]);
 
   useEffect(() => {
@@ -65,6 +72,26 @@ function Header() {
   const { openDrawer } = useDrawer();
 
   const isTabletOrMobile = useMediaQuery(`(max-width: ${breakpoints.tablet})`);
+
+  const handleHover = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (event.target instanceof HTMLElement) {
+      const targetChild = event.target;
+      //width
+      const targetWidth = targetChild.clientWidth;
+      setHoverLinkWidth(targetWidth);
+      //step
+      const targetOffsetLeft = targetChild.offsetLeft;
+      const parentOffsetLeft = event.currentTarget.offsetLeft;
+      const sign = targetOffsetLeft >= prevOffsetLeft.current ? 1 : -1;
+      const translateX =
+        prevOffsetLeft.current -
+        parentOffsetLeft +
+        sign * Math.abs(targetOffsetLeft - prevOffsetLeft.current);
+      setTranslateStep(translateX);
+
+      prevOffsetLeft.current = targetOffsetLeft;
+    }
+  };
 
   return (
     <>
@@ -80,14 +107,19 @@ function Header() {
             <InnerContainer>
               <Icon name="logo" width="75px" height="75px" />
               <LinksContainerNav>
-                {navLinks.map(({ route, nameOrIcon }) => (
-                  <LinkStyled to={route} key={route}>
-                    {nameOrIcon}
+                <div onMouseOver={(e) => handleHover(e)}>
+                  <HoverBar $step={translateStep} $linkWidth={hoverLinkWidth} />
+                  {navLinks.map(({ route, nameOrIcon }) => (
+                    <LinkStyled to={route} key={route}>
+                      {nameOrIcon}
+                    </LinkStyled>
+                  ))}
+                </div>
+                <CircleAnimation>
+                  <LinkStyled to={""}>
+                    <ShoppingCart size={22} strokeWidth={2} />
                   </LinkStyled>
-                ))}
-                <LinkStyled to={""}>
-                  <ShoppingCart />
-                </LinkStyled>
+                </CircleAnimation>
               </LinksContainerNav>
             </InnerContainer>
           </Container>
