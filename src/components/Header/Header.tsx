@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@custom-react-hooks/use-media-query";
-import { ShoppingCart, Menu } from "lucide-react";
+import { ShoppingCart, Menu, Search, User } from "lucide-react";
 
 import { navLinks } from "../../utils/constants";
 //import { routes } from "../../utils/constants";
 import Icon from "../Icon/Icon";
 import {
+  BarAnimationContainer,
   CircleAnimation,
   Container,
   ContainerBlock,
@@ -14,7 +15,6 @@ import {
   LinksContainerNav,
   LinkStyled,
   MobileContainer,
-  //NavBarAnimation,
 } from "./HeaderStyled";
 import breakpoints from "../../utils/breakpoints";
 import { useDrawer } from "../../context/DrawerContext";
@@ -74,14 +74,15 @@ function Header() {
   const isTabletOrMobile = useMediaQuery(`(max-width: ${breakpoints.tablet})`);
 
   const handleHover = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    if (event.target instanceof HTMLElement) {
-      const targetChild = event.target;
+    const target = event.target;
+    const currentTarget = event.currentTarget;
+    if (target instanceof HTMLElement && target !== currentTarget) {
       //width
-      const targetWidth = targetChild.clientWidth;
+      const targetWidth = target.clientWidth;
       setHoverLinkWidth(targetWidth);
       //step
-      const targetOffsetLeft = targetChild.offsetLeft;
-      const parentOffsetLeft = event.currentTarget.offsetLeft;
+      const targetOffsetLeft = target.offsetLeft;
+      const parentOffsetLeft = currentTarget.offsetLeft;
       const sign = targetOffsetLeft >= prevOffsetLeft.current ? 1 : -1;
       const translateX =
         prevOffsetLeft.current -
@@ -91,6 +92,10 @@ function Header() {
 
       prevOffsetLeft.current = targetOffsetLeft;
     }
+  };
+
+  const handleMouseLeave = () => {
+    setHoverLinkWidth(0);
   };
 
   return (
@@ -107,17 +112,26 @@ function Header() {
             <InnerContainer>
               <Icon name="logo" width="75px" height="75px" />
               <LinksContainerNav>
-                <div onMouseOver={(e) => handleHover(e)}>
+                <BarAnimationContainer
+                  onMouseOver={(e) => handleHover(e)}
+                  onMouseLeave={handleMouseLeave}
+                >
                   <HoverBar $step={translateStep} $linkWidth={hoverLinkWidth} />
                   {navLinks.map(({ route, nameOrIcon }) => (
                     <LinkStyled to={route} key={route}>
                       {nameOrIcon}
                     </LinkStyled>
                   ))}
-                </div>
+                </BarAnimationContainer>
                 <CircleAnimation>
                   <LinkStyled to={""}>
                     <ShoppingCart size={22} strokeWidth={2} />
+                  </LinkStyled>
+                  <LinkStyled to={""}>
+                    <Search size={22} strokeWidth={2} />
+                  </LinkStyled>
+                  <LinkStyled to={""}>
+                    <User size={22} strokeWidth={2} />
                   </LinkStyled>
                 </CircleAnimation>
               </LinksContainerNav>

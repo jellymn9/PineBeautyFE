@@ -17,6 +17,7 @@ const colors = {
   imperialRed: rgbColor(248, 53, 62), //#f8353e,
   ebony: rgbColor(83, 87, 78),
   blackTransparent1: rgbColor(0, 0, 0, 0.34),
+  blackTransparent2: rgbColor(0, 0, 0, 0.07),
 };
 
 export default colors;
