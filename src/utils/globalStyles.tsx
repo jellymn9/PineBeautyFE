@@ -16,12 +16,17 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   h2 {
-    font-size: 28px;
-    line-heght: 38px;
+    //font-size: 28px;
+    font-size: 14px;
+    //line-heght: 38px;
+    line-heght: 24px;
   }
 
   h3 {
     font-size: 24px;
+    @media screen and (max-width: ${breakpoints.tablet}) {
+        font-size: 18px;
+    }
   }
 
   h4 {
