@@ -1,7 +1,7 @@
 import Button from "../../components/Button/Button";
+import Categories from "../../components/Categories/Categories";
 import InfoHome from "../../components/InfoHome/InfoHome";
 import {
-  Categories,
   DecorativeSeparator,
   FlagHeading,
   Hero,
@@ -46,10 +46,10 @@ function Home() {
         </SustainableHeading>
         <SectionParagraph>{sustainableAndPure.description}</SectionParagraph>
       </SustainableAndPure>
-      <Categories>
-        <FlagHeading>categories</FlagHeading>
-        <DecorativeSeparator />
-      </Categories>
+      <Categories />
+      {/* <FlagHeading>categories</FlagHeading>
+        <DecorativeSeparator /> */}
+      {/* </Categories> */}
       <InfoHome />
     </div>
   );

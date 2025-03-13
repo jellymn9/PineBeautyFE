@@ -81,4 +81,4 @@ export const DecorativeSeparator = styled.div`
   background-color: ${colors.whiteTransparent1};
 `;
 
-export const Categories = styled.div``;
+//export const Categories = styled.div``;
