@@ -53,4 +53,11 @@ export const InputContainer = styled.div`
   display: flex;
   padding: 18px;
 `;
+
 export const SearchInput = styled.input``;
+
+export const IconsContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;

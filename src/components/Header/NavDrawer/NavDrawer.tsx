@@ -5,11 +5,13 @@ import {
   Container,
   Drawer,
   HSeparator,
+  IconsContainer,
   InputContainer,
   NavLinks,
   SearchInput,
 } from "./NavDrawerStyled";
 import { useDrawer } from "../../../context/DrawerContext";
+import { Link } from "react-router-dom";
 
 const NavDrawer = function () {
   const { closeDrawer, isOpen } = useDrawer();
@@ -17,7 +19,13 @@ const NavDrawer = function () {
   return (
     <Container $isOpen={isOpen}>
       <Drawer $isOpen={isOpen}>
-        <CloseButton handleClose={closeDrawer} />
+        <IconsContainer>
+          {navLinks.iconLinks.map(
+            ({ route, icon, mobile }) =>
+              mobile && <Link to={route}>{icon}</Link>
+          )}
+          <CloseButton handleClose={closeDrawer} />
+        </IconsContainer>
         <HSeparator />
         <InputContainer>
           {/* improve later, create custom input */}
