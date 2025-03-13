@@ -25,9 +25,9 @@ const NavDrawer = function () {
           <Search />
         </InputContainer>
         <HSeparator />
-        {navLinks.map(({ route, nameOrIcon }) => (
+        {navLinks.textualLinks.map(({ route, name }) => (
           <>
-            <NavLinks to={route}>{nameOrIcon}</NavLinks>
+            <NavLinks to={route}>{name}</NavLinks>
             <HSeparator />
           </>
         ))}

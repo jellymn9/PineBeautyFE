@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@custom-react-hooks/use-media-query";
-import { ShoppingCart, Menu, Search, User } from "lucide-react";
+import { ShoppingCart, Menu } from "lucide-react";
 
 import { navLinks } from "../../utils/constants";
-//import { routes } from "../../utils/constants";
 import Icon from "../Icon/Icon";
 import {
   BarAnimationContainer,
@@ -18,15 +17,7 @@ import {
 } from "./HeaderStyled";
 import breakpoints from "../../utils/breakpoints";
 import { useDrawer } from "../../context/DrawerContext";
-
-// const navLinks = [
-//   { route: routes.home, nameOrIcon: "home" },
-//   { route: routes.products, nameOrIcon: "products" },
-//   { route: "2", nameOrIcon: "contact" },
-//   { route: "1", nameOrIcon: <User size={22} strokeWidth={2} /> },
-//   { route: "3", nameOrIcon: <Search size={22} strokeWidth={2} /> },
-//   { route: "4", nameOrIcon: <ShoppingCart size={22} strokeWidth={2} /> },
-// ];
+import { useHoverBarAnimation } from "../../helpers/customHooks";
 
 function Header() {
   const timeout = useRef(0);
@@ -34,9 +25,8 @@ function Header() {
   const [isScrollingUp, setScrollingUp] = useState(false);
   const [isStickyHeader, setStickyHeader] = useState(false);
 
-  const [hoverLinkWidth, setHoverLinkWidth] = useState(0);
-  const [translateStep, setTranslateStep] = useState(0); // consider adding reducer for this
-  const prevOffsetLeft = useRef(0);
+  const { hoverLinkWidth, translateStep, handleHover, handleMouseLeave } =
+    useHoverBarAnimation();
 
   const handleScroll = useCallback(() => {
     const newScrollY = window.scrollY;
@@ -73,31 +63,6 @@ function Header() {
 
   const isTabletOrMobile = useMediaQuery(`(max-width: ${breakpoints.tablet})`);
 
-  const handleHover = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    const target = event.target;
-    const currentTarget = event.currentTarget;
-    if (target instanceof HTMLElement && target !== currentTarget) {
-      //width
-      const targetWidth = target.clientWidth;
-      setHoverLinkWidth(targetWidth);
-      //step
-      const targetOffsetLeft = target.offsetLeft;
-      const parentOffsetLeft = currentTarget.offsetLeft;
-      const sign = targetOffsetLeft >= prevOffsetLeft.current ? 1 : -1;
-      const translateX =
-        prevOffsetLeft.current -
-        parentOffsetLeft +
-        sign * Math.abs(targetOffsetLeft - prevOffsetLeft.current);
-      setTranslateStep(translateX);
-
-      prevOffsetLeft.current = targetOffsetLeft;
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setHoverLinkWidth(0);
-  };
-
   return (
     <>
       {isTabletOrMobile ? (
@@ -117,22 +82,16 @@ function Header() {
                   onMouseLeave={handleMouseLeave}
                 >
                   <HoverBar $step={translateStep} $linkWidth={hoverLinkWidth} />
-                  {navLinks.map(({ route, nameOrIcon }) => (
+                  {navLinks.textualLinks.map(({ route, name }) => (
                     <LinkStyled to={route} key={route}>
-                      {nameOrIcon}
+                      {name}
                     </LinkStyled>
                   ))}
                 </BarAnimationContainer>
                 <CircleAnimation>
-                  <LinkStyled to={""}>
-                    <ShoppingCart size={22} strokeWidth={2} />
-                  </LinkStyled>
-                  <LinkStyled to={""}>
-                    <Search size={22} strokeWidth={2} />
-                  </LinkStyled>
-                  <LinkStyled to={""}>
-                    <User size={22} strokeWidth={2} />
-                  </LinkStyled>
+                  {navLinks.iconLinks.map(({ route, icon }) => (
+                    <LinkStyled to={route}>{icon}</LinkStyled>
+                  ))}
                 </CircleAnimation>
               </LinksContainerNav>
             </InnerContainer>
