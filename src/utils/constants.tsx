@@ -1,3 +1,4 @@
+import { Search, ShoppingCart, User } from "lucide-react";
 import type { ProductCategoriesMappedT } from "./types";
 
 export const ProductCategories: ProductCategoriesMappedT = {
@@ -21,4 +22,29 @@ export const routes = {
   profile: "/profile",
   signin: "/signin",
   signup: "/signup",
+};
+
+export const navLinks = {
+  textualLinks: [
+    { route: routes.home, name: "home" },
+    { route: routes.products, name: "products" },
+    { route: "2", name: "contact" },
+  ],
+  iconLinks: [
+    {
+      route: "1",
+      icon: <User size={22} strokeWidth={2} />,
+      mobile: true,
+    },
+    {
+      route: "3",
+      icon: <Search size={22} strokeWidth={2} />,
+      mobile: false,
+    },
+    {
+      route: "4",
+      icon: <ShoppingCart size={22} strokeWidth={2} />,
+      mobile: false,
+    },
+  ],
 };
