@@ -100,14 +100,14 @@ export const CustomScrollThumb = styled.div<{
   $offset: { containerWidth: number; overflowWidth: number };
   $scrollLeft: number;
 }>`
-  --category-width-px: ${convertToPixels(categoryWidthMobile)};
+  --category-width-px: ${Math.ceil(convertToPixels(categoryWidthMobile))};
 
   @media screen and (min-width: ${breakpoints.tablet}) {
-    --category-width-px: ${convertToPixels(categoryWithTablet)};
+    --category-width-px: ${Math.ceil(convertToPixels(categoryWithTablet))};
   }
 
   @media screen and (min-width: ${breakpoints.laptop}) {
-    --category-width-px: ${convertToPixels(categoryWithTablet)};
+    --category-width-px: ${Math.ceil(convertToPixels(categoryWithTablet))};
   }
 
   --category-width-px: ${Math.ceil(convertToPixels(77.042))};
