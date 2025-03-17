@@ -3,6 +3,11 @@ import breakpoints from "./breakpoints";
 
 export const GlobalStyles = createGlobalStyle`
 
+  :root{
+    --section-padding: 60px;
+    --section-margin: 40px;
+  }
+
   h1, h2, h3, h4 {
     margin: 0;
     letter-spacing: 0.02em;

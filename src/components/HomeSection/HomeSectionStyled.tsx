@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
+  padding: var(--section-padding) 0;
 `;
 
 export const HeadingAndSeparator = styled.div`
@@ -14,6 +14,7 @@ export const HeadingAndSeparator = styled.div`
   width: max-content;
   justify-content: center;
   align-items: center;
+  margin-bottom: var(--section-margin);
 `;
 
 export const Heading = styled.h2`

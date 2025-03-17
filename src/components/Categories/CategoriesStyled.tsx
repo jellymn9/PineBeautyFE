@@ -55,13 +55,12 @@ export const Category = styled.div<{ $imageURL: string }>`
   flex: 0 0 auto;
 
   background-image: url(${({ $imageURL }) => $imageURL});
-  background-color: yellow;
+  background-color: transparent;
   background-size: contain;
   background-repeat: no-repeat;
   width: ${categoryWidthMobile}vw;
   height: calc(77.042vw / 0.707);
 
-  padding: auto auto;
   color: ${colors.white};
   font-size: 22px;
   text-transform: uppercase;
@@ -84,10 +83,12 @@ export const CustomScrollbar = styled.div`
   width: ${mobileWidth}%;
   height: 6px;
   background-color: ${colors.whiteTransparent2};
-  border: 1px solid red;
+  margin-top: 20px;
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     width: ${tabletWidth}vw;
+
+    display: none;
   }
 
   @media screen and (min-width: ${breakpoints.laptop}) {
@@ -109,14 +110,14 @@ export const CustomScrollThumb = styled.div<{
     --category-width-px: ${convertToPixels(categoryWithTablet)};
   }
 
-  --category-width-px: ${convertToPixels(77.042)};
+  --category-width-px: ${Math.ceil(convertToPixels(77.042))};
   --step-constant: ${({ $offset }) =>
     `${$offset.containerWidth}/ (${$offset.overflowWidth} - ${thumbWidth} - var(--category-width-px))`};
-  --test-t: calc(4px / 4);
 
   width: ${thumbWidth}px;
   background-color: ${colors.blackTransparent1};
   height: inherit;
+  border-radius: 6px;
 
   transition: margin-left 0.3s linear;
 
