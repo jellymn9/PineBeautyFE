@@ -31,7 +31,7 @@ const Categories = () => {
     containerWidth: 0,
     overflowWidth: 0,
   });
-  const [scrollLeft, setScrollLeft] = useState(0); // improve further!!
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const currentTarget = e.currentTarget;
