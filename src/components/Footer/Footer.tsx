@@ -1,124 +1,77 @@
+//import * as yup from "yup";
+//import Icon from "../Icon/Icon";
 import Icon from "../Icon/Icon";
-import LinksSection from "./LinksSection";
+import LinksSection from "./LinksSection/LinksSection";
 import {
+  CaptchaInfo,
   Container,
-  Subscription,
   FormHeading,
-  SocialIconsContainer,
+  IconAndLinksContainer,
+  InputTemporarily,
+  MainContainer,
+  SubFooter,
+  Subscription,
 } from "./FooterStyled";
+//import Form from "../Form/Form";
+//import { SubmitHandler } from "react-hook-form";
+
+// const subscribeSchema = yup.object({
+//   email: yup.string().email().required("Email field is required."),
+// });
+
+// type InputsT = yup.InferType<typeof subscribeSchema>;
+
+// type FormFieldsT = {
+//   label: string;
+//   inputType: "text" | "email" | "password";
+//   inputId: string;
+//   registerName: keyof InputsT;
+// };
 
 function Footer() {
-  const formHeading = "Be in touch with us:";
+  const formHeading = "Subscribe to our newsletter";
+  const subscribeNote =
+    "Subscribe now to our newsletter and recive a 10% discount on your first purchase.";
 
-  const linkGroups = [
-    {
-      isTag: false,
-      heading: "products",
-      links: [
-        {
-          name: "Scrubs & Masks",
-          route: "",
-        },
-        {
-          name: "Natural Deodorants",
-          route: "",
-        },
-        {
-          name: "Hair Oils & Serums",
-          route: "",
-        },
-        {
-          name: "Solid Shampoos & Hair Soaps",
-          route: "",
-        },
-        {
-          name: "Eau de Toilette",
-          route: "",
-        },
-      ],
-    },
-    {
-      isTag: true,
-      heading: "product tags",
-      links: [
-        {
-          name: "#vegan cosmetics",
-          route: "",
-        },
-        {
-          name: "#organic cosmetics",
-          route: "",
-        },
-        {
-          name: "#handmade cosmetics",
-          route: "",
-        },
-        {
-          name: "#summer essentials",
-          route: "",
-        },
-        {
-          name: "#gifts",
-          route: "",
-        },
-      ],
-    },
-    {
-      isTag: false,
-      heading: "terms of use",
-      links: [
-        {
-          name: "order confirmation",
-          route: "",
-        },
-        {
-          name: "availability",
-          route: "",
-        },
-        {
-          name: "order cancelation",
-          route: "",
-        },
-        {
-          name: "ordering methods",
-          route: "",
-        },
-        {
-          name: "returns/changes",
-          route: "",
-        },
-        {
-          name: "payment methods",
-          route: "",
-        },
-        {
-          name: "terms of use",
-          route: "",
-        },
-        {
-          name: "shipping",
-          route: "",
-        },
-      ],
-    },
-  ];
+  const captchaInfo =
+    "This site is protected by hCatpcha and the hCaptcha Privacy Policy and Terms of Service apply.";
+
+  const subFooter = ` © pine beauty ${new Date().getFullYear()}`;
+
+  // const formFields: Array<FormFieldsT> = [
+  //   {
+  //     label: "Email",
+  //     inputType: "email",
+  //     inputId: "subscribeEmail",
+  //     registerName: "email",
+  //   },
+  // ];
+
+  //const handleSubsription: SubmitHandler<InputsT> = () => {};
 
   return (
-    <Container>
-      <Subscription>
-        <FormHeading>{formHeading}</FormHeading>
-        <form>
-          <input></input>
-          <button>Join us</button>
-        </form>
-        <SocialIconsContainer>
-          <Icon name="instagram" width="32px" height="32px" />
-          <Icon name="facebook" width="32px" height="32px" />
-          <Icon name="pinterest" width="32px" height="32px" />
-        </SocialIconsContainer>
-      </Subscription>
-      <LinksSection linkGroups={linkGroups} />
-    </Container>
+    <MainContainer>
+      <Container>
+        {/* <Form<InputsT>
+        heading="Subscribe to our newsletter"
+        buttonText="send"
+        onSubmit={handleSubsription}
+        schema={subscribeSchema}
+        formFields={formFields}
+      /> */}
+        <Subscription>
+          <FormHeading>{formHeading}</FormHeading>
+          <small>{subscribeNote}</small>
+          <InputTemporarily placeholder="your-email@example.com" />
+          <CaptchaInfo>{captchaInfo}</CaptchaInfo>
+        </Subscription>
+        <IconAndLinksContainer>
+          <Icon name="logo" width="100px" height="100px" />
+          <LinksSection />
+        </IconAndLinksContainer>
+      </Container>
+      <SubFooter>{subFooter}</SubFooter>
+    </MainContainer>
   );
 }
 

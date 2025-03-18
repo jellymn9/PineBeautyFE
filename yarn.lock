@@ -275,6 +275,11 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
+"@custom-react-hooks/use-media-query@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@custom-react-hooks/use-media-query/-/use-media-query-1.5.1.tgz#ef92741709fdd40a7392f175a1d07f1f79b3da51"
+  integrity sha512-a9ON4m1XjlWlCSHmtZ4Horau/1DWURbHlk6dq7mNkaOM5vRyxp2EgklWrUqoX2Ywnqnr065YYDgqUUA0VYZDTw==
+
 "@emotion/is-prop-valid@1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-1.2.2.tgz#d4175076679c6a26faa92b03bb786f9e52612337"
@@ -1659,6 +1664,11 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
+
+lucide-react@^0.475.0:
+  version "0.475.0"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.475.0.tgz#4b7b62c024f153ee4b52a6a0f33f9e72f07156f0"
+  integrity sha512-NJzvVu1HwFVeZ+Gwq2q00KygM1aBhy/ZrhY9FsAgJtpB+E4R7uxRk9M2iKvHa6/vNxZydIB59htha4c2vvwvVg==
 
 merge2@^1.3.0, merge2@^1.4.1:
   version "1.4.1"

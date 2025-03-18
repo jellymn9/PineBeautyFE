@@ -1,66 +1,104 @@
-import { routes } from "../../utils/constants";
-import { CartIcon } from "../CartIcon/CartIcon";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "@custom-react-hooks/use-media-query";
+import { ShoppingCart, Menu } from "lucide-react";
+
+import { navLinks } from "../../utils/constants";
 import Icon from "../Icon/Icon";
 import {
+  BarAnimationContainer,
+  CircleAnimation,
   Container,
-  TopLinksBar,
-  BlogLink,
-  Separator,
-  HeaderLink,
-  TopLinksBarSection,
-  Label,
-  ProfileCartBar,
-  LogoContainer,
-  MainNavBar,
-  MainLinksContainer,
-  HSeparator,
+  ContainerBlock,
+  HoverBar,
+  InnerContainer,
+  LinksContainerNav,
+  LinkStyled,
+  MobileContainer,
 } from "./HeaderStyled";
+import breakpoints from "../../utils/breakpoints";
+import { useDrawer } from "../../context/DrawerContext";
+import { useHoverBarAnimation } from "../../helpers/customHooks";
 
 function Header() {
-  const label = "Serbian natural and organic Cosmetics";
-  const blog = "Blog";
-  const shipping = "International shipping";
-  const samples = "Free samples";
+  const timeout = useRef(0);
+  const currentScrollY = useRef(0);
+  const [isScrollingUp, setScrollingUp] = useState(false);
+  const [isStickyHeader, setStickyHeader] = useState(false);
 
-  const navLinks = [
-    { route: routes.home, name: "home" },
-    { route: routes.products, name: "products" },
-    { route: "", name: "offers" },
-    { route: "", name: "free samples" },
-  ];
+  const { hoverLinkWidth, translateStep, handleHover, handleMouseLeave } =
+    useHoverBarAnimation();
+
+  const handleScroll = useCallback(() => {
+    const newScrollY = window.scrollY;
+
+    // checks if scroll position is over header height
+    if (newScrollY > 135 && !isStickyHeader) {
+      setStickyHeader(true);
+    } else if (newScrollY < 135 && isStickyHeader) {
+      setStickyHeader(false);
+    }
+
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => {
+      // checks if user scrolls up or down
+      if (newScrollY > currentScrollY.current && isScrollingUp) {
+        setScrollingUp(false);
+      } else if (newScrollY < currentScrollY.current && !isScrollingUp) {
+        setScrollingUp(true);
+      }
+
+      currentScrollY.current = newScrollY;
+    }, 100);
+  }, [isScrollingUp, isStickyHeader]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
+  const { openDrawer } = useDrawer();
+
+  const isTabletOrMobile = useMediaQuery(`(max-width: ${breakpoints.tablet})`);
+
   return (
-    <Container>
-      <TopLinksBar>
-        <TopLinksBarSection>
-          <Label>{label}</Label>
-          <Separator />
-          <BlogLink to={""}>{blog}</BlogLink>
-        </TopLinksBarSection>
-        <TopLinksBarSection>
-          <HeaderLink to="">{shipping}</HeaderLink>
-          <Separator />
-          <HeaderLink to="">{samples}</HeaderLink>
-        </TopLinksBarSection>
-      </TopLinksBar>
-      <ProfileCartBar>
-        <CartIcon />
-        <Icon name="user" width="24px" height="24px" />
-      </ProfileCartBar>
-      <LogoContainer>
-        <Icon name="logo" width="100px" height="100px" />
-      </LogoContainer>
-      <MainNavBar>
-        <MainLinksContainer>
-          {navLinks?.map((link) => (
-            <HeaderLink to={link.route} key={link.name}>
-              {link.name}
-            </HeaderLink>
-          ))}
-        </MainLinksContainer>
-        <Icon name="search" width="22px" height="22px" />
-      </MainNavBar>
-      <HSeparator />
-    </Container>
+    <>
+      {isTabletOrMobile ? (
+        <MobileContainer>
+          <Menu onClick={openDrawer} />
+          <Icon name="logo" width="55px" height="55px" />
+          <ShoppingCart />
+        </MobileContainer>
+      ) : (
+        <ContainerBlock>
+          <Container $isSticky={isStickyHeader} $isActive={isScrollingUp}>
+            <InnerContainer>
+              <Icon name="logo" width="75px" height="75px" />
+              <LinksContainerNav>
+                <BarAnimationContainer
+                  onMouseOver={(e) => handleHover(e)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <HoverBar $step={translateStep} $linkWidth={hoverLinkWidth} />
+                  {navLinks.textualLinks.map(({ route, name }) => (
+                    <LinkStyled to={route} key={route}>
+                      {name}
+                    </LinkStyled>
+                  ))}
+                </BarAnimationContainer>
+                <CircleAnimation>
+                  {navLinks.iconLinks.map(({ route, icon }) => (
+                    <LinkStyled to={route}>{icon}</LinkStyled>
+                  ))}
+                </CircleAnimation>
+              </LinksContainerNav>
+            </InnerContainer>
+          </Container>
+        </ContainerBlock>
+      )}
+    </>
   );
 }
 
