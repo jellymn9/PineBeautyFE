@@ -6,27 +6,23 @@ import colors from "../../utils/colors";
 export const Card = styled.article`
   height: auto;
   min-height: 290px;
-  width: auto;
+  width: fit-content;
   border: 1px solid ${colors.gray};
-  border-radius: 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  &:hover {
-    div:nth-child(2) {
-      height: 130px;
-    }
-  }
 `;
 
 export const ProductImage = styled.div`
-  width: 210px;
-  height: 210px;
+  --aspect-ratio: 0.9;
+
+  width: 18.041vw;
+  height: calc(18.041vw / var(--aspect-ratio));
   background-image: url(${image});
   background-color: ${colors.babyPowder};
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
 `;
 
@@ -35,21 +31,14 @@ export const NameAndPriceContainer = styled.div`
   padding-bottom: 12px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   grid-gap: 12px;
-  background-color: ${colors.whiteTransparent1};
-  height: calc(292px - 210px - 12px - 14px);
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  transition: height 0.5s;
 `;
 
 export const Name = styled.h3`
   font-size: 16px;
   line-height: 26px;
   font-family: JosefinSans;
-  margin: 0;
   font-weight: 500;
   text-transform: capitalize;
 `;
