@@ -32,8 +32,6 @@ function Products() {
 
   const emptyMessage = "There are no products available.";
 
-  console.log("test p: ", products);
-
   useEffect(() => {
     dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
   }, [dispatch]);
