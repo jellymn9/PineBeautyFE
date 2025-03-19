@@ -13,6 +13,9 @@ interface ProductCardPropsI {
   product: RawProductT;
 }
 
+const imageURL =
+  import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
+
 // const addToCart = () => {
 //   return; // come back to this
 // };
@@ -21,10 +24,13 @@ function ProductCard({ product }: ProductCardPropsI) {
   return (
     <Card>
       <Link to={`${routes.product}/${product.id}`}>
-        <ProductImage />
+        <ProductImage imageURL={imageURL} />
         <NameAndPriceContainer>
-          <Name>{product.name}</Name>
-          <Price>{product.price}</Price>
+          <Name>{product.name} | 100% Organic & Cold Pressed</Name>
+          <Price>
+            {product.currency}
+            {product.price}
+          </Price>
         </NameAndPriceContainer>
       </Link>
     </Card>

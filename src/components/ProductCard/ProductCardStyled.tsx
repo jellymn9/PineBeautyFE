@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
-import image from "../../assets/productMockupImage.jpg";
 import colors from "../../utils/colors";
 
 export const Card = styled.article`
   height: auto;
-  min-height: 290px;
-  width: fit-content;
+  min-height: fit-content;
+  width: min-content;
   border: 1px solid ${colors.gray};
   display: flex;
   flex-direction: column;
@@ -14,12 +13,12 @@ export const Card = styled.article`
   position: relative;
 `;
 
-export const ProductImage = styled.div`
+export const ProductImage = styled.div<{ imageURL: string }>`
   --aspect-ratio: 0.9;
 
-  width: 18.041vw;
-  height: calc(18.041vw / var(--aspect-ratio));
-  background-image: url(${image});
+  width: var(--container-width);
+  height: calc(var(--container-width) * var(--aspect-ratio));
+  background-image: url(${({ imageURL }) => imageURL});
   background-color: ${colors.babyPowder};
   background-repeat: no-repeat;
   background-size: contain;
@@ -35,16 +34,17 @@ export const NameAndPriceContainer = styled.div`
   grid-gap: 12px;
 `;
 
-export const Name = styled.h3`
-  font-size: 16px;
-  line-height: 26px;
-  font-family: JosefinSans;
+export const Name = styled.h4`
+  font-size: 14px;
+  line-height: 24px;
+
+  font-family: Avenir;
   font-weight: 500;
   text-transform: capitalize;
 `;
 
 export const Price = styled.span`
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 28px;
+  text-wrap-mode: nowrap;
+  font-size: 12px;
+  line-height: 22px;
 `;
