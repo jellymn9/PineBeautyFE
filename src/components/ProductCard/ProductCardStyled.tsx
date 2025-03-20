@@ -16,8 +16,9 @@ export const Card = styled.article`
 export const ProductImage = styled.div<{ imageURL: string }>`
   --aspect-ratio: 0.9;
 
-  width: var(--container-width);
-  height: calc(var(--container-width) * var(--aspect-ratio));
+  width: var(--card-container-width);
+  //consider adding alternative to --card-container-width undefined value
+  height: calc(var(--card-container-width) * var(--aspect-ratio));
   background-image: url(${({ imageURL }) => imageURL});
   background-color: ${colors.babyPowder};
   background-repeat: no-repeat;

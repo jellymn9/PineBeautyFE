@@ -1,12 +1,26 @@
 import styled from "styled-components";
+import breakpoints from "../../utils/breakpoints";
 
 export const Container = styled.div`
-  --container-width: 12.864vw;
+  --card-container-width: 50vw;
 
   display: grid;
   gap: 50px 16px;
-  //grid-template-columns: min-content min-content min-content;
-  grid-template-columns: var(--container-width) var(--container-width) var(
-      --container-width
-    );
+  grid-template-columns: var(--card-container-width) var(--card-container-width);
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    --card-container-width: 29.427vw;
+
+    grid-template-columns:
+      var(--card-container-width) var(--card-container-width)
+      var(--card-container-width);
+  }
+
+  @media screen and (min-width: ${breakpoints.smallDesktop}) {
+    --card-container-width: 279px;
+
+    grid-template-columns:
+      var(--card-container-width) var(--card-container-width)
+      var(--card-container-width);
+  }
 `;
