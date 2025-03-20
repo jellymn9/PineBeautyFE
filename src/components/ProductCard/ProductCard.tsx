@@ -22,9 +22,9 @@ const imageURL =
 
 function ProductCard({ product }: ProductCardPropsI) {
   return (
-    <Card>
+    <Card className="keen-slider__slide">
       <Link to={`${routes.product}/${product.id}`}>
-        <ProductImage imageURL={imageURL} />
+        <ProductImage $imageURL={imageURL} />
         <NameAndPriceContainer>
           <Name>{product.name} | 100% Organic & Cold Pressed</Name>
           <Price>

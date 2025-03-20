@@ -5,21 +5,28 @@ import colors from "../../utils/colors";
 export const Card = styled.article`
   height: auto;
   min-height: fit-content;
-  width: min-content;
+
+  min-width: var(--card-container-width);
+  width: var(--card-container-width); //min-content;
+
   border: 1px solid ${colors.gray};
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
+
+  a {
+    width: inherit;
+  }
 `;
 
-export const ProductImage = styled.div<{ imageURL: string }>`
+export const ProductImage = styled.div<{ $imageURL: string }>`
   --aspect-ratio: 0.9;
 
   width: var(--card-container-width);
   //consider adding alternative to --card-container-width undefined value
   height: calc(var(--card-container-width) * var(--aspect-ratio));
-  background-image: url(${({ imageURL }) => imageURL});
+  background-image: url(${({ $imageURL }) => $imageURL});
   background-color: ${colors.babyPowder};
   background-repeat: no-repeat;
   background-size: contain;
