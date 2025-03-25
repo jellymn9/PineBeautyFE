@@ -3,6 +3,23 @@ import breakpoints from "./breakpoints";
 
 export const GlobalStyles = createGlobalStyle`
 
+  .keen-slider {
+    width: fit-content;
+  }
+  .keen-slider:not([data-keen-slider-disabled]){
+    width: inherit;
+
+    .keen-slider__slide {
+      min-width: fit-content !important;
+      max-width: fit-content !important;
+    }
+  }
+
+  .keen-slider__slide {
+    min-width: fit-content !important;
+    max-width: fit-content !important;
+  }
+
   :root{
     --section-padding: 60px;
     --section-margin: 40px;

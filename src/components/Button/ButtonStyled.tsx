@@ -2,20 +2,14 @@ import styled from "styled-components";
 
 import colors from "../../utils/colors";
 
-export const CustomButton = styled.button`
-  // background-color: ${colors.olivine};
-  // padding: 6px 12px;
-  // border: none;
-  // border-radius: 6px;
-  // transition: background-color 0.5s;
-  // &:hover {
-  //   background-color: ${colors.celticBlue};
-  // }
-
+export const CustomButton = styled.button<{ $isIcon: boolean }>`
   width: fit-content;
   border: none;
-  background-color: ${colors.white};
-  padding: 18px 48px;
+
+  background-color: ${({ $isIcon }) =>
+    $isIcon ? "transparent" : `${colors.white}`};
+
+  ${({ $isIcon }) => !$isIcon && `padding: 18px 48px;`};
 `;
 
 export const InnerContainer = styled.div`

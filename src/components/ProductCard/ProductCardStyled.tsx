@@ -6,8 +6,8 @@ export const Card = styled.article`
   height: auto;
   min-height: fit-content;
 
-  min-width: var(--card-container-width);
-  width: var(--card-container-width); //min-content;
+  min-width: var(--card-container-width) !important;
+  width: var(--card-container-width) !important;
 
   border: 1px solid ${colors.gray};
   display: flex;
