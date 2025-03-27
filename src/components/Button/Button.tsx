@@ -3,7 +3,7 @@ import { ButtonText, InnerContainer, CustomButton } from "./ButtonStyled";
 interface ButtonPropsI {
   text?: string;
   handleClick?: () => void;
-  variant: "regular" | "icon";
+  variant?: "regular" | "icon";
   icon?: JSX.Element;
   disabled?: boolean;
   type?: "submit" | "reset" | "button";
