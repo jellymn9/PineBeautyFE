@@ -13,9 +13,10 @@ interface ProductCardPropsI {
   product: RawProductT;
 }
 
-const imageURL = import.meta.env.VITE_R2_PROD_BUCKET_URL
-  ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
-  : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
+const imageURL =
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
+    : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
 
 // const addToCart = () => {
 //   return; // come back to this
