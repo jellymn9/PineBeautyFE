@@ -9,7 +9,6 @@ export const Card = styled.article`
   min-width: var(--card-container-width) !important;
   width: var(--card-container-width) !important;
 
-  border: 1px solid ${colors.gray};
   display: flex;
   flex-direction: column;
   overflow: hidden;
