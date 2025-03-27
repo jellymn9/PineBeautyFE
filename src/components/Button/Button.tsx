@@ -1,11 +1,10 @@
-import { IconNamesT } from "../../utils/types";
-import Icon from "../Icon/Icon";
 import { ButtonText, InnerContainer, CustomButton } from "./ButtonStyled";
 
 interface ButtonPropsI {
   text?: string;
   handleClick?: () => void;
-  icon?: IconNamesT;
+  variant?: "regular" | "icon";
+  icon?: JSX.Element;
   disabled?: boolean;
   type?: "submit" | "reset" | "button";
 }
@@ -15,21 +14,29 @@ const Button = function ({
   handleClick,
   icon,
   disabled,
-  type,
+  type = "button",
+  variant = "regular",
 }: ButtonPropsI) {
   return (
     <CustomButton
       {...(handleClick && { onClick: handleClick })}
       disabled={!!disabled}
-      type={type || "button"}
+      type={type}
+      $isIcon={variant === "icon"}
     >
-      {icon ? (
-        <InnerContainer>
-          <Icon name={icon} width="22px" height="22px" />
-          {text && <ButtonText>{text}</ButtonText>}
-        </InnerContainer>
+      {variant === "icon" && !!icon ? (
+        icon
       ) : (
-        <ButtonText>{text}</ButtonText>
+        <>
+          {icon ? (
+            <InnerContainer>
+              {icon}
+              {text && <ButtonText>{text}</ButtonText>}
+            </InnerContainer>
+          ) : (
+            <ButtonText>{text}</ButtonText>
+          )}
+        </>
       )}
     </CustomButton>
   );

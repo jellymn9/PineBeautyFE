@@ -4,6 +4,7 @@ import { CartItemT, RawProductT } from "../../utils/types";
 import { useAppDispatch } from "../../withTypes";
 import Button from "../Button/Button";
 import Counter from "../Counter/Counter";
+import Icon from "../Icon/Icon";
 import {
   Item,
   ItemImg,
@@ -33,8 +34,9 @@ export const CartItem = ({ product }: CartItemPropsI) => {
           <ActionsContainer>
             <Counter id={id} quantity={quantity} />
             <Button
+              variant="regular"
               text=""
-              icon="delete"
+              icon={<Icon name="delete" width="22px" height="22px" />}
               handleClick={() => dispatch(remove(id))}
             />
           </ActionsContainer>

@@ -2,6 +2,7 @@ import { useAppDispatch } from "../../withTypes";
 import { remove, upsert } from "../../state/reducers/cartReducer";
 import Button from "../Button/Button";
 import { Amount, Container } from "./CounterStyled";
+import Icon from "../Icon/Icon";
 
 interface CounterPropsI {
   quantity: number;
@@ -29,9 +30,18 @@ const Counter = ({ id, quantity }: CounterPropsI) => {
 
   return (
     <Container>
-      <Button icon="minus" handleClick={decrease} disabled={quantity === 0} />
+      <Button
+        variant="icon"
+        icon={<Icon name="minus" width="22px" height="22px" />}
+        handleClick={decrease}
+        disabled={quantity === 0}
+      />
       <Amount>{quantity}</Amount>
-      <Button icon="plus" handleClick={increase} />
+      <Button
+        variant="icon"
+        icon={<Icon name="plus" width="22px" height="22px" />}
+        handleClick={increase}
+      />
     </Container>
   );
 };
