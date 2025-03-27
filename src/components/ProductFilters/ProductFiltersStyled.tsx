@@ -17,14 +17,14 @@ export const FiltersList = styled.ul`
   list-style-type: none;
   padding: 0;
   display: flex;
-  flex-direction: column;
+  //flex-direction: column;
   grid-gap: 14px;
 `;
 
 export const FilterListItem = styled.li``;
 
-export const FilterLink = styled.a`
-  text-decoration: none;
-  color: ${colors.black};
-  text-transform: capitalize;
-`;
+// export const FilterLink = styled.a`
+//   text-decoration: none;
+//   color: ${colors.black};
+//   text-transform: capitalize;
+// `;

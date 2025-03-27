@@ -1,6 +1,12 @@
 import { Search, ShoppingCart, User } from "lucide-react";
 import type { ProductCategoriesMappedT } from "./types";
 
+export const BasicCategories = {
+  body: { name: "body", link: "/" },
+  hair: { name: "hair", link: "/" },
+  face: { name: "face", link: "/" },
+};
+
 export const ProductCategories: ProductCategoriesMappedT = {
   SCRUBS_AND_MASKS: { name: "scrubs and masks", link: "/" },
   NATURAL_DEODORANTS: { name: "natural deodorants", link: "/" },

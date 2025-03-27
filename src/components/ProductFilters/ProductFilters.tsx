@@ -1,23 +1,21 @@
-import { ProductCategories } from "../../utils/constants";
+import { BasicCategories } from "../../utils/constants";
 import {
-  FilterLink,
+  //FilterLink,
   FilterListItem,
   FiltersContainer,
   FiltersHeading,
   FiltersList,
 } from "./ProductFiltersStyled";
 
+const heading = "Product type";
+
 const ProductFilters = function () {
   return (
     <FiltersContainer>
-      <FiltersHeading>Product Type</FiltersHeading>
+      <FiltersHeading>{heading}</FiltersHeading>
       <FiltersList>
-        {Object.values(ProductCategories).map((category) => {
-          return (
-            <FilterListItem key={category.name}>
-              <FilterLink href={category.link}>{category.name}</FilterLink>
-            </FilterListItem>
-          );
+        {Object.values(BasicCategories).map(({ name }) => {
+          return <FilterListItem key={name}>{name}</FilterListItem>;
         })}
       </FiltersList>
       {/* <FiltersHeading>Categories</FiltersHeading>

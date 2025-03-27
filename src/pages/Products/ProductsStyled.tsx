@@ -3,9 +3,23 @@ import styled from "styled-components";
 import colors from "../../utils/colors";
 
 export const Container = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   grid-gap: 60px;
-  grid-template-columns: calc(200px + 40px) auto;
+`;
+
+export const BannerAndHeading = styled.div<{ $imageURL: string }>`
+  --banner-aspect-ratio: 1.777;
+
+  width: 100vw;
+  height: calc(100vw / var(--banner-aspect-ratio));
+  background-color: transparent;
+  background-image: url(${({ $imageURL }) => $imageURL});
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  display: flex;
+  align-items: center;
 `;
 
 export const ProductsSection = styled.section`
@@ -20,8 +34,9 @@ export const ProductsSection = styled.section`
   }
 `;
 
-export const SectionHeading = styled.h2`
-  color: ${colors.olivine};
+export const SectionHeading = styled.h1`
+  padding-left: 10%;
+  color: ${colors.white};
   font-family: Cinzel-Bold;
   font-weight: 500;
 `;
