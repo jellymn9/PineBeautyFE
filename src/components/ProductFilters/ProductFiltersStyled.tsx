@@ -4,16 +4,21 @@ import colors from "../../utils/colors";
 
 export const FiltersContainer = styled.section`
   height: inherit;
-  width: 200px;
+  padding: 0 10%;
   background-color: ${colors.alabaster};
   padding: 20px;
 `;
 
 export const FiltersHeading = styled.h3`
+  font-family: Montserrat-Variable;
+  text-transform: uppercase;
   color: ${colors.olivine};
 `;
 
 export const FiltersList = styled.ul`
+  font-family: Montserrat-Variable;
+  text-transform: uppercase;
+
   list-style-type: none;
   padding: 0;
   display: flex;
