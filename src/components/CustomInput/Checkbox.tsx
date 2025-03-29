@@ -1,11 +1,13 @@
-import { CheckboxContainer, Label } from "./InputStyled";
+import {
+  CheckboxContainer,
+  CheckboxInput,
+  CheckedSign,
+  Label,
+} from "./InputStyled";
 
 interface CheckboxInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  //value: string;
-  //name: string;
-  //id: string;
   checked?: boolean;
 }
 
@@ -19,13 +21,15 @@ const Checkbox = ({
   return (
     <CheckboxContainer>
       <Label htmlFor={id}>{label}</Label>
-      <input
+
+      <CheckboxInput
         type="checkbox"
         id={id}
         name={name}
         value={value}
         //checked={checked ?? undefined}
       />
+      <CheckedSign />
     </CheckboxContainer>
   );
 };
