@@ -1,27 +1,32 @@
-import { ProductCategories } from "../../utils/constants";
+import { BasicCategories } from "../../utils/constants";
+import Checkbox from "../CustomInput/Checkbox";
 import {
-  FilterLink,
-  FilterListItem,
+  //FilterLink,
+  //FilterListItem,
   FiltersContainer,
   FiltersHeading,
   FiltersList,
 } from "./ProductFiltersStyled";
 
+const heading = "Categories";
+
 const ProductFilters = function () {
+  const handleChange = () => {};
+
   return (
     <FiltersContainer>
-      <FiltersHeading>Product Type</FiltersHeading>
+      <FiltersHeading>{heading}</FiltersHeading>
       <FiltersList>
-        {Object.values(ProductCategories).map((category) => {
-          return (
-            <FilterListItem key={category.name}>
-              <FilterLink href={category.link}>{category.name}</FilterLink>
-            </FilterListItem>
-          );
-        })}
+        {Object.values(BasicCategories).map(({ name }) => (
+          <Checkbox
+            key={name}
+            id={name}
+            label={name}
+            value={name}
+            handleChange={handleChange}
+          />
+        ))}
       </FiltersList>
-      {/* <FiltersHeading>Categories</FiltersHeading>
-      <FiltersHeading>Tags</FiltersHeading> */}
     </FiltersContainer>
   );
 };
