@@ -9,6 +9,7 @@ interface CheckboxInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   checked?: true;
+  handleChange: (c: boolean) => void;
 }
 
 const Checkbox = ({
@@ -17,7 +18,12 @@ const Checkbox = ({
   value,
   checked = undefined,
   name,
+  handleChange,
 }: CheckboxInputProps) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange(e.target.checked);
+  };
+
   return (
     <CheckboxContainer>
       <Label htmlFor={id}>{label}</Label>
@@ -26,7 +32,8 @@ const Checkbox = ({
         id={id}
         name={name}
         value={value}
-        checked={checked ?? undefined}
+        checked={checked}
+        onChange={(e) => onChange(e)}
       />
       <CheckedSign />
     </CheckboxContainer>
