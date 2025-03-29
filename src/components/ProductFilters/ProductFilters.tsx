@@ -1,8 +1,7 @@
+import { useEffect, useState } from "react";
 import { BasicCategories } from "../../utils/constants";
-import Checkbox from "../CustomInput/Checkbox";
+import Checkbox, { CheckboxInputProps } from "../CustomInput/Checkbox";
 import {
-  //FilterLink,
-  //FilterListItem,
   FiltersContainer,
   FiltersHeading,
   FiltersList,
@@ -11,7 +10,27 @@ import {
 const heading = "Categories";
 
 const ProductFilters = function () {
-  const handleChange = () => {};
+  const [selectedCategories, setSelectedCategories] = useState<Array<string>>(
+    []
+  );
+
+  useEffect(() => {
+    console.log("bla");
+  }, [selectedCategories]);
+
+  const handleChange = (
+    isChecked: boolean,
+    value: CheckboxInputProps["value"]
+  ) => {
+    //update selectedCategories
+    if (typeof value == "string") {
+      const newSelectedCategories = selectedCategories.includes(value)
+        ? selectedCategories.filter((c) => c !== value)
+        : [...selectedCategories, value];
+
+      setSelectedCategories(newSelectedCategories);
+    }
+  };
 
   return (
     <FiltersContainer>

@@ -5,11 +5,14 @@ import {
   Label,
 } from "./InputStyled";
 
-interface CheckboxInputProps
+export interface CheckboxInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   checked?: true;
-  handleChange: (c: boolean) => void;
+  handleChange: (
+    c: boolean,
+    value: React.InputHTMLAttributes<HTMLInputElement>["value"] //change handling type here
+  ) => void;
 }
 
 const Checkbox = ({
@@ -21,7 +24,7 @@ const Checkbox = ({
   handleChange,
 }: CheckboxInputProps) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleChange(e.target.checked);
+    handleChange(e.target.checked, value);
   };
 
   return (
