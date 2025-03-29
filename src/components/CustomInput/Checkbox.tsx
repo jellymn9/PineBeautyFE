@@ -8,26 +8,25 @@ import {
 interface CheckboxInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  checked?: boolean;
+  checked?: true;
 }
 
 const Checkbox = ({
   id,
   label,
   value,
-  //checked = false,
+  checked = undefined,
   name,
 }: CheckboxInputProps) => {
   return (
     <CheckboxContainer>
       <Label htmlFor={id}>{label}</Label>
-
       <CheckboxInput
         type="checkbox"
         id={id}
         name={name}
         value={value}
-        //checked={checked ?? undefined}
+        checked={checked ?? undefined}
       />
       <CheckedSign />
     </CheckboxContainer>
