@@ -13,14 +13,12 @@ import {
   BannerAndHeading,
   Container,
   ProductsSection,
-  SectionDescription,
+  EmptyMessage,
   SectionHeading,
 } from "./ProductsStyled";
 import { Loader } from "../../components/Loader/Loader";
 
 const productsHeading = "All products";
-const productsDescription =
-  "Searching for a sustainable alternative to liquid shampoo? We ‘ve got you covered! Our solid shampoos and hair soaps are fully biodegradable, 100% natural, and they come with an eco-friendly packaging. We offer a wide range of shampoo bars and hair soaps for all hair types and special needs. Find the right one for you and keep your hair strands healthy and shiny!";
 const pageSize = 6;
 
 const imageURL =
@@ -44,7 +42,6 @@ function Products() {
 
   useEffect(() => {
     if (reachBottom) {
-      console.log("Reach bottom: ", reachBottom);
       dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
     }
   }, [reachBottom, dispatch]);
@@ -59,13 +56,12 @@ function Products() {
         <Loader />
       ) : (
         <ProductsSection ref={productSectionRef}>
-          <SectionDescription>{productsDescription}</SectionDescription>
           {products.length ? (
             <div>
               <ProductsList products={products} />
             </div>
           ) : (
-            <SectionDescription>{emptyMessage}</SectionDescription>
+            <EmptyMessage>{emptyMessage}</EmptyMessage>
           )}
         </ProductsSection>
       )}

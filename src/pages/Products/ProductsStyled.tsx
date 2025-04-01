@@ -41,7 +41,7 @@ export const SectionHeading = styled.h1`
   font-weight: 500;
 `;
 
-export const SectionDescription = styled.p`
+export const EmptyMessage = styled.p`
   font-size: 16px;
   line-height: 26px;
   font-weight: 500;

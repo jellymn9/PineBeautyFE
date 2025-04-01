@@ -4,15 +4,14 @@ import colors from "../../utils/colors";
 
 export const FiltersContainer = styled.section`
   height: inherit;
-  padding: 0 10%;
-  background-color: ${colors.alabaster};
-  padding: 20px;
+
+  padding: 0px 20%;
 `;
 
 export const FiltersHeading = styled.h3`
   font-family: Montserrat-Variable;
   text-transform: uppercase;
-  color: ${colors.olivine};
+  color: ${colors.black};
 `;
 
 export const FiltersList = styled.ul`
