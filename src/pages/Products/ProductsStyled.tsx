@@ -47,3 +47,11 @@ export const EmptyMessage = styled.p`
   font-weight: 500;
   font-family: DidactGothic-Regular;
 `;
+
+export const ProductsAndCategories = styled.div`
+  width: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+`;

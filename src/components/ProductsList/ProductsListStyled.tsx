@@ -6,7 +6,6 @@ export const Container = styled.div`
 
   display: grid;
   gap: 50px 16px;
-  justify-content: center;
   grid-template-columns: var(--card-container-width) var(--card-container-width);
 
   @media screen and (min-width: ${breakpoints.tablet}) {

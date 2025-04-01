@@ -15,6 +15,7 @@ import {
   ProductsSection,
   EmptyMessage,
   SectionHeading,
+  ProductsAndCategories,
 } from "./ProductsStyled";
 import { Loader } from "../../components/Loader/Loader";
 
@@ -51,19 +52,19 @@ function Products() {
       <BannerAndHeading $imageURL={imageURL}>
         <SectionHeading>{productsHeading}</SectionHeading>
       </BannerAndHeading>
-      <ProductFilters />
       {!products.length && isLoading ? (
         <Loader />
       ) : (
-        <ProductsSection ref={productSectionRef}>
-          {products.length ? (
-            <div>
+        <ProductsAndCategories>
+          <ProductFilters />
+          <ProductsSection ref={productSectionRef}>
+            {products.length ? (
               <ProductsList products={products} />
-            </div>
-          ) : (
-            <EmptyMessage>{emptyMessage}</EmptyMessage>
-          )}
-        </ProductsSection>
+            ) : (
+              <EmptyMessage>{emptyMessage}</EmptyMessage>
+            )}
+          </ProductsSection>
+        </ProductsAndCategories>
       )}
     </Container>
   );

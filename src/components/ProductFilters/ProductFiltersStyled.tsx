@@ -4,8 +4,6 @@ import colors from "../../utils/colors";
 
 export const FiltersContainer = styled.section`
   height: inherit;
-
-  padding: 0px 20%;
 `;
 
 export const FiltersHeading = styled.h3`
