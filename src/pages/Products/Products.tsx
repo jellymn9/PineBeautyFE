@@ -10,17 +10,22 @@ import { useElementScroll } from "../../helpers/customHooks";
 import ProductFilters from "../../components/ProductFilters/ProductFilters";
 import ProductsList from "../../components/ProductsList/ProductsList";
 import {
+  BannerAndHeading,
   Container,
   ProductsSection,
-  SectionDescription,
+  EmptyMessage,
   SectionHeading,
+  ProductsAndCategories,
 } from "./ProductsStyled";
 import { Loader } from "../../components/Loader/Loader";
 
 const productsHeading = "All products";
-const productsDescription =
-  "Searching for a sustainable alternative to liquid shampoo? We ‘ve got you covered! Our solid shampoos and hair soaps are fully biodegradable, 100% natural, and they come with an eco-friendly packaging. We offer a wide range of shampoo bars and hair soaps for all hair types and special needs. Find the right one for you and keep your hair strands healthy and shiny!";
 const pageSize = 6;
+
+const imageURL =
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/banner3_1920x1080.jpg"
+    : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/banner3_1920x1080.jpg";
 
 function Products() {
   const dispatch = useAppDispatch();
@@ -38,28 +43,28 @@ function Products() {
 
   useEffect(() => {
     if (reachBottom) {
-      console.log("Reach bottom: ", reachBottom);
       dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
     }
   }, [reachBottom, dispatch]);
 
   return (
     <Container>
-      <ProductFilters />
+      <BannerAndHeading $imageURL={imageURL}>
+        <SectionHeading>{productsHeading}</SectionHeading>
+      </BannerAndHeading>
       {!products.length && isLoading ? (
         <Loader />
       ) : (
-        <ProductsSection ref={productSectionRef}>
-          <SectionHeading>{productsHeading}</SectionHeading>
-          <SectionDescription>{productsDescription}</SectionDescription>
-          {products.length ? (
-            <div>
+        <ProductsAndCategories>
+          <ProductFilters />
+          <ProductsSection ref={productSectionRef}>
+            {products.length ? (
               <ProductsList products={products} />
-            </div>
-          ) : (
-            <SectionDescription>{emptyMessage}</SectionDescription>
-          )}
-        </ProductsSection>
+            ) : (
+              <EmptyMessage>{emptyMessage}</EmptyMessage>
+            )}
+          </ProductsSection>
+        </ProductsAndCategories>
       )}
     </Container>
   );

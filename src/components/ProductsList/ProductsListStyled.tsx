@@ -2,7 +2,7 @@ import styled from "styled-components";
 import breakpoints from "../../utils/breakpoints";
 
 export const Container = styled.div`
-  --card-container-width: 50vw;
+  --card-container-width: 46vw;
 
   display: grid;
   gap: 50px 16px;
