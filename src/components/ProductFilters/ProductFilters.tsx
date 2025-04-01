@@ -23,6 +23,7 @@ const ProductFilters = function () {
     value: CheckboxInputProps["value"]
   ) => {
     //update selectedCategories
+    console.log(isChecked);
     if (typeof value == "string") {
       const newSelectedCategories = selectedCategories.includes(value)
         ? selectedCategories.filter((c) => c !== value)
