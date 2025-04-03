@@ -7,12 +7,18 @@ import { formatPrice } from "../../helpers/formatters";
 import Counter from "../../components/Counter/Counter";
 import {
   Container,
-  CounterAndAddBtnWrapper,
-  Price,
-  ProductData,
+  Gallery,
+  ProductInfo,
+  // CounterAndAddBtnWrapper,
+  // Price,
+  // ProductData,
   ProductDescription,
-  ProductImage,
+  // ProductImage,
   ProductName,
+  ProductSection,
+  RelatedProductsSection,
+  ReviewsSection,
+  FirstImage,
 } from "./ProductStyled";
 
 const desc =
@@ -27,9 +33,26 @@ function Product() {
     selectItemById(state, productId)
   );
 
+  //temporary image
+  const imageURL =
+    import.meta.env.MODE === "production"
+      ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
+      : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
+
   return (
     <Container>
-      <ProductImage />
+      <ProductSection>
+        <Gallery>
+          <FirstImage $imageURL={imageURL} />
+        </Gallery>
+        <ProductInfo>
+          <ProductName>{product.name}</ProductName>
+          <ProductDescription>{desc}</ProductDescription>
+        </ProductInfo>
+      </ProductSection>
+      <ReviewsSection></ReviewsSection>
+      <RelatedProductsSection></RelatedProductsSection>
+      {/* <ProductImage />
       <ProductData>
         <ProductName>{product.name}</ProductName>
         <ProductDescription>{desc}</ProductDescription>
@@ -37,7 +60,7 @@ function Product() {
         <CounterAndAddBtnWrapper>
           <Counter id={productId} quantity={itemInCart?.quantity || 0} />
         </CounterAndAddBtnWrapper>
-      </ProductData>
+      </ProductData> */}
     </Container>
   );
 }
