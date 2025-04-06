@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import colors from "../../utils/colors";
-import image from "../../assets/productMockupImage.jpg";
 import breakpoints from "../../utils/breakpoints";
 
 export const Container = styled.div`
@@ -13,6 +12,10 @@ export const Container = styled.div`
 export const ProductSection = styled.section`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+
+  height: 90vh; //adapt later
+  overflow: scroll;
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     flex-direction: row;
@@ -22,39 +25,57 @@ export const ProductSection = styled.section`
   }
 `;
 
+export const GalleryAndDescription = styled.div``;
+
 export const Gallery = styled.div`
   display: grid;
-  grid-template-columns: 300px 150px;
+  grid-template-columns: 20vw 20vw; //change later
   gap: 10px;
-`;
 
-export const FirstImage = styled.div<{ $imageURL: string }>`
-  grid-column: span 2;
+  img:first-child {
+    grid-column: span 2;
+  }
 
-  background-image: url(${({ $imageURL }) => $imageURL});
-  background-color: transparent;
-  background-size: contain;
-  background-repeat: no-repeat;
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    grid-template-columns: 20vw 20vw;
+  }
+
+  @media screen and (min-width: ${breakpoints.largeDesktop}) {
+    grid-template-columns: 288px 288px;
+  }
 `;
 
 export const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
+
+  position: sticky;
+  top: 100px;
+  border: 1px solid red;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    width: 450px;
+  }
 `;
+
+export const ProductImage = styled.img`
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    width: 100%;
+  }
+`;
+
+// export const FirstImage = styled.div<{ $imageURL: string }>`
+//   grid-column: span 2;
+
+//   background-image: url(${({ $imageURL }) => $imageURL});
+//   background-color: transparent;
+//   background-size: contain;
+//   background-repeat: no-repeat;
+// `;
 
 export const ReviewsSection = styled.section``;
 
 export const RelatedProductsSection = styled.section``;
-
-export const ProductImage = styled.div`
-  min-width: 310px;
-  min-height: 310px;
-  background-image: url(${image});
-  background-color: ${colors.babyPowder};
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-`;
 
 export const ProductData = styled.div`
   display: flex;
