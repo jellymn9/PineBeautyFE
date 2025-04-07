@@ -14,8 +14,8 @@ export const ProductSection = styled.section`
   flex-direction: column;
   justify-content: center;
 
-  height: 90vh; //adapt later
-  overflow: scroll;
+  //height: 456px; //adapt later
+  //overflow: auto;
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     flex-direction: row;
@@ -50,8 +50,9 @@ export const ProductInfo = styled.div`
   flex-direction: column;
 
   position: sticky;
-  top: 100px;
-  border: 1px solid red;
+  top: 135px; //header height, adapt later
+  height: fit-content;
+  //border: 1px solid red;
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     width: 450px;
@@ -85,11 +86,26 @@ export const ProductData = styled.div`
   grid-gap: 26px;
 `;
 
-export const ProductName = styled.h2`
-  font-family: Cinzel-Bold;
-  font-size: 22px;
-  color: ${colors.olivine};
+export const ProductName = styled.h3`
+  font-family: Montserrat-Variable;
+  font-weight: 400;
+  color: ${colors.black};
+  text-transform: capitalize;
+  padding-bottom: 20px;
+`;
+
+export const ContentsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  grid-gap: 16px;
+  padding-bottom: 20px;
+`;
+
+export const ProductContents = styled.span`
+  // create global style for this
+  color: ${colors.blackTransparent1};
   text-transform: uppercase;
+  font-size: 12px;
 `;
 
 export const ProductDescription = styled.p`
