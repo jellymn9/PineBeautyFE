@@ -9,9 +9,9 @@ import {
   Container,
   Gallery,
   ProductInfo,
-  CounterAndAddBtnWrapper,
-  Price,
-  ProductData,
+  //CounterAndAddBtnWrapper,
+  //Price,
+  //ProductData,
   ProductDescription,
   // ProductImage,
   ProductName,
@@ -87,23 +87,6 @@ function Product() {
       </ProductSection>
       <ReviewsSection></ReviewsSection>
       <RelatedProductsSection></RelatedProductsSection>
-
-      <ProductData>
-        <ProductName>{product.name}</ProductName>
-        <ProductDescription>{desc}</ProductDescription>
-        <Price>{formatPrice(product.price)}</Price>
-        <CounterAndAddBtnWrapper>
-          <Counter id={productId} quantity={itemInCart?.quantity || 0} />
-        </CounterAndAddBtnWrapper>
-      </ProductData>
-      <ProductData>
-        <ProductName>{product.name}</ProductName>
-        <ProductDescription>{desc}</ProductDescription>
-        <Price>{formatPrice(product.price)}</Price>
-        <CounterAndAddBtnWrapper>
-          <Counter id={productId} quantity={itemInCart?.quantity || 0} />
-        </CounterAndAddBtnWrapper>
-      </ProductData>
     </Container>
   );
 }
