@@ -1,4 +1,6 @@
 import { useState, Fragment } from "react";
+
+import { ColorThemeT } from "../../utils/types";
 import {
   Container,
   HeadingContainer,
@@ -17,9 +19,10 @@ interface AccordionDataI {
 
 interface AccordionPropsI {
   data: Array<AccordionDataI>;
+  colorTheme?: ColorThemeT;
 }
 
-const Accordion = function ({ data }: AccordionPropsI) {
+const Accordion = function ({ data, colorTheme = "light" }: AccordionPropsI) {
   const [isOpenId, setIsOpen] = useState("");
 
   const handleOpen = (id: string) => {
@@ -31,8 +34,8 @@ const Accordion = function ({ data }: AccordionPropsI) {
   };
 
   return (
-    <MainContainer>
-      <HSeparator />
+    <MainContainer $colorTheme={colorTheme}>
+      <HSeparator $colorTheme={colorTheme} />
       {data.map((singleItem) => (
         <Fragment key={singleItem.heading}>
           <Container $isOpen={singleItem.heading === isOpenId}>
@@ -49,7 +52,7 @@ const Accordion = function ({ data }: AccordionPropsI) {
             </HeadingContainer>
             <ChildContainer>{singleItem.childComponent}</ChildContainer>
           </Container>
-          <HSeparator />
+          <HSeparator $colorTheme={colorTheme} />
         </Fragment>
       ))}
     </MainContainer>

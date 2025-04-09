@@ -14,9 +14,6 @@ export const ProductSection = styled.section`
   flex-direction: column;
   justify-content: center;
 
-  //height: 456px; //adapt later
-  //overflow: auto;
-
   @media screen and (min-width: ${breakpoints.tablet}) {
     flex-direction: row;
     //flex: 1;
@@ -25,7 +22,11 @@ export const ProductSection = styled.section`
   }
 `;
 
-export const GalleryAndDescription = styled.div``;
+export const GalleryAndDescription = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 45px;
+`;
 
 export const Gallery = styled.div`
   display: grid;
