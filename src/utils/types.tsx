@@ -85,3 +85,5 @@ export type CartItemT = {
 };
 
 export type CartDetailedProductT = Array<RawProductT & CartItemT>;
+
+export type ColorThemeT = "dark" | "light";

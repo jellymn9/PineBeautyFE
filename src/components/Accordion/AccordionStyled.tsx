@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import { ChevronRight } from "lucide-react";
 import colors from "../../utils/colors";
+import { ColorThemeT } from "../../utils/types";
 
 const headingHeight = 24;
 const headingPadding = 16;
 
-export const MainContainer = styled.div``;
+export const MainContainer = styled.div<{ $colorTheme: ColorThemeT }>`
+  color: ${({ $colorTheme }) =>
+    $colorTheme === "light" ? colors.white : colors.black};
+`;
 
 export const Container = styled.div<{ $isOpen: boolean }>`
   display: flex;
@@ -21,14 +25,14 @@ export const Container = styled.div<{ $isOpen: boolean }>`
 export const HeadingContainer = styled.div`
   text-transform: uppercase;
   padding: ${headingPadding}px 0;
-  color: ${colors.white};
   height: ${headingHeight}px;
 `;
 
-export const HSeparator = styled.div`
+export const HSeparator = styled.div<{ $colorTheme: ColorThemeT }>`
   // consider adding this to global style later..
   height: 1px;
-  background-color: ${colors.whiteTransparent1};
+  background-color: ${({ $colorTheme }) =>
+    $colorTheme === "light" ? colors.whiteTransparent1 : colors.black};
 `;
 
 export const HeadingInnerContiner = styled.div`

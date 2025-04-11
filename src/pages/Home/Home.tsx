@@ -47,7 +47,7 @@ function Home() {
         </SustainableHeading>
         <SectionParagraph>{sustainableAndPure.description}</SectionParagraph>
       </SustainableAndPure>
-      <Favs />
+      <Favs heading="PineBeauty's favs" />
       <Categories />
       <InfoHome />
     </div>
