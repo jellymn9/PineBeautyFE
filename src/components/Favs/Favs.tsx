@@ -8,9 +8,13 @@ import colors from "../../utils/colors";
 import { useState } from "react";
 import Button from "../Button/Button";
 
-const heading = "PineBeauty's favs";
+//const heading = "PineBeauty's favs";
 
-const PineBeautyFavs = () => {
+interface SliderPropsI {
+  heading: string;
+}
+
+const PineBeautyFavs = ({ heading }: SliderPropsI) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider({

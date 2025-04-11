@@ -7,6 +7,15 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 60px;
+  align-self: center;
+  padding-top: 24px;
+`;
+
+export const SecondaryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  grid-gap: 24px;
 `;
 
 export const ProductSection = styled.section`
