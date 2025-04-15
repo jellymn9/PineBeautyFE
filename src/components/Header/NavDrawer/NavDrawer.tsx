@@ -1,24 +1,24 @@
+import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
+
+import { useDrawer } from "../../../context/DrawerContext";
 import { navLinks } from "../../../utils/constants";
 import { CloseButton } from "../../CloseBtn/CloseBtn";
+import Drawer from "../../Drawer/Drawer";
 import {
-  Container,
-  Drawer,
   HSeparator,
   IconsContainer,
   InputContainer,
   NavLinks,
   SearchInput,
 } from "./NavDrawerStyled";
-import { useDrawer } from "../../../context/DrawerContext";
-import { Link } from "react-router-dom";
 
 const NavDrawer = function () {
-  const { closeDrawer, isOpen } = useDrawer();
+  const { closeDrawer } = useDrawer();
 
   return (
-    <Container $isOpen={isOpen}>
-      <Drawer $isOpen={isOpen}>
+    <Drawer>
+      <>
         <IconsContainer>
           {navLinks.iconLinks.map(
             ({ route, icon, mobile }) =>
@@ -39,8 +39,8 @@ const NavDrawer = function () {
             <HSeparator />
           </>
         ))}
-      </Drawer>
-    </Container>
+      </>
+    </Drawer>
   );
 };
 
