@@ -16,11 +16,8 @@ import {
   ButtonWrapper,
   Container,
   Heading,
-  HSeparator,
   InnerContainer,
   List,
-  PriceColName,
-  Subtotal,
 } from "./CartStyled";
 import { formatPrice } from "../../helpers/formatters";
 import Button from "../../components/Button/Button";
