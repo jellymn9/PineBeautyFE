@@ -1,24 +1,30 @@
+import { Trash } from "lucide-react";
 import { formatPrice } from "../../helpers/formatters";
 import { remove } from "../../state/reducers/cartReducer";
 import { CartItemT, RawProductT } from "../../utils/types";
 import { useAppDispatch } from "../../withTypes";
 import Button from "../Button/Button";
 import Counter from "../Counter/Counter";
-import Icon from "../Icon/Icon";
 import {
   Item,
   ItemImg,
   ItemDetailsAndActions,
   ItemPrice,
   ItemName,
-  ActionsContainer,
   ItemInnerContainer,
   HSeparator,
+  ItemDetails,
+  BtnWrapper,
 } from "./CartItemStyled";
 
 interface CartItemPropsI {
   product: RawProductT & CartItemT;
 }
+
+const imageURL =
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
+    : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
 
 export const CartItem = ({ product }: CartItemPropsI) => {
   const { id, price, name, quantity, currency } = product;
@@ -28,20 +34,24 @@ export const CartItem = ({ product }: CartItemPropsI) => {
   return (
     <Item>
       <ItemInnerContainer>
-        <ItemImg>img</ItemImg>
+        <ItemImg src={imageURL} />
         <ItemDetailsAndActions>
           <ItemName>{name.toLocaleUpperCase()}</ItemName>
-          <ActionsContainer>
-            <Counter id={id} quantity={quantity} />
-            <Button
-              variant="regular"
-              text=""
-              icon={<Icon name="delete" width="22px" height="22px" />}
-              handleClick={() => dispatch(remove(id))}
-            />
-          </ActionsContainer>
+          <ItemDetails>
+            <span>50 ML</span>
+            <span>Pine Beauty</span>
+            <ItemPrice>{formatPrice(price, currency)}</ItemPrice>
+          </ItemDetails>
+          <Counter id={id} quantity={quantity} />
         </ItemDetailsAndActions>
-        <ItemPrice>{formatPrice(price, currency)}</ItemPrice>
+        <BtnWrapper>
+          <Button
+            variant="regular"
+            text=""
+            icon={<Trash size={22} strokeWidth={1.5} />}
+            handleClick={() => dispatch(remove(id))}
+          />
+        </BtnWrapper>
       </ItemInnerContainer>
       <HSeparator />
     </Item>

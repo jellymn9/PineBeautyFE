@@ -6,7 +6,9 @@ export const Container = styled.div`
   flex-direction: column;
   max-width: 800px;
   grid-gap: 30px;
-  padding: 40px 0 80px 0;
+  padding: 40px 40px 80px 40px;
+
+  font-family: Montserrat-Variable;
 `;
 
 export const InnerContainer = styled.div`
@@ -18,6 +20,7 @@ export const InnerContainer = styled.div`
 export const Heading = styled.h2`
   font-size: 22px;
   line-height: 32px;
+  font-family: Avenir;
 `;
 
 export const List = styled.ul`

@@ -48,7 +48,7 @@ export const navLinks = {
       mobile: false,
     },
     {
-      route: "4",
+      route: routes.cart,
       icon: <ShoppingCart size={22} strokeWidth={2} />,
       mobile: false,
     },

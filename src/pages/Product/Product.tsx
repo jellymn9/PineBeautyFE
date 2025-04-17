@@ -31,6 +31,8 @@ import {
   SecondaryContainer,
   //ProductInfoContainer,
 } from "./ProductStyled";
+import { useDispatch } from "react-redux";
+import { add } from "../../state/reducers/cartReducer";
 
 const desc = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const nameAddition = " | 100% organic and cold pressed";
@@ -39,6 +41,12 @@ const relatedProductsTitle = "Related products";
 
 function Product() {
   const productRes = useLoaderData() as GetProductAxiosResT;
+
+  const dispatch = useDispatch();
+
+  const handleAdd = (productId: string) => {
+    dispatch(add({ id: productId, quantity: 1 })); // change quantity later
+  };
 
   const product = productRes.data.product;
   const productId = product.id; //change later
@@ -81,7 +89,10 @@ function Product() {
               <ProductContents>contents | {contentsMl}</ProductContents>
               <Button text={contentsMl} />
             </ContentsContainer>
-            <Button text="add to cart" />
+            <Button
+              text="add to cart"
+              handleClick={() => handleAdd(productId)}
+            />
             <GeneralProductInfo />
             <ProductDescription>{desc}</ProductDescription>
           </ProductInfo>
