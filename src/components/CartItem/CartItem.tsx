@@ -15,6 +15,7 @@ import {
   HSeparator,
   ItemDetails,
   BtnWrapper,
+  DetailsAndBtnWrapper,
 } from "./CartItemStyled";
 
 interface CartItemPropsI {
@@ -35,23 +36,25 @@ export const CartItem = ({ product }: CartItemPropsI) => {
     <Item>
       <ItemInnerContainer>
         <ItemImg src={imageURL} />
-        <ItemDetailsAndActions>
-          <ItemName>{name.toLocaleUpperCase()}</ItemName>
-          <ItemDetails>
-            <span>50 ML</span>
-            <span>Pine Beauty</span>
-            <ItemPrice>{formatPrice(price, currency)}</ItemPrice>
-          </ItemDetails>
-          <Counter id={id} quantity={quantity} />
-        </ItemDetailsAndActions>
-        <BtnWrapper>
-          <Button
-            variant="regular"
-            text=""
-            icon={<Trash size={22} strokeWidth={1.5} />}
-            handleClick={() => dispatch(remove(id))}
-          />
-        </BtnWrapper>
+        <DetailsAndBtnWrapper>
+          <ItemDetailsAndActions>
+            <ItemName>{name.toLocaleUpperCase()}</ItemName>
+            <ItemDetails>
+              <span>50 ML</span>
+              <span>Pine Beauty</span>
+              <ItemPrice>{formatPrice(price, currency)}</ItemPrice>
+            </ItemDetails>
+            <Counter id={id} quantity={quantity} />
+          </ItemDetailsAndActions>
+          <BtnWrapper>
+            <Button
+              variant="icon"
+              text=""
+              icon={<Trash size={22} strokeWidth={1.5} />}
+              handleClick={() => dispatch(remove(id))}
+            />
+          </BtnWrapper>
+        </DetailsAndBtnWrapper>
       </ItemInnerContainer>
       <HSeparator />
     </Item>

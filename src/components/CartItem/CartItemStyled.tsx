@@ -5,7 +5,6 @@ import breakpoints from "../../utils/breakpoints";
 export const Item = styled.li`
   display: flex;
   flex-direction: column;
-  height: 180px;
 `;
 
 export const ItemInnerContainer = styled.div`
@@ -20,10 +19,16 @@ export const ItemInnerContainer = styled.div`
 `;
 
 export const ItemImg = styled.img`
-  width: 180px;
-  height: 180px;
+  width: 100%;
+  height: auto;
+  max-width: 600px;
   background: lightblue;
   text-align: center;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    width: 180px;
+    height: 180px;
+  }
 `;
 
 export const ItemPrice = styled.span`
@@ -49,7 +54,7 @@ export const ItemDetailsAndActions = styled.div`
   padding-left: 0px;
   padding-top: 30px;
   justify-content: space-between;
-  height: 100%;
+  height: 180px;
 
   @media screen and (min-width: ${breakpoints.tablet}) {
     padding-left: 30px;
@@ -68,6 +73,18 @@ export const HSeparator = styled.div`
 `;
 
 export const BtnWrapper = styled.div`
+  align-self: flex-end;
   margin-left: auto;
   margin-right: 0;
+
+  @media screen and (min-width: ${breakpoints.tablet}) {
+    margin-left: auto;
+    margin-right: 0;
+    align-self: flex-start;
+  }
+`;
+
+export const DetailsAndBtnWrapper = styled.div`
+  display: flex;
+  width: 100%;
 `;
