@@ -16,11 +16,8 @@ import {
   ButtonWrapper,
   Container,
   Heading,
-  HSeparator,
   InnerContainer,
   List,
-  PriceColName,
-  Subtotal,
 } from "./CartStyled";
 import { formatPrice } from "../../helpers/formatters";
 import Button from "../../components/Button/Button";
@@ -44,6 +41,8 @@ function Cart() {
         try {
           setLoading(true);
           const cartProducts = await getProductsBatch(cartProductsIDs);
+
+          console.log(cartProducts);
 
           setProducts(mapQuantityToProducts(cartProducts, cartItems));
         } catch (e) {
@@ -75,8 +74,6 @@ function Cart() {
             <p>{emptyCart}</p>
           ) : (
             <div>
-              <PriceColName>Price</PriceColName>
-              <HSeparator />
               <List>
                 {products.map((product) => (
                   <CartItem product={product} />
@@ -84,11 +81,11 @@ function Cart() {
               </List>
             </div>
           )}
-          <Subtotal>
-            <span itemProp="price">{formatPrice(subtotal)}</span>
-          </Subtotal>
           <ButtonWrapper>
-            <Button text="Proceed to checkout" handleClick={() => {}} />
+            <Button
+              text={`Proceed to checkout ${formatPrice(subtotal)}`}
+              handleClick={() => {}}
+            />
           </ButtonWrapper>
         </InnerContainer>
       )}
