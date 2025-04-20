@@ -83,6 +83,7 @@ function Cart() {
           )}
           <ButtonWrapper>
             <Button
+              styleVariant="primary"
               text={`Proceed to checkout ${formatPrice(subtotal)}`}
               handleClick={() => {}}
             />

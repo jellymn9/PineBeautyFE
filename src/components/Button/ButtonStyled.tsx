@@ -1,15 +1,22 @@
 import styled from "styled-components";
 
+import { BtnVariantT, buttonVariants } from "../../utils/buttonStyles";
 import colors from "../../utils/colors";
 
-export const CustomButton = styled.button<{ $isIcon: boolean }>`
+export const CustomButton = styled.button<{
+  $isIcon: boolean;
+  $variant?: BtnVariantT;
+}>`
   width: fit-content;
   border: none;
+  color: ${colors.black};
 
   background-color: ${({ $isIcon }) =>
     $isIcon ? "transparent" : `${colors.white}`};
 
   ${({ $isIcon }) => !$isIcon && `padding: 18px 48px;`};
+
+  ${({ $variant }) => $variant && buttonVariants[$variant]}
 `;
 
 export const InnerContainer = styled.div`
@@ -25,5 +32,4 @@ export const ButtonText = styled.span`
   width: fit-content;
   text-transform: uppercase;
   font-family: Montserrat-Variable;
-  color: ${colors.black};
 `;

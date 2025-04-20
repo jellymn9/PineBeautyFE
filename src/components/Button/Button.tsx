@@ -1,3 +1,4 @@
+import { BtnVariantT } from "../../utils/buttonStyles";
 import { ButtonText, InnerContainer, CustomButton } from "./ButtonStyled";
 
 interface ButtonPropsI {
@@ -7,6 +8,7 @@ interface ButtonPropsI {
   icon?: JSX.Element;
   disabled?: boolean;
   type?: "submit" | "reset" | "button";
+  styleVariant?: BtnVariantT;
 }
 
 const Button = function ({
@@ -16,6 +18,7 @@ const Button = function ({
   disabled,
   type = "button",
   variant = "regular",
+  styleVariant,
 }: ButtonPropsI) {
   return (
     <CustomButton
@@ -23,6 +26,7 @@ const Button = function ({
       disabled={!!disabled}
       type={type}
       $isIcon={variant === "icon"}
+      $variant={styleVariant}
     >
       {variant === "icon" && !!icon ? (
         icon

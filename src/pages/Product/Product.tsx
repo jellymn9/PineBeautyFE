@@ -90,6 +90,7 @@ function Product() {
               <Button text={contentsMl} />
             </ContentsContainer>
             <Button
+              styleVariant="primary"
               text="add to cart"
               handleClick={() => handleAdd(productId)}
             />
