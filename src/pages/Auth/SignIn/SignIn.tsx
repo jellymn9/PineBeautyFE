@@ -1,8 +1,13 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { SubmitHandler } from "react-hook-form";
 
+import { routes as routesC } from "../../../utils/constants";
 import { AuthFormsContainer } from "./SignInStyled";
 import Form from "../../../components/Form/Form";
+import { login } from "../../../APIs/auth";
+import { setUserSession } from "../../../helpers/authHelper";
 
 const signInSchema = yup.object({
   username: yup
@@ -23,7 +28,21 @@ type FormFieldsT = {
 };
 
 function SignIn() {
-  const onSubmit: SubmitHandler<InputsT> = (data) => console.log(data);
+  const [isLoginError, setLoginError] = useState(false);
+
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<InputsT> = async (data) => {
+    try {
+      const token = await login(data.username, data.password);
+
+      setUserSession(token);
+
+      navigate(routesC.home);
+    } catch (e) {
+      setLoginError(true);
+    }
+  };
 
   const formFields: Array<FormFieldsT> = [
     {
@@ -49,6 +68,7 @@ function SignIn() {
         formFields={formFields}
         onSubmit={onSubmit}
       />
+      {isLoginError && <div style={{ color: "red" }}>User login fails!</div>}
     </AuthFormsContainer>
   );
 }

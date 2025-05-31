@@ -3,6 +3,8 @@ import { SubmitHandler } from "react-hook-form";
 
 import Form from "../../../components/Form/Form";
 import { AuthFormsContainer } from "../SignIn/SignInStyled";
+import { register } from "../../../APIs/auth";
+import { useState } from "react";
 
 const signUpSchema = yup.object({
   username: yup
@@ -28,6 +30,8 @@ type FormFieldsT = {
 };
 
 const SignUp = () => {
+  const [isRegSuccess, setRegSuccess] = useState(true);
+
   const formFields: Array<FormFieldsT> = [
     {
       label: "Username",
@@ -55,8 +59,15 @@ const SignUp = () => {
     },
   ];
 
-  const onSubmit: SubmitHandler<InputsT> = (data) => {
-    console.log("Form Data", data);
+  const onSubmit: SubmitHandler<InputsT> = async (data) => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      await register(data.username, data.email, data.password);
+
+      setRegSuccess(true);
+    } catch (_e) {
+      setRegSuccess(false);
+    }
   };
 
   return (
@@ -68,6 +79,9 @@ const SignUp = () => {
         formFields={formFields}
         onSubmit={onSubmit}
       />
+      {!isRegSuccess && (
+        <div style={{ color: "red" }}>User registration fails!</div>
+      )}
     </AuthFormsContainer>
   );
 };

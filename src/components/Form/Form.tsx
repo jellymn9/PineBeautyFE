@@ -45,7 +45,7 @@ const Form = function <T extends FieldValues>({
     resolver: yupResolver(schema) as any,
   });
 
-  console.log("errors: ", errors, touchedFields);
+  //console.log("errors: ", errors, touchedFields);
 
   return (
     <>

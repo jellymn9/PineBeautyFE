@@ -4,5 +4,5 @@
 
 export default {
   products: "/products",
-  user: "/user",
+  auth: "/auth",
 };
