@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 
-import { removeUserSession } from "../../helpers/authHelper";
+import { useAuth } from "../../context/AuthContext";
 import Button from "../../components/Button/Button";
 import {
   HSeparator,
@@ -18,6 +18,12 @@ const tabs = [
 ];
 
 function Profile() {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <ProfileContainer>
       <MyAccountHeader>
@@ -25,7 +31,7 @@ function Profile() {
         <Button
           text="Log out"
           icon={<ChevronRight strokeWidth={1} size={22} />}
-          handleClick={() => removeUserSession()}
+          handleClick={handleLogout}
         />
       </MyAccountHeader>
       <HSeparator />

@@ -2,14 +2,16 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 import { routes as routesC } from "../../utils/constants";
-import { isUserAuthenticated } from "../../helpers/authHelper";
+import { useAuth } from "../../context/AuthContext";
 
 interface AuthRouteProps {
   children: React.ReactNode;
 }
 
 const AuthRoute: React.FC<AuthRouteProps> = ({ children }) => {
-  if (isUserAuthenticated()) {
+  const { isLoggedIn } = useAuth();
+
+  if (isLoggedIn) {
     return <Navigate to={routesC.home} />;
   }
 

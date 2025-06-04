@@ -6,8 +6,8 @@ import { SubmitHandler } from "react-hook-form";
 import { routes as routesC } from "../../../utils/constants";
 import { AuthFormsContainer } from "./SignInStyled";
 import Form from "../../../components/Form/Form";
-import { login } from "../../../APIs/auth";
-import { setUserSession } from "../../../helpers/authHelper";
+import { login as getToken } from "../../../APIs/auth";
+import { useAuth } from "../../../context/AuthContext";
 
 const signInSchema = yup.object({
   username: yup
@@ -30,13 +30,15 @@ type FormFieldsT = {
 function SignIn() {
   const [isLoginError, setLoginError] = useState(false);
 
+  const { login } = useAuth();
+
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<InputsT> = async (data) => {
     try {
-      const token = await login(data.username, data.password);
+      const token = await getToken(data.username, data.password);
 
-      setUserSession(token);
+      login(token);
 
       navigate(routesC.home);
     } catch (e) {
