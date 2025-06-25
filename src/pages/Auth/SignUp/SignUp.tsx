@@ -1,10 +1,13 @@
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { routes as routesC } from "../../../utils/constants";
 import { SubmitHandler } from "react-hook-form";
 
 import Form from "../../../components/Form/Form";
 import { AuthFormsContainer } from "../SignIn/SignInStyled";
-import { register } from "../../../APIs/auth";
+import { register, login as getToken } from "../../../APIs/auth";
 import { useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
 
 const signUpSchema = yup.object({
   username: yup
@@ -30,6 +33,9 @@ type FormFieldsT = {
 };
 
 const SignUp = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const [isRegSuccess, setRegSuccess] = useState(true);
 
   const formFields: Array<FormFieldsT> = [
@@ -63,9 +69,18 @@ const SignUp = () => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       await register(data.username, data.email, data.password);
-
       setRegSuccess(true);
+
+      //add message to user that registration is successful
+      const token = await getToken(data.username, data.password);
+      login(token);
+      navigate(routesC.home);
     } catch (_e) {
+      // if (_e instanceof Error) {
+      //   console.error("Registration error: ", _e.message);
+      // } else {
+      //   console.error("Registration error: ", _e);
+      // }
       setRegSuccess(false);
     }
   };
