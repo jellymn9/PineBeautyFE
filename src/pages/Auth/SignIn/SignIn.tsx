@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { SubmitHandler } from "react-hook-form";
 
@@ -32,6 +32,7 @@ function SignIn() {
 
   const { login } = useAuth();
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<InputsT> = async (data) => {
@@ -40,7 +41,7 @@ function SignIn() {
 
       login(token);
 
-      navigate(routesC.home);
+      navigate(location.state?.from ?? routesC.home);
     } catch (e) {
       setLoginError(true);
     }
