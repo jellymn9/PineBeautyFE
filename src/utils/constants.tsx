@@ -38,7 +38,7 @@ export const navLinks = {
   ],
   iconLinks: [
     {
-      route: "1",
+      route: routes.profile,
       icon: <User size={22} strokeWidth={2} />,
       mobile: true,
     },

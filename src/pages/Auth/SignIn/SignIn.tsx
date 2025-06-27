@@ -1,8 +1,13 @@
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { SubmitHandler } from "react-hook-form";
 
+import { routes as routesC } from "../../../utils/constants";
 import { AuthFormsContainer } from "./SignInStyled";
 import Form from "../../../components/Form/Form";
+import { login as getToken } from "../../../APIs/auth";
+import { useAuth } from "../../../context/AuthContext";
 
 const signInSchema = yup.object({
   username: yup
@@ -23,7 +28,24 @@ type FormFieldsT = {
 };
 
 function SignIn() {
-  const onSubmit: SubmitHandler<InputsT> = (data) => console.log(data);
+  const [isLoginError, setLoginError] = useState(false);
+
+  const { login } = useAuth();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<InputsT> = async (data) => {
+    try {
+      const token = await getToken(data.username, data.password);
+
+      login(token);
+
+      navigate(location.state?.from ?? routesC.home);
+    } catch (e) {
+      setLoginError(true);
+    }
+  };
 
   const formFields: Array<FormFieldsT> = [
     {
@@ -49,6 +71,7 @@ function SignIn() {
         formFields={formFields}
         onSubmit={onSubmit}
       />
+      {isLoginError && <div style={{ color: "red" }}>User login fails!</div>}
     </AuthFormsContainer>
   );
 }

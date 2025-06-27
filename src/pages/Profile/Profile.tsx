@@ -1,9 +1,49 @@
-function App() {
+import { ChevronRight } from "lucide-react";
+
+import { useAuth } from "../../context/AuthContext";
+import Button from "../../components/Button/Button";
+import {
+  HSeparator,
+  MyAccountHeader,
+  MyAccountHeaderTitle,
+  ProfileCard,
+  ProfileCards,
+  ProfileCardTitle,
+  ProfileContainer,
+} from "./ProfileStyled";
+
+const tabs = [
+  { id: 1, title: "Order history" },
+  { id: 2, title: "Account details" },
+];
+
+function Profile() {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
-    <div>
-      <p>This is Profile page</p>
-    </div>
+    <ProfileContainer>
+      <MyAccountHeader>
+        <MyAccountHeaderTitle>My Account</MyAccountHeaderTitle>
+        <Button
+          text="Log out"
+          icon={<ChevronRight strokeWidth={1} size={22} />}
+          handleClick={handleLogout}
+        />
+      </MyAccountHeader>
+      <HSeparator />
+      <ProfileCards>
+        {tabs.map((tab) => (
+          <ProfileCard key={tab.id}>
+            <ProfileCardTitle>{tab.title}</ProfileCardTitle>
+          </ProfileCard>
+        ))}
+      </ProfileCards>
+    </ProfileContainer>
   );
 }
 
-export default App;
+export default Profile;

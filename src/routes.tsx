@@ -12,6 +12,8 @@ import Product from "./pages/Product/Product";
 import Products from "./pages/Products/Products";
 import Profile from "./pages/Profile/Profile";
 import Error from "./pages/Error/error";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import AuthRoute from "./components/AuthRoute/AuthRoute";
 
 const routes: Array<RouteObject> = [
   {
@@ -31,8 +33,12 @@ const routes: Array<RouteObject> = [
         errorElement: <div>Error element</div>,
       },
       {
-        path: routesC.profile, // private route
-        element: <Profile />,
+        path: routesC.profile,
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
       {
         path: routesC.cart,
@@ -42,11 +48,19 @@ const routes: Array<RouteObject> = [
   },
   {
     path: routesC.signin,
-    element: <SignIn />,
+    element: (
+      <AuthRoute>
+        <SignIn />
+      </AuthRoute>
+    ),
   },
   {
     path: routesC.signup,
-    element: <SignUp />,
+    element: (
+      <AuthRoute>
+        <SignUp />
+      </AuthRoute>
+    ),
   },
 ];
 
