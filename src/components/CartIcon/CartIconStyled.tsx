@@ -7,6 +7,24 @@ const fadeIn = keyframes`
     to { min-width: 28px; line-height: 28px;}
 `;
 
+export const CartContainer = styled.div`
+  position: relative;
+  svg {
+    position: absolute;
+  }
+
+  .lucide-dot {
+    top: -14px;
+  }
+
+  &:hover {
+    .lucide-dot {
+      transform: translateY(+12px);
+      transition: transform 0.3s ease-in-out;
+    }
+  }
+`;
+
 export const CartLink = styled(Link)`
   text-decoration: none;
   color: ${colors.black};

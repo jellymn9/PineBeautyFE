@@ -15,3 +15,8 @@ export const totalItemsQuantity = createSelector([selectAllItems], (items) => {
   }, 0);
   return quantity;
 });
+
+export const isCartEmpty = createSelector(
+  [selectAllItems],
+  (items) => items.length === 0
+);

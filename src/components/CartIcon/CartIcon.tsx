@@ -1,16 +1,15 @@
-import { totalItemsQuantity } from "../../state/selectors/cartSelector";
-import { routes } from "../../utils/constants";
+import { ShoppingCart, Dot } from "lucide-react";
+import { isCartEmpty } from "../../state/selectors/cartSelector";
 import { useAppSelector } from "../../withTypes";
-import Icon from "../Icon/Icon";
-import { CartLink, CartNumber } from "./CartIconStyled";
+import { CartContainer } from "./CartIconStyled";
 
 export const CartIcon = () => {
-  const totalQuantity = useAppSelector(totalItemsQuantity);
+  const isEmpty = useAppSelector(isCartEmpty);
 
   return (
-    <CartLink to={routes.cart}>
-      <Icon name="cart" width="24px" height="24px" />
-      {!!totalQuantity && <CartNumber>{totalQuantity}</CartNumber>}
-    </CartLink>
+    <CartContainer>
+      {!isEmpty && <Dot size={24} />}
+      <ShoppingCart size={22} strokeWidth={2} />{" "}
+    </CartContainer>
   );
 };

@@ -1,5 +1,6 @@
-import { Search, ShoppingCart, User } from "lucide-react";
+import { Search, User } from "lucide-react";
 import type { ProductCategoriesMappedT } from "./types";
+import { CartIcon } from "../components/CartIcon/CartIcon";
 
 export const BasicCategories = {
   body: { name: "body", link: "/" },
@@ -49,7 +50,7 @@ export const navLinks = {
     },
     {
       route: routes.cart,
-      icon: <ShoppingCart size={22} strokeWidth={2} />,
+      icon: <CartIcon />,
       mobile: false,
     },
   ],
