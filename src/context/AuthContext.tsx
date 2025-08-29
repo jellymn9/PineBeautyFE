@@ -1,15 +1,18 @@
-import { createContext, useContext, useState, ReactNode } from "react";
-
 import {
-  isUserAuthenticated,
-  removeUserSession,
-  setUserSession,
-} from "../helpers/authHelper";
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
+
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 
 type AuthContextType = {
   isLoggedIn: boolean;
-  login: (token: string) => void;
-  logout: () => void;
+  // login: (token: string) => void;
+  // logout: () => void;
 };
 
 type AuthProviderProps = {
@@ -19,21 +22,27 @@ type AuthProviderProps = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return isUserAuthenticated();
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  const login = (token: string) => {
-    setUserSession(token);
-    setIsLoggedIn(true);
-  };
-  const logout = () => {
-    removeUserSession();
-    setIsLoggedIn(false);
-  };
+  // const login = (token: string) => {
+  //   setUserSession(token);
+  //   setIsLoggedIn(true);
+  // };
+  // const logout = () => {
+  //   removeUserSession();
+  //   setIsLoggedIn(false);
+  // };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );

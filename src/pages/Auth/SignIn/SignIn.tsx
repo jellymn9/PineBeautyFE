@@ -6,15 +6,13 @@ import { SubmitHandler } from "react-hook-form";
 import { routes as routesC } from "../../../utils/constants";
 import { AuthFormsContainer } from "./SignInStyled";
 import Form from "../../../components/Form/Form";
-import { login as getToken } from "../../../APIs/auth";
-import { useAuth } from "../../../context/AuthContext";
+import { login } from "../../../APIs/auth";
 
 const signInSchema = yup.object({
-  username: yup
+  email: yup
     .string()
-    .required("Username field is required.")
-    .min(4, "Username must be at least 4 characters.")
-    .max(12, "Username must be at most 12 characters."),
+    .email("Invalid email format.")
+    .required("Email field is required."),
   password: yup.string().required("Password is required"),
 });
 
@@ -22,7 +20,7 @@ type InputsT = yup.InferType<typeof signInSchema>;
 
 type FormFieldsT = {
   label: string;
-  inputType: "text" | "password";
+  inputType: "email" | "password";
   inputId: string;
   registerName: keyof InputsT;
 };
@@ -30,16 +28,14 @@ type FormFieldsT = {
 function SignIn() {
   const [isLoginError, setLoginError] = useState(false);
 
-  const { login } = useAuth();
+  //const { login } = useAuth();
 
   const location = useLocation();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<InputsT> = async (data) => {
     try {
-      const token = await getToken(data.username, data.password);
-
-      login(token);
+      await login(data.email, data.password);
 
       navigate(location.state?.from ?? routesC.home);
     } catch (e) {
@@ -49,10 +45,10 @@ function SignIn() {
 
   const formFields: Array<FormFieldsT> = [
     {
-      label: "Username",
-      inputType: "text",
-      inputId: "loginUsername",
-      registerName: "username",
+      label: "Email address",
+      inputType: "email",
+      inputId: "loginEmail",
+      registerName: "email",
     },
     {
       label: "Password",
