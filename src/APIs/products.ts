@@ -6,15 +6,21 @@ import {
   limit,
   getDocs,
   QueryDocumentSnapshot,
+  doc,
+  getDoc,
 } from "firebase/firestore";
 
 import { db } from "../firebase";
 
 import apiClient from "../utils/axios";
 import endpoint from "./endpoints";
-import { ProductsApiResponseI, ProductI } from "../utils/types/productTypes";
+import {
+  ProductsApiResponseI,
+  ProductI,
+  GetProductT,
+} from "../utils/types/productTypes";
 
-import { RawProductT, GetProductT } from "../utils/types";
+import { RawProductT } from "../utils/types";
 
 export const getProducts = async (
   currentLastProduct: QueryDocumentSnapshot | null,
@@ -78,14 +84,39 @@ export const getProducts = async (
 //     });
 // };
 
-export const getSingleProduct: GetProductT = async (id?: string) => {
-  // fix type later
-  try {
-    const product = await apiClient.get(endpoint.products + "/" + id);
+// export const getSingleProduct: GetProductT = async (id?: string) => {
+//   // fix type later
+//   try {
+//     const product = await apiClient.get(endpoint.products + "/" + id);
 
-    return product;
+//     return product;
+//   } catch (e) {
+//     console.log("error: ", e);
+//     throw e;
+//   }
+// };
+
+export const getSingleProduct: GetProductT = async (id?: string) => {
+  if (!id) {
+    return null;
+  }
+
+  try {
+    const productRef = doc(db, "products", id);
+
+    const productSnap = await getDoc(productRef);
+    console.log("p: ", productSnap.data());
+
+    if (productSnap.exists()) {
+      return {
+        id: productSnap.id,
+        ...productSnap.data(),
+      } as ProductI;
+    } else {
+      return null;
+    }
   } catch (e) {
-    console.log("error: ", e);
+    console.error("Error getting product:", e);
     throw e;
   }
 };

@@ -2,24 +2,19 @@ import { useLoaderData } from "react-router-dom";
 
 import { useAppSelector } from "../../withTypes";
 import { selectItemById } from "../../state/selectors/cartSelector";
-import { GetProductAxiosResT } from "../../utils/types";
-//import { formatPrice } from "../../helpers/formatters";
-//import Counter from "../../components/Counter/Counter";
+import { useDispatch } from "react-redux";
+import { add } from "../../state/reducers/cartReducer";
+import { ProductI } from "../../utils/types/productTypes";
 import Accordion from "../../components/Accordion/Accordion";
 import Button from "../../components/Button/Button";
 import GeneralProductInfo from "../../components/GeneralProductInfo/GeneralProductInfo";
-//import HomeSection from "../../components/HomeSection/HomeSection";
 import PineBeautyFavs from "../../components/Favs/Favs";
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import {
   Container,
   Gallery,
   ProductInfo,
-  //CounterAndAddBtnWrapper,
-  //Price,
-  //ProductData,
   ProductDescription,
-  // ProductImage,
   ProductName,
   ProductSection,
   RelatedProductsSection,
@@ -29,18 +24,17 @@ import {
   ProductContents,
   ContentsContainer,
   SecondaryContainer,
-  //ProductInfoContainer,
+  NoProductMessage,
 } from "./ProductStyled";
-import { useDispatch } from "react-redux";
-import { add } from "../../state/reducers/cartReducer";
 
 const desc = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const nameAddition = " | 100% organic and cold pressed";
 const contentsMl = "50ml"; // add to product
 const relatedProductsTitle = "Related products";
+const nonExistentProductMessage = "Product not found.";
 
 function Product() {
-  const productRes = useLoaderData() as GetProductAxiosResT;
+  const product = useLoaderData() as ProductI | null;
 
   const dispatch = useDispatch();
 
@@ -48,12 +42,14 @@ function Product() {
     dispatch(add({ id: productId, quantity: 1 })); // change quantity later
   };
 
-  const product = productRes.data.product;
-  const productId = product.id; //change later
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const itemInCart = useAppSelector((state) =>
-    selectItemById(state, productId)
+    selectItemById(state, product ? product.id : "")
   );
+
+  if (!product) {
+    return <NoProductMessage>{nonExistentProductMessage}</NoProductMessage>;
+  }
 
   //temporary image
   const imageURL =
@@ -92,7 +88,7 @@ function Product() {
             <Button
               styleVariant="primary"
               text="add to cart"
-              handleClick={() => handleAdd(productId)}
+              handleClick={() => handleAdd(product.id)}
             />
             <GeneralProductInfo />
             <ProductDescription>{desc}</ProductDescription>

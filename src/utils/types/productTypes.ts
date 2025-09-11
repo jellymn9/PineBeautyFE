@@ -30,3 +30,5 @@ export interface ProductsApiResponseI {
   cursor: QueryDocumentSnapshot | null;
   hasMore: boolean;
 }
+
+export type GetProductT = (id?: string) => Promise<ProductI | null>;

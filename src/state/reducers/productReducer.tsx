@@ -15,7 +15,7 @@ const initialState: ProductsStateI = {
   status: "idle",
   list: [],
 };
-
+//check out status logic..
 export const fetchProductsThunk = createAsyncThunk<
   ProductsApiResponseI,
   { productsPerPage: number },

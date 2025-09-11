@@ -1,5 +1,3 @@
-import { AxiosResponse } from "axios";
-
 //import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 
 export type IconNamesT = // turn to enum
@@ -94,13 +92,13 @@ export type ProductCategoriesMappedT = {
 //   (p: FetchProductsParamsI): Promise<FetchProductsData>;
 // };
 
-export type GetProductAxiosResT = AxiosResponse<
-  { product: RawProductT },
-  unknown
->;
-export type GetProductT = {
-  (id?: string): Promise<GetProductAxiosResT>;
-};
+// export type GetProductAxiosResT = AxiosResponse<
+//   { product: RawProductT },
+//   unknown
+// >;
+// export type GetProductT = {
+//   (id?: string): Promise<GetProductAxiosResT>;
+// };
 
 export type CartProductT = Pick<RawProductT, "id" | "price" | "name" | "image">;
 
