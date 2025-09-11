@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { routes } from "../../utils/constants";
-import { RawProductT } from "../../utils/types";
+import { ProductI } from "../../utils/types/productTypes";
 import {
   Card,
   Name,
@@ -10,7 +10,7 @@ import {
 } from "./ProductCardStyled";
 
 interface ProductCardPropsI {
-  product: RawProductT;
+  product: ProductI;
 }
 
 const imageURL =

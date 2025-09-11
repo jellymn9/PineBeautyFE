@@ -5,6 +5,7 @@ import { fetchProductsThunk } from "../../state/reducers/productReducer";
 import {
   listProductsSelector,
   isPendingSelector,
+  hasMoreSelector,
 } from "../../state/selectors/productSelector";
 import { useElementScroll } from "../../helpers/customHooks";
 import ProductFilters from "../../components/ProductFilters/ProductFilters";
@@ -33,19 +34,21 @@ function Products() {
 
   const products = useAppSelector(listProductsSelector);
   const isLoading = useAppSelector(isPendingSelector);
+  const hasMore = useAppSelector(hasMoreSelector);
   const { reachBottom } = useElementScroll(productSectionRef);
 
   const emptyMessage = "There are no products available.";
 
   useEffect(() => {
-    dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
+    dispatch(fetchProductsThunk({ productsPerPage: pageSize }));
   }, [dispatch]);
 
   useEffect(() => {
-    if (reachBottom) {
-      dispatch(fetchProductsThunk({ isForward: true, page: pageSize }));
+    console.log("has more", hasMore, "reach Bottom:", reachBottom);
+    if (reachBottom && hasMore) {
+      dispatch(fetchProductsThunk({ productsPerPage: pageSize }));
     }
-  }, [reachBottom, dispatch]);
+  }, [reachBottom, dispatch, hasMore]);
 
   return (
     <Container>
