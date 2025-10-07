@@ -18,16 +18,21 @@ import {
 } from "./HeaderStyled";
 import breakpoints from "../../utils/breakpoints";
 import { useDrawer } from "../../context/DrawerContext";
-import { useHoverBarAnimation } from "../../helpers/customHooks";
+import { useCart, useHoverBarAnimation } from "../../helpers/customHooks";
+import { useAuth } from "../../context/AuthContext";
 
 function Header() {
   const timeout = useRef(0);
   const currentScrollY = useRef(0);
   const [isScrollingUp, setScrollingUp] = useState(false);
   const [isStickyHeader, setStickyHeader] = useState(false);
+  const { user } = useAuth();
+  const { cart, loading, error } = useCart(user?.uid || null);
 
   const { hoverLinkWidth, translateStep, handleHover, handleMouseLeave } =
     useHoverBarAnimation();
+
+  const isCartEmpty = Object.keys(cart.items).length === 0;
 
   const handleScroll = useCallback(() => {
     const newScrollY = window.scrollY;
@@ -94,7 +99,7 @@ function Header() {
                     if (route === routes.cart) {
                       return (
                         <LinkStyled to={route}>
-                          <CartInsertWrapper>
+                          <CartInsertWrapper isEmpty={isCartEmpty}>
                             <Dot />
                             {icon}
                           </CartInsertWrapper>

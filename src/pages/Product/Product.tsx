@@ -2,8 +2,8 @@ import { useLoaderData } from "react-router-dom";
 
 import { useAppSelector } from "../../withTypes";
 import { selectItemById } from "../../state/selectors/cartSelector";
-import { useDispatch } from "react-redux";
-import { add } from "../../state/reducers/cartReducer";
+// import { useDispatch } from "react-redux";
+// import { add } from "../../state/reducers/cartReducer";
 import { ProductI } from "../../utils/types/productTypes";
 import Accordion from "../../components/Accordion/Accordion";
 import Button from "../../components/Button/Button";
