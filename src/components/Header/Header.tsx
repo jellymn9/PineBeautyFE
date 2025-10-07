@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@custom-react-hooks/use-media-query";
-import { ShoppingCart, Menu } from "lucide-react";
+import { ShoppingCart, Menu, Dot } from "lucide-react";
 
-import { navLinks } from "../../utils/constants";
+import { navLinks, routes } from "../../utils/constants";
 import Icon from "../Icon/Icon";
 import {
   BarAnimationContainer,
+  CartInsertWrapper,
   CircleAnimation,
   Container,
   ContainerBlock,
@@ -89,9 +90,20 @@ function Header() {
                   ))}
                 </BarAnimationContainer>
                 <CircleAnimation>
-                  {navLinks.iconLinks.map(({ route, icon }) => (
-                    <LinkStyled to={route}>{icon}</LinkStyled>
-                  ))}
+                  {navLinks.iconLinks.map(({ route, icon }) => {
+                    if (route === routes.cart) {
+                      return (
+                        <LinkStyled to={route}>
+                          <CartInsertWrapper>
+                            <Dot />
+                            {icon}
+                          </CartInsertWrapper>
+                        </LinkStyled>
+                      );
+                    } else {
+                      return <LinkStyled to={route}>{icon}</LinkStyled>;
+                    }
+                  })}
                 </CircleAnimation>
               </LinksContainerNav>
             </InnerContainer>

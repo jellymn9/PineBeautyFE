@@ -1,7 +1,7 @@
 import { Trash } from "lucide-react";
 import { formatPrice } from "../../helpers/formatters";
 import { remove } from "../../state/reducers/cartReducer";
-import { CartItemT, RawProductT } from "../../utils/types";
+import { CartItemI } from "../../utils/types/cartTypes";
 import { useAppDispatch } from "../../withTypes";
 import Button from "../Button/Button";
 import Counter from "../Counter/Counter";
@@ -19,7 +19,7 @@ import {
 } from "./CartItemStyled";
 
 interface CartItemPropsI {
-  product: RawProductT & CartItemT;
+  product: CartItemI;
 }
 
 const imageURL =
@@ -28,7 +28,7 @@ const imageURL =
     : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
 
 export const CartItem = ({ product }: CartItemPropsI) => {
-  const { id, price, name, quantity, currency } = product;
+  const { id, price, name, quantity } = product;
 
   const dispatch = useAppDispatch();
 
@@ -42,7 +42,7 @@ export const CartItem = ({ product }: CartItemPropsI) => {
             <ItemDetails>
               <span>50 ML</span>
               <span>Pine Beauty</span>
-              <ItemPrice>{formatPrice(price, currency)}</ItemPrice>
+              <ItemPrice>{formatPrice(price, "EUR")}</ItemPrice>
             </ItemDetails>
             <Counter id={id} quantity={quantity} />
           </ItemDetailsAndActions>

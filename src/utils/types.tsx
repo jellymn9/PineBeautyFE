@@ -102,12 +102,12 @@ export type ProductCategoriesMappedT = {
 
 export type CartProductT = Pick<RawProductT, "id" | "price" | "name" | "image">;
 
-export type CartItemT = {
-  //product: CartProductT;
-  id: string;
-  quantity: number;
-};
+// export type CartItemT = {
+//   //product: CartProductT;
+//   id: string;
+//   quantity: number;
+// };
 
-export type CartDetailedProductT = Array<RawProductT & CartItemT>;
+//export type CartDetailedProductT = Array<RawProductT & CartItemT>;
 
 export type ColorThemeT = "dark" | "light";

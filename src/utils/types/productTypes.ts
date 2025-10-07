@@ -32,3 +32,5 @@ export interface ProductsApiResponseI {
 }
 
 export type GetProductT = (id?: string) => Promise<ProductI | null>;
+
+export type GetProductsBatchT = (ids: Array<string>) => Promise<ProductI[]>;

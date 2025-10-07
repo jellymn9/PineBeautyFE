@@ -8,19 +8,22 @@ import {
   QueryDocumentSnapshot,
   doc,
   getDoc,
+  where,
+  DocumentData,
 } from "firebase/firestore";
 
 import { db } from "../firebase";
 
-import apiClient from "../utils/axios";
-import endpoint from "./endpoints";
+//import apiClient from "../utils/axios";
+//import endpoint from "./endpoints";
 import {
   ProductsApiResponseI,
   ProductI,
   GetProductT,
+  GetProductsBatchT,
 } from "../utils/types/productTypes";
 
-import { RawProductT } from "../utils/types";
+//import { RawProductT } from "../utils/types";
 
 export const getProducts = async (
   currentLastProduct: QueryDocumentSnapshot | null,
@@ -121,16 +124,58 @@ export const getSingleProduct: GetProductT = async (id?: string) => {
   }
 };
 
-export const getProductsBatch = async (ids: Array<string>) => {
-  try {
-    const products = await apiClient.post<{ products: Array<RawProductT> }>(
-      endpoint.products,
-      { ids }
-    );
+export const getProductsBatch: GetProductsBatchT = async (
+  ids: Array<string>
+) => {
+  if (ids.length === 0) {
+    return [];
+  }
 
-    return products.data?.products;
+  try {
+    const productsRef = collection(db, "products");
+    const allProducts: Array<ProductI> = [];
+
+    // Firestore `in` operator has a limit of 10 items.
+    const chunks = [];
+    for (let i = 0; i < ids.length; i += 10) {
+      chunks.push(ids.slice(i, i + 10));
+    }
+
+    // Process each chunk with a separate query
+    const promises = chunks.map((chunk) => {
+      const q = query(productsRef, where("__name__", "in", chunk));
+      return getDocs(q);
+    });
+
+    const snapshots = await Promise.all(promises);
+
+    // Combine the results from all snapshots
+    snapshots.forEach((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        allProducts.push({
+          id: doc.id,
+          ...(doc.data() as DocumentData),
+        } as ProductI);
+      });
+    });
+
+    return allProducts;
   } catch (e) {
-    console.log("error: ", e);
+    console.error("Error getting products batch:", e);
     throw e;
   }
 };
+
+// export const getProductsBatch = async (ids: Array<string>) => {
+//   try {
+//     const products = await apiClient.post<{ products: Array<RawProductT> }>(
+//       endpoint.products,
+//       { ids }
+//     );
+
+//     return products.data?.products;
+//   } catch (e) {
+//     console.log("error: ", e);
+//     throw e;
+//   }
+// };

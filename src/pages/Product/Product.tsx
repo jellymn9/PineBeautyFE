@@ -26,6 +26,9 @@ import {
   SecondaryContainer,
   NoProductMessage,
 } from "./ProductStyled";
+import { useAuth } from "../../context/AuthContext";
+import { addProductToCart } from "../../APIs/carts";
+import { setOrUpdateCartLS } from "../../helpers/cartHelper";
 
 const desc = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const nameAddition = " | 100% organic and cold pressed";
@@ -34,13 +37,10 @@ const relatedProductsTitle = "Related products";
 const nonExistentProductMessage = "Product not found.";
 
 function Product() {
+  const { isLoggedIn, user } = useAuth();
   const product = useLoaderData() as ProductI | null;
 
-  const dispatch = useDispatch();
-
-  const handleAdd = (productId: string) => {
-    dispatch(add({ id: productId, quantity: 1 })); // change quantity later
-  };
+  //const dispatch = useDispatch();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const itemInCart = useAppSelector((state) =>
@@ -50,6 +50,29 @@ function Product() {
   if (!product) {
     return <NoProductMessage>{nonExistentProductMessage}</NoProductMessage>;
   }
+
+  const handleAdd = async () => {
+    if (isLoggedIn && user) {
+      await addProductToCart(user?.uid, {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+      });
+    } else {
+      setOrUpdateCartLS({
+        items: {
+          [product.id]: {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            quantity: 1,
+          },
+        },
+      });
+    }
+  };
 
   //temporary image
   const imageURL =
@@ -88,7 +111,7 @@ function Product() {
             <Button
               styleVariant="primary"
               text="add to cart"
-              handleClick={() => handleAdd(product.id)}
+              handleClick={() => handleAdd()}
             />
             <GeneralProductInfo />
             <ProductDescription>{desc}</ProductDescription>
