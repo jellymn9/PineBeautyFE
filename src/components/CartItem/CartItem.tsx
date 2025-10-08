@@ -1,8 +1,6 @@
 import { Trash } from "lucide-react";
 import { formatPrice } from "../../helpers/formatters";
-import { remove } from "../../state/reducers/cartReducer";
 import { CartItemI } from "../../utils/types/cartTypes";
-import { useAppDispatch } from "../../withTypes";
 import Button from "../Button/Button";
 import Counter from "../Counter/Counter";
 import {
@@ -17,6 +15,8 @@ import {
   BtnWrapper,
   DetailsAndBtnWrapper,
 } from "./CartItemStyled";
+import { useAuth } from "../../context/AuthContext";
+import { removeProductFromCart } from "../../APIs/carts";
 
 interface CartItemPropsI {
   product: CartItemI;
@@ -30,7 +30,13 @@ const imageURL =
 export const CartItem = ({ product }: CartItemPropsI) => {
   const { id, price, name, quantity } = product;
 
-  const dispatch = useAppDispatch();
+  const { user } = useAuth();
+
+  const handleRemove = async () => {
+    if (user) {
+      await removeProductFromCart(user?.uid, id);
+    }
+  };
 
   return (
     <Item>
@@ -44,14 +50,14 @@ export const CartItem = ({ product }: CartItemPropsI) => {
               <span>Pine Beauty</span>
               <ItemPrice>{formatPrice(price, "EUR")}</ItemPrice>
             </ItemDetails>
-            <Counter id={id} quantity={quantity} />
+            <Counter id={id} quantity={quantity} userId={user?.uid || ""} />
           </ItemDetailsAndActions>
           <BtnWrapper>
             <Button
               variant="icon"
               text=""
               icon={<Trash size={22} strokeWidth={1.5} />}
-              handleClick={() => dispatch(remove(id))}
+              handleClick={handleRemove}
             />
           </BtnWrapper>
         </DetailsAndBtnWrapper>

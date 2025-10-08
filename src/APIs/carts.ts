@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { CartData, CartItemI } from "../utils/types/cartTypes";
 import { db } from "../firebase";
 
@@ -69,8 +69,12 @@ export const removeProductFromCart = async (
     const updatedItems = { ...currentCart.items };
     delete updatedItems[productId];
 
-    // Update the document with the new map
-    await setOrUpdateCart(userId, { items: updatedItems });
+    try {
+      await updateDoc(cartRef, { items: updatedItems });
+    } catch (e) {
+      console.error("Error updating cart items map:", e);
+      throw e;
+    }
   }
 };
 
@@ -99,6 +103,38 @@ export const decreaseProductQuantity = async (
       } else {
         await removeProductFromCart(userId, productId);
       }
+    }
+  }
+};
+
+export const increaseCartItemQuantity = async (
+  userId: string,
+  productId: string,
+  amount: number = 1
+): Promise<void> => {
+  if (!userId || !productId) {
+    console.error("User ID and Product ID are required.");
+    return;
+  }
+
+  const cartRef = doc(db, "carts", userId);
+  const cartSnap = await getDoc(cartRef);
+
+  if (cartSnap.exists()) {
+    const currentCart = cartSnap.data() as CartData;
+    const cartItems = currentCart.items || {};
+    const existingItem = cartItems[productId];
+
+    if (existingItem) {
+      existingItem.quantity += amount;
+
+      cartItems[productId] = existingItem;
+
+      await setOrUpdateCart(userId, { items: cartItems });
+    } else {
+      console.warn(
+        `Attempted to increase quantity for non-existent product ID: ${productId}`
+      );
     }
   }
 };

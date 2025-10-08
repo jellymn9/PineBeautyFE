@@ -19,7 +19,7 @@ function Cart() {
   const { user } = useAuth();
   const [subtotal, setSubtotal] = useState<number>(0);
 
-  const { cart, loading, error } = useCart(user?.uid || null);
+  const { cart, loading } = useCart(user?.uid || null);
 
   const title = "Shopping Cart";
   const emptyCart = "There are no products in the cart.";

@@ -27,7 +27,7 @@ function Header() {
   const [isScrollingUp, setScrollingUp] = useState(false);
   const [isStickyHeader, setStickyHeader] = useState(false);
   const { user } = useAuth();
-  const { cart, loading, error } = useCart(user?.uid || null);
+  const { cart } = useCart(user?.uid || null);
 
   const { hoverLinkWidth, translateStep, handleHover, handleMouseLeave } =
     useHoverBarAnimation();
