@@ -5,16 +5,15 @@ import { SubmitHandler } from "react-hook-form";
 
 import Form from "../../../components/Form/Form";
 import { AuthFormsContainer } from "../SignIn/SignInStyled";
-import { register, login as getToken } from "../../../APIs/auth";
+import { register } from "../../../APIs/auth";
 import { useState } from "react";
-import { useAuth } from "../../../context/AuthContext";
 
 const signUpSchema = yup.object({
-  username: yup
-    .string()
-    .required("Username field is required.")
-    .min(4, "Username must be at least 4 characters.")
-    .max(12, "Username must be at most 12 characters."),
+  // username: yup
+  //   .string()
+  //   .required("Username field is required.")
+  //   .min(4, "Username must be at least 4 characters.")
+  //   .max(12, "Username must be at most 12 characters."),
   email: yup.string().email().required("Email field is required."),
   password: yup.string().required("Password is required"),
   repeatPassword: yup
@@ -33,18 +32,18 @@ type FormFieldsT = {
 };
 
 const SignUp = () => {
-  const { login } = useAuth();
+  //const { login } = useAuth();
   const navigate = useNavigate();
 
   const [isRegSuccess, setRegSuccess] = useState(true);
 
   const formFields: Array<FormFieldsT> = [
-    {
-      label: "Username",
-      inputType: "text",
-      inputId: "registerUsername",
-      registerName: "username",
-    },
+    // {
+    //   label: "Username",
+    //   inputType: "text",
+    //   inputId: "registerUsername",
+    //   registerName: "username",
+    // },
     {
       label: "Email address",
       inputType: "email",
@@ -68,19 +67,11 @@ const SignUp = () => {
   const onSubmit: SubmitHandler<InputsT> = async (data) => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      await register(data.username, data.email, data.password);
+      await register(data.email, data.password);
       setRegSuccess(true);
 
-      //add message to user that registration is successful
-      const token = await getToken(data.username, data.password);
-      login(token);
       navigate(routesC.home);
     } catch (_e) {
-      // if (_e instanceof Error) {
-      //   console.error("Registration error: ", _e.message);
-      // } else {
-      //   console.error("Registration error: ", _e);
-      // }
       setRegSuccess(false);
     }
   };

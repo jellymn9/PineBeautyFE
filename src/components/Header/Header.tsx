@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@custom-react-hooks/use-media-query";
-import { ShoppingCart, Menu } from "lucide-react";
+import { ShoppingCart, Menu, Dot } from "lucide-react";
 
-import { navLinks } from "../../utils/constants";
+import { navLinks, routes } from "../../utils/constants";
 import Icon from "../Icon/Icon";
 import {
   BarAnimationContainer,
+  CartInsertWrapper,
   CircleAnimation,
   Container,
   ContainerBlock,
@@ -17,16 +18,21 @@ import {
 } from "./HeaderStyled";
 import breakpoints from "../../utils/breakpoints";
 import { useDrawer } from "../../context/DrawerContext";
-import { useHoverBarAnimation } from "../../helpers/customHooks";
+import { useCart, useHoverBarAnimation } from "../../helpers/customHooks";
+import { useAuth } from "../../context/AuthContext";
 
 function Header() {
   const timeout = useRef(0);
   const currentScrollY = useRef(0);
   const [isScrollingUp, setScrollingUp] = useState(false);
   const [isStickyHeader, setStickyHeader] = useState(false);
+  const { user } = useAuth();
+  const { cart } = useCart(user?.uid || null);
 
   const { hoverLinkWidth, translateStep, handleHover, handleMouseLeave } =
     useHoverBarAnimation();
+
+  const isCartEmpty = Object.keys(cart.items).length === 0;
 
   const handleScroll = useCallback(() => {
     const newScrollY = window.scrollY;
@@ -89,9 +95,20 @@ function Header() {
                   ))}
                 </BarAnimationContainer>
                 <CircleAnimation>
-                  {navLinks.iconLinks.map(({ route, icon }) => (
-                    <LinkStyled to={route}>{icon}</LinkStyled>
-                  ))}
+                  {navLinks.iconLinks.map(({ route, icon }) => {
+                    if (route === routes.cart) {
+                      return (
+                        <LinkStyled to={route}>
+                          <CartInsertWrapper isEmpty={isCartEmpty}>
+                            <Dot />
+                            {icon}
+                          </CartInsertWrapper>
+                        </LinkStyled>
+                      );
+                    } else {
+                      return <LinkStyled to={route}>{icon}</LinkStyled>;
+                    }
+                  })}
                 </CircleAnimation>
               </LinksContainerNav>
             </InnerContainer>

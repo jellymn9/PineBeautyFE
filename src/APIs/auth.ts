@@ -1,33 +1,72 @@
-import apiClient from "../utils/axios";
-import endpoint from "./endpoints";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../firebase";
 
-export const register = async (
-  username: string,
-  email = "someemail@some.com",
-  password: string
-) => {
+//import apiClient from "../utils/axios";
+//import endpoint from "./endpoints";
+
+// export const register = async (
+//   username: string,
+//   email = "someemail@some.com",
+//   password: string
+// ) => {
+//   try {
+//     const user = await apiClient.post(endpoint.auth + "/register", {
+//       username,
+//       email,
+//       password,
+//     });
+
+//     return user;
+//   } catch (e) {
+//     console.log("user registration error: ", e);
+//     throw e;
+//   }
+// };
+
+// export const login = async (username: string, password: string) => {
+//   try {
+//     const jwtToken: string = await apiClient.post(endpoint.auth + "/login", {
+//       username,
+//       password,
+//     });
+
+//     return jwtToken;
+//   } catch (e) {
+//     console.log("user login error: ", e);
+//     throw e;
+//   }
+// };
+
+export const register = async (email: string, password: string) => {
   try {
-    const user = await apiClient.post(endpoint.auth + "/register", {
-      username,
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
       email,
-      password,
-    });
+      password
+    );
+    // User account created and signed in successfully.
+    // The user's information is available in userCredential.user
+    console.log("User registered:", userCredential.user);
 
-    return user;
+    return userCredential.user;
   } catch (e) {
-    console.log("user registration error: ", e);
+    console.error("User registration error:", e);
     throw e;
   }
 };
 
-export const login = async (username: string, password: string) => {
+export const login = async (email: string, password: string) => {
   try {
-    const jwtToken: string = await apiClient.post(endpoint.auth + "/login", {
-      username,
-      password,
-    });
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-    return jwtToken;
+    return userCredential.user;
   } catch (e) {
     console.log("user login error: ", e);
     throw e;

@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react";
 
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../../context/AuthContext";
 import Button from "../../components/Button/Button";
 import {
   HSeparator,
@@ -11,6 +11,8 @@ import {
   ProfileCardTitle,
   ProfileContainer,
 } from "./ProfileStyled";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const tabs = [
   { id: 1, title: "Order history" },
@@ -18,10 +20,15 @@ const tabs = [
 ];
 
 function Profile() {
-  const { logout } = useAuth();
+  //const { logout } = useAuth();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      console.log("User signed out successfully.");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   return (

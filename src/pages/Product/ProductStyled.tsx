@@ -135,3 +135,11 @@ export const CounterAndAddBtnWrapper = styled.div`
   flex-direction: row;
   grid-gap: 26px;
 `;
+
+export const NoProductMessage = styled.p`
+  color: ${colors.blackTransparent1};
+  text-align: center;
+  line-height: 48px;
+  font-size: 28px;
+  padding: 36px;
+`;

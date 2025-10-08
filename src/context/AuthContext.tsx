@@ -1,15 +1,18 @@
-import { createContext, useContext, useState, ReactNode } from "react";
-
 import {
-  isUserAuthenticated,
-  removeUserSession,
-  setUserSession,
-} from "../helpers/authHelper";
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
+
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "../firebase";
 
 type AuthContextType = {
   isLoggedIn: boolean;
-  login: (token: string) => void;
-  logout: () => void;
+  user: User | null;
+  loading: boolean;
 };
 
 type AuthProviderProps = {
@@ -19,24 +22,25 @@ type AuthProviderProps = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return isUserAuthenticated();
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (token: string) => {
-    setUserSession(token);
-    setIsLoggedIn(true);
-  };
-  const logout = () => {
-    removeUserSession();
-    setIsLoggedIn(false);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const value = {
+    isLoggedIn: !!user,
+    user,
+    loading,
   };
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 // Custom hook with type safety

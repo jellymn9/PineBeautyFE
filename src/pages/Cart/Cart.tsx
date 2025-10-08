@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { getProductsBatch } from "../../APIs/products";
-import { useAppSelector } from "../../withTypes";
-import { mapQuantityToProducts } from "../../helpers/dataMapper";
-import { CartDetailedProductT } from "../../utils/types";
-import { calculateSubtotal } from "../../helpers/cartHelper";
+import { useAuth } from "../../context/AuthContext";
 
-import {
-  selectAllItems,
-  selectItemIds,
-} from "../../state/selectors/cartSelector";
 import { CartItem } from "../../components/CartItem/CartItem";
 import { Loader } from "../../components/Loader/Loader";
 import {
@@ -21,47 +13,27 @@ import {
 } from "./CartStyled";
 import { formatPrice } from "../../helpers/formatters";
 import Button from "../../components/Button/Button";
+import { useCart } from "../../helpers/customHooks";
 
 function Cart() {
-  const cartProductsIDs = useAppSelector(selectItemIds);
-  const cartItems = useAppSelector(selectAllItems);
-  const [products, setProducts] = useState<CartDetailedProductT>([]);
+  const { user } = useAuth();
   const [subtotal, setSubtotal] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+
+  const { cart, loading } = useCart(user?.uid || null);
 
   const title = "Shopping Cart";
   const emptyCart = "There are no products in the cart.";
 
-  useEffect(() => {
-    // I DONT LIKE IT!
-    if (!products.length && cartItems.length) {
-      // fetch products just first time, for other cases handle quantity updates
-      const getCartProducts = async () => {
-        // TEST THIS CODE
-        try {
-          setLoading(true);
-          const cartProducts = await getProductsBatch(cartProductsIDs);
-
-          console.log(cartProducts);
-
-          setProducts(mapQuantityToProducts(cartProducts, cartItems));
-        } catch (e) {
-          console.log("111: ", e);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      getCartProducts();
-    } else {
-      //map new quantity from cart to products
-      setProducts((p) => mapQuantityToProducts(p, cartItems));
-    }
-  }, [cartProductsIDs, cartItems, products.length]);
+  const isCartEmpty = Object.keys(cart.items).length === 0;
 
   useEffect(() => {
-    setSubtotal(calculateSubtotal(products));
-  }, [products]);
+    const subtotalPrice = Object.keys(cart.items).reduce((acc, current) => {
+      acc += cart.items[current].price * cart.items[current].quantity;
+      return acc;
+    }, 0); // move to helper later..
+
+    setSubtotal(subtotalPrice);
+  }, [cart]);
 
   return (
     <Container>
@@ -70,24 +42,27 @@ function Cart() {
         <Loader />
       ) : (
         <InnerContainer>
-          {!products.length ? (
+          {isCartEmpty ? (
             <p>{emptyCart}</p>
           ) : (
-            <div>
-              <List>
-                {products.map((product) => (
-                  <CartItem product={product} />
-                ))}
-              </List>
-            </div>
+            <>
+              <div>
+                <List>
+                  {Object.keys(cart.items).map((product) => (
+                    <CartItem product={cart.items[product]} />
+                  ))}
+                </List>
+              </div>
+
+              <ButtonWrapper>
+                <Button
+                  styleVariant="primary"
+                  text={`Proceed to checkout ${formatPrice(subtotal)}`}
+                  handleClick={() => {}}
+                />
+              </ButtonWrapper>
+            </>
           )}
-          <ButtonWrapper>
-            <Button
-              styleVariant="primary"
-              text={`Proceed to checkout ${formatPrice(subtotal)}`}
-              handleClick={() => {}}
-            />
-          </ButtonWrapper>
         </InnerContainer>
       )}
     </Container>

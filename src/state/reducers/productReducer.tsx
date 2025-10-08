@@ -1,45 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-//import type { PayloadAction } from "@reduxjs/toolkit";
-
-import { getProducts } from "../../APIs/products";
-import { FetchProductsThunkResI, RawProductT } from "../../utils/types";
-import { metaDataSelector } from "../selectors/productSelector";
 import { RootState } from "../../store";
+import {
+  ProductsApiResponseI,
+  ProductsStateI,
+  ProductI,
+} from "../../utils/types/productTypes";
+import { getProducts } from "../../APIs/products";
 
-interface ProductsStateI {
-  list: Array<RawProductT>;
-  skip: [number, number];
-  cursor?: string;
-}
-export interface InitialProductsStateI {
-  products: ProductsStateI;
-  status: "idle" | "pending" | "succeeded" | "failed";
-}
-const initialState: InitialProductsStateI = {
-  products: { list: [], skip: [0, 0], cursor: undefined },
+import { cursorSelector } from "../selectors/productSelector";
+
+const initialState: ProductsStateI = {
+  hasMore: true,
+  cursor: null,
   status: "idle",
+  list: [],
 };
-
+//check out status logic..
 export const fetchProductsThunk = createAsyncThunk<
-  FetchProductsThunkResI,
-  { isForward: boolean; page?: number },
+  ProductsApiResponseI,
+  { productsPerPage: number },
   { state: RootState }
 >(
   "products/fetchProducts",
-  async ({ isForward = true, page = 6 }, { getState }) => {
+  async ({ productsPerPage }, { getState }) => {
     const state = getState();
 
-    console.log("bla bla bla");
-
-    const response = await getProducts({
-      isForward: isForward,
-      page: page,
-      skip: metaDataSelector(state).skip,
-      cursor: metaDataSelector(state).cursor,
-    });
+    const response = await getProducts(cursorSelector(state), productsPerPage);
     return {
-      list: response.products,
-      skip: response.skip,
+      list: response.list,
+      hasMore: response.hasMore,
       cursor: response.cursor,
     };
   }
@@ -70,15 +59,17 @@ export const productSlice = createSlice({
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.status = "succeeded";
         // Check out immer docs.
-        if (action.payload.list.length) {
-          const newList: Array<RawProductT> = [
-            ...state.products.list,
+        if (!action.payload.cursor && state.list.length === 0) {
+          state.list = action.payload.list;
+        } else {
+          const newList: Array<ProductI> = [
+            ...state.list,
             ...action.payload.list,
           ];
-          state.products.list = newList;
+          state.list = newList;
         }
-        state.products.skip = action.payload.skip;
-        state.products.cursor = action.payload.cursor;
+        state.cursor = action.payload.cursor;
+        state.hasMore = action.payload.hasMore;
       })
       .addCase(fetchProductsThunk.rejected, (state) => {
         state.status = "failed";
@@ -86,5 +77,4 @@ export const productSlice = createSlice({
   },
 });
 
-//export const { getProducts } = productSlice.actions;
 export default productSlice.reducer;
