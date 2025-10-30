@@ -9,6 +9,8 @@ import { GlobalStyles } from "./utils/globalStyles";
 import "./index.css";
 import { DrawerProvider } from "./context/DrawerContext";
 import { AuthProvider } from "./context/AuthContext";
+import { ToastProvider } from "./context/ToastContext";
+import { Toast } from "./components/Toast/Toast";
 
 const router = createBrowserRouter(routes);
 
@@ -48,10 +50,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Profiler id="App" onRender={onRender}>
       <AuthProvider>
         <DrawerProvider>
-          <Provider store={store}>
-            <GlobalStyles />
-            <RouterProvider router={router} />
-          </Provider>
+          <ToastProvider>
+            <Provider store={store}>
+              <GlobalStyles />
+              <Toast />
+              <RouterProvider router={router} />
+            </Provider>
+          </ToastProvider>
         </DrawerProvider>
       </AuthProvider>
     </Profiler>
