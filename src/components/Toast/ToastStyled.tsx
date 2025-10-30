@@ -1,16 +1,20 @@
 import styled from "styled-components";
 import colors from "../../utils/colors";
-import { ToastMessageTypeT } from "./Toast";
+import { ToastMessageTypeT } from "./../../context/ToastContext";
 
 export const ToastContainer = styled.div<{
-  messageType: ToastMessageTypeT;
+  $messageType: ToastMessageTypeT;
 }>`
+  position: fixed;
+  top: 10%;
+  left: 40%;
+  z-index: 1000;
   min-width: 300px;
   width: fit-content;
   padding: 16px 24px;
   background-color: ${colors.babyPowder};
-  border-color: ${({ messageType }) => {
-    switch (messageType) {
+  border-color: ${(props) => {
+    switch (props.$messageType) {
       case "success":
         return colors.olivine;
       case "error":
@@ -27,5 +31,5 @@ export const ToastContainer = styled.div<{
 
 export const InnerWrapper = styled.div`
   display: flex;
-  align-items: space-between;
+  align-items: center;
 `;

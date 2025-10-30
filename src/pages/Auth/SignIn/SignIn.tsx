@@ -7,6 +7,9 @@ import { routes as routesC } from "../../../utils/constants";
 import { AuthFormsContainer } from "./SignInStyled";
 import Form from "../../../components/Form/Form";
 import { login } from "../../../APIs/auth";
+import { getCart, overwriteCart } from "../../../APIs/carts";
+import { clearCartLocal, mergeCartsLocal } from "../../../helpers/cartHelper";
+import { useToast } from "../../../context/ToastContext";
 
 const signInSchema = yup.object({
   email: yup
@@ -28,14 +31,34 @@ type FormFieldsT = {
 function SignIn() {
   const [isLoginError, setLoginError] = useState(false);
 
-  //const { login } = useAuth();
+  const { showToast } = useToast();
 
   const location = useLocation();
   const navigate = useNavigate();
 
+  const mergeCarts = async (userId: string) => {
+    try {
+      const serverCart = await getCart(userId);
+
+      const mergeLocal = mergeCartsLocal(serverCart);
+
+      if (!mergeLocal) {
+        return;
+      }
+
+      await overwriteCart(userId, mergeLocal);
+      clearCartLocal();
+      showToast("Carts merged successfully!", "success");
+    } catch (e) {
+      showToast("Error merging carts.", "error");
+    }
+  };
+
   const onSubmit: SubmitHandler<InputsT> = async (data) => {
     try {
-      await login(data.email, data.password);
+      const loginData = await login(data.email, data.password);
+
+      await mergeCarts(loginData.uid);
 
       navigate(location.state?.from ?? routesC.home);
     } catch (e) {
@@ -63,7 +86,7 @@ function SignIn() {
       <Form<InputsT>
         schema={signInSchema}
         buttonText="Sign in"
-        heading="Sing in"
+        heading="Sign in"
         formFields={formFields}
         onSubmit={onSubmit}
       />

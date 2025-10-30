@@ -145,22 +145,29 @@ export const getCart = async (userId: string | null): Promise<CartData> => {
   }
 
   try {
-    // Get a reference to the specific cart document
     const cartRef = doc(db, "carts", userId);
 
-    // Fetch the document once
     const docSnap = await getDoc(cartRef);
 
     if (docSnap.exists()) {
       const cartData = docSnap.data() as CartData;
       return cartData;
     } else {
-      // If the document doesn't exist, the cart is empty
       return { items: {} };
     }
   } catch (err) {
     console.error("Error fetching cart:", err);
-    // In case of an error, return an empty cart to prevent app breakage
     return { items: {} };
   }
+};
+
+export const overwriteCart = async (
+  userId: string,
+  mergedCartData: CartData
+): Promise<boolean> => {
+  const cartRef = doc(db, "carts", userId);
+
+  await setDoc(cartRef, mergedCartData);
+
+  return true;
 };
