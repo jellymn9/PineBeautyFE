@@ -53,117 +53,126 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
           <Slider>
             <ProductCard
               product={{
-                id: "",
+                id: "1",
                 name: " test name 1",
                 price: 123,
-                currency: "$",
+                currency: "EUR",
                 image: "",
-                categoryName: "OIL",
+                category: "OIL",
                 productTypeName: "SCRUBS_AND_MASKS",
+                tags: [],
               }}
             ></ProductCard>
           </Slider>
           <Slider>
             <ProductCard
               product={{
-                id: "",
+                id: "2",
                 name: " test name 2",
                 price: 123,
-                currency: "$",
+                currency: "EUR",
                 image: "",
-                categoryName: "OIL",
+                category: "OIL",
                 productTypeName: "SCRUBS_AND_MASKS",
+                tags: [],
               }}
             ></ProductCard>
           </Slider>
           <Slider>
             <ProductCard
               product={{
-                id: "",
+                id: "3",
                 name: " test name 3",
                 price: 123,
-                currency: "$",
+                currency: "EUR",
                 image: "",
-                categoryName: "OIL",
+                category: "OIL",
                 productTypeName: "SCRUBS_AND_MASKS",
+                tags: [],
               }}
             ></ProductCard>
           </Slider>
           <Slider>
             <ProductCard
               product={{
-                id: "",
+                id: "4",
                 name: " test name",
                 price: 123,
-                currency: "$",
+                currency: "EUR",
                 image: "",
-                categoryName: "OIL",
+                category: "OIL",
                 productTypeName: "SCRUBS_AND_MASKS",
+                tags: [],
               }}
             ></ProductCard>
           </Slider>
           <Slider>
             <ProductCard
               product={{
-                id: "",
+                id: "5",
                 name: " test name",
                 price: 123,
-                currency: "$",
+                currency: "EUR",
                 image: "",
-                categoryName: "OIL",
+                category: "OIL",
                 productTypeName: "SCRUBS_AND_MASKS",
+                tags: [],
               }}
             ></ProductCard>
           </Slider>
           <Slider>
             <ProductCard
               product={{
-                id: "",
+                id: "6",
                 name: " test name",
                 price: 123,
-                currency: "$",
+                currency: "EUR",
                 image: "",
-                categoryName: "OIL",
+                category: "OIL",
                 productTypeName: "SCRUBS_AND_MASKS",
+                tags: [],
               }}
             ></ProductCard>
           </Slider>
           <Slider>
             <ProductCard
               product={{
-                id: "",
+                id: "7",
                 name: " test name",
                 price: 123,
-                currency: "$",
+                currency: "EUR",
                 image: "",
-                categoryName: "OIL",
+                category: "OIL",
                 productTypeName: "SCRUBS_AND_MASKS",
+                tags: [],
               }}
             ></ProductCard>
           </Slider>
           <Slider>
             <ProductCard
               product={{
-                id: "",
+                id: "8",
                 name: " test name",
                 price: 123,
-                currency: "$",
+                currency: "EUR",
                 image: "",
-                categoryName: "OIL",
+                category: "OIL",
                 productTypeName: "SCRUBS_AND_MASKS",
+                tags: [],
               }}
             ></ProductCard>
           </Slider>
           <Slider>
             <ProductCard
               product={{
-                id: "",
+                id: "9",
                 name: " test name",
                 price: 123,
-                currency: "$",
+                currency: "EUR",
                 image: "",
-                categoryName: "OIL",
+                category: "OIL",
                 productTypeName: "SCRUBS_AND_MASKS",
+                tags: [],
               }}
             ></ProductCard>
           </Slider>

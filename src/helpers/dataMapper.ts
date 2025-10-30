@@ -1,8 +1,9 @@
-import { CartItemT, RawProductT } from "@/utils/types";
+import { CartItemI } from "@/utils/types/cartTypes";
+import { ProductI } from "@/utils/types/productTypes";
 
 export const mapQuantityToProducts = (
-  products: Array<RawProductT>,
-  productsWithQuantity: Array<CartItemT>
+  products: Array<ProductI>,
+  productsWithQuantity: Array<CartItemI>
 ) => {
   const productsMap = new Map(products.map((p) => [p.id, p]));
 
