@@ -1,8 +1,10 @@
 import { Trash } from "lucide-react";
-import { formatPrice } from "../../helpers/formatters";
-import { CartItemI } from "../../utils/types/cartTypes";
-import Button from "../Button/Button";
-import Counter from "../Counter/Counter";
+import { formatPrice } from "@/helpers/formatters";
+import { CartItemI } from "@/utils/types/cartTypes";
+import Button from "@/components/Button/Button";
+import Counter from "@/components/Counter/Counter";
+import { useAuth } from "@/context/AuthContext";
+import { removeProductFromCart } from "@/APIs/carts";
 import {
   Item,
   ItemImg,
@@ -15,8 +17,6 @@ import {
   BtnWrapper,
   DetailsAndBtnWrapper,
 } from "./CartItemStyled";
-import { useAuth } from "../../context/AuthContext";
-import { removeProductFromCart } from "../../APIs/carts";
 
 interface CartItemPropsI {
   product: CartItemI;

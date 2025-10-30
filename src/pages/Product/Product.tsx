@@ -1,15 +1,18 @@
 import { useLoaderData } from "react-router-dom";
 
-import { useAppSelector } from "../../withTypes";
-import { selectItemById } from "../../state/selectors/cartSelector";
+import { useAppSelector } from "@/withTypes";
+import { selectItemById } from "@/state/selectors/cartSelector";
 // import { useDispatch } from "react-redux";
 // import { add } from "../../state/reducers/cartReducer";
-import { ProductI } from "../../utils/types/productTypes";
-import Accordion from "../../components/Accordion/Accordion";
-import Button from "../../components/Button/Button";
-import GeneralProductInfo from "../../components/GeneralProductInfo/GeneralProductInfo";
-import PineBeautyFavs from "../../components/Favs/Favs";
-import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
+import { ProductI } from "@/utils/types/productTypes";
+import { useAuth } from "@/context/AuthContext";
+import { addProductToCart } from "@/APIs/carts";
+import { setOrUpdateCartLS } from "@/helpers/cartHelper";
+import Accordion from "@/components/Accordion/Accordion";
+import Button from "@/components/Button/Button";
+import GeneralProductInfo from "@/components/GeneralProductInfo/GeneralProductInfo";
+import PineBeautyFavs from "@/components/Favs/Favs";
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import {
   Container,
   Gallery,
@@ -26,9 +29,6 @@ import {
   SecondaryContainer,
   NoProductMessage,
 } from "./ProductStyled";
-import { useAuth } from "../../context/AuthContext";
-import { addProductToCart } from "../../APIs/carts";
-import { setOrUpdateCartLS } from "../../helpers/cartHelper";
 
 const desc = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const nameAddition = " | 100% organic and cold pressed";

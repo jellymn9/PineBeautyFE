@@ -12,7 +12,7 @@ import {
   DocumentData,
 } from "firebase/firestore";
 
-import { db } from "../firebase";
+import { db } from "@/firebase";
 
 //import apiClient from "../utils/axios";
 //import endpoint from "./endpoints";

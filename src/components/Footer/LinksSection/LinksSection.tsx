@@ -1,8 +1,8 @@
 import { useMediaQuery } from "@custom-react-hooks/use-media-query";
 
-import Accordion from "../../Accordion/Accordion";
-import ContactInfo from "../ContactInfo/ContactInfo";
-import LinksList from "../Links/Links";
+import Accordion from "@/components/Accordion/Accordion";
+import ContactInfo from "@/components/Footer/ContactInfo/ContactInfo";
+import LinksList from "@/components/Footer/Links/Links";
 import { Container, LinksContainer } from "./LinksSectionStyled";
 
 type LinkComponentF = (heading?: string) => JSX.Element;

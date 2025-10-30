@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { routes } from "../../utils/constants";
-import { ProductI } from "../../utils/types/productTypes";
+import { routes } from "@/utils/constants";
+import { ProductI } from "@/utils/types/productTypes";
 import {
   Card,
   Name,

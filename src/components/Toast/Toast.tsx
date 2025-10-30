@@ -1,9 +1,8 @@
 import { XIcon } from "lucide-react";
-import { InnerWrapper, ToastContainer } from "./ToastStyled";
-import Button from "../Button/Button";
-import { useToast } from "../../context/ToastContext";
 
-//export type ToastMessageTypeT = "success" | "error" | "info";
+import Button from "@/components/Button/Button";
+import { useToast } from "@/context/ToastContext";
+import { InnerWrapper, ToastContainer } from "./ToastStyled";
 
 export const Toast = () => {
   const { toastMessage, isToastVisible, hideToast, messageType } = useToast();

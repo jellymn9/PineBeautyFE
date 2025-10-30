@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 
-import { useDrawer } from "../../../context/DrawerContext";
-import { navLinks } from "../../../utils/constants";
-import { CloseButton } from "../../CloseBtn/CloseBtn";
-import Drawer from "../../Drawer/Drawer";
+import { useDrawer } from "@/context/DrawerContext";
+import { navLinks } from "@/utils/constants";
+import { CloseButton } from "@/components/CloseBtn/CloseBtn";
+import Drawer from "@/components/Drawer/Drawer";
 import {
   HSeparator,
   IconsContainer,

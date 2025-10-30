@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import colors from "../../utils/colors";
-import breakpoints from "../../utils/breakpoints";
+import colors from "@/utils/colors";
+import breakpoints from "@/utils/breakpoints";
 
 export const ProfileContainer = styled.div`
   height: 100%;

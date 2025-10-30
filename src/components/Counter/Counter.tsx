@@ -1,13 +1,13 @@
 // import { useAppDispatch } from "../../withTypes";
 // import { remove, upsert } from "../../state/reducers/cartReducer";
-import Button from "../Button/Button";
-import { Amount, Container } from "./CounterStyled";
 import { Minus, Plus } from "lucide-react";
-import colors from "../../utils/colors";
+import Button from "@/components/Button/Button";
+import colors from "@/utils/colors";
 import {
   decreaseProductQuantity,
   increaseCartItemQuantity,
-} from "../../APIs/carts";
+} from "@/APIs/carts";
+import { Amount, Container } from "./CounterStyled";
 
 interface CounterPropsI {
   quantity: number;

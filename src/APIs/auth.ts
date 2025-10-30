@@ -2,7 +2,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "@/firebase";
 
 //import apiClient from "../utils/axios";
 //import endpoint from "./endpoints";

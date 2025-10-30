@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import colors from "../../utils/colors";
-import breakpoints from "../../utils/breakpoints";
-import { convertToPixels } from "../../helpers/layoutHelper";
+import colors from "@/utils/colors";
+import breakpoints from "@/utils/breakpoints";
+import { convertToPixels } from "@/helpers/layoutHelper";
 
 const mobileWidth = 100; // %
 const tabletWidth = 92.668; //vw

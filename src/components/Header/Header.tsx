@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@custom-react-hooks/use-media-query";
 import { ShoppingCart, Menu, Dot } from "lucide-react";
 
-import { navLinks, routes } from "../../utils/constants";
-import Icon from "../Icon/Icon";
+import { navLinks, routes } from "@/utils/constants";
+import Icon from "@/components/Icon/Icon";
 import {
   BarAnimationContainer,
   CartInsertWrapper,
@@ -16,10 +16,10 @@ import {
   LinkStyled,
   MobileContainer,
 } from "./HeaderStyled";
-import breakpoints from "../../utils/breakpoints";
-import { useDrawer } from "../../context/DrawerContext";
-import { useCart, useHoverBarAnimation } from "../../helpers/customHooks";
-import { useAuth } from "../../context/AuthContext";
+import breakpoints from "@/utils/breakpoints";
+import { useDrawer } from "@/context/DrawerContext";
+import { useCart, useHoverBarAnimation } from "@/helpers/customHooks";
+import { useAuth } from "@/context/AuthContext";
 
 function Header() {
   const timeout = useRef(0);

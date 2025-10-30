@@ -1,19 +1,19 @@
 import { RouteObject } from "react-router-dom";
 
-import { routes as routesC } from "../src/utils/constants";
-import { getSingleProduct } from "./APIs/products";
+import { routes as routesC } from "@/utils/constants";
+import { getSingleProduct } from "@/APIs/products";
 
-import PageLayout from "./components/Layout/Layout";
-import Home from "./pages/Home/Home";
-import SignIn from "./pages/Auth/SignIn/SignIn";
-import SignUp from "./pages/Auth/SignUp/SignUp";
-import Cart from "./pages/Cart/Cart";
-import Product from "./pages/Product/Product";
-import Products from "./pages/Products/Products";
-import Profile from "./pages/Profile/Profile";
-import Error from "./pages/Error/error";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import AuthRoute from "./components/AuthRoute/AuthRoute";
+import PageLayout from "@/components/Layout/Layout";
+import Home from "@/pages/Home/Home";
+import SignIn from "@/pages/Auth/SignIn/SignIn";
+import SignUp from "@/pages/Auth/SignUp/SignUp";
+import Cart from "@/pages/Cart/Cart";
+import Product from "@/pages/Product/Product";
+import Products from "@/pages/Products/Products";
+import Profile from "@/pages/Profile/Profile";
+import Error from "@/pages/Error/error";
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
+import AuthRoute from "@/components/AuthRoute/AuthRoute";
 
 const routes: Array<RouteObject> = [
   {

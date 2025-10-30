@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ChevronRight } from "lucide-react";
-import colors from "../../utils/colors";
-import { ColorThemeT } from "../../utils/types";
+import colors from "@/utils/colors";
+import { ColorThemeT } from "@/utils/types";
 
 const headingHeight = 24;
 const headingPadding = 16;

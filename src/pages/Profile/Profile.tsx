@@ -1,7 +1,9 @@
 import { ChevronRight } from "lucide-react";
 
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebase";
 // import { useAuth } from "../../context/AuthContext";
-import Button from "../../components/Button/Button";
+import Button from "@/components/Button/Button";
 import {
   HSeparator,
   MyAccountHeader,
@@ -11,8 +13,6 @@ import {
   ProfileCardTitle,
   ProfileContainer,
 } from "./ProfileStyled";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
 
 const tabs = [
   { id: 1, title: "Order history" },

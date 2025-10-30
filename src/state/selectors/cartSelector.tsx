@@ -1,7 +1,7 @@
 // import { createSelector } from "@reduxjs/toolkit";
 import { createSelector } from "@reduxjs/toolkit";
-import type { RootState } from "../../store";
-import { cartAdapter } from "../reducers/cartReducer";
+import type { RootState } from "@/store";
+import { cartAdapter } from "@/state/reducers/cartReducer";
 
 export const {
   selectAll: selectAllItems,

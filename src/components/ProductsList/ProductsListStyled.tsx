@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import breakpoints from "../../utils/breakpoints";
+import breakpoints from "@/utils/breakpoints";
 
 export const Container = styled.div`
   --card-container-width: 46vw;

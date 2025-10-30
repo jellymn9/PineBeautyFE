@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import colors from "../../utils/colors";
-import breakpoints from "../../utils/breakpoints";
+import colors from "@/utils/colors";
+import breakpoints from "@/utils/breakpoints";
 
 export const Item = styled.li`
   display: flex;

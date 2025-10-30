@@ -1,15 +1,16 @@
 import { useEffect, useRef } from "react";
 
-import { useAppSelector, useAppDispatch } from "../../withTypes";
-import { fetchProductsThunk } from "../../state/reducers/productReducer";
+import { useAppSelector, useAppDispatch } from "@/withTypes";
+import { fetchProductsThunk } from "@/state/reducers/productReducer";
 import {
   listProductsSelector,
   isPendingSelector,
   hasMoreSelector,
-} from "../../state/selectors/productSelector";
-import { useElementScroll } from "../../helpers/customHooks";
-import ProductFilters from "../../components/ProductFilters/ProductFilters";
-import ProductsList from "../../components/ProductsList/ProductsList";
+} from "@/state/selectors/productSelector";
+import { useElementScroll } from "@/helpers/customHooks";
+import ProductFilters from "@/components/ProductFilters/ProductFilters";
+import ProductsList from "@/components/ProductsList/ProductsList";
+import { Loader } from "@/components/Loader/Loader";
 import {
   BannerAndHeading,
   Container,
@@ -18,7 +19,6 @@ import {
   SectionHeading,
   ProductsAndCategories,
 } from "./ProductsStyled";
-import { Loader } from "../../components/Loader/Loader";
 
 const productsHeading = "All products";
 const pageSize = 6;
