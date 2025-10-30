@@ -1,7 +1,7 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 //import type { PayloadAction } from "@reduxjs/toolkit";
 
-import { CartItemT } from "../../utils/types";
+import { CartItemT } from "@/utils/types";
 
 export const cartAdapter = createEntityAdapter<CartItemT>();
 

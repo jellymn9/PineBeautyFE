@@ -1,6 +1,6 @@
 import { useState, Fragment } from "react";
 
-import { ColorThemeT } from "../../utils/types";
+import { ColorThemeT } from "@/utils/types";
 import {
   Container,
   HeadingContainer,

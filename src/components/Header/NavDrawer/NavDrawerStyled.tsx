@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import colors from "../../../utils/colors";
 import { Link } from "react-router-dom";
+import colors from "@/utils/colors";
 
 export const NavLinks = styled(Link)`
   text-decoration: none;

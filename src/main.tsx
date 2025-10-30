@@ -3,14 +3,14 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 
-import { store } from "./store";
-import routes from "./routes";
-import { GlobalStyles } from "./utils/globalStyles";
+import { store } from "@/store";
+import routes from "@/routes";
+import { GlobalStyles } from "@/utils/globalStyles";
 import "./index.css";
-import { DrawerProvider } from "./context/DrawerContext";
-import { AuthProvider } from "./context/AuthContext";
-import { ToastProvider } from "./context/ToastContext";
-import { Toast } from "./components/Toast/Toast";
+import { DrawerProvider } from "@/context/DrawerContext";
+import { AuthProvider } from "@/context/AuthContext";
+import { ToastProvider } from "@/context/ToastContext";
+import { Toast } from "@/components/Toast/Toast";
 
 const router = createBrowserRouter(routes);
 

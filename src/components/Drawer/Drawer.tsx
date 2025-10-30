@@ -1,5 +1,5 @@
 import { Container, DrawerBox } from "./DrawerStyled";
-import { useDrawer } from "../../context/DrawerContext";
+import { useDrawer } from "@/context/DrawerContext";
 
 const Drawer = function ({ children }: { children: JSX.Element }) {
   const { isOpen } = useDrawer();

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { BasicCategories } from "../../utils/constants";
-import Checkbox, { CheckboxInputProps } from "../CustomInput/Checkbox";
+import { BasicCategories } from "@/utils/constants";
+import Checkbox, {
+  CheckboxInputProps,
+} from "@/components/CustomInput/Checkbox";
 import {
   FiltersContainer,
   FiltersHeading,

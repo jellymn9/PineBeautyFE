@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
+import { RootState } from "@/store";
 import {
   ProductsApiResponseI,
   ProductsStateI,
   ProductI,
-} from "../../utils/types/productTypes";
-import { getProducts } from "../../APIs/products";
+} from "@/utils/types/productTypes";
+import { getProducts } from "@/APIs/products";
 
-import { cursorSelector } from "../selectors/productSelector";
+import { cursorSelector } from "@/state/selectors/productSelector";
 
 const initialState: ProductsStateI = {
   hasMore: true,

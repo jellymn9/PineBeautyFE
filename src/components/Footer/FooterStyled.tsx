@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import colors from "../../utils/colors";
-import breakpoints from "../../utils/breakpoints";
+import colors from "@/utils/colors";
+import breakpoints from "@/utils/breakpoints";
 
 export const MainContainer = styled.div`
   background-color: ${colors.ebony};

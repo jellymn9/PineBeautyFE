@@ -1,7 +1,7 @@
 //import * as yup from "yup";
 //import Icon from "../Icon/Icon";
-import Icon from "../Icon/Icon";
-import LinksSection from "./LinksSection/LinksSection";
+import Icon from "@/components/Icon/Icon";
+import LinksSection from "@/components/Footer/LinksSection/LinksSection";
 import {
   CaptchaInfo,
   Container,

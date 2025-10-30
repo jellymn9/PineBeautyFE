@@ -1,8 +1,8 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 
-import { db } from "../firebase";
-import { CartData } from "../utils/types/cartTypes";
+import { db } from "@/firebase";
+import { CartData } from "@/utils/types/cartTypes";
 
 function useScrollLocation(elementHeightFromBottom: number) {
   // window scroll befavior

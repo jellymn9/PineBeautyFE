@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import { Container, ContentContainer } from "./LayoutStyled";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import NavDrawer from "../Header/NavDrawer/NavDrawer";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
+import NavDrawer from "@/components/Header/NavDrawer/NavDrawer";
 
 function Layout() {
   return (

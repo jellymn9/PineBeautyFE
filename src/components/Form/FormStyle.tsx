@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "../../utils/colors";
+import colors from "@/utils/colors";
 
 export const FormHeading = styled.h1`
   font-size: 36px;

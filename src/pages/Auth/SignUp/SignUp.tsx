@@ -1,11 +1,11 @@
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { routes as routesC } from "../../../utils/constants";
+import { routes as routesC } from "@/utils/constants";
 import { SubmitHandler } from "react-hook-form";
 
-import Form from "../../../components/Form/Form";
-import { AuthFormsContainer } from "../SignIn/SignInStyled";
-import { register } from "../../../APIs/auth";
+import Form from "@/components/Form/Form";
+import { AuthFormsContainer } from "@/pages/Auth/SignIn/SignInStyled";
+import { register } from "@/APIs/auth";
 import { useState } from "react";
 
 const signUpSchema = yup.object({

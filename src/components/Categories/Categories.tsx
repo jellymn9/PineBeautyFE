@@ -1,5 +1,5 @@
 import { useState } from "react";
-import HomeSection from "../HomeSection/HomeSection";
+import HomeSection from "@/components/HomeSection/HomeSection";
 import {
   CategoriesContainer,
   Category,

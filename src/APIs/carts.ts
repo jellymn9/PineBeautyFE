@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { CartData, CartItemI } from "../utils/types/cartTypes";
-import { db } from "../firebase";
+import { CartData, CartItemI } from "@/utils/types/cartTypes";
+import { db } from "@/firebase";
 
 const setOrUpdateCart = async (
   userId: string,

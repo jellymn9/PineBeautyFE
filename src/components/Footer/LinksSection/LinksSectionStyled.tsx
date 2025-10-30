@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import colors from "../../../utils/colors";
-import breakpoints from "../../../utils/breakpoints";
+import colors from "@/utils/colors";
+import breakpoints from "@/utils/breakpoints";
 
 export const Container = styled.div`
   background-color: ${colors.ebony};

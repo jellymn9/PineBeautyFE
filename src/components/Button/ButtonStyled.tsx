@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import { BtnVariantT, buttonVariants } from "../../utils/buttonStyles";
-import colors from "../../utils/colors";
+import { BtnVariantT, buttonVariants } from "@/utils/buttonStyles";
+import colors from "@/utils/colors";
 
 export const CustomButton = styled.button<{
   $isIcon: boolean;

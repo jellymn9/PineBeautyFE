@@ -1,12 +1,11 @@
 import { Phone, Mail, Clock } from "lucide-react";
-import {} from "../LinksSection/LinksSectionStyled";
 import {
   Container,
   InfoItem,
   InfoItemContainer,
   Heading,
 } from "./ContactInfoStyled";
-import colors from "../../../utils/colors";
+import colors from "@/utils/colors";
 
 const info: Array<[JSX.Element, string]> = [
   [

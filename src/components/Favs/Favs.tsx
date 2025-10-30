@@ -1,12 +1,13 @@
 import { useKeenSlider } from "keen-slider/react";
-
-import { CircleChevronRight, CircleChevronLeft } from "lucide-react";
-import HomeSection from "../HomeSection/HomeSection";
-import ProductCard from "../ProductCard/ProductCard";
-import { Slider, SliderContainer, SliderMainContainer } from "./FavsStyled";
-import colors from "../../utils/colors";
 import { useState } from "react";
-import Button from "../Button/Button";
+import { CircleChevronRight, CircleChevronLeft } from "lucide-react";
+
+import HomeSection from "@/components/HomeSection/HomeSection";
+import ProductCard from "@/components//ProductCard/ProductCard";
+import { Slider, SliderContainer, SliderMainContainer } from "./FavsStyled";
+import colors from "@/utils/colors";
+
+import Button from "@/components/Button/Button";
 
 //const heading = "PineBeauty's favs";
 

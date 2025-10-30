@@ -1,4 +1,4 @@
-import { CartItemT, RawProductT } from "../utils/types";
+import { CartItemT, RawProductT } from "@/utils/types";
 
 export const mapQuantityToProducts = (
   products: Array<RawProductT>,

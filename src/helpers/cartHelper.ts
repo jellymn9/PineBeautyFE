@@ -1,4 +1,4 @@
-import { CartData } from "../utils/types/cartTypes";
+import { CartData } from "@/utils/types/cartTypes";
 
 export const calculateSubtotal = (
   products: Array<{ price: number; quantity: number }>

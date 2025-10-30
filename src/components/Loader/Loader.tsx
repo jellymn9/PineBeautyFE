@@ -1,4 +1,4 @@
-import LoaderSVG from "../../assets/loader.svg?react";
+import LoaderSVG from "@/assets/loader.svg?react";
 import { LoaderWrapper } from "./LoaderStyled";
 
 export const Loader = () => {

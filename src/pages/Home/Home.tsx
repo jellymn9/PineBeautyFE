@@ -1,7 +1,7 @@
-import Button from "../../components/Button/Button";
-import Categories from "../../components/Categories/Categories";
-import Favs from "../../components/Favs/Favs";
-import InfoHome from "../../components/InfoHome/InfoHome";
+import Button from "@/components/Button/Button";
+import Categories from "@/components/Categories/Categories";
+import Favs from "@/components/Favs/Favs";
+import InfoHome from "@/components/InfoHome/InfoHome";
 import {
   DecorativeSeparator,
   FlagHeading,

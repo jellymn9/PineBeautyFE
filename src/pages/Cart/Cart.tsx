@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
-import { CartItem } from "../../components/CartItem/CartItem";
-import { Loader } from "../../components/Loader/Loader";
+import { CartItem } from "@/components/CartItem/CartItem";
+import { Loader } from "@/components/Loader/Loader";
 import {
   ButtonWrapper,
   Container,
@@ -11,9 +11,9 @@ import {
   InnerContainer,
   List,
 } from "./CartStyled";
-import { formatPrice } from "../../helpers/formatters";
-import Button from "../../components/Button/Button";
-import { useCart } from "../../helpers/customHooks";
+import { formatPrice } from "@/helpers/formatters";
+import Button from "@/components/Button/Button";
+import { useCart } from "@/helpers/customHooks";
 
 function Cart() {
   const { user } = useAuth();

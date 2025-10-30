@@ -3,13 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { SubmitHandler } from "react-hook-form";
 
-import { routes as routesC } from "../../../utils/constants";
+import { routes as routesC } from "@/utils/constants";
 import { AuthFormsContainer } from "./SignInStyled";
-import Form from "../../../components/Form/Form";
-import { login } from "../../../APIs/auth";
-import { getCart, overwriteCart } from "../../../APIs/carts";
-import { clearCartLocal, mergeCartsLocal } from "../../../helpers/cartHelper";
-import { useToast } from "../../../context/ToastContext";
+import Form from "@/components/Form/Form";
+import { login } from "@/APIs/auth";
+import { getCart, overwriteCart } from "@/APIs/carts";
+import { clearCartLocal, mergeCartsLocal } from "@/helpers/cartHelper";
+import { useToast } from "@/context/ToastContext";
 
 const signInSchema = yup.object({
   email: yup
