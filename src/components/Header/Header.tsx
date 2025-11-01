@@ -45,7 +45,7 @@ function Header() {
     }
 
     clearTimeout(timeout.current);
-    timeout.current = setTimeout(() => {
+    timeout.current = window.setTimeout(() => {
       // checks if user scrolls up or down
       if (newScrollY > currentScrollY.current && isScrollingUp) {
         setScrollingUp(false);
