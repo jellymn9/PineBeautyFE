@@ -1,9 +1,9 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 //import type { PayloadAction } from "@reduxjs/toolkit";
 
-import { CartItemT } from "@/utils/types";
+import { CartItemI } from "@/utils/types/cartTypes";
 
-export const cartAdapter = createEntityAdapter<CartItemT>();
+export const cartAdapter = createEntityAdapter<CartItemI>();
 
 const initialState = cartAdapter.getInitialState({}); // { ids: [], entities: {} }
 
