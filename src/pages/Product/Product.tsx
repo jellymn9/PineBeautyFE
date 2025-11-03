@@ -61,15 +61,11 @@ function Product() {
       });
     } else {
       setOrUpdateCartLS({
-        items: {
-          [product.id]: {
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            quantity: 1,
-          },
-        },
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: 1, //redundant
       });
     }
   };

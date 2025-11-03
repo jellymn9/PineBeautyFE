@@ -1,4 +1,9 @@
-import { CartData } from "@/utils/types/cartTypes";
+import {
+  ActionCartT,
+  CartDataI,
+  CartItemsI,
+  CartItemT,
+} from "@/utils/types/cartTypes";
 
 export const calculateSubtotal = (
   products: Array<{ price: number; quantity: number }>
@@ -10,43 +15,58 @@ export const calculateSubtotal = (
 
 export const getCartLocal = () => window.localStorage.getItem("cart");
 
-export const setOrUpdateCartLS = (cartData: CartData) => {
+export const setCartLocal = (cart: CartDataI) => {
+  window.localStorage.setItem("cart", JSON.stringify(cart));
+};
+
+const updateQuantity = (item: CartItemT, action: ActionCartT = "increment") => {
+  if (action === "increment") {
+    return {
+      ...item,
+      quantity: item.quantity + 1,
+    };
+  } else {
+    return {
+      ...item,
+      quantity: item.quantity - 1,
+    };
+  }
+};
+
+export const setOrUpdateCartLS = (cartItem: CartItemT) => {
   try {
-    const cartItem = window.localStorage.getItem("cart");
-    if (!cartItem) {
-      window.localStorage.setItem("cart", JSON.stringify(cartData));
+    const cart = getCartLocal();
+    if (!cart) {
+      //create new cart
+      const newCart = { items: { [cartItem.id]: cartItem } };
+      setCartLocal(newCart);
       return true;
     }
-    const cartExisting = JSON.parse(cartItem);
-    const cartExistingItems = cartExisting.items ?? { items: {} };
+    const cartExistingItems: CartItemsI = JSON.parse(cart).items ?? {};
 
-    Object.keys(cartData.items).forEach((productId) => {
-      const newItem = cartData.items[productId];
-      if (cartExistingItems[productId]) {
-        cartExistingItems[productId] = {
-          ...cartExistingItems[productId],
-          quantity: cartExistingItems[productId].quantity + 1,
-        };
-      } else {
-        cartExistingItems[productId] = newItem;
-      }
-    });
+    //update existing cart item or add new item
+    const newItems = {
+      ...cartExistingItems,
+      [cartItem.id]: cartExistingItems[cartItem.id]
+        ? updateQuantity(cartExistingItems[cartItem.id])
+        : cartItem,
+    };
 
-    window.localStorage.setItem("cart", JSON.stringify(cartExisting));
+    setCartLocal({ items: newItems });
     return true;
   } catch (e) {
     console.error("Error on updating cart in localStorage:", e);
   }
-}; // improve function so it can be used for counter from cart page as well
+};
 
-export const mergeCartsLocal = (serverCart: CartData) => {
+export const mergeCartsLocal = (serverCart: CartDataI) => {
   const localCart = getCartLocal();
   if (!localCart) {
     return;
   }
 
-  const localCartData: CartData = JSON.parse(localCart);
-  const merged: CartData = {
+  const localCartData: CartDataI = JSON.parse(localCart);
+  const merged: CartDataI = {
     items: { ...serverCart.items, ...localCartData.items },
   };
 
@@ -56,4 +76,18 @@ export const mergeCartsLocal = (serverCart: CartData) => {
 export const clearCartLocal = () => {
   window.localStorage.removeItem("cart");
   return true;
+};
+
+export const removeItemFromCartLS = (productId: string) => {
+  const cartItem = getCartLocal();
+  if (!cartItem) {
+    return;
+  }
+  const cartExisting = JSON.parse(cartItem);
+  const cartExistingItems = cartExisting.items ?? { items: {} };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { [productId]: _removedItem, ...rest } = cartExistingItems;
+
+  setCartLocal({ items: rest });
 };
