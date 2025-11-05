@@ -7,7 +7,7 @@ import { selectItemById } from "@/state/selectors/cartSelector";
 import { ProductI } from "@/utils/types/productTypes";
 import { useAuth } from "@/context/AuthContext";
 import { addProductToCart } from "@/APIs/carts";
-import { setOrUpdateCartLS } from "@/helpers/cartHelper";
+import { plusAction } from "@/helpers/cartHelper";
 import Accordion from "@/components/Accordion/Accordion";
 import Button from "@/components/Button/Button";
 import GeneralProductInfo from "@/components/GeneralProductInfo/GeneralProductInfo";
@@ -60,7 +60,7 @@ function Product() {
         image: product.image,
       });
     } else {
-      setOrUpdateCartLS({
+      plusAction({
         id: product.id,
         name: product.name,
         price: product.price,

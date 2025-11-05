@@ -53,7 +53,11 @@ export const CartItem = ({ product }: CartItemPropsI) => {
               <span>Pine Beauty</span>
               <ItemPrice>{formatPrice(price, "EUR")}</ItemPrice>
             </ItemDetails>
-            <Counter id={id} quantity={quantity} userId={user?.uid || ""} />
+            <Counter
+              product={product}
+              quantity={quantity}
+              userId={user?.uid || ""}
+            />
           </ItemDetailsAndActions>
           <BtnWrapper>
             <Button

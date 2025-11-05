@@ -15,6 +15,40 @@ export const calculateSubtotal = (
 
 export const getCartLocal = () => window.localStorage.getItem("cart");
 
+export const getCartItemsLocal = (): CartItemsI | null => {
+  const cart = window.localStorage.getItem("cart");
+  return cart ? JSON.parse(cart).items : null;
+};
+
+export function clearCartLocal() {
+  window.localStorage.removeItem("cart");
+  return true;
+}
+
+export const removeItemFromCartLS = (productId: string) => {
+  const cartExistingItems = getCartItemsLocal();
+  if (!cartExistingItems) {
+    return;
+  }
+
+  const newItems = removeItem(cartExistingItems, productId);
+
+  setCartLocal({ items: newItems });
+};
+
+const cartActionWrapper = (
+  noCartCallback: () => void,
+  actionCallback: (items: CartItemsI) => void
+) => {
+  const cartExistingItems = getCartItemsLocal();
+  if (!cartExistingItems) {
+    noCartCallback();
+    return;
+  }
+
+  actionCallback(cartExistingItems);
+};
+
 export const setCartLocal = (cart: CartDataI) => {
   window.localStorage.setItem("cart", JSON.stringify(cart));
 };
@@ -33,61 +67,86 @@ const updateQuantity = (item: CartItemT, action: ActionCartT = "increment") => {
   }
 };
 
-export const setOrUpdateCartLS = (cartItem: CartItemT) => {
-  try {
-    const cart = getCartLocal();
-    if (!cart) {
-      //create new cart
+const removeItem = (cartItems: CartItemsI, itemId: string): CartItemsI => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { [itemId]: _removedItem, ...items } = cartItems;
+  return items;
+};
+
+const updateItems = (
+  cartItems: CartItemsI,
+  item: CartItemT,
+  action: "plus" | "minus"
+): CartItemsI => {
+  const itemInCart = cartItems[item.id];
+
+  switch (action) {
+    case "plus": {
+      const hasItem = !!itemInCart;
+
+      return {
+        ...cartItems,
+        [item.id]: hasItem ? item : updateQuantity(item, "increment"),
+      };
+    }
+    case "minus": {
+      const itemQuantity = itemInCart.quantity;
+      if (itemQuantity > 1) {
+        return {
+          ...cartItems,
+          [item.id]: updateQuantity(item, "decrement"),
+        };
+      } else {
+        return removeItem(cartItems, item.id);
+      }
+    }
+    default:
+      return cartItems;
+  }
+};
+
+// action for "plus"
+export const plusAction = (cartItem: CartItemT) => {
+  cartActionWrapper(
+    () => {
       const newCart = { items: { [cartItem.id]: cartItem } };
       setCartLocal(newCart);
-      return true;
+    },
+    (items: CartItemsI) => {
+      const newItems = updateItems(items, cartItem, "plus");
+      setCartLocal({ items: newItems });
     }
-    const cartExistingItems: CartItemsI = JSON.parse(cart).items ?? {};
+  );
+};
 
-    //update existing cart item or add new item
-    const newItems = {
-      ...cartExistingItems,
-      [cartItem.id]: cartExistingItems[cartItem.id]
-        ? updateQuantity(cartExistingItems[cartItem.id])
-        : cartItem,
-    };
+// action for "minus"
+export const minusAction = (cartItem: CartItemT) => {
+  cartActionWrapper(
+    () => {
+      return;
+    },
+    (items: CartItemsI) => {
+      const newItems = updateItems(items, cartItem, "minus");
+      if (Object.keys(newItems).length === 0) {
+        clearCartLocal();
+        return;
+      }
 
-    setCartLocal({ items: newItems });
-    return true;
-  } catch (e) {
-    console.error("Error on updating cart in localStorage:", e);
-  }
+      setCartLocal({ items: newItems });
+    }
+  );
 };
 
 export const mergeCartsLocal = (serverCart: CartDataI) => {
-  const localCart = getCartLocal();
-  if (!localCart) {
+  const localCartItems = getCartItemsLocal();
+  if (!localCartItems) {
     return;
   }
 
-  const localCartData: CartDataI = JSON.parse(localCart);
+  //const localCartParsed: CartDataI = JSON.parse(localCart);
   const merged: CartDataI = {
-    items: { ...serverCart.items, ...localCartData.items },
+    items: { ...serverCart.items, ...localCartItems },
   };
 
   return merged;
-};
-
-export const clearCartLocal = () => {
-  window.localStorage.removeItem("cart");
-  return true;
-};
-
-export const removeItemFromCartLS = (productId: string) => {
-  const cartItem = getCartLocal();
-  if (!cartItem) {
-    return;
-  }
-  const cartExisting = JSON.parse(cartItem);
-  const cartExistingItems = cartExisting.items ?? { items: {} };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { [productId]: _removedItem, ...rest } = cartExistingItems;
-
-  setCartLocal({ items: rest });
 };
