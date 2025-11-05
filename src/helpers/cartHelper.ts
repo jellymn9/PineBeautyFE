@@ -26,20 +26,21 @@ export function clearCartLocal() {
 }
 
 export const removeItemFromCartLS = (productId: string) => {
-  const cartExistingItems = getCartItemsLocal();
-  if (!cartExistingItems) {
-    return;
-  }
-
-  const newItems = removeItem(cartExistingItems, productId);
-
-  setCartLocal({ items: newItems });
+  cartActionWrapper(
+    () => {
+      return;
+    },
+    (items: CartItemsI) => {
+      const newItems = removeItem(items, productId);
+      setCartLocal({ items: newItems });
+    }
+  );
 };
 
-const cartActionWrapper = (
+function cartActionWrapper(
   noCartCallback: () => void,
   actionCallback: (items: CartItemsI) => void
-) => {
+) {
   const cartExistingItems = getCartItemsLocal();
   if (!cartExistingItems) {
     noCartCallback();
@@ -47,13 +48,16 @@ const cartActionWrapper = (
   }
 
   actionCallback(cartExistingItems);
-};
+}
 
 export const setCartLocal = (cart: CartDataI) => {
   window.localStorage.setItem("cart", JSON.stringify(cart));
 };
 
-const updateQuantity = (item: CartItemT, action: ActionCartT = "increment") => {
+const updateQuantity = (
+  item: CartItemT,
+  action: ActionCartT = "increment"
+): CartItemT => {
   if (action === "increment") {
     return {
       ...item,
@@ -137,13 +141,14 @@ export const minusAction = (cartItem: CartItemT) => {
   );
 };
 
-export const mergeCartsLocal = (serverCart: CartDataI) => {
+export const mergeCartsLocal = (
+  serverCart: CartDataI
+): CartDataI | undefined => {
   const localCartItems = getCartItemsLocal();
   if (!localCartItems) {
     return;
   }
 
-  //const localCartParsed: CartDataI = JSON.parse(localCart);
   const merged: CartDataI = {
     items: { ...serverCart.items, ...localCartItems },
   };
