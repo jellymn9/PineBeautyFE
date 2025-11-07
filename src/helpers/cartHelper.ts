@@ -47,7 +47,7 @@ function cartActionWrapper(
     return;
   }
 
-  actionCallback(cartExistingItems);
+  return actionCallback(cartExistingItems);
 }
 
 export const setCartLocal = (cart: CartDataI) => {
@@ -141,17 +141,16 @@ export const minusAction = (cartItem: CartItemT) => {
   );
 };
 
-export const mergeCartsLocal = (
-  serverCart: CartDataI
-): CartDataI | undefined => {
-  const localCartItems = getCartItemsLocal();
-  if (!localCartItems) {
-    return;
-  }
-
-  const merged: CartDataI = {
-    items: { ...serverCart.items, ...localCartItems },
-  };
-
-  return merged;
+export const mergeCartsLocal = (serverCart: CartDataI): CartDataI | void => {
+  return cartActionWrapper(
+    () => {
+      return;
+    },
+    (items: CartItemsI) => {
+      const merged: CartDataI = {
+        items: { ...serverCart.items, ...items },
+      };
+      return merged;
+    }
+  );
 };
