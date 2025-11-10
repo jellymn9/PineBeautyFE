@@ -20,6 +20,7 @@ import breakpoints from "@/utils/breakpoints";
 import { useDrawer } from "@/context/DrawerContext";
 import { useCart, useHoverBarAnimation } from "@/helpers/customHooks";
 import { useAuth } from "@/context/AuthContext";
+import { getCartItemsLocal } from "@/helpers/cartHelper";
 
 function Header() {
   const timeout = useRef(0);
@@ -32,7 +33,8 @@ function Header() {
   const { hoverLinkWidth, translateStep, handleHover, handleMouseLeave } =
     useHoverBarAnimation();
 
-  const isCartEmpty = Object.keys(cart.items).length === 0;
+  const isCartEmpty =
+    Object.keys(cart.items).length === 0 || !!getCartItemsLocal()?.length;
 
   const handleScroll = useCallback(() => {
     const newScrollY = window.scrollY;
@@ -98,15 +100,19 @@ function Header() {
                   {navLinks.iconLinks.map(({ route, icon }) => {
                     if (route === routes.cart) {
                       return (
-                        <LinkStyled to={route}>
-                          <CartInsertWrapper isEmpty={isCartEmpty}>
+                        <LinkStyled to={route} key={route}>
+                          <CartInsertWrapper $isEmpty={isCartEmpty}>
                             <Dot />
                             {icon}
                           </CartInsertWrapper>
                         </LinkStyled>
                       );
                     } else {
-                      return <LinkStyled to={route}>{icon}</LinkStyled>;
+                      return (
+                        <LinkStyled to={route} key={route}>
+                          {icon}
+                        </LinkStyled>
+                      );
                     }
                   })}
                 </CircleAnimation>

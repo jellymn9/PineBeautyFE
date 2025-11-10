@@ -154,3 +154,12 @@ export const mergeCartsLocal = (serverCart: CartDataI): CartDataI | void => {
     }
   );
 };
+
+export const calcSubtotalPrice = (cartItems: CartItemsI): number => {
+  const subtotalPrice = Object.keys(cartItems).reduce((acc, current) => {
+    acc += cartItems[current].price * cartItems[current].quantity;
+    return acc;
+  }, 0);
+
+  return subtotalPrice;
+};

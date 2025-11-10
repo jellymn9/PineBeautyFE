@@ -131,7 +131,7 @@ export const CircleAnimation = styled.div`
   }
 `;
 
-export const CartInsertWrapper = styled.div<{ isEmpty: boolean }>`
+export const CartInsertWrapper = styled.div<{ $isEmpty: boolean }>`
   position: relative;
 
   svg:first-child {
@@ -141,8 +141,8 @@ export const CartInsertWrapper = styled.div<{ isEmpty: boolean }>`
 
     transition: all 0.3s;
 
-    ${({ isEmpty }) =>
-      !isEmpty &&
+    ${({ $isEmpty }) =>
+      !$isEmpty &&
       `
     top: -1px;
     display: unset;`}

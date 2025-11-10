@@ -4,6 +4,11 @@ import { useAuth } from "@/context/AuthContext";
 
 import { CartItem } from "@/components/CartItem/CartItem";
 import { Loader } from "@/components/Loader/Loader";
+import { formatPrice } from "@/helpers/formatters";
+import Button from "@/components/Button/Button";
+import { useCart } from "@/helpers/customHooks";
+import { calcSubtotalPrice } from "@/helpers/cartHelper";
+
 import {
   ButtonWrapper,
   Container,
@@ -11,9 +16,6 @@ import {
   InnerContainer,
   List,
 } from "./CartStyled";
-import { formatPrice } from "@/helpers/formatters";
-import Button from "@/components/Button/Button";
-import { useCart } from "@/helpers/customHooks";
 
 function Cart() {
   const { user } = useAuth();
@@ -21,19 +23,16 @@ function Cart() {
 
   const { cart, loading } = useCart(user?.uid || null);
 
+  const cartItems = cart.items;
+
   const title = "Shopping Cart";
   const emptyCart = "There are no products in the cart.";
 
-  const isCartEmpty = Object.keys(cart.items).length === 0;
+  const isCartEmpty = Object.keys(cartItems).length === 0;
 
   useEffect(() => {
-    const subtotalPrice = Object.keys(cart.items).reduce((acc, current) => {
-      acc += cart.items[current].price * cart.items[current].quantity;
-      return acc;
-    }, 0); // move to helper later..
-
-    setSubtotal(subtotalPrice);
-  }, [cart]);
+    setSubtotal(calcSubtotalPrice(cartItems));
+  }, [cartItems]);
 
   return (
     <Container>
@@ -48,8 +47,8 @@ function Cart() {
             <>
               <div>
                 <List>
-                  {Object.keys(cart.items).map((product) => (
-                    <CartItem product={cart.items[product]} />
+                  {Object.keys(cartItems).map((product) => (
+                    <CartItem product={cartItems[product]} key={product} />
                   ))}
                 </List>
               </div>

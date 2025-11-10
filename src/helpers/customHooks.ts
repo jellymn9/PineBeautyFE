@@ -2,7 +2,7 @@ import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 
 import { db } from "@/firebase";
-import { CartData } from "@/utils/types/cartTypes";
+import { CartDataI } from "@/utils/types/cartTypes";
 
 function useScrollLocation(elementHeightFromBottom: number) {
   // window scroll befavior
@@ -95,7 +95,7 @@ function useHoverBarAnimation() {
 }
 
 function useCart(userId: string | null) {
-  const [cart, setCart] = useState<CartData>({ items: {} });
+  const [cart, setCart] = useState<CartDataI>({ items: {} });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -113,7 +113,7 @@ function useCart(userId: string | null) {
       (docSnap) => {
         if (docSnap.exists()) {
           // Document exists: update state with the retrieved cart data
-          const cartData = docSnap.data() as CartData;
+          const cartData = docSnap.data() as CartDataI;
           setCart(cartData);
         } else {
           setCart({ items: {} });
