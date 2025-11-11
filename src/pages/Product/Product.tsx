@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 
-import { useAppSelector } from "@/withTypes";
-import { selectItemById } from "@/state/selectors/cartSelector";
+//import { useAppSelector } from "@/withTypes";
+//import { selectItemById } from "@/state/selectors/cartSelector";
 // import { useDispatch } from "react-redux";
 // import { add } from "../../state/reducers/cartReducer";
 import { ProductI } from "@/utils/types/productTypes";
@@ -43,9 +43,9 @@ function Product() {
   //const dispatch = useDispatch();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const itemInCart = useAppSelector((state) =>
-    selectItemById(state, product ? product.id : "")
-  );
+  // const itemInCart = useAppSelector((state) =>
+  //   selectItemById(state, product ? product.id : "")
+  // );
 
   if (!product) {
     return <NoProductMessage>{nonExistentProductMessage}</NoProductMessage>;
