@@ -6,7 +6,7 @@ import { CartItem } from "@/components/CartItem/CartItem";
 import { Loader } from "@/components/Loader/Loader";
 import { formatPrice } from "@/helpers/formatters";
 import Button from "@/components/Button/Button";
-import { useCart } from "@/helpers/customHooks";
+import { useCart } from "@/helpers/customHooks/cartCustomHooks";
 import { calcSubtotalPrice } from "@/helpers/cartHelper";
 
 import {

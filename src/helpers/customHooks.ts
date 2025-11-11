@@ -1,8 +1,4 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
-
-import { db } from "@/firebase";
-import { CartDataI } from "@/utils/types/cartTypes";
 
 function useScrollLocation(elementHeightFromBottom: number) {
   // window scroll befavior
@@ -94,45 +90,4 @@ function useHoverBarAnimation() {
   return { hoverLinkWidth, translateStep, handleHover, handleMouseLeave };
 }
 
-function useCart(userId: string | null) {
-  const [cart, setCart] = useState<CartDataI>({ items: {} });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!userId) {
-      setCart({ items: {} });
-      setLoading(false);
-      return;
-    }
-
-    const cartRef = doc(db, "carts", userId);
-
-    const unsubscribe = onSnapshot(
-      cartRef,
-      (docSnap) => {
-        if (docSnap.exists()) {
-          // Document exists: update state with the retrieved cart data
-          const cartData = docSnap.data() as CartDataI;
-          setCart(cartData);
-        } else {
-          setCart({ items: {} });
-        }
-        setLoading(false);
-        setError(null);
-      },
-      (err) => {
-        // Handle any errors from the listener (e.g., permission issues)
-        console.error("Error fetching real-time cart:", err);
-        setError("Failed to load cart.");
-        setLoading(false);
-      }
-    );
-
-    return () => unsubscribe();
-  }, [userId]);
-
-  return { cart, loading, error };
-}
-
-export { useScrollLocation, useElementScroll, useHoverBarAnimation, useCart };
+export { useScrollLocation, useElementScroll, useHoverBarAnimation };
