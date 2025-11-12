@@ -1,6 +1,12 @@
 // import { CartItemI } from "@/utils/types/cartTypes";
 // import { ProductI } from "@/utils/types/productTypes";
 
+import {
+  CartDataFirebaseI,
+  CartDataLocalI,
+  CartItemsLocalT,
+} from "@/utils/types/cartTypes";
+
 // export const mapQuantityToProducts = (
 //   products: Array<ProductI>,
 //   productsWithQuantity: Array<CartItemI>
@@ -20,3 +26,19 @@
 //     };
 //   });
 // };
+
+export const serverCartDateConversion = (
+  cart: CartDataFirebaseI
+): CartDataLocalI => {
+  const items = { ...cart.items };
+  const newItems: CartItemsLocalT = {};
+
+  Object.keys(items).forEach((key) => {
+    newItems[key] = {
+      ...items[key],
+      createdAt: items[key].createdAt.toDate(),
+      updatedAt: items[key].updatedAt.toDate(),
+    };
+  });
+  return { items: newItems };
+};

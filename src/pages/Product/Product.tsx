@@ -1,9 +1,5 @@
 import { useLoaderData } from "react-router-dom";
 
-//import { useAppSelector } from "@/withTypes";
-//import { selectItemById } from "@/state/selectors/cartSelector";
-// import { useDispatch } from "react-redux";
-// import { add } from "../../state/reducers/cartReducer";
 import { ProductI } from "@/utils/types/productTypes";
 import { useAuth } from "@/context/AuthContext";
 import { addProductToCart } from "@/APIs/carts";
@@ -40,13 +36,6 @@ function Product() {
   const { isLoggedIn, user } = useAuth();
   const product = useLoaderData() as ProductI | null;
 
-  //const dispatch = useDispatch();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const itemInCart = useAppSelector((state) =>
-  //   selectItemById(state, product ? product.id : "")
-  // );
-
   if (!product) {
     return <NoProductMessage>{nonExistentProductMessage}</NoProductMessage>;
   }
@@ -58,6 +47,8 @@ function Product() {
         name: product.name,
         price: product.price,
         image: product.image,
+        //createdAt: product.createdAt,
+        //updatedAt: product.updatedAt,
       });
     } else {
       plusAction({
@@ -65,7 +56,7 @@ function Product() {
         name: product.name,
         price: product.price,
         image: product.image,
-        quantity: 1, //redundant
+        //quantity: 1, //redundant
       });
     }
   };

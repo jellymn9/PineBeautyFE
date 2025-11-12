@@ -1,9 +1,8 @@
 import { Trash } from "lucide-react";
 import { formatPrice } from "@/helpers/formatters";
-import { CartItemT } from "@/utils/types/cartTypes";
+import { CartItemLocalT } from "@/utils/types/cartTypes";
 import Button from "@/components/Button/Button";
 import Counter from "@/components/Counter/Counter";
-import { useAuth } from "@/context/AuthContext";
 import { removeProductFromCart } from "@/APIs/carts";
 import { removeItemFromCartLS } from "@/helpers/cartHelper";
 import {
@@ -18,9 +17,11 @@ import {
   BtnWrapper,
   DetailsAndBtnWrapper,
 } from "./CartItemStyled";
+import { User } from "firebase/auth";
 
 interface CartItemPropsI {
-  product: CartItemT;
+  product: CartItemLocalT;
+  user: User | null;
 }
 
 const imageURL =
@@ -28,10 +29,8 @@ const imageURL =
     ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
     : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
 
-export const CartItem = ({ product }: CartItemPropsI) => {
+export const CartItem = ({ product, user }: CartItemPropsI) => {
   const { id, price, name, quantity } = product;
-
-  const { user } = useAuth();
 
   const handleRemove = async () => {
     if (user) {

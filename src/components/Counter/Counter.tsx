@@ -1,5 +1,3 @@
-// import { useAppDispatch } from "../../withTypes";
-// import { remove, upsert } from "../../state/reducers/cartReducer";
 import { Minus, Plus } from "lucide-react";
 import Button from "@/components/Button/Button";
 import colors from "@/utils/colors";
@@ -9,12 +7,12 @@ import {
 } from "@/APIs/carts";
 import { Amount, Container } from "./CounterStyled";
 import { plusAction } from "@/helpers/cartHelper";
-import { CartItemT } from "@/utils/types/cartTypes";
+import { CartItemLocalT } from "@/utils/types/cartTypes";
 
 interface CounterPropsI {
   quantity: number;
   userId: string;
-  product: CartItemT;
+  product: CartItemLocalT;
 }
 
 const iconsStrokeWidth = 1.5;

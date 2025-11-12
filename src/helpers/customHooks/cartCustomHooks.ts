@@ -1,10 +1,11 @@
 import { db } from "@/firebase";
-import { CartDataI } from "@/utils/types/cartTypes";
+import { CartDataFirebaseI, CartDataLocalI } from "@/utils/types/cartTypes";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { serverCartDateConversion } from "../dataMapper";
 
 function useCart(userId: string | null) {
-  const [cart, setCart] = useState<CartDataI>({ items: {} });
+  const [cart, setCart] = useState<CartDataLocalI>({ items: {} });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEmpty, setIsEmpty] = useState(Object.keys(cart.items).length === 0);
@@ -23,9 +24,10 @@ function useCart(userId: string | null) {
       (docSnap) => {
         if (docSnap.exists()) {
           // Document exists: update state with the retrieved cart data
-          const cartData = docSnap.data() as CartDataI;
-          setCart(cartData);
-          setIsEmpty(Object.keys(cartData.items).length === 0);
+          const cartData = docSnap.data() as CartDataFirebaseI;
+          const cartDataConv = serverCartDateConversion(cartData);
+          setCart(cartDataConv);
+          setIsEmpty(Object.keys(cartDataConv.items).length === 0);
         } else {
           setCart({ items: {} });
           setIsEmpty(true);
