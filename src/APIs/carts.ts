@@ -1,10 +1,10 @@
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { CartData, CartItemI } from "@/utils/types/cartTypes";
+import { CartDataI, CartItemT } from "@/utils/types/cartTypes";
 import { db } from "@/firebase";
 
 const setOrUpdateCart = async (
   userId: string,
-  cartData: CartData
+  cartData: CartDataI
 ): Promise<void> => {
   if (!userId) {
     console.error("User ID is required to set or update cart.");
@@ -30,10 +30,10 @@ export const addProductToCart = async (
 
   const cartRef = doc(db, "carts", userId);
   const cartSnap = await getDoc(cartRef);
-  let cartItems: { [productId: string]: CartItemI } = {};
+  let cartItems: { [productId: string]: CartItemT } = {};
 
   if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartData;
+    const currentCart = cartSnap.data() as CartDataI;
     cartItems = currentCart.items || {};
   }
 
@@ -42,7 +42,7 @@ export const addProductToCart = async (
     existingItem.quantity += 1;
     cartItems[productToAdd.id] = existingItem;
   } else {
-    const newItem: CartItemI = {
+    const newItem: CartItemT = {
       ...productToAdd,
       quantity: 1,
     };
@@ -65,7 +65,7 @@ export const removeProductFromCart = async (
   const cartSnap = await getDoc(cartRef);
 
   if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartData;
+    const currentCart = cartSnap.data() as CartDataI;
     const updatedItems = { ...currentCart.items };
     delete updatedItems[productId];
 
@@ -91,7 +91,7 @@ export const decreaseProductQuantity = async (
   const cartSnap = await getDoc(cartRef);
 
   if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartData;
+    const currentCart = cartSnap.data() as CartDataI;
     const cartItems = { ...currentCart.items };
     const existingItem = cartItems[productId];
 
@@ -121,7 +121,7 @@ export const increaseCartItemQuantity = async (
   const cartSnap = await getDoc(cartRef);
 
   if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartData;
+    const currentCart = cartSnap.data() as CartDataI;
     const cartItems = currentCart.items || {};
     const existingItem = cartItems[productId];
 
@@ -139,7 +139,7 @@ export const increaseCartItemQuantity = async (
   }
 };
 
-export const getCart = async (userId: string | null): Promise<CartData> => {
+export const getCart = async (userId: string | null): Promise<CartDataI> => {
   if (!userId) {
     return { items: {} };
   }
@@ -150,7 +150,7 @@ export const getCart = async (userId: string | null): Promise<CartData> => {
     const docSnap = await getDoc(cartRef);
 
     if (docSnap.exists()) {
-      const cartData = docSnap.data() as CartData;
+      const cartData = docSnap.data() as CartDataI;
       return cartData;
     } else {
       return { items: {} };
@@ -163,7 +163,7 @@ export const getCart = async (userId: string | null): Promise<CartData> => {
 
 export const overwriteCart = async (
   userId: string,
-  mergedCartData: CartData
+  mergedCartData: CartDataI
 ): Promise<boolean> => {
   const cartRef = doc(db, "carts", userId);
 

@@ -8,24 +8,30 @@ import {
   increaseCartItemQuantity,
 } from "@/APIs/carts";
 import { Amount, Container } from "./CounterStyled";
+import { plusAction } from "@/helpers/cartHelper";
+import { CartItemT } from "@/utils/types/cartTypes";
 
 interface CounterPropsI {
   quantity: number;
-  id: string;
   userId: string;
+  product: CartItemT;
 }
 
 const iconsStrokeWidth = 1.5;
 const iconColor = colors.black;
 
-const Counter = ({ id, userId, quantity }: CounterPropsI) => {
-  const increase = async () => {
-    await increaseCartItemQuantity(userId, id);
-  };
+const Counter = ({ product, userId, quantity }: CounterPropsI) => {
+  const increase = userId
+    ? async () => {
+        await increaseCartItemQuantity(userId, product.id);
+      }
+    : () => plusAction(product);
 
-  const decrease = async () => {
-    await decreaseProductQuantity(userId, id);
-  };
+  const decrease = userId
+    ? async () => {
+        await decreaseProductQuantity(userId, product.id);
+      }
+    : () => plusAction(product);
 
   return (
     <Container>

@@ -1,10 +1,11 @@
 import { Trash } from "lucide-react";
 import { formatPrice } from "@/helpers/formatters";
-import { CartItemI } from "@/utils/types/cartTypes";
+import { CartItemT } from "@/utils/types/cartTypes";
 import Button from "@/components/Button/Button";
 import Counter from "@/components/Counter/Counter";
 import { useAuth } from "@/context/AuthContext";
 import { removeProductFromCart } from "@/APIs/carts";
+import { removeItemFromCartLS } from "@/helpers/cartHelper";
 import {
   Item,
   ItemImg,
@@ -19,7 +20,7 @@ import {
 } from "./CartItemStyled";
 
 interface CartItemPropsI {
-  product: CartItemI;
+  product: CartItemT;
 }
 
 const imageURL =
@@ -35,6 +36,8 @@ export const CartItem = ({ product }: CartItemPropsI) => {
   const handleRemove = async () => {
     if (user) {
       await removeProductFromCart(user?.uid, id);
+    } else {
+      removeItemFromCartLS(id);
     }
   };
 
@@ -50,7 +53,11 @@ export const CartItem = ({ product }: CartItemPropsI) => {
               <span>Pine Beauty</span>
               <ItemPrice>{formatPrice(price, "EUR")}</ItemPrice>
             </ItemDetails>
-            <Counter id={id} quantity={quantity} userId={user?.uid || ""} />
+            <Counter
+              product={product}
+              quantity={quantity}
+              userId={user?.uid || ""}
+            />
           </ItemDetailsAndActions>
           <BtnWrapper>
             <Button
