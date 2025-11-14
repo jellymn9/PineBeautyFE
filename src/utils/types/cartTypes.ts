@@ -21,14 +21,18 @@ export interface CartDataI<T extends TimestampsT> {
   items: CartItemsI<T>;
 }
 
+//cart item types
 export type CartItemFirebaseT = CartItemT<Timestamp>;
 export type CartItemLocalT = CartItemT<Date>;
-
+//cart items types
 export type CartItemsFirebaseT = CartItemsI<Timestamp>;
 export type CartItemsLocalT = CartItemsI<Date>;
-
+//cart data types
 export interface CartDataFirebaseI extends CartDataI<Timestamp> {}
 export interface CartDataLocalI extends CartDataI<Date> {}
+
+//cart items type array for UI
+export type CartItemsUIT = Array<CartItemLocalT>;
 
 //writeFirebase types
 export type CartItemWriteT = CartItemT<FieldValue>;

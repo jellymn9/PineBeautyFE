@@ -47,8 +47,10 @@ export const addProductToCart = async (
 
   const existingItem = cartItems[productToAdd.id];
   if (existingItem) {
-    existingItem.quantity += 1;
-    cartItems[productToAdd.id] = existingItem;
+    const quantity = existingItem.quantity + 1;
+    const updatedAt = serverTimestamp();
+
+    cartItems[productToAdd.id] = { ...existingItem, quantity, updatedAt };
   } else {
     const newItem: CartItemWriteT = {
       ...productToAdd,
@@ -56,6 +58,7 @@ export const addProductToCart = async (
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     };
+
     cartItems[productToAdd.id] = newItem;
   }
 
@@ -101,13 +104,14 @@ export const decreaseProductQuantity = async (
   const cartSnap = await getDoc(cartRef);
 
   if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartDataFirebaseI;
+    const currentCart = cartSnap.data() as CartDataWriteI;
     const cartItems = { ...currentCart.items };
     const existingItem = cartItems[productId];
 
     if (existingItem) {
       if (existingItem.quantity > 1) {
         existingItem.quantity -= 1;
+        existingItem.updatedAt = serverTimestamp();
         cartItems[productId] = existingItem;
         await setOrUpdateCart(userId, { items: cartItems });
       } else {
@@ -131,12 +135,13 @@ export const increaseCartItemQuantity = async (
   const cartSnap = await getDoc(cartRef);
 
   if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartDataFirebaseI;
+    const currentCart = cartSnap.data() as CartDataWriteI;
     const cartItems = currentCart.items || {};
     const existingItem = cartItems[productId];
 
     if (existingItem) {
       existingItem.quantity += amount;
+      existingItem.updatedAt = serverTimestamp();
 
       cartItems[productId] = existingItem;
 

@@ -4,7 +4,7 @@ import {
   CartDataLocalI,
   ItemToAddOrUpdateT,
   CartItemLocalT,
-  CartItemsFirebaseT,
+  CartItemsUIT,
 } from "@/utils/types/cartTypes";
 
 export const calculateSubtotal = (
@@ -177,11 +177,9 @@ export const mergeCartsLocal = (
   );
 };
 
-export const calcSubtotalPrice = (
-  cartItems: CartItemsLocalT | CartItemsFirebaseT
-): number => {
-  const subtotalPrice = Object.keys(cartItems).reduce((acc, current) => {
-    acc += cartItems[current].price * cartItems[current].quantity;
+export const calcSubtotalPrice = (cartItems: CartItemsUIT): number => {
+  const subtotalPrice = cartItems.reduce((acc, current) => {
+    acc += current.price * current.quantity;
     return acc;
   }, 0);
 

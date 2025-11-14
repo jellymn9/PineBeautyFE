@@ -5,7 +5,9 @@ import {
   CartDataFirebaseI,
   CartDataLocalI,
   CartItemsLocalT,
+  CartItemsUIT,
 } from "@/utils/types/cartTypes";
+import { Timestamp } from "firebase/firestore";
 
 // export const mapQuantityToProducts = (
 //   products: Array<ProductI>,
@@ -27,6 +29,10 @@ import {
 //   });
 // };
 
+const normalizeTimestamp = (date: Timestamp | null): Date => {
+  return date instanceof Timestamp ? date.toDate() : new Date(Date.now());
+};
+
 export const serverCartDateConversion = (
   cart: CartDataFirebaseI
 ): CartDataLocalI => {
@@ -34,11 +40,18 @@ export const serverCartDateConversion = (
   const newItems: CartItemsLocalT = {};
 
   Object.keys(items).forEach((key) => {
+    console.log("date type: ", items[key].createdAt, items[key].updatedAt);
     newItems[key] = {
       ...items[key],
-      createdAt: items[key].createdAt.toDate(),
-      updatedAt: items[key].updatedAt.toDate(),
+      createdAt: normalizeTimestamp(items[key].createdAt),
+      updatedAt: normalizeTimestamp(items[key].updatedAt),
     };
   });
   return { items: newItems };
+};
+
+export const itemToArrAndSort = (items: CartItemsLocalT): CartItemsUIT => {
+  return Object.values(items).sort((a, b) =>
+    a.updatedAt > b.updatedAt ? 1 : -1
+  );
 };

@@ -16,6 +16,7 @@ import {
   InnerContainer,
   List,
 } from "./CartStyled";
+import { itemToArrAndSort } from "@/helpers/dataMapper";
 
 const title = "Shopping Cart";
 const emptyCart = "There are no products in the cart.";
@@ -28,7 +29,9 @@ function Cart() {
 
   //REFACTOR!
 
-  const cartItems = user ? cart.items : getCartItemsLocal();
+  const cartItems = user
+    ? itemToArrAndSort(cart.items)
+    : itemToArrAndSort(getCartItemsLocal());
 
   const isCartEmpty = Object.keys(cartItems).length === 0;
 
@@ -49,12 +52,8 @@ function Cart() {
             <>
               <div>
                 <List>
-                  {Object.keys(cartItems).map((productId) => (
-                    <CartItem
-                      product={cartItems[productId]}
-                      user={user}
-                      key={productId}
-                    />
+                  {cartItems.map((item) => (
+                    <CartItem product={item} user={user} key={item.id} />
                   ))}
                 </List>
               </div>
