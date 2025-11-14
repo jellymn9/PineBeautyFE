@@ -1,6 +1,3 @@
-// import { CartItemI } from "@/utils/types/cartTypes";
-// import { ProductI } from "@/utils/types/productTypes";
-
 import {
   CartDataFirebaseI,
   CartDataLocalI,
@@ -40,7 +37,6 @@ export const serverCartDateConversion = (
   const newItems: CartItemsLocalT = {};
 
   Object.keys(items).forEach((key) => {
-    console.log("date type: ", items[key].createdAt, items[key].updatedAt);
     newItems[key] = {
       ...items[key],
       createdAt: normalizeTimestamp(items[key].createdAt),
@@ -52,6 +48,6 @@ export const serverCartDateConversion = (
 
 export const itemToArrAndSort = (items: CartItemsLocalT): CartItemsUIT => {
   return Object.values(items).sort((a, b) =>
-    a.updatedAt > b.updatedAt ? 1 : -1
+    a.createdAt > b.createdAt ? 1 : -1
   );
 };
