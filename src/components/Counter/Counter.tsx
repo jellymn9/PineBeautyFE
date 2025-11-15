@@ -1,35 +1,37 @@
 import { Minus, Plus } from "lucide-react";
 import Button from "@/components/Button/Button";
 import colors from "@/utils/colors";
-import {
-  decreaseProductQuantity,
-  increaseCartItemQuantity,
-} from "@/APIs/carts";
 import { Amount, Container } from "./CounterStyled";
-import { plusAction } from "@/helpers/cartHelper";
 import { CartItemLocalT } from "@/utils/types/cartTypes";
+import { useContext } from "react";
+import { CartContext } from "@/context/CartContext";
 
 interface CounterPropsI {
   quantity: number;
-  userId: string;
+  //userId: string;
   product: CartItemLocalT;
 }
 
 const iconsStrokeWidth = 1.5;
 const iconColor = colors.black;
 
-const Counter = ({ product, userId, quantity }: CounterPropsI) => {
-  const increase = userId
-    ? async () => {
-        await increaseCartItemQuantity(userId, product.id);
-      }
-    : () => plusAction(product);
+const Counter = ({ product, quantity }: CounterPropsI) => {
+  const { increase, decrease } = useContext(CartContext);
 
-  const decrease = userId
-    ? async () => {
-        await decreaseProductQuantity(userId, product.id);
-      }
-    : () => plusAction(product);
+  const handlePlus = () => increase(product);
+  const handleMinus = () => decrease(product);
+  // userId
+  //   ? async () => {
+  //       await increaseCartItemQuantity(userId, product.id);
+  //     }
+  //   : () => plusAction(product);
+
+  //const decrease =
+  // userId
+  //   ? async () => {
+  //       await decreaseProductQuantity(userId, product.id);
+  //     }
+  //   : () => plusAction(product);
 
   return (
     <Container>
@@ -38,7 +40,7 @@ const Counter = ({ product, userId, quantity }: CounterPropsI) => {
         icon={
           <Minus size={22} strokeWidth={iconsStrokeWidth} color={iconColor} />
         }
-        handleClick={decrease}
+        handleClick={handleMinus}
         disabled={quantity === 0}
       />
       <Amount>{quantity}</Amount>
@@ -47,7 +49,7 @@ const Counter = ({ product, userId, quantity }: CounterPropsI) => {
         icon={
           <Plus size={22} strokeWidth={iconsStrokeWidth} color={iconColor} />
         }
-        handleClick={increase}
+        handleClick={handlePlus}
       />
     </Container>
   );

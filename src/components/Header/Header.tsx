@@ -8,6 +8,8 @@ import { MobileContainer } from "./HeaderStyled";
 import HeaderDesktop from "./HeaderDesktop/HeaderDesktop";
 import CartHeader from "./CartHeaderLink/CartHeader";
 
+const SHOPPING_CART = <ShoppingCart />;
+
 function Header() {
   const { openDrawer } = useDrawer();
 
@@ -19,7 +21,7 @@ function Header() {
         <MobileContainer>
           <Menu onClick={openDrawer} />
           <Icon name="logo" width="55px" height="55px" />
-          <CartHeader icon={<ShoppingCart />} />
+          <CartHeader icon={SHOPPING_CART} />
         </MobileContainer>
       ) : (
         <HeaderDesktop />

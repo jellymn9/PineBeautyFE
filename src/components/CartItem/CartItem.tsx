@@ -3,8 +3,8 @@ import { formatPrice } from "@/helpers/formatters";
 import { CartItemLocalT } from "@/utils/types/cartTypes";
 import Button from "@/components/Button/Button";
 import Counter from "@/components/Counter/Counter";
-import { removeProductFromCart } from "@/APIs/carts";
-import { removeItemFromCartLS } from "@/helpers/cartHelper";
+//import { removeProductFromCart } from "@/APIs/carts";
+//import { removeItemFromCartLS } from "@/helpers/cartHelper";
 import {
   Item,
   ItemImg,
@@ -17,11 +17,13 @@ import {
   BtnWrapper,
   DetailsAndBtnWrapper,
 } from "./CartItemStyled";
-import { User } from "firebase/auth";
+//import { User } from "firebase/auth";
+import { useContext } from "react";
+import { CartContext } from "@/context/CartContext";
 
 interface CartItemPropsI {
   product: CartItemLocalT;
-  user: User | null;
+  //user: User | null;
 }
 
 const imageURL =
@@ -29,16 +31,11 @@ const imageURL =
     ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
     : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
 
-export const CartItem = ({ product, user }: CartItemPropsI) => {
+export const CartItem = ({ product }: CartItemPropsI) => {
   const { id, price, name, quantity } = product;
+  const { removeItem } = useContext(CartContext);
 
-  const handleRemove = async () => {
-    if (user) {
-      await removeProductFromCart(user?.uid, id);
-    } else {
-      removeItemFromCartLS(id);
-    }
-  };
+  const handleRemove = () => removeItem(id);
 
   return (
     <Item>
@@ -55,7 +52,7 @@ export const CartItem = ({ product, user }: CartItemPropsI) => {
             <Counter
               product={product}
               quantity={quantity}
-              userId={user?.uid || ""}
+              //userId={user?.uid || ""}
             />
           </ItemDetailsAndActions>
           <BtnWrapper>

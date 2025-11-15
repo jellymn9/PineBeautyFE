@@ -2,9 +2,10 @@ import {
   ActionCartT,
   CartItemsLocalT,
   CartDataLocalI,
-  ItemToAddOrUpdateT,
+  //ItemToAddOrUpdateT,
   CartItemLocalT,
   CartItemsUIT,
+  NewItemT,
 } from "@/utils/types/cartTypes";
 
 export const calculateSubtotal = (
@@ -16,6 +17,11 @@ export const calculateSubtotal = (
 };
 
 export const getCartLocal = () => window.localStorage.getItem("cart") || null;
+
+export const getCartLocalObj = (): CartDataLocalI => {
+  const cart = getCartLocal();
+  return cart ? JSON.parse(cart) : { items: {} };
+};
 
 export const getCartItemsLocal = (): CartItemsLocalT => {
   const cart = getCartLocal();
@@ -97,7 +103,7 @@ const removeItem = (
 
 const updateItems = (
   cartItems: CartItemsLocalT,
-  item: ItemToAddOrUpdateT,
+  item: NewItemT,
   action: "plus" | "minus"
 ): CartItemsLocalT => {
   const itemInCart = cartItems[item.id];
@@ -130,7 +136,7 @@ const updateItems = (
 };
 
 // action for "plus"
-export const plusAction = (cartItem: ItemToAddOrUpdateT) => {
+export const plusAction = (cartItem: NewItemT) => {
   cartActionWrapper(
     () => {
       const newCart = { items: { [cartItem.id]: newItem(cartItem) } };
@@ -144,7 +150,7 @@ export const plusAction = (cartItem: ItemToAddOrUpdateT) => {
 };
 
 // action for "minus"
-export const minusAction = (cartItem: ItemToAddOrUpdateT) => {
+export const minusAction = (cartItem: NewItemT) => {
   cartActionWrapper(
     () => {
       return;

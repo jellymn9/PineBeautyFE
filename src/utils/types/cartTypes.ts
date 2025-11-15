@@ -41,7 +41,7 @@ export interface CartDataWriteI extends CartDataI<FieldValue> {}
 
 export type ActionCartT = "increment" | "decrement";
 
-export type ItemToAddOrUpdateT = Omit<
+export type NewItemT = Omit<
   CartItemT<Date>,
   "createdAt" | "updatedAt" | "quantity"
 >;

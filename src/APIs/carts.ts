@@ -10,7 +10,7 @@ import {
   CartDataLocalI,
   CartDataWriteI,
   CartItemWriteT,
-  ItemToAddOrUpdateT,
+  NewItemT,
 } from "@/utils/types/cartTypes";
 import { db } from "@/firebase";
 import { serverCartDateConversion } from "@/helpers/dataMapper";
@@ -29,7 +29,7 @@ const setOrUpdateCart = async (
 
 export const addProductToCart = async (
   userId: string,
-  productToAdd: ItemToAddOrUpdateT
+  productToAdd: NewItemT
 ): Promise<void> => {
   if (!userId || !productToAdd || !productToAdd.id) {
     console.error("User ID and a valid product with an ID are required.");
