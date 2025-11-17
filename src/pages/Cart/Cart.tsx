@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 //import { useAuth } from "@/context/AuthContext";
 
@@ -17,7 +17,7 @@ import {
   List,
 } from "./CartStyled";
 //import { itemToArrAndSort } from "@/helpers/dataMapper";
-import { CartContext } from "@/context/CartContext";
+import { useCartContext } from "@/context/CartContext";
 
 const title = "Shopping Cart";
 const emptyCart = "There are no products in the cart.";
@@ -25,16 +25,7 @@ const emptyCart = "There are no products in the cart.";
 function Cart() {
   //const { user } = useAuth();
   const [subtotal, setSubtotal] = useState<number>(0);
-  const { cartItems } = useContext(CartContext);
-  //const { cart, loading } = useCart(user?.uid || null);
-  // const [cartLocal, setCartLocal] = useState(
-  //   // use context instead
-  //   itemToArrAndSort(getCartItemsLocal())
-  // );
-
-  //REFACTOR!
-
-  //const cartItems = user ? itemToArrAndSort(cart.items) : cartL?.cartLocal;
+  const { cartItems } = useCartContext();
 
   const isCartEmpty = Object.keys(cartItems).length === 0;
 

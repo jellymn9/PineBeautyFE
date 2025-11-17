@@ -1,17 +1,5 @@
-import {
-  getCartLocalObj,
-  plusAction,
-  minusAction,
-  removeItemFromCartLS,
-} from "@/helpers/cartHelper";
-import { itemToArrAndSort } from "@/helpers/dataMapper";
-import {
-  CartDataLocalI,
-  CartItemLocalT,
-  CartItemsUIT,
-  NewItemT,
-} from "@/utils/types/cartTypes";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext } from "react";
+
 import { useAuth } from "./AuthContext";
 import {
   addProductToCart,
@@ -19,109 +7,83 @@ import {
   increaseCartItemQuantity,
   removeProductFromCart,
 } from "@/APIs/carts";
-import { useCart } from "@/helpers/customHooks/cartCustomHooks";
+import { itemToArrAndSort } from "@/helpers/dataMapper";
+import { useCart } from "@/helpers/customHooks/serverCartHooks";
+import useLocalCart from "@/helpers/customHooks/localCartHooks";
+import {
+  //CartDataLocalI,
+  CartItemLocalT,
+  CartItemsUIT,
+  NewItemT,
+} from "@/utils/types/cartTypes";
 
 interface CartContextTypeI {
   cartItems: CartItemsUIT;
   removeItem: (id: string) => void;
   increase: (product: CartItemLocalT) => void;
   decrease: (product: CartItemLocalT) => void;
-  productAdd: (product: NewItemT) => void;
+  addProduct: (product: NewItemT) => void;
 }
 
-const initialValue: CartContextTypeI = {
-  cartItems: [],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  removeItem: (_id) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  increase: (_product) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  decrease: (_product) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  productAdd: (_product) => {},
-};
+// const initialValue: CartContextTypeI = {
+//   cartItems: [],
+//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//   removeItem: (_id) => {},
+//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//   increase: (_product) => {},
+//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//   decrease: (_product) => {},
+//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+//   addProduct: (_product) => {},
+// };
 
-export const CartContext = createContext<CartContextTypeI>(initialValue);
+export const CartContext = createContext<CartContextTypeI | undefined>(
+  undefined
+);
 
 export const CartProvider: React.FC<{
   children: ReactNode;
 }> = ({ children }) => {
   const { user } = useAuth();
   const { cart: serverCart } = useCart(user?.uid || null);
-  const [localCart, setLocalCart] = useState<CartDataLocalI>(getCartLocalObj());
+  const {
+    cart: localCart,
+    removeItem,
+    increaseAction,
+    decreaseAction,
+  } = useLocalCart();
 
-  const cartItems = user
-    ? itemToArrAndSort(serverCart.items)
-    : itemToArrAndSort(localCart.items);
+  const cart: CartContextTypeI = user
+    ? {
+        cartItems: itemToArrAndSort(serverCart.items),
+        removeItem: (productId: string) => {
+          removeProductFromCart(user.uid, productId);
+        },
+        increase: (product) => {
+          increaseCartItemQuantity(user.uid, product.id);
+        },
+        decrease: (product) => {
+          decreaseProductQuantity(user.uid, product.id);
+        },
+        addProduct: (product) => {
+          addProductToCart(user.uid, product);
+        },
+      }
+    : {
+        cartItems: itemToArrAndSort(localCart.items),
+        removeItem: removeItem,
+        increase: increaseAction,
+        decrease: decreaseAction,
+        addProduct: increaseAction,
+      };
 
-  const removeItemLocal = (id: string) => {
-    removeItemFromCartLS(id);
-    setLocalCart(getCartLocalObj()); // Is there event for ls changes???
-  };
-
-  const removeItemFromServer = async (userId: string, productId: string) => {
-    await removeProductFromCart(userId, productId);
-  };
-
-  const removeItem = async (id: string) => {
-    if (user) {
-      await removeItemFromServer(user.uid, id);
-    } else {
-      removeItemLocal(id);
-    }
-  };
-
-  const increaseActionServer = async (userId: string, productId: string) => {
-    await increaseCartItemQuantity(userId, productId);
-  };
-
-  const increaseActionLocal = (product: NewItemT) => {
-    plusAction(product);
-    setLocalCart(getCartLocalObj());
-  };
-
-  const increase = async (product: CartItemLocalT) => {
-    if (user) {
-      await increaseActionServer(user.uid, product.id);
-    } else {
-      increaseActionLocal(product);
-    }
-  };
-
-  const decreaseActionServer = async (userId: string, productId: string) => {
-    await decreaseProductQuantity(userId, productId);
-  };
-
-  const decreaseActionLocal = (product: CartItemLocalT) => {
-    minusAction(product);
-    setLocalCart(getCartLocalObj());
-  };
-
-  const decrease = async (product: CartItemLocalT) => {
-    if (user) {
-      await decreaseActionServer(user.uid, product.id);
-    } else {
-      decreaseActionLocal(product);
-    }
-  };
-
-  const productAddServer = async (userId: string, product: NewItemT) => {
-    await addProductToCart(userId, product);
-  };
-
-  const productAdd = async (product: NewItemT) => {
-    if (user) {
-      await productAddServer(user.uid, product);
-    } else {
-      increaseActionLocal(product);
-    }
-  };
-
-  return (
-    <CartContext.Provider
-      value={{ cartItems, removeItem, increase, decrease, productAdd }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+  return <CartContext.Provider value={cart}>{children}</CartContext.Provider>;
 };
+
+export function useCartContext() {
+  const ctx = useContext(CartContext);
+  if (!ctx) {
+    throw new Error("useCartContext must be used within CartProvider");
+  }
+  return ctx;
+}

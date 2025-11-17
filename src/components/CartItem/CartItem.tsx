@@ -18,8 +18,7 @@ import {
   DetailsAndBtnWrapper,
 } from "./CartItemStyled";
 //import { User } from "firebase/auth";
-import { useContext } from "react";
-import { CartContext } from "@/context/CartContext";
+import { useCartContext } from "@/context/CartContext";
 
 interface CartItemPropsI {
   product: CartItemLocalT;
@@ -33,7 +32,7 @@ const imageURL =
 
 export const CartItem = ({ product }: CartItemPropsI) => {
   const { id, price, name, quantity } = product;
-  const { removeItem } = useContext(CartContext);
+  const { removeItem } = useCartContext();
 
   const handleRemove = () => removeItem(id);
 

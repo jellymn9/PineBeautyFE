@@ -1,9 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 
+import { useCartContext } from "@/context/CartContext";
 import { ProductI } from "@/utils/types/productTypes";
-// import { useAuth } from "@/context/AuthContext";
-// import { addProductToCart } from "@/APIs/carts";
-// import { plusAction } from "@/helpers/cartHelper";
 import Accordion from "@/components/Accordion/Accordion";
 import Button from "@/components/Button/Button";
 import GeneralProductInfo from "@/components/GeneralProductInfo/GeneralProductInfo";
@@ -25,8 +23,6 @@ import {
   SecondaryContainer,
   NoProductMessage,
 } from "./ProductStyled";
-import { useContext } from "react";
-import { CartContext } from "@/context/CartContext";
 
 const desc = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const nameAddition = " | 100% organic and cold pressed";
@@ -36,39 +32,19 @@ const nonExistentProductMessage = "Product not found.";
 
 function Product() {
   const product = useLoaderData() as ProductI | null;
-  const { productAdd } = useContext(CartContext);
+  const { addProduct } = useCartContext();
 
   if (!product) {
     return <NoProductMessage>{nonExistentProductMessage}</NoProductMessage>;
   }
 
   const handleAdd = () =>
-    productAdd({
+    addProduct({
       id: product.id,
       name: product.name,
       price: product.price,
       image: product.image,
     });
-  // async () => {
-  //   if (user) {
-  //     await addProductToCart(user?.uid, {
-  //       id: product.id,
-  //       name: product.name,
-  //       price: product.price,
-  //       image: product.image,
-  //       //createdAt: product.createdAt,
-  //       //updatedAt: product.updatedAt,
-  //     });
-  //   } else {
-  //     plusAction({
-  //       id: product.id,
-  //       name: product.name,
-  //       price: product.price,
-  //       image: product.image,
-  //       //quantity: 1, //redundant
-  //     });
-  //   }
-  // };
 
   //temporary image
   const imageURL =

@@ -1,14 +1,14 @@
 import { CartInsertWrapper } from "./CartHeaderStyled";
 import { Dot } from "lucide-react";
-import { memo, useContext } from "react";
-import { CartContext } from "@/context/CartContext";
+import { memo } from "react";
+import { useCartContext } from "@/context/CartContext";
 
 interface CartHeaderProps {
   icon: JSX.Element;
 }
 
 const CartHeader = memo(function ({ icon }: CartHeaderProps) {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems } = useCartContext();
   const isCartEmpty = !cartItems.length;
 
   return (
