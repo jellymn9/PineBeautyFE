@@ -11,7 +11,6 @@ import { itemToArrAndSort } from "@/helpers/dataMapper";
 import { useCart } from "@/helpers/customHooks/serverCartHooks";
 import useLocalCart from "@/helpers/customHooks/localCartHooks";
 import {
-  //CartDataLocalI,
   CartItemLocalT,
   CartItemsUIT,
   NewItemT,
@@ -24,18 +23,6 @@ interface CartContextTypeI {
   decrease: (product: CartItemLocalT) => void;
   addProduct: (product: NewItemT) => void;
 }
-
-// const initialValue: CartContextTypeI = {
-//   cartItems: [],
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   removeItem: (_id) => {},
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   increase: (_product) => {},
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   decrease: (_product) => {},
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   addProduct: (_product) => {},
-// };
 
 export const CartContext = createContext<CartContextTypeI | undefined>(
   undefined

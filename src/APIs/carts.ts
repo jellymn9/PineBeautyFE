@@ -42,7 +42,7 @@ export const addProductToCart = async (
 
   if (cartSnap.exists()) {
     const currentCart = cartSnap.data() as CartDataFirebaseI;
-    cartItems = currentCart.items || {};
+    cartItems = currentCart.items ? { ...currentCart.items } : {};
   }
 
   const existingItem = cartItems[productToAdd.id];
@@ -110,9 +110,11 @@ export const decreaseProductQuantity = async (
 
     if (existingItem) {
       if (existingItem.quantity > 1) {
-        existingItem.quantity -= 1;
-        existingItem.updatedAt = serverTimestamp();
-        cartItems[productId] = existingItem;
+        cartItems[productId] = {
+          ...existingItem,
+          quantity: existingItem.quantity - 1,
+          updatedAt: serverTimestamp(),
+        };
         await setOrUpdateCart(userId, { items: cartItems });
       } else {
         await removeProductFromCart(userId, productId);
@@ -136,14 +138,15 @@ export const increaseCartItemQuantity = async (
 
   if (cartSnap.exists()) {
     const currentCart = cartSnap.data() as CartDataWriteI;
-    const cartItems = currentCart.items || {};
+    const cartItems = currentCart.items ? { ...currentCart.items } : {};
     const existingItem = cartItems[productId];
 
     if (existingItem) {
-      existingItem.quantity += amount;
-      existingItem.updatedAt = serverTimestamp();
-
-      cartItems[productId] = existingItem;
+      cartItems[productId] = {
+        ...existingItem,
+        quantity: existingItem.quantity + amount,
+        updatedAt: serverTimestamp(),
+      };
 
       await setOrUpdateCart(userId, { items: cartItems });
     } else {

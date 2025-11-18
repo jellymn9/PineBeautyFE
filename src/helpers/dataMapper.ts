@@ -47,7 +47,12 @@ export const serverCartDateConversion = (
 };
 
 export const itemToArrAndSort = (items: CartItemsLocalT): CartItemsUIT => {
-  return Object.values(items).sort((a, b) =>
-    a.createdAt > b.createdAt ? 1 : -1
-  );
+  return Object.values(items).sort((a, b) => {
+    const diff = a.createdAt.getTime() - b.createdAt.getTime();
+    if (diff !== 0) {
+      return diff;
+    }
+    //a.createdAt > b.createdAt ? 1 : -1;
+    return a.id.localeCompare(b.id);
+  });
 };

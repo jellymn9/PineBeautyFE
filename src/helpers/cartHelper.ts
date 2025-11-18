@@ -1,12 +1,26 @@
 import {
-  ActionCartT,
   CartItemsLocalT,
   CartDataLocalI,
-  //ItemToAddOrUpdateT,
-  CartItemLocalT,
   CartItemsUIT,
   NewItemT,
 } from "@/utils/types/cartTypes";
+import { createNewItem, removeItem, updateItems } from "./cartHelperCore";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function reviveCartDates(obj: CartDataLocalI): CartDataLocalI {
+  const items = Object.fromEntries(
+    Object.entries(obj.items || {}).map(([id, item]) => [
+      id,
+      {
+        ...item,
+        createdAt: new Date(item.createdAt),
+        updatedAt: new Date(item.updatedAt),
+      },
+    ])
+  );
+
+  return { items };
+}
 
 export const calculateSubtotal = (
   products: Array<{ price: number; quantity: number }>
@@ -20,12 +34,12 @@ export const getCartLocal = () => window.localStorage.getItem("cart") || null;
 
 export const getCartLocalObj = (): CartDataLocalI => {
   const cart = getCartLocal();
-  return cart ? JSON.parse(cart) : { items: {} };
+  return cart ? reviveCartDates(JSON.parse(cart)) : { items: {} };
 };
 
 export const getCartItemsLocal = (): CartItemsLocalT => {
   const cart = getCartLocal();
-  return cart ? JSON.parse(cart).items : {};
+  return cart ? reviveCartDates(JSON.parse(cart)).items : {};
 };
 
 export function clearCartLocal() {
@@ -62,88 +76,17 @@ export const setCartLocal = (cart: CartDataLocalI) => {
   window.localStorage.setItem("cart", JSON.stringify(cart));
 };
 
-const newItem = (
-  item: Omit<CartItemLocalT, "createdAt" | "updatedAt" | "quantity">
-): CartItemLocalT => {
-  return {
-    ...item,
-    quantity: 1,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-};
-
-const updateItem = (
-  item: CartItemLocalT,
-  action: ActionCartT = "increment"
-): CartItemLocalT => {
-  if (action === "increment") {
-    return {
-      ...item,
-      quantity: item.quantity + 1,
-      updatedAt: new Date(),
-    };
-  } else {
-    return {
-      ...item,
-      quantity: item.quantity - 1,
-      updatedAt: new Date(),
-    };
-  }
-};
-
-const removeItem = (
-  cartItems: CartItemsLocalT,
-  itemId: string
-): CartItemsLocalT => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { [itemId]: _removedItem, ...items } = cartItems;
-  return items;
-};
-
-const updateItems = (
-  cartItems: CartItemsLocalT,
-  item: NewItemT,
-  action: "plus" | "minus"
-): CartItemsLocalT => {
-  const itemInCart = cartItems[item.id];
-
-  switch (action) {
-    case "plus": {
-      const hasItem = !!itemInCart;
-
-      return {
-        ...cartItems,
-        [item.id]: hasItem
-          ? updateItem(itemInCart, "increment")
-          : newItem(item),
-      };
-    }
-    case "minus": {
-      const itemQuantity = itemInCart.quantity;
-      if (itemQuantity > 1) {
-        return {
-          ...cartItems,
-          [item.id]: updateItem(itemInCart, "decrement"),
-        };
-      } else {
-        return removeItem(cartItems, itemInCart.id);
-      }
-    }
-    default:
-      return cartItems;
-  }
-};
-
 // action for "plus"
 export const plusAction = (cartItem: NewItemT) => {
   cartActionWrapper(
     () => {
-      const newCart = { items: { [cartItem.id]: newItem(cartItem) } };
+      const newCart = {
+        items: { [cartItem.id]: createNewItem(cartItem, new Date()) },
+      };
       setCartLocal(newCart);
     },
     (items: CartItemsLocalT) => {
-      const newItems = updateItems(items, cartItem, "plus");
+      const newItems = updateItems(items, cartItem, "plus", new Date());
       setCartLocal({ items: newItems });
     }
   );
@@ -156,7 +99,7 @@ export const minusAction = (cartItem: NewItemT) => {
       return;
     },
     (items: CartItemsLocalT) => {
-      const newItems = updateItems(items, cartItem, "minus");
+      const newItems = updateItems(items, cartItem, "minus", new Date());
       if (Object.keys(newItems).length === 0) {
         clearCartLocal();
         return;
@@ -167,20 +110,13 @@ export const minusAction = (cartItem: NewItemT) => {
   );
 };
 
-export const mergeCartsLocal = (
-  serverCart: CartDataLocalI
-): CartDataLocalI | void => {
-  return cartActionWrapper(
-    () => {
-      return;
-    },
-    (items: CartItemsLocalT) => {
-      const merged: CartDataLocalI = {
-        items: { ...serverCart.items, ...items },
-      };
-      return merged;
-    }
-  );
+export const mergeCartsLocal = (serverCart: CartDataLocalI): CartDataLocalI => {
+  const itemsLocal = getCartLocalObj();
+
+  const merged: CartDataLocalI = {
+    items: { ...serverCart.items, ...itemsLocal.items },
+  };
+  return merged;
 };
 
 export const calcSubtotalPrice = (cartItems: CartItemsUIT): number => {

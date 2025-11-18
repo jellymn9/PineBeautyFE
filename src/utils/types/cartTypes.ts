@@ -8,7 +8,7 @@ export type CartItemBaseT = {
   quantity: number;
 };
 
-type TimestampsT = Date | Timestamp | FieldValue;
+export type TimestampsT = Date | Timestamp | FieldValue | string;
 
 export type CartItemT<T extends TimestampsT> = CartItemBaseT & {
   createdAt: T;
