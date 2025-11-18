@@ -1,13 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 
-import { useAppSelector } from "@/withTypes";
-import { selectItemById } from "@/state/selectors/cartSelector";
-// import { useDispatch } from "react-redux";
-// import { add } from "../../state/reducers/cartReducer";
+import { useCartContext } from "@/context/CartContext";
 import { ProductI } from "@/utils/types/productTypes";
-import { useAuth } from "@/context/AuthContext";
-import { addProductToCart } from "@/APIs/carts";
-import { setOrUpdateCartLS } from "@/helpers/cartHelper";
 import Accordion from "@/components/Accordion/Accordion";
 import Button from "@/components/Button/Button";
 import GeneralProductInfo from "@/components/GeneralProductInfo/GeneralProductInfo";
@@ -37,42 +31,20 @@ const relatedProductsTitle = "Related products";
 const nonExistentProductMessage = "Product not found.";
 
 function Product() {
-  const { isLoggedIn, user } = useAuth();
   const product = useLoaderData() as ProductI | null;
-
-  //const dispatch = useDispatch();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const itemInCart = useAppSelector((state) =>
-    selectItemById(state, product ? product.id : "")
-  );
+  const { addProduct } = useCartContext();
 
   if (!product) {
     return <NoProductMessage>{nonExistentProductMessage}</NoProductMessage>;
   }
 
-  const handleAdd = async () => {
-    if (isLoggedIn && user) {
-      await addProductToCart(user?.uid, {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-      });
-    } else {
-      setOrUpdateCartLS({
-        items: {
-          [product.id]: {
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            quantity: 1,
-          },
-        },
-      });
-    }
-  };
+  const handleAdd = () =>
+    addProduct({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+    });
 
   //temporary image
   const imageURL =

@@ -11,6 +11,7 @@ import { DrawerProvider } from "@/context/DrawerContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ToastProvider } from "@/context/ToastContext";
 import { Toast } from "@/components/Toast/Toast";
+import { CartProvider } from "./context/CartContext";
 
 const router = createBrowserRouter(routes);
 
@@ -49,15 +50,17 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Profiler id="App" onRender={onRender}>
       <AuthProvider>
-        <DrawerProvider>
-          <ToastProvider>
-            <Provider store={store}>
-              <GlobalStyles />
-              <Toast />
-              <RouterProvider router={router} />
-            </Provider>
-          </ToastProvider>
-        </DrawerProvider>
+        <CartProvider>
+          <DrawerProvider>
+            <ToastProvider>
+              <Provider store={store}>
+                <GlobalStyles />
+                <Toast />
+                <RouterProvider router={router} />
+              </Provider>
+            </ToastProvider>
+          </DrawerProvider>
+        </CartProvider>
       </AuthProvider>
     </Profiler>
   </React.StrictMode>

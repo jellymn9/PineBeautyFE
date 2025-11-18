@@ -1,10 +1,10 @@
 import { Trash } from "lucide-react";
 import { formatPrice } from "@/helpers/formatters";
-import { CartItemI } from "@/utils/types/cartTypes";
+import { CartItemLocalT } from "@/utils/types/cartTypes";
 import Button from "@/components/Button/Button";
 import Counter from "@/components/Counter/Counter";
-import { useAuth } from "@/context/AuthContext";
-import { removeProductFromCart } from "@/APIs/carts";
+//import { removeProductFromCart } from "@/APIs/carts";
+//import { removeItemFromCartLS } from "@/helpers/cartHelper";
 import {
   Item,
   ItemImg,
@@ -17,9 +17,12 @@ import {
   BtnWrapper,
   DetailsAndBtnWrapper,
 } from "./CartItemStyled";
+//import { User } from "firebase/auth";
+import { useCartContext } from "@/context/CartContext";
 
 interface CartItemPropsI {
-  product: CartItemI;
+  product: CartItemLocalT;
+  //user: User | null;
 }
 
 const imageURL =
@@ -29,14 +32,9 @@ const imageURL =
 
 export const CartItem = ({ product }: CartItemPropsI) => {
   const { id, price, name, quantity } = product;
+  const { removeItem } = useCartContext();
 
-  const { user } = useAuth();
-
-  const handleRemove = async () => {
-    if (user) {
-      await removeProductFromCart(user?.uid, id);
-    }
-  };
+  const handleRemove = () => removeItem(id);
 
   return (
     <Item>
@@ -50,7 +48,11 @@ export const CartItem = ({ product }: CartItemPropsI) => {
               <span>Pine Beauty</span>
               <ItemPrice>{formatPrice(price, "EUR")}</ItemPrice>
             </ItemDetails>
-            <Counter id={id} quantity={quantity} userId={user?.uid || ""} />
+            <Counter
+              product={product}
+              quantity={quantity}
+              //userId={user?.uid || ""}
+            />
           </ItemDetailsAndActions>
           <BtnWrapper>
             <Button

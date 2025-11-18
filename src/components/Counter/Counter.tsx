@@ -1,31 +1,23 @@
-// import { useAppDispatch } from "../../withTypes";
-// import { remove, upsert } from "../../state/reducers/cartReducer";
 import { Minus, Plus } from "lucide-react";
 import Button from "@/components/Button/Button";
 import colors from "@/utils/colors";
-import {
-  decreaseProductQuantity,
-  increaseCartItemQuantity,
-} from "@/APIs/carts";
 import { Amount, Container } from "./CounterStyled";
+import { CartItemLocalT } from "@/utils/types/cartTypes";
+import { useCartContext } from "@/context/CartContext";
 
 interface CounterPropsI {
   quantity: number;
-  id: string;
-  userId: string;
+  product: CartItemLocalT;
 }
 
 const iconsStrokeWidth = 1.5;
 const iconColor = colors.black;
 
-const Counter = ({ id, userId, quantity }: CounterPropsI) => {
-  const increase = async () => {
-    await increaseCartItemQuantity(userId, id);
-  };
+const Counter = ({ product, quantity }: CounterPropsI) => {
+  const { increase, decrease } = useCartContext();
 
-  const decrease = async () => {
-    await decreaseProductQuantity(userId, id);
-  };
+  const handlePlus = () => increase(product);
+  const handleMinus = () => decrease(product);
 
   return (
     <Container>
@@ -34,7 +26,7 @@ const Counter = ({ id, userId, quantity }: CounterPropsI) => {
         icon={
           <Minus size={22} strokeWidth={iconsStrokeWidth} color={iconColor} />
         }
-        handleClick={decrease}
+        handleClick={handleMinus}
         disabled={quantity === 0}
       />
       <Amount>{quantity}</Amount>
@@ -43,7 +35,7 @@ const Counter = ({ id, userId, quantity }: CounterPropsI) => {
         icon={
           <Plus size={22} strokeWidth={iconsStrokeWidth} color={iconColor} />
         }
-        handleClick={increase}
+        handleClick={handlePlus}
       />
     </Container>
   );
