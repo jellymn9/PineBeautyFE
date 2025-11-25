@@ -12,6 +12,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { ToastProvider } from "@/context/ToastContext";
 import { Toast } from "@/components/Toast/Toast";
 import { CartProvider } from "./context/CartContext";
+import { RootErrorBoundary } from "./components/Boundaries/RootErrorBoundary";
 
 const router = createBrowserRouter(routes);
 
@@ -49,19 +50,21 @@ function onRender(
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Profiler id="App" onRender={onRender}>
-      <AuthProvider>
-        <CartProvider>
-          <DrawerProvider>
-            <ToastProvider>
-              <Provider store={store}>
-                <GlobalStyles />
-                <Toast />
-                <RouterProvider router={router} />
-              </Provider>
-            </ToastProvider>
-          </DrawerProvider>
-        </CartProvider>
-      </AuthProvider>
+      <RootErrorBoundary>
+        <AuthProvider>
+          <CartProvider>
+            <DrawerProvider>
+              <ToastProvider>
+                <Provider store={store}>
+                  <GlobalStyles />
+                  <Toast />
+                  <RouterProvider router={router} />
+                </Provider>
+              </ToastProvider>
+            </DrawerProvider>
+          </CartProvider>
+        </AuthProvider>
+      </RootErrorBoundary>
     </Profiler>
   </React.StrictMode>
 );
