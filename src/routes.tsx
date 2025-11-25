@@ -4,61 +4,68 @@ import { routes as routesC } from "@/utils/constants";
 import { getSingleProduct } from "@/APIs/products";
 
 import PageLayout from "@/components/Layout/Layout";
-import Home from "@/pages/Home/Home";
-import SignIn from "@/pages/Auth/SignIn/SignIn";
-import SignUp from "@/pages/Auth/SignUp/SignUp";
-import Cart from "@/pages/Cart/Cart";
-import Product from "@/pages/Product/Product";
-import Products from "@/pages/Products/Products";
-import Profile from "@/pages/Profile/Profile";
 import Error from "@/pages/Error/error";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import AuthRoute from "@/components/AuthRoute/AuthRoute";
+import { withSuspense } from "./utils/withSuspense";
+import {
+  LazyHome,
+  LazyCart,
+  LazyProduct,
+  LazyProducts,
+  LazyProfile,
+  LazySignIn,
+  LazySignUp,
+} from "./utils/lazyRoutes";
 
 const routes: Array<RouteObject> = [
   {
     element: <PageLayout />,
     children: [
-      { path: routesC.home, element: <Home />, errorElement: <Error /> },
+      {
+        path: routesC.home,
+        element: withSuspense(<LazyHome />),
+        errorElement: <Error />,
+      },
       {
         path: routesC.products,
-        element: <Products />,
+        element: withSuspense(<LazyProducts />),
       },
       {
         path: routesC.product + "/:id",
         loader: async ({ params }) => {
           return await getSingleProduct(params.id);
         },
-        element: <Product />,
+        element: withSuspense(<LazyProduct />),
         errorElement: <div>Error element</div>,
       },
       {
         path: routesC.profile,
-        element: (
+        element: withSuspense(
           <PrivateRoute>
-            <Profile />
+            <LazyProfile />
           </PrivateRoute>
         ),
       },
       {
         path: routesC.cart,
-        element: <Cart />,
+        element: withSuspense(<LazyCart />),
       },
     ],
   },
   {
     path: routesC.signin,
-    element: (
+    element: withSuspense(
       <AuthRoute>
-        <SignIn />
+        <LazySignIn />
       </AuthRoute>
     ),
   },
   {
     path: routesC.signup,
-    element: (
+    element: withSuspense(
       <AuthRoute>
-        <SignUp />
+        <LazySignUp />
       </AuthRoute>
     ),
   },
