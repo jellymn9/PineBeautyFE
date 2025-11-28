@@ -10,6 +10,8 @@ import { CartItemLocalT, NewItemT } from "@/utils/types/cartTypes";
 function useLocalCart() {
   const [cart, setCart] = useState(getCartLocalObj());
 
+  const isEmpty = Object.keys(cart.items).length === 0;
+
   const removeItem = (id: string) => {
     removeItemFromCartLS(id);
     setCart(getCartLocalObj());
@@ -25,7 +27,7 @@ function useLocalCart() {
     setCart(getCartLocalObj());
   };
 
-  return { cart, removeItem, increaseAction, decreaseAction };
+  return { cart, removeItem, increaseAction, decreaseAction, isEmpty };
 }
 
 export default useLocalCart;

@@ -22,6 +22,8 @@ interface CartContextTypeI {
   increase: (product: CartItemLocalT) => void;
   decrease: (product: CartItemLocalT) => void;
   addProduct: (product: NewItemT) => void;
+  isLoading: boolean;
+  isEmpty: boolean;
 }
 
 export const CartContext = createContext<CartContextTypeI | undefined>(
@@ -31,8 +33,10 @@ export const CartContext = createContext<CartContextTypeI | undefined>(
 export const CartProvider: React.FC<{
   children: ReactNode;
 }> = ({ children }) => {
-  const { user } = useAuth();
-  const { cart: serverCart } = useCart(user?.uid || null);
+  const { user, isAuthLoading } = useAuth();
+  const { cart: serverCart, loading: serverLoading } = useCart(
+    user?.uid || null
+  );
   const {
     cart: localCart,
     removeItem,
@@ -40,31 +44,53 @@ export const CartProvider: React.FC<{
     decreaseAction,
   } = useLocalCart();
 
-  const cart: CartContextTypeI = user
-    ? {
-        cartItems: itemToArrAndSort(serverCart.items),
-        removeItem: (productId: string) => {
-          removeProductFromCart(user.uid, productId);
-        },
-        increase: (product) => {
-          increaseCartItemQuantity(user.uid, product.id);
-        },
-        decrease: (product) => {
-          decreaseProductQuantity(user.uid, product.id);
-        },
-        addProduct: (product) => {
-          addProductToCart(user.uid, product);
-        },
-      }
-    : {
-        cartItems: itemToArrAndSort(localCart.items),
-        removeItem: removeItem,
-        increase: increaseAction,
-        decrease: decreaseAction,
-        addProduct: increaseAction,
-      };
+  let cart: Omit<CartContextTypeI, "isEmpty">;
 
-  return <CartContext.Provider value={cart}>{children}</CartContext.Provider>;
+  if (isAuthLoading) {
+    cart = {
+      cartItems: [],
+      removeItem: () => {},
+      increase: () => {},
+      decrease: () => {},
+      addProduct: () => {},
+      isLoading: true,
+      //isEmpty: true,
+    };
+  } else if (user) {
+    cart = {
+      cartItems: itemToArrAndSort(serverCart.items),
+      removeItem: (productId: string) => {
+        removeProductFromCart(user.uid, productId);
+      },
+      increase: (product) => {
+        increaseCartItemQuantity(user.uid, product.id);
+      },
+      decrease: (product) => {
+        decreaseProductQuantity(user.uid, product.id);
+      },
+      addProduct: (product) => {
+        addProductToCart(user.uid, product);
+      },
+      isLoading: isAuthLoading || serverLoading,
+    };
+  } else {
+    cart = {
+      cartItems: itemToArrAndSort(localCart.items),
+      removeItem: removeItem,
+      increase: increaseAction,
+      decrease: decreaseAction,
+      addProduct: increaseAction,
+      isLoading: false,
+    };
+  }
+
+  const isEmpty = !cart.cartItems.length;
+
+  return (
+    <CartContext.Provider value={{ ...cart, isEmpty }}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 export function useCartContext() {

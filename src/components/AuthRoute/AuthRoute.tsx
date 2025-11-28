@@ -9,9 +9,9 @@ interface AuthRouteProps {
 }
 
 const AuthRoute: React.FC<AuthRouteProps> = ({ children }) => {
-  const { isLoggedIn } = useAuth();
+  const { user } = useAuth();
 
-  if (isLoggedIn) {
+  if (user) {
     return <Navigate to={routesC.home} />;
   }
 

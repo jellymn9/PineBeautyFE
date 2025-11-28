@@ -1,52 +1,89 @@
+import { useEffect, useState } from "react";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+
 import { db } from "@/firebase";
 import { CartDataFirebaseI, CartDataLocalI } from "@/utils/types/cartTypes";
-import { doc, onSnapshot } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { serverCartDateConversion } from "../dataMapper";
 
+const initialCartState: CartDataLocalI = { items: {} };
+
 function useCart(userId: string | null) {
-  const [cart, setCart] = useState<CartDataLocalI>({ items: {} });
-  const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useState<CartDataLocalI>(initialCartState);
+  const [loading, setLoading] = useState(true); // "initial load in progress"
   const [error, setError] = useState<string | null>(null);
-  const [isEmpty, setIsEmpty] = useState(Object.keys(cart.items).length === 0);
+
+  console.log("BLAAA");
 
   useEffect(() => {
     if (!userId) {
-      setCart({ items: {} });
+      setCart(initialCartState);
       setLoading(false);
+      setError(null);
       return;
     }
 
     const cartRef = doc(db, "carts", userId);
+    let unsubscribe: (() => void) | null = null;
+    let cancelled = false;
 
-    const unsubscribe = onSnapshot(
-      cartRef,
-      (docSnap) => {
-        if (docSnap.exists()) {
-          // Document exists: update state with the retrieved cart data
-          const cartData = docSnap.data() as CartDataFirebaseI;
+    (async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Initial one-shot load
+        const initialSnap = await getDoc(cartRef);
+        if (cancelled) return;
+
+        if (initialSnap.exists()) {
+          const cartData = initialSnap.data() as CartDataFirebaseI;
           const cartDataConv = serverCartDateConversion(cartData);
           setCart(cartDataConv);
-          setIsEmpty(Object.keys(cartDataConv.items).length === 0);
         } else {
           setCart({ items: {} });
-          setIsEmpty(true);
         }
+
         setLoading(false);
-        setError(null);
-      },
-      (err) => {
-        // Handle any errors from the listener (e.g., permission issues)
-        console.error("Error fetching real-time cart:", err);
+
+        // After initial load, attach live listener
+        unsubscribe = onSnapshot(
+          cartRef,
+          (docSnap) => {
+            if (cancelled) return;
+
+            if (docSnap.exists()) {
+              const cartData = docSnap.data() as CartDataFirebaseI;
+              const cartDataConv = serverCartDateConversion(cartData);
+              setCart(cartDataConv);
+            } else {
+              setCart({ items: {} });
+            }
+            // no loading changes here, already "loaded"
+          },
+          (err) => {
+            if (cancelled) return;
+            console.error("Error in cart listener:", err);
+            setError("Failed to keep cart in sync.");
+          }
+        );
+      } catch (err) {
+        if (cancelled) return;
+        console.error("Error loading cart:", err);
         setError("Failed to load cart.");
+        setCart({ items: {} });
         setLoading(false);
       }
-    );
+    })();
 
-    return () => unsubscribe();
+    return () => {
+      cancelled = true;
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, [userId]);
 
-  return { cart, loading, error, isEmpty };
+  return { cart, loading, error };
 }
 
 export { useCart };
