@@ -65,7 +65,6 @@ export const CartProvider: React.FC<{
       decrease: () => {},
       addProduct: () => {},
       isLoading: true,
-      //isEmpty: true,
     };
   } else if (user) {
     cart = {
@@ -82,7 +81,7 @@ export const CartProvider: React.FC<{
       addProduct: (product) => {
         addProductToCart(user.uid, product);
       },
-      isLoading: isServerLoading, //isAuthLoading || serverLoading,
+      isLoading: isServerLoading,
     };
   } else {
     cart = {
