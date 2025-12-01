@@ -24,6 +24,7 @@ interface CartContextTypeI {
   addProduct: (product: NewItemT) => void;
   isLoading: boolean;
   isEmpty: boolean;
+  serverError?: string | null;
 }
 
 export const CartContext = createContext<CartContextTypeI | undefined>(
@@ -34,9 +35,11 @@ export const CartProvider: React.FC<{
   children: ReactNode;
 }> = ({ children }) => {
   const { user, isAuthLoading } = useAuth();
-  const { cart: serverCart, loading: serverLoading } = useCart(
-    user?.uid || null
-  );
+  const {
+    cart: serverCart,
+    loading: serverLoading,
+    error: serverError,
+  } = useCart(user?.uid || null);
   const {
     cart: localCart,
     removeItem,
@@ -97,7 +100,7 @@ export const CartProvider: React.FC<{
   const isEmpty = !cart.isLoading && cart.cartItems.length === 0;
 
   return (
-    <CartContext.Provider value={{ ...cart, isEmpty }}>
+    <CartContext.Provider value={{ ...cart, isEmpty, serverError }}>
       {children}
     </CartContext.Provider>
   );
