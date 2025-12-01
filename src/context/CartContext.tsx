@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useRef } from "react";
 
 import { useAuth } from "./AuthContext";
 import {
@@ -44,6 +44,17 @@ export const CartProvider: React.FC<{
     decreaseAction,
   } = useLocalCart();
 
+  const userRef = useRef(user);
+
+  let isServerLoading: boolean;
+
+  if (userRef.current === null && user !== null) {
+    userRef.current = user;
+    isServerLoading = true;
+  } else {
+    isServerLoading = isAuthLoading || serverLoading;
+  }
+
   let cart: Omit<CartContextTypeI, "isEmpty">;
 
   if (isAuthLoading) {
@@ -71,7 +82,7 @@ export const CartProvider: React.FC<{
       addProduct: (product) => {
         addProductToCart(user.uid, product);
       },
-      isLoading: isAuthLoading || serverLoading,
+      isLoading: isServerLoading, //isAuthLoading || serverLoading,
     };
   } else {
     cart = {
@@ -84,7 +95,7 @@ export const CartProvider: React.FC<{
     };
   }
 
-  const isEmpty = !cart.cartItems.length;
+  const isEmpty = !cart.isLoading && cart.cartItems.length === 0;
 
   return (
     <CartContext.Provider value={{ ...cart, isEmpty }}>

@@ -12,8 +12,6 @@ function useCart(userId: string | null) {
   const [loading, setLoading] = useState(true); // "initial load in progress"
   const [error, setError] = useState<string | null>(null);
 
-  console.log("BLAAA");
-
   useEffect(() => {
     if (!userId) {
       setCart(initialCartState);
