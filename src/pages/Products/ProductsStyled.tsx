@@ -22,17 +22,17 @@ export const BannerAndHeading = styled.div<{ $imageURL: string }>`
   align-items: center;
 `;
 
-export const ProductsSection = styled.section`
-  width: auto;
+// export const ProductsSection = styled.section`
+//   width: auto;
 
-  padding-bottom: 32px;
-  height: 721px;
-  overflow-y: scroll;
+//   padding-bottom: 32px;
+//   height: 721px;
+//   overflow-y: scroll;
 
-  &&::-webkit-scrollbar {
-    //display: none;
-  }
-`;
+//   &&::-webkit-scrollbar {
+//     //display: none;
+//   }
+// `;
 
 export const SectionHeading = styled.h1`
   padding-left: 10%;
@@ -42,17 +42,17 @@ export const SectionHeading = styled.h1`
   text-transform: uppercase;
 `;
 
-export const EmptyMessage = styled.p`
-  font-size: 16px;
-  line-height: 26px;
-  font-weight: 500;
-  font-family: DidactGothic-Regular;
-`;
+// export const EmptyMessage = styled.p`
+//   font-size: 16px;
+//   line-height: 26px;
+//   font-weight: 500;
+//   font-family: DidactGothic-Regular;
+// `;
 
-export const ProductsAndCategories = styled.div`
-  width: fit-content;
+// export const ProductsAndCategories = styled.div`
+//   width: fit-content;
 
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-`;
+//   display: flex;
+//   flex-direction: column;
+//   align-self: center;
+// `;
