@@ -1,6 +1,7 @@
 import { useElementScroll } from "@/helpers/customHooks";
 import {
   hasMoreSelector,
+  isErrorSelector,
   isPendingSelector,
   listProductsSelector,
 } from "@/state/selectors/productSelector";
@@ -17,6 +18,7 @@ import ProductsList from "../ProductsList/ProductsList";
 import { fetchProductsThunk } from "@/state/reducers/productReducer";
 
 const PAGE_SIZE = 6;
+const EMPTY_MESSAGE = "There are no products available.";
 
 const ProductsListAndFilters = () => {
   const dispatch = useAppDispatch();
@@ -24,10 +26,9 @@ const ProductsListAndFilters = () => {
 
   const products = useAppSelector(listProductsSelector);
   const isLoading = useAppSelector(isPendingSelector);
+  const isError = useAppSelector(isErrorSelector);
   const hasMore = useAppSelector(hasMoreSelector);
   const { reachBottom } = useElementScroll(productSectionRef);
-
-  const emptyMessage = "There are no products available.";
 
   useEffect(() => {
     dispatch(fetchProductsThunk({ productsPerPage: PAGE_SIZE }));
@@ -40,6 +41,10 @@ const ProductsListAndFilters = () => {
     }
   }, [reachBottom, dispatch, hasMore]);
 
+  if (isError) {
+    return <div>Sorry, an error occurred while loading products.</div>;
+  }
+
   return (
     <>
       {!products.length && isLoading ? (
@@ -51,7 +56,7 @@ const ProductsListAndFilters = () => {
             {products.length ? (
               <ProductsList products={products} />
             ) : (
-              <EmptyMessage>{emptyMessage}</EmptyMessage>
+              <EmptyMessage>{EMPTY_MESSAGE}</EmptyMessage>
             )}
           </ProductsSection>
         </ProductsAndCategories>
