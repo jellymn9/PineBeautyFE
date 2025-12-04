@@ -20,6 +20,7 @@ const Button = function ({
   variant = "regular",
   styleVariant,
 }: ButtonPropsI) {
+  //add aria-label for icon buttons
   return (
     <CustomButton
       {...(handleClick && { onClick: handleClick })}

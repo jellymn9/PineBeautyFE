@@ -75,14 +75,14 @@ export const CartProvider: React.FC<{
       removeItem: (productId: string) => {
         removeProductFromCart(user.uid, productId);
       },
-      increase: (product) => {
-        increaseCartItemQuantity(user.uid, product.id);
+      increase: async (product) => {
+        await increaseCartItemQuantity(user.uid, product.id);
       },
-      decrease: (product) => {
-        decreaseProductQuantity(user.uid, product.id);
+      decrease: async (product) => {
+        await decreaseProductQuantity(user.uid, product.id);
       },
-      addProduct: (product) => {
-        addProductToCart(user.uid, product);
+      addProduct: async (product) => {
+        await addProductToCart(user.uid, product);
       },
       isLoading: isServerLoading,
     };

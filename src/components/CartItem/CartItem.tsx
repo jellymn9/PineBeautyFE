@@ -22,6 +22,8 @@ import { useCartContext } from "@/context/CartContext";
 
 interface CartItemPropsI {
   product: CartItemLocalT;
+  actionLoading: boolean;
+  handleLoading: React.Dispatch<React.SetStateAction<boolean>>;
   //user: User | null;
 }
 
@@ -30,7 +32,11 @@ const imageURL =
     ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
     : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
 
-export const CartItem = ({ product }: CartItemPropsI) => {
+export const CartItem = ({
+  product,
+  actionLoading,
+  handleLoading,
+}: CartItemPropsI) => {
   const { id, price, name, quantity } = product;
   const { removeItem } = useCartContext();
 
@@ -51,6 +57,8 @@ export const CartItem = ({ product }: CartItemPropsI) => {
             <Counter
               product={product}
               quantity={quantity}
+              actionLoading={actionLoading}
+              handleLoading={handleLoading}
               //userId={user?.uid || ""}
             />
           </ItemDetailsAndActions>

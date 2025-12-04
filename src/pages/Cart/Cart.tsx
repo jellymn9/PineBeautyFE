@@ -13,6 +13,7 @@ function Cart() {
   const { cartItems, isLoading, isEmpty, serverError } = useCartContext();
 
   const suubtotalPrice = calcSubtotalPrice(cartItems);
+  console.log("loading...: ", isLoading);
 
   return (
     <Container>

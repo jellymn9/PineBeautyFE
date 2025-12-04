@@ -17,6 +17,14 @@ export const CustomButton = styled.button<{
   ${({ $isIcon }) => !$isIcon && `padding: 18px 48px;`};
 
   ${({ $variant }) => $variant && buttonVariants[$variant]}
+
+  :hover {
+  }
+
+  :disabled {
+  //color with opacity so it is light gray
+    color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.3);
 `;
 
 export const InnerContainer = styled.div`

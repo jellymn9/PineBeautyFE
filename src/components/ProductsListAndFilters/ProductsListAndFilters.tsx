@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useElementScroll } from "@/helpers/customHooks";
 import {
   hasMoreSelector,
@@ -5,20 +6,20 @@ import {
   isPendingSelector,
   listProductsSelector,
 } from "@/state/selectors/productSelector";
+import { fetchProductsThunk } from "@/state/reducers/productReducer";
 import { useAppDispatch, useAppSelector } from "@/withTypes";
-import { useEffect, useRef } from "react";
-import { Loader } from "../Loader/Loader";
+import { Loader } from "@/components/Loader/Loader";
+import ProductFilters from "@/components/ProductFilters/ProductFilters";
+import ProductsList from "@/components/ProductsList/ProductsList";
 import {
   EmptyMessage,
   ProductsAndCategories,
   ProductsSection,
 } from "./ProductsListAndFiltersStyled";
-import ProductFilters from "../ProductFilters/ProductFilters";
-import ProductsList from "../ProductsList/ProductsList";
-import { fetchProductsThunk } from "@/state/reducers/productReducer";
 
 const PAGE_SIZE = 6;
 const EMPTY_MESSAGE = "There are no products available.";
+const ERROR_MESSAGE = "Sorry, an error occurred while loading products.";
 
 const ProductsListAndFilters = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +43,7 @@ const ProductsListAndFilters = () => {
   }, [reachBottom, dispatch, hasMore]);
 
   if (isError) {
-    return <div>Sorry, an error occurred while loading products.</div>;
+    return <div>{ERROR_MESSAGE}</div>;
   }
 
   return (

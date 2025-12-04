@@ -1,4 +1,5 @@
 //import { Loader } from "@/components/Loader/Loader";
+import { useState } from "react";
 import { ButtonWrapper, InnerContainer, List } from "./CartListStyled";
 import Button from "@/components/Button/Button";
 import { CartItem } from "@/components/CartItem/CartItem";
@@ -18,16 +19,9 @@ interface CartListPropI {
   formatedPrice: number;
 }
 
-const CartList = ({
-  //loading,
-  error,
-  items,
-  isEmpty,
-  formatedPrice,
-}: CartListPropI) => {
-  //   if (loading) {
-  //     return LOADER;
-  //   }
+const CartList = ({ error, items, isEmpty, formatedPrice }: CartListPropI) => {
+  const [actionLoading, setActionLoading] = useState(false);
+
   if (error) {
     return errorUI(error);
   }
@@ -41,7 +35,12 @@ const CartList = ({
         <div>
           <List>
             {items.map((item) => (
-              <CartItem product={item} key={item.id} />
+              <CartItem
+                product={item}
+                key={item.id}
+                actionLoading={actionLoading}
+                handleLoading={setActionLoading}
+              />
             ))}
           </List>
         </div>
@@ -49,6 +48,7 @@ const CartList = ({
           <Button
             styleVariant="primary"
             text={`Proceed to checkout ${formatedPrice}`}
+            disabled={actionLoading}
             handleClick={() => {}}
           />
         </ButtonWrapper>

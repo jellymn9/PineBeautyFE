@@ -1,8 +1,6 @@
-import { XIcon } from "lucide-react";
-
-import Button from "@/components/Button/Button";
 import { useToast } from "@/context/ToastContext";
 import { InnerWrapper, ToastContainer } from "./ToastStyled";
+import { CloseButton } from "../CloseBtn/CloseBtn";
 
 export const Toast = () => {
   const { toastMessage, isToastVisible, hideToast, messageType } = useToast();
@@ -12,7 +10,7 @@ export const Toast = () => {
     <ToastContainer $messageType={messageType}>
       <InnerWrapper>
         <p>{toastMessage}</p>
-        <Button handleClick={hideToast} text="" icon={<XIcon size={25} />} />
+        <CloseButton handleClose={hideToast} />
       </InnerWrapper>
     </ToastContainer>
   );
