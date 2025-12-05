@@ -1,4 +1,4 @@
-import { BtnVariantT } from "@/utils/buttonStyles";
+import { BtnVariantT } from "@/styles/buttonStyles";
 import { ButtonText, InnerContainer, CustomButton } from "./ButtonStyled";
 
 interface ButtonPropsI {

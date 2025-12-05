@@ -5,7 +5,7 @@ import { CircleChevronRight, CircleChevronLeft } from "lucide-react";
 import HomeSection from "@/components/HomeSection/HomeSection";
 import ProductCard from "@/components//ProductCard/ProductCard";
 import { Slider, SliderContainer, SliderMainContainer } from "./FavsStyled";
-import colors from "@/utils/colors";
+import colors from "@/styles/colors";
 
 import Button from "@/components/Button/Button";
 

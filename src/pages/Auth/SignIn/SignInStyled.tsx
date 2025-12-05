@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "@/utils/colors";
+import colors from "@/styles/colors";
 
 export const AuthFormsContainer = styled.div`
   width: 400px;

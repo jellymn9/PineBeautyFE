@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import breakpoints from "@/utils/breakpoints";
+import breakpoints from "@/styles/breakpoints";
 
 export const SliderMainContainer = styled.div`
   display: flex;

@@ -1,4 +1,4 @@
-import breakpoints from "@/utils/breakpoints";
+import breakpoints from "@/styles/breakpoints";
 import { styled } from "styled-components";
 
 export const InnerContainer = styled.div`

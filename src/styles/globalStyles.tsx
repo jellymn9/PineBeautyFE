@@ -40,8 +40,8 @@ export const GlobalStyles = createGlobalStyle`
   h2 {
     //font-size: 28px;
     font-size: 14px;
-    //line-heght: 38px;
-    line-heght: 24px;
+    //line-height: 38px;
+    line-height: 24px;
   }
 
   h3 {

@@ -1,6 +1,6 @@
 import { Loader, Minus, Plus } from "lucide-react";
 import Button from "@/components/Button/Button";
-import colors from "@/utils/colors";
+import colors from "@/styles/colors";
 import { Amount, Container } from "./CounterStyled";
 import { CartItemLocalT } from "@/utils/types/cartTypes";
 import { useCartContext } from "@/context/CartContext";

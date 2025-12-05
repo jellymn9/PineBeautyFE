@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 
 import { store } from "@/store";
 import routes from "@/routes";
-import { GlobalStyles } from "@/utils/globalStyles";
+import { GlobalStyles } from "@/styles/globalStyles";
 import "./index.css";
 import { DrawerProvider } from "@/context/DrawerContext";
 import { AuthProvider } from "@/context/AuthContext";

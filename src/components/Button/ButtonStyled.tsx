@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import { BtnVariantT, buttonVariants } from "@/utils/buttonStyles";
-import colors from "@/utils/colors";
+import { BtnVariantT, buttonVariants } from "@/styles/buttonStyles";
+import colors from "@/styles/colors";
 
 export const CustomButton = styled.button<{
   $isIcon: boolean;
@@ -22,9 +22,10 @@ export const CustomButton = styled.button<{
   }
 
   :disabled {
-  //color with opacity so it is light gray
+    //color with opacity so it is light gray
     color: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(0, 0, 0, 0.3);
+  }
 `;
 
 export const InnerContainer = styled.div`

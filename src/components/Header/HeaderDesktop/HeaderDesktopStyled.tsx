@@ -1,4 +1,4 @@
-import colors from "@/utils/colors";
+import colors from "@/styles/colors";
 import styled from "styled-components";
 
 export const ContainerBlock = styled.div`

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import colors from "@/utils/colors";
-import breakpoints from "@/utils/breakpoints";
+import colors from "@/styles/colors";
+import breakpoints from "@/styles/breakpoints";
 
 export const Hero = styled.div`
   background-image: url("gen3.jpg");

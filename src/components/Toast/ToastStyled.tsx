@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "@/utils/colors";
+import colors from "@/styles/colors";
 import { ToastMessageTypeT } from "@/context/ToastContext";
 
 export const ToastContainer = styled.div<{

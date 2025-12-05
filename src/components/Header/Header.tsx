@@ -1,7 +1,7 @@
 import { useMediaQuery } from "@custom-react-hooks/use-media-query";
 import { ShoppingCart, Menu } from "lucide-react";
 
-import breakpoints from "@/utils/breakpoints";
+import breakpoints from "@/styles/breakpoints";
 import { useDrawer } from "@/context/DrawerContext";
 import Icon from "@/components/Icon/Icon";
 import { MobileContainer } from "./HeaderStyled";

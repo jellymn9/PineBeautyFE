@@ -5,7 +5,7 @@ import {
   InfoItemContainer,
   Heading,
 } from "./ContactInfoStyled";
-import colors from "@/utils/colors";
+import colors from "@/styles/colors";
 
 const info: Array<[JSX.Element, string]> = [
   [
