@@ -27,7 +27,7 @@ export const InputCustom = styled.input<{
   padding-left: 12px;
   border: 1px solid ${({ theme }) => theme.colors.timberwolf};
   border-radius: 6px;
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 
   outline: ${({ $isValidated, $customValid, theme }) =>
     !$isValidated

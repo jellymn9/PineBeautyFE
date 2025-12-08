@@ -28,7 +28,7 @@ export const InnerContainer = styled.div`
 export const Heading = styled.h2`
   font-size: 22px;
   line-height: 32px;
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 
   padding-left: 20px;
 `;

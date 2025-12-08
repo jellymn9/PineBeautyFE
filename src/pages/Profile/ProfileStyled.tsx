@@ -24,7 +24,7 @@ export const MyAccountHeader = styled.header`
 
 export const MyAccountHeaderTitle = styled.h1`
   font-weight: 700;
-  font-family: Montserrat, sans-serif;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   font-size: 14px;
 `;
 
@@ -52,7 +52,7 @@ export const ProfileCard = styled.div`
   }
 `;
 export const ProfileCardTitle = styled.h2`
-  font-family: Montserrat, sans-serif;
+  ${({ theme }) => theme.typography.fontFamilyBase};
   font-size: 14px;
   text-transform: uppercase;
 `;

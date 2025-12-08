@@ -41,7 +41,7 @@ export const Title = styled.h4`
 `;
 
 export const Description = styled.p`
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
   font-size: 16px;
   line-height: 26px;
 `;

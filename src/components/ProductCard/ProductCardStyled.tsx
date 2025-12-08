@@ -43,7 +43,7 @@ export const Name = styled.h4`
   font-size: 14px;
   line-height: 24px;
 
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
   font-weight: 500;
   text-transform: capitalize;
 `;

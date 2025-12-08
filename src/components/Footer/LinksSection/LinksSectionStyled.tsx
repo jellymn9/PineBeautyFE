@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.ebony};
 
-  font-family: DidactGothic-Regular;
+  font-family: ${({ theme }) => theme.typography.fontFamilyAlt};
 `;
 
 export const FooterLink = styled(Link)`

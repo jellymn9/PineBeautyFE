@@ -24,5 +24,5 @@ export const EmptyMessage = styled.p`
   font-size: 16px;
   line-height: 26px;
   font-weight: 500;
-  font-family: DidactGothic-Regular;
+  font-family: ${({ theme }) => theme.typography.fontFamilyAlt};
 `;

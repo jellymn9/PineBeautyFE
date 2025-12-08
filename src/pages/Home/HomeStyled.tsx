@@ -39,11 +39,11 @@ export const FlagHeading = styled.p<{ marginBottom?: number }>`
 
 export const MainHeading = styled.h1`
   font-size: 42px;
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 `;
 
 export const SectionParagraph = styled.p`
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 `;
 
 export const SustainableAndPure = styled.div`
@@ -72,7 +72,7 @@ export const SustainableFlag = styled.p`
 export const SustainableHeading = styled.h3`
   font-size: 24px;
   font-weight: 400;
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
   margin: 12px 0;
 `;
 

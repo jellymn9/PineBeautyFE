@@ -29,7 +29,7 @@ export const Subscription = styled.div`
   grid-gap: 12px;
   margin-bottom: 60px;
 
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
   font-weight: 400;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
