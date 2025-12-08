@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useRef } from "react";
+import { createContext, ReactNode, useContext, useMemo, useRef } from "react";
 
 import { useAuth } from "./AuthContext";
 import {
@@ -49,14 +49,22 @@ export const CartProvider: React.FC<{
 
   const userRef = useRef(user);
 
-  let isServerLoading: boolean;
+  //let isServerLoading: boolean;
 
-  if (userRef.current === null && user !== null) {
-    userRef.current = user;
-    isServerLoading = true;
-  } else {
-    isServerLoading = isAuthLoading || serverLoading;
-  }
+  const isServerLoading = useMemo(() => {
+    if (userRef.current === null && user !== null) {
+      userRef.current = user;
+      return true;
+    }
+    return serverLoading; //change this logic nut n serverCart
+  }, [user, serverLoading]);
+
+  // if (userRef.current === null && user !== null) {
+  //   userRef.current = user;
+  //   isServerLoading = true;
+  // } else {
+  //   isServerLoading = false; //change this logic
+  // }
 
   let cart: Omit<CartContextTypeI, "isEmpty">;
 

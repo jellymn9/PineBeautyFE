@@ -25,6 +25,7 @@ function useCart(userId: string | null) {
     let cancelled = false;
 
     (async () => {
+      console.log("Loading cart for user:", userId);
       try {
         setLoading(true);
         setError(null);

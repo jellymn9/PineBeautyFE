@@ -1,8 +1,6 @@
-const rgbColor = (r: number, g: number, b: number, alpha = 1) => {
-  return `rgb(${r},${g},${b},${alpha})`;
-};
+import { rgbColor } from "@/helpers/styleHelper";
 
-const colors = {
+export const colors = {
   platinum: rgbColor(224, 224, 224), //"#e0e0e0",
   babyPowder: rgbColor(252, 251, 244), //"#fcfbf4",
   olivine: rgbColor(146, 185, 86), //"#92b956",
@@ -20,4 +18,25 @@ const colors = {
   blackTransparent2: rgbColor(0, 0, 0, 0.07),
 };
 
-export default colors;
+export const spacing = {
+  sectionPadding: "60px",
+  sectionMargin: "40px",
+};
+
+export const typography = {
+  fontFamilyBase:
+    "'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+
+  /* Secondary / alternative UI text */
+  fontFamilyAlt: "'Didact Gothic', system-ui, sans-serif",
+
+  /* Brand / marketing / special sections */
+  fontFamilyBrand: "'Avenir', 'Montserrat', system-ui, sans-serif",
+  h1: {
+    fontSize: "42px",
+    lineHeight: "52px",
+    fontWeight: 400,
+    letterSpacing: "0.02em",
+  },
+  // adjust h2–h5
+};

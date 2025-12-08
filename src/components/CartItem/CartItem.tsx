@@ -1,7 +1,6 @@
 import { Trash } from "lucide-react";
 import { formatPrice } from "@/helpers/formatters";
 import { CartItemLocalT } from "@/utils/types/cartTypes";
-import Button from "@/components/Button/Button";
 import Counter from "@/components/Counter/Counter";
 //import { removeProductFromCart } from "@/APIs/carts";
 //import { removeItemFromCartLS } from "@/helpers/cartHelper";
@@ -19,6 +18,7 @@ import {
 } from "./CartItemStyled";
 //import { User } from "firebase/auth";
 import { useCartContext } from "@/context/CartContext";
+import IconBtn from "../Button/IconBtn/IconBtn";
 
 interface CartItemPropsI {
   product: CartItemLocalT;
@@ -63,10 +63,9 @@ export const CartItem = ({
             />
           </ItemDetailsAndActions>
           <BtnWrapper>
-            <Button
-              variant="icon"
-              text=""
+            <IconBtn
               icon={<Trash size={22} strokeWidth={1.5} />}
+              label="Remove item"
               handleClick={handleRemove}
             />
           </BtnWrapper>

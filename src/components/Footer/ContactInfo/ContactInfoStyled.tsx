@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import colors from "@/utils/colors";
 
 export const Container = styled.div`
   display: flex;
@@ -8,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const InfoItem = styled.span`
-  color: ${colors.white};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 export const InfoItemContainer = styled.div`
@@ -18,6 +17,7 @@ export const InfoItemContainer = styled.div`
 `;
 
 export const Heading = styled.h4`
-  font-family: Montserrat-Variable; //add this 2 props to global style
+  //add this 2 props to global style
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   text-transform: uppercase;
 `;

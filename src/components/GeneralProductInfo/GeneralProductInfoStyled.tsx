@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   row-gap: 20px;
 
-  font-family: Montserrat-Variable;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
 `;
 
 export const ColumnList = styled.ul`

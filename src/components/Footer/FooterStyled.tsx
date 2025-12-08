@@ -1,13 +1,10 @@
 import styled from "styled-components";
 
-import colors from "@/utils/colors";
-import breakpoints from "@/utils/breakpoints";
-
 export const MainContainer = styled.div`
-  background-color: ${colors.ebony};
+  background-color: ${({ theme }) => theme.colors.ebony};
   padding: 48px 24px 0px 24px;
 
-  color: ${colors.white};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 export const Container = styled.footer`
@@ -18,7 +15,7 @@ export const Container = styled.footer`
 
   grid-gap: 30px;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
     justify-content: space-between;
 
@@ -35,7 +32,7 @@ export const Subscription = styled.div`
   font-family: Avenir;
   font-weight: 400;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     max-width: 380px;
     order: 5;
 
@@ -52,7 +49,7 @@ export const InputTemporarily = styled.input`
   height: 26px;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid ${colors.whiteTransparent2};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.whiteTransparent2};
 `;
 
 export const CaptchaInfo = styled.i`
@@ -60,7 +57,8 @@ export const CaptchaInfo = styled.i`
 `;
 
 export const SubFooter = styled.div`
-  font-family: Montserrat-Variable; //add this 2 props to global style
+  //add this 2 props to global style
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   letter-spacing: 0.02em;
 
   font-size: 12px;
@@ -73,7 +71,7 @@ export const IconAndLinksContainer = styled.div`
   flex-direction: column;
   grid-gap: 32px;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-gap: 22px;
 
     width: 100%;

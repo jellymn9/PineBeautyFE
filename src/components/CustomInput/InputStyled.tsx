@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import colors from "@/utils/colors";
 
 export const CheckboxContainer = styled.div`
   --label-line-height: 24px;
@@ -28,7 +27,7 @@ export const CheckedSign = styled.div`
   position: absolute;
   width: var(--checkbox-sign-w-h);
   height: var(--checkbox-sign-w-h);
-  background-color: ${colors.black};
+  background-color: ${({ theme }) => theme.colors.black};
   top: calc(
     ((var(--label-line-height) - var(--checkbox-width-height)) / 2) +
       var(--inner-spaceing)

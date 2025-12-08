@@ -1,8 +1,8 @@
-import { BtnVariantT } from "@/utils/buttonStyles";
+import { BtnVariantT } from "@/styles/mixins";
 import { ButtonText, InnerContainer, CustomButton } from "./ButtonStyled";
 
 interface ButtonPropsI {
-  text?: string;
+  text: string;
   handleClick?: () => void;
   variant?: "regular" | "icon";
   icon?: JSX.Element;
@@ -20,7 +20,6 @@ const Button = function ({
   variant = "regular",
   styleVariant,
 }: ButtonPropsI) {
-  //add aria-label for icon buttons
   return (
     <CustomButton
       {...(handleClick && { onClick: handleClick })}
@@ -29,19 +28,13 @@ const Button = function ({
       $isIcon={variant === "icon"}
       $variant={styleVariant}
     >
-      {variant === "icon" && !!icon ? (
-        icon
+      {icon ? (
+        <InnerContainer>
+          {icon}
+          <ButtonText>{text}</ButtonText>
+        </InnerContainer>
       ) : (
-        <>
-          {icon ? (
-            <InnerContainer>
-              {icon}
-              {text && <ButtonText>{text}</ButtonText>}
-            </InnerContainer>
-          ) : (
-            <ButtonText>{text}</ButtonText>
-          )}
-        </>
+        <ButtonText>{text}</ButtonText>
       )}
     </CustomButton>
   );

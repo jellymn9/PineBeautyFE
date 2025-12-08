@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-import colors from "@/utils/colors";
-import breakpoints from "@/utils/breakpoints";
-
 export const ProfileContainer = styled.div`
   height: 100%;
   display: flex;
@@ -11,7 +8,7 @@ export const ProfileContainer = styled.div`
   width: 90vw;
   align-self: center;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 80vw;
     max-width: 1200px;
   }
@@ -33,13 +30,13 @@ export const MyAccountHeaderTitle = styled.h1`
 
 export const HSeparator = styled.div`
   height: 2px;
-  background-color: ${colors.timberwolf};
+  background-color: ${({ theme }) => theme.colors.timberwolf};
 `;
 
 export const ProfileCards = styled.div`
   display: flex;
   flex-direction: column;
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
     justify-content: space-between;
   }
@@ -50,7 +47,7 @@ export const ProfileCard = styled.div`
   flex-direction: column;
   padding: 20px 0;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
   }
 `;

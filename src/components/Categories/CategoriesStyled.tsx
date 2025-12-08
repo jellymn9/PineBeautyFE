@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import colors from "@/utils/colors";
-import breakpoints from "@/utils/breakpoints";
 import { convertToPixels } from "@/helpers/layoutHelper";
 
 const mobileWidth = 100; // %
@@ -13,21 +11,6 @@ const categoryWidthLaptop = 362.66; //px
 
 const thumbWidth = 40;
 
-// export const CategoriesAndScrollContainer = styled.div`
-//   gap: 16px;
-//   display: flex;
-//   overflow-x: auto;
-//   flex-direction: column;
-
-//   width: 100%;
-
-//   -ms-overflow-style: none;
-//   scrollbar-width: none;
-//   &::-webkit-scrollbar {
-//     display: none;
-//   }
-// `;
-
 export const CategoriesContainer = styled.div`
   gap: 16px;
   display: flex;
@@ -36,11 +19,11 @@ export const CategoriesContainer = styled.div`
 
   width: ${mobileWidth}%;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: ${tabletWidth}vw;
   }
 
-  @media screen and (min-width: ${breakpoints.laptop}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.laptop}) {
     width: ${laptopWidth}px;
   }
 
@@ -61,19 +44,19 @@ export const Category = styled.div<{ $imageURL: string }>`
   width: ${categoryWidthMobile}vw;
   height: calc(77.042vw / 0.707);
 
-  color: ${colors.white};
+  color: ${({ theme }) => theme.colors.white};
   font-size: 22px;
   text-transform: uppercase;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: ${categoryWithTablet}vw;
     height: calc(28.951vw / 0.707);
   }
 
-  @media screen and (min-width: ${breakpoints.laptop}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.laptop}) {
     width: ${categoryWidthLaptop}px;
     height: calc(362.66px / 0.707);
   }
@@ -82,16 +65,16 @@ export const Category = styled.div<{ $imageURL: string }>`
 export const CustomScrollbar = styled.div`
   width: ${mobileWidth}%;
   height: 6px;
-  background-color: ${colors.whiteTransparent2};
+  background-color: ${({ theme }) => theme.colors.whiteTransparent2};
   margin-top: 20px;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: ${tabletWidth}vw;
 
     display: none;
   }
 
-  @media screen and (min-width: ${breakpoints.laptop}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.laptop}) {
     width: ${laptopWidth}px;
   }
 `;
@@ -102,11 +85,11 @@ export const CustomScrollThumb = styled.div<{
 }>`
   --category-width-px: ${Math.ceil(convertToPixels(categoryWidthMobile))};
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     --category-width-px: ${Math.ceil(convertToPixels(categoryWithTablet))};
   }
 
-  @media screen and (min-width: ${breakpoints.laptop}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.laptop}) {
     --category-width-px: ${Math.ceil(convertToPixels(categoryWithTablet))};
   }
 
@@ -115,7 +98,7 @@ export const CustomScrollThumb = styled.div<{
     `${$offset.containerWidth}/ (${$offset.overflowWidth} - ${thumbWidth} - var(--category-width-px))`};
 
   width: ${thumbWidth}px;
-  background-color: ${colors.blackTransparent1};
+  background-color: ${({ theme }) => theme.colors.blackTransparent1};
   height: inherit;
   border-radius: 6px;
 

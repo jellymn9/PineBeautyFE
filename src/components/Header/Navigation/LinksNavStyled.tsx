@@ -1,6 +1,5 @@
-import colors from "@/utils/colors";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const LinksContainerNav = styled.nav`
   display: flex;
@@ -28,7 +27,7 @@ export const HoverBar = styled.div<{
     transform 0.3s linear;
 
   width: 0;
-  background-color: ${colors.blackTransparent2};
+  background-color: ${({ theme }) => theme.colors.blackTransparent2};
 
   transform: ${({ $step }) => ` translate(${$step}px)`};
   width: ${({ $linkWidth }) => ` ${$linkWidth}px`};
@@ -36,10 +35,10 @@ export const HoverBar = styled.div<{
 
 export const LinkStyled = styled(Link)`
   text-decoration: none;
-  color: ${colors.black};
+  color: ${({ theme }) => theme.colors.black};
   text-transform: uppercase;
 
-  font-family: Montserrat-Variable;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   letter-spacing: 0.02em;
   font-weight: 500;
   font-size: 14px;
@@ -68,14 +67,14 @@ export const CircleAnimation = styled.div`
     opacity: 0;
 
     border-radius: 50%;
-    background-color: ${colors.blackTransparent2};
-    outline: 0px solid ${colors.blackTransparent2};
+    background-color: ${({ theme }) => theme.colors.blackTransparent2};
+    outline: 0px solid ${({ theme }) => theme.colors.blackTransparent2};
 
     transition: outline 0.3s, opacity 0.3s;
   }
 
   a:hover::before {
-    outline: 22px solid ${colors.blackTransparent2};
+    outline: 22px solid ${({ theme }) => theme.colors.blackTransparent2};
     opacity: 1;
   }
 `;

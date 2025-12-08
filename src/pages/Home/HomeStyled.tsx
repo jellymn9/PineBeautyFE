@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import colors from "@/utils/colors";
-import breakpoints from "@/utils/breakpoints";
 
 export const Hero = styled.div`
   background-image: url("gen3.jpg");
@@ -9,15 +7,17 @@ export const Hero = styled.div`
   background-position: bottom;
   min-height: 466px;
 
-  @media screen and (min-width: ${breakpoints.mobile}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
   }
-  @media screen and (min-width: ${breakpoints.smallDesktop}) {
+  @media screen and (min-width: ${({ theme }) =>
+      theme.breakpoints.smallDesktop}) {
     background-image: url("gen3.jpg");
     background-size: cover;
     padding: 9vw 3.889vw;
     background-position: bottom;
   }
-  @media screen and (min-width: ${breakpoints.largeDesktop}) {
+  @media screen and (min-width: ${({ theme }) =>
+      theme.breakpoints.largeDesktop}) {
   }
 `;
 
@@ -33,7 +33,7 @@ export const HeroInnerContainer = styled.div`
 export const FlagHeading = styled.p<{ marginBottom?: number }>`
   margin-bottom: ${({ marginBottom }) => marginBottom || 16}px;
   text-transform: uppercase;
-  font-family: Montserrat-Variable;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   font-size: 14px;
 `;
 
@@ -47,24 +47,26 @@ export const SectionParagraph = styled.p`
 `;
 
 export const SustainableAndPure = styled.div`
-  background-color: ${colors.ebony};
-  color: ${colors.whiteTransparent2};
+  background-color: ${({ theme }) => theme.colors.ebony};
+  color: ${({ theme }) => theme.colors.whiteTransparent2};
 
   padding: 60px 17vw;
 
-  @media screen and (min-width: ${breakpoints.mobile}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
   }
-  @media screen and (min-width: ${breakpoints.smallDesktop}) {
+  @media screen and (min-width: ${({ theme }) =>
+      theme.breakpoints.smallDesktop}) {
     padding: 6.944vw 10.833vw;
   }
-  @media screen and (min-width: ${breakpoints.largeDesktop}) {
+  @media screen and (min-width: ${({ theme }) =>
+      theme.breakpoints.largeDesktop}) {
   }
 `;
 
 export const SustainableFlag = styled.p`
   font-size: 12px;
   text-transform: uppercase;
-  font-family: Montserrat-Variable;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
 `;
 
 export const SustainableHeading = styled.h3`
@@ -78,7 +80,5 @@ export const DecorativeSeparator = styled.div`
   height: 4px;
   width: 24px;
   border-radius: 2px;
-  background-color: ${colors.whiteTransparent1};
+  background-color: ${({ theme }) => theme.colors.whiteTransparent1};
 `;
-
-//export const Categories = styled.div``;
