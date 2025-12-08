@@ -28,16 +28,14 @@ const Button = function ({
       $isIcon={variant === "icon"}
       $variant={styleVariant}
     >
-      <>
-        {icon ? (
-          <InnerContainer>
-            {icon}
-            <ButtonText>{text}</ButtonText>
-          </InnerContainer>
-        ) : (
+      {icon ? (
+        <InnerContainer>
+          {icon}
           <ButtonText>{text}</ButtonText>
-        )}
-      </>
+        </InnerContainer>
+      ) : (
+        <ButtonText>{text}</ButtonText>
+      )}
     </CustomButton>
   );
 };
