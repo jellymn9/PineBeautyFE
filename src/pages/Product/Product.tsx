@@ -24,6 +24,7 @@ import {
   SecondaryContainer,
   NoProductMessage,
 } from "./ProductStyled";
+import { Helmet } from "react-helmet-async";
 
 const DESC = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const NAME_ADDITION = " | 100% organic and cold pressed";
@@ -64,6 +65,13 @@ function Product() {
 
   return (
     <Container>
+      <Helmet>
+        <title>{product.name} | PineBeauty</title>
+        <meta
+          name="description"
+          content={`Learn more about ${product.name}, a product from PineBeauty.`}
+        />
+      </Helmet>
       <SecondaryContainer>
         <Breadcrumbs />
         <ProductSection>

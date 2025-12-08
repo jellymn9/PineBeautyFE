@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Button from "@/components/Button/Button";
 import Categories from "@/components/Categories/Categories";
 import Favs from "@/components/Favs/Favs";
@@ -30,6 +31,13 @@ const sustainableAndPure = {
 function Home() {
   return (
     <div>
+      <Helmet>
+        <title>PineBeauty | Home</title>
+        <meta
+          name="description"
+          content="Discover PineBeauty, your destination for sustainable, low-waste skincare products that nourish your skin and respect the planet."
+        />
+      </Helmet>
       <Hero>
         <HeroInnerContainer>
           <div>
