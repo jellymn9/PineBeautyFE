@@ -1,30 +1,15 @@
 import styled from "styled-components";
 
-import { BtnVariantT, buttonVariants } from "@/styles/buttonStyles";
+import { BtnVariantT, buttonVariants, buttonBase } from "@/styles/mixins";
 
 export const CustomButton = styled.button<{
   $isIcon: boolean;
   $variant?: BtnVariantT;
 }>`
+  ${buttonBase}
   width: fit-content;
-  border: none;
-  color: ${({ theme }) => theme.colors.black};
 
-  background-color: ${({ $isIcon, theme }) =>
-    $isIcon ? "transparent" : theme.colors.white};
-
-  ${({ $isIcon }) => !$isIcon && `padding: 18px 48px;`};
-
-  ${({ $variant }) => $variant && buttonVariants[$variant]}
-
-  :hover {
-  }
-
-  :disabled {
-    //color with opacity so it is light gray
-    color: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0, 0, 0, 0.3);
-  }
+  ${({ $variant = "primary" }) => buttonVariants[$variant]}
 `;
 
 export const InnerContainer = styled.div`

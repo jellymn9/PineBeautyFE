@@ -6,7 +6,7 @@ import { CircleChevronRight, CircleChevronLeft } from "lucide-react";
 import HomeSection from "@/components/HomeSection/HomeSection";
 import ProductCard from "@/components//ProductCard/ProductCard";
 import { Slider, SliderContainer, SliderMainContainer } from "./FavsStyled";
-import Button from "@/components/Button/Button";
+import IconBtn from "../Button/IconBtn/IconBtn";
 
 //const heading = "PineBeauty's favs";
 
@@ -36,8 +36,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
     <HomeSection heading={heading}>
       <SliderMainContainer>
         {loaded && instanceRef.current && (
-          <Button
-            variant="icon"
+          <IconBtn
             icon={
               <CircleChevronLeft
                 size={36}
@@ -47,6 +46,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
             }
             handleClick={() => instanceRef.current?.prev()}
             disabled={currentSlide === 0}
+            label="Previous slide"
           />
         )}
         <SliderContainer ref={sliderRef}>
@@ -178,8 +178,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
           </Slider>
         </SliderContainer>
         {loaded && instanceRef.current && (
-          <Button
-            variant="icon"
+          <IconBtn
             icon={
               <CircleChevronRight
                 size={36}
@@ -192,6 +191,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
               currentSlide ===
               instanceRef.current.track.details.slides.length - 1
             }
+            label="Next slide"
           />
         )}
       </SliderMainContainer>

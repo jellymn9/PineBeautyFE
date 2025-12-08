@@ -1,10 +1,10 @@
 import { Loader, Minus, Plus } from "lucide-react";
-import Button from "@/components/Button/Button";
 import { Amount, Container } from "./CounterStyled";
 import { CartItemLocalT } from "@/utils/types/cartTypes";
 import { useCartContext } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
 import { useTheme } from "styled-components";
+import IconBtn from "../Button/IconBtn/IconBtn";
 
 interface CounterPropsI {
   quantity: number;
@@ -61,8 +61,7 @@ const Counter = ({
         <Loader size={20} strokeWidth={2} color={iconColor} />
       ) : (
         <>
-          <Button
-            variant="icon"
+          <IconBtn
             icon={
               <Minus
                 size={22}
@@ -70,12 +69,12 @@ const Counter = ({
                 color={iconColor}
               />
             }
+            label="Decrease quantity"
             handleClick={handleMinus}
             disabled={quantity === 0}
           />
           <Amount>{quantity}</Amount>
-          <Button
-            variant="icon"
+          <IconBtn
             icon={
               <Plus
                 size={22}
@@ -83,6 +82,7 @@ const Counter = ({
                 color={iconColor}
               />
             }
+            label="Increase quantity"
             handleClick={handlePlus}
             disabled={actionLoading}
           />
