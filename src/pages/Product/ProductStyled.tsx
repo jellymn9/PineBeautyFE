@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-import colors from "@/styles/colors";
-import breakpoints from "@/styles/breakpoints";
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,7 +20,7 @@ export const ProductSection = styled.section`
   flex-direction: column;
   justify-content: center;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
     //flex: 1;
 
@@ -46,11 +43,12 @@ export const Gallery = styled.div`
     grid-column: span 2;
   }
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-template-columns: 20vw 20vw;
   }
 
-  @media screen and (min-width: ${breakpoints.largeDesktop}) {
+  @media screen and (min-width: ${({ theme }) =>
+      theme.breakpoints.largeDesktop}) {
     grid-template-columns: 288px 288px;
   }
 `;
@@ -64,25 +62,16 @@ export const ProductInfo = styled.div`
   height: fit-content;
   //border: 1px solid red;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 450px;
   }
 `;
 
 export const ProductImage = styled.img`
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 100%;
   }
 `;
-
-// export const FirstImage = styled.div<{ $imageURL: string }>`
-//   grid-column: span 2;
-
-//   background-image: url(${({ $imageURL }) => $imageURL});
-//   background-color: transparent;
-//   background-size: contain;
-//   background-repeat: no-repeat;
-// `;
 
 export const ReviewsSection = styled.section``;
 
@@ -97,9 +86,9 @@ export const ProductData = styled.div`
 `;
 
 export const ProductName = styled.h3`
-  font-family: Montserrat-Variable;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   font-weight: 400;
-  color: ${colors.black};
+  color: ${({ theme }) => theme.colors.black};
   text-transform: capitalize;
   padding-bottom: 20px;
 `;
@@ -113,7 +102,7 @@ export const ContentsContainer = styled.div`
 
 export const ProductContents = styled.span`
   // create global style for this
-  color: ${colors.blackTransparent1};
+  color: ${({ theme }) => theme.colors.blackTransparent1};
   text-transform: uppercase;
   font-size: 12px;
 `;
@@ -125,7 +114,7 @@ export const ProductDescription = styled.p`
 `;
 
 export const Price = styled.b`
-  color: ${colors.imperialRed};
+  color: ${({ theme }) => theme.colors.imperialRed};
   font-size: 30px;
   line-height: 40px;
 `;
@@ -137,7 +126,7 @@ export const CounterAndAddBtnWrapper = styled.div`
 `;
 
 export const NoProductMessage = styled.p`
-  color: ${colors.blackTransparent1};
+  color: ${({ theme }) => theme.colors.blackTransparent1};
   text-align: center;
   line-height: 48px;
   font-size: 28px;

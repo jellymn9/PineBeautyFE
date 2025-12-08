@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import colors from "@/styles/colors";
 
 export const Container = styled.div`
   display: flex;
@@ -18,13 +17,13 @@ export const HeadingAndSeparator = styled.div`
 `;
 
 export const Heading = styled.h2`
-  font-family: Montserrat-Variable;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   text-transform: uppercase;
 `;
 
 export const TinySeparator = styled.div`
   width: 30px;
   height: 4px;
-  background-color: ${colors.blackTransparent1};
+  background-color: ${({ theme }) => theme.colors.blackTransparent1};
   border-radius: 2px;
 `;

@@ -5,19 +5,19 @@ import {
   InfoItemContainer,
   Heading,
 } from "./ContactInfoStyled";
-import colors from "@/styles/colors";
+import { theme } from "@/styles/theme"; // remove theme import!..
 
 const info: Array<[JSX.Element, string]> = [
   [
-    <Phone strokeWidth={1} width={22} height={22} color={colors.white} />,
+    <Phone strokeWidth={1} width={22} height={22} color={theme.colors.white} />,
     "+00000000",
   ],
   [
-    <Mail strokeWidth={1} width={22} height={22} color={colors.white} />,
+    <Mail strokeWidth={1} width={22} height={22} color={theme.colors.white} />,
     "info@info.com",
   ],
   [
-    <Clock strokeWidth={1} width={22} height={22} color={colors.white} />,
+    <Clock strokeWidth={1} width={22} height={22} color={theme.colors.white} />,
     "10:00 am - 6:00 pm",
   ],
 ];

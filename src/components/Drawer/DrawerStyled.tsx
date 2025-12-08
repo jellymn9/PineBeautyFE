@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import colors from "@/styles/colors";
 
 export const Container = styled.aside<{ $isOpen: boolean }>`
   position: fixed;
   left: 0;
-  background-color: ${colors.blackTransparent1};
+  background-color: ${({ theme }) => theme.colors.blackTransparent1};
   width: 100%;
   backdrop-filter: blur(10px);
 
@@ -20,7 +19,7 @@ export const Container = styled.aside<{ $isOpen: boolean }>`
 export const DrawerBox = styled.nav<{ $isOpen: boolean }>`
   left: 0;
   width: 300px;
-  background-color: ${colors.white};
+  background-color: ${({ theme }) => theme.colors.white};
   height: 100vh;
   display: flex;
   flex-direction: column;

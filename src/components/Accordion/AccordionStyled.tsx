@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { ChevronRight } from "lucide-react";
-import colors from "@/styles/colors";
 import { ColorThemeT } from "@/utils/types";
 
 const headingHeight = 24;
 const headingPadding = 16;
 
 export const MainContainer = styled.div<{ $colorTheme: ColorThemeT }>`
-  color: ${({ $colorTheme }) =>
-    $colorTheme === "light" ? colors.white : colors.black};
+  color: ${({ $colorTheme, theme }) =>
+    $colorTheme === "light" ? theme.colors.white : theme.colors.black};
 `;
 
 export const Container = styled.div<{ $isOpen: boolean }>`
@@ -31,8 +30,10 @@ export const HeadingContainer = styled.div`
 export const HSeparator = styled.div<{ $colorTheme: ColorThemeT }>`
   // consider adding this to global style later..
   height: 1px;
-  background-color: ${({ $colorTheme }) =>
-    $colorTheme === "light" ? colors.whiteTransparent1 : colors.black};
+  background-color: ${({ $colorTheme, theme }) =>
+    $colorTheme === "light"
+      ? theme.colors.whiteTransparent1
+      : theme.colors.black};
 `;
 
 export const HeadingInnerContiner = styled.div`
@@ -42,9 +43,7 @@ export const HeadingInnerContiner = styled.div`
 
 export const Heading = styled.h4`
   margin: 0;
-  //font-size: 14px;
   line-height: ${headingHeight}px;
-  font-family: Montserrat-Variable;
   font-weight: 400;
   letter-spacing: 0.06em;
 `;

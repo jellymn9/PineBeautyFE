@@ -1,12 +1,11 @@
 import { useKeenSlider } from "keen-slider/react";
 import { useState } from "react";
+import { useTheme } from "styled-components";
 import { CircleChevronRight, CircleChevronLeft } from "lucide-react";
 
 import HomeSection from "@/components/HomeSection/HomeSection";
 import ProductCard from "@/components//ProductCard/ProductCard";
 import { Slider, SliderContainer, SliderMainContainer } from "./FavsStyled";
-import colors from "@/styles/colors";
-
 import Button from "@/components/Button/Button";
 
 //const heading = "PineBeauty's favs";
@@ -18,6 +17,7 @@ interface SliderPropsI {
 const PineBeautyFavs = ({ heading }: SliderPropsI) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const theme = useTheme();
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
     slides: {
@@ -42,7 +42,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
               <CircleChevronLeft
                 size={36}
                 strokeWidth={1}
-                fill={colors.blackTransparent2}
+                fill={theme.colors.blackTransparent2}
               />
             }
             handleClick={() => instanceRef.current?.prev()}
@@ -184,7 +184,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
               <CircleChevronRight
                 size={36}
                 strokeWidth={1}
-                fill={colors.blackTransparent2}
+                fill={theme.colors.blackTransparent2}
               />
             }
             handleClick={() => instanceRef.current?.next()}

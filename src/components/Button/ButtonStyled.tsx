@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import { BtnVariantT, buttonVariants } from "@/styles/buttonStyles";
-import colors from "@/styles/colors";
 
 export const CustomButton = styled.button<{
   $isIcon: boolean;
@@ -9,10 +8,10 @@ export const CustomButton = styled.button<{
 }>`
   width: fit-content;
   border: none;
-  color: ${colors.black};
+  color: ${({ theme }) => theme.colors.black};
 
-  background-color: ${({ $isIcon }) =>
-    $isIcon ? "transparent" : `${colors.white}`};
+  background-color: ${({ $isIcon, theme }) =>
+    $isIcon ? "transparent" : theme.colors.white};
 
   ${({ $isIcon }) => !$isIcon && `padding: 18px 48px;`};
 
@@ -40,5 +39,5 @@ export const ButtonText = styled.span`
   min-width: 74px;
   width: fit-content;
   text-transform: uppercase;
-  font-family: Montserrat-Variable;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
 `;

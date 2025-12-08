@@ -1,4 +1,3 @@
-import breakpoints from "@/styles/breakpoints";
 import { styled } from "styled-components";
 
 export const InnerContainer = styled.div`
@@ -7,7 +6,7 @@ export const InnerContainer = styled.div`
   grid-gap: 30px;
   align-items: center;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     align-items: normal;
   }
 `;

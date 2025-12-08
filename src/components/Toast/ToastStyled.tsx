@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import colors from "@/styles/colors";
 import { ToastMessageTypeT } from "@/context/ToastContext";
 
 export const ToastContainer = styled.div<{
@@ -12,21 +11,21 @@ export const ToastContainer = styled.div<{
   min-width: 300px;
   width: fit-content;
   padding: 16px 24px;
-  background-color: ${colors.babyPowder};
+  background-color: ${({ theme }) => theme.colors.babyPowder};
   border-style: solid;
   border-color: ${(props) => {
     switch (props.$messageType) {
       case "success":
-        return colors.olivine;
+        return props.theme.colors.olivine;
       case "error":
-        return colors.imperialRed;
+        return props.theme.colors.imperialRed;
       case "info":
-        return colors.celticBlue;
+        return props.theme.colors.celticBlue;
     }
   }};
   border-width: 2px;
 
-  color: ${colors.black};
+  color: ${({ theme }) => theme.colors.black};
   font-size: 16px;
 `;
 

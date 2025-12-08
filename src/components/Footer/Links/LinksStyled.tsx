@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import colors from "@/styles/colors";
 
 export const Container = styled.div`
   display: flex;
@@ -10,12 +9,13 @@ export const Container = styled.div`
 
 export const SingleLink = styled(Link)`
   text-decoration: none;
-  color: ${colors.white};
+  color: ${({ theme }) => theme.colors.white};
   text-transform: capitalize;
 `;
 
 export const Heading = styled.h4`
-  font-family: Montserrat-Variable; //add this 2 props to global style
+  //add this 2 props to global style
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   letter-spacing: 0.02em;
   text-transform: uppercase;
   font-weight: 400;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import breakpoints from "@/styles/breakpoints";
 
 export const Container = styled.div`
   --card-container-width: 46vw;
@@ -8,7 +7,7 @@ export const Container = styled.div`
   gap: 50px 16px;
   grid-template-columns: var(--card-container-width) var(--card-container-width);
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     --card-container-width: 29.427vw;
 
     grid-template-columns:
@@ -16,7 +15,8 @@ export const Container = styled.div`
       var(--card-container-width);
   }
 
-  @media screen and (min-width: ${breakpoints.smallDesktop}) {
+  @media screen and (min-width: ${({ theme }) =>
+      theme.breakpoints.smallDesktop}) {
     --card-container-width: 279px;
 
     grid-template-columns:

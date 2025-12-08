@@ -1,4 +1,3 @@
-import colors from "@/styles/colors";
 import styled from "styled-components";
 
 export const ContainerBlock = styled.div`
@@ -10,7 +9,7 @@ export const Container = styled.header<{
   $isActive: boolean;
 }>`
   padding: 30px 30px;
-  background-color: ${colors.white};
+  background-color: ${({ theme }) => theme.colors.white};
   backdrop-filter: blur(10px);
 
   position: fixed;
@@ -18,10 +17,10 @@ export const Container = styled.header<{
   left: 0;
   right: 0;
 
-  ${({ $isSticky }) =>
+  ${({ $isSticky, theme }) =>
     $isSticky &&
     `
-        background-color: ${colors.whiteTransparent1};
+        background-color: ${theme.colors.whiteTransparent1};
         display: none;
     `}
 
@@ -32,7 +31,7 @@ export const Container = styled.header<{
   `}
 
   &:hover {
-    background-color: ${colors.white};
+    background-color: ${({ theme }) => theme.colors.white};
   }
 `;
 

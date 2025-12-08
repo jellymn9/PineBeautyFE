@@ -1,10 +1,10 @@
 import { Loader, Minus, Plus } from "lucide-react";
 import Button from "@/components/Button/Button";
-import colors from "@/styles/colors";
 import { Amount, Container } from "./CounterStyled";
 import { CartItemLocalT } from "@/utils/types/cartTypes";
 import { useCartContext } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
+import { useTheme } from "styled-components";
 
 interface CounterPropsI {
   quantity: number;
@@ -14,7 +14,7 @@ interface CounterPropsI {
 }
 
 const iconsStrokeWidth = 1.5;
-const iconColor = colors.black;
+//const iconColor = theme.colors.black;
 
 const Counter = ({
   product,
@@ -24,6 +24,9 @@ const Counter = ({
 }: CounterPropsI) => {
   const { increase, decrease } = useCartContext();
   const { showToast } = useToast();
+  const theme = useTheme();
+
+  const iconColor = theme.colors.black;
 
   // const delay = (ms: number) =>
   //   new Promise((resolve) => setTimeout(resolve, ms));

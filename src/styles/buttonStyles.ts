@@ -1,10 +1,10 @@
 import { css } from "styled-components";
-import colors from "./colors";
+import { theme } from "@/styles/theme";
 
 export const buttonVariants = {
   primary: css`
-    background-color: ${colors.ebony};
-    color: ${colors.white};
+    background-color: ${theme.colors.ebony};
+    color: ${theme.colors.white};
     border: none;
 
     &:hover {
@@ -18,8 +18,8 @@ export const buttonVariants = {
   `,
   outlined: css`
     background: transparent;
-    color: ${colors.black};
-    border: 1px solid ${colors.gray};
+    color: ${theme.colors.black};
+    border: 1px solid ${theme.colors.gray};
 
     &:hover {
     }
