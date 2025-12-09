@@ -10,7 +10,10 @@ function Layout() {
   const mainRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    mainRef.current?.focus();
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    if (mainRef.current) {
+      mainRef.current.focus({ preventScroll: true });
+    }
   }, [location.pathname]);
 
   return (

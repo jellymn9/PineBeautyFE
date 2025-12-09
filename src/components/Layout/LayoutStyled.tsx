@@ -17,6 +17,10 @@ export const ContentContainer = styled.main`
   display: flex;
   flex-direction: column;
   //overflow: hidden;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const SkipToMainLink = styled.a`
