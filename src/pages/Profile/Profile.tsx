@@ -36,10 +36,7 @@ function Profile() {
     <ProfileContainer>
       <Helmet>
         <title>PineBeauty | My Profile</title>
-        <meta
-          name="description"
-          content="Manage your PineBeauty account, view order history, and update your personal details."
-        />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <MyAccountHeader>
         <MyAccountHeaderTitle>My Account</MyAccountHeaderTitle>

@@ -18,3 +18,17 @@ export const ContentContainer = styled.main`
   flex-direction: column;
   //overflow: hidden;
 `;
+
+export const SkipToMainLink = styled.a`
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: black;
+  color: white;
+  padding: 8px;
+  z-index: 1000;
+
+  &:focus {
+    top: 0;
+  }
+`;
