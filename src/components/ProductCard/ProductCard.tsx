@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { routes } from "@/utils/constants";
+import { ROUTES } from "@/utils/constants";
 import { ProductI } from "@/utils/types/productTypes";
 import {
   Card,
@@ -25,7 +25,7 @@ const imageURL =
 function ProductCard({ product }: ProductCardPropsI) {
   return (
     <Card className="keen-slider__slide">
-      <Link to={`${routes.product}/${product.id}`}>
+      <Link to={`${ROUTES.product}/${product.id}`}>
         <ProductImage $imageURL={imageURL} />
         <NameAndPriceContainer>
           <Name>{product.name} | 100% Organic & Cold Pressed</Name>

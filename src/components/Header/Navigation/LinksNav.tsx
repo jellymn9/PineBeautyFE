@@ -1,4 +1,4 @@
-import { navLinks, routes } from "@/utils/constants";
+import { NAV_LINKS, ROUTES } from "@/utils/constants";
 import {
   BarAnimationContainer,
   CircleAnimation,
@@ -19,15 +19,15 @@ const LinksNav = () => {
         onMouseLeave={handleMouseLeave}
       >
         <HoverBar $step={translateStep} $linkWidth={hoverLinkWidth} />
-        {navLinks.textualLinks.map(({ route, name }) => (
+        {NAV_LINKS.textualLinks.map(({ route, name }) => (
           <LinkStyled to={route} key={route}>
             {name}
           </LinkStyled>
         ))}
       </BarAnimationContainer>
       <CircleAnimation>
-        {navLinks.iconLinks.map(({ route, icon }) => {
-          if (route === routes.cart) {
+        {NAV_LINKS.iconLinks.map(({ route, icon }) => {
+          if (route === ROUTES.cart) {
             return (
               <LinkStyled to={route} key={route}>
                 <CartHeader icon={icon} />

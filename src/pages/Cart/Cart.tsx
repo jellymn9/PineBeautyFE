@@ -5,7 +5,7 @@ import { useCartContext } from "@/context/CartContext";
 import { Container, Heading } from "./CartStyled";
 import CartList from "./CartList";
 
-const title = "Shopping Cart";
+const TITLE = "Shopping Cart";
 
 const LOADER = <Loader />;
 
@@ -16,7 +16,7 @@ function Cart() {
 
   return (
     <Container>
-      <Heading>{title}</Heading>
+      <Heading>{TITLE}</Heading>
       {isLoading ? (
         LOADER
       ) : (

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { SubmitHandler } from "react-hook-form";
 
-import { routes as routesC } from "@/utils/constants";
+import { ROUTES } from "@/utils/constants";
 import { AuthFormsContainer } from "./SignInStyled";
 import Form from "@/components/Form/Form";
 import { login } from "@/APIs/auth";
@@ -60,7 +60,7 @@ function SignIn() {
 
       await mergeCarts(loginData.uid);
 
-      navigate(location.state?.from ?? routesC.home);
+      navigate(location.state?.from ?? ROUTES.home);
     } catch (e) {
       setLoginError(true);
     }

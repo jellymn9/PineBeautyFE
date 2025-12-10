@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { routes as routesC } from "@/utils/constants";
+import { ROUTES } from "@/utils/constants";
 import { SubmitHandler } from "react-hook-form";
 
 import Form from "@/components/Form/Form";
@@ -70,7 +70,7 @@ const SignUp = () => {
       await register(data.email, data.password);
       setRegSuccess(true);
 
-      navigate(routesC.home);
+      navigate(ROUTES.home);
     } catch (_e) {
       setRegSuccess(false);
     }
