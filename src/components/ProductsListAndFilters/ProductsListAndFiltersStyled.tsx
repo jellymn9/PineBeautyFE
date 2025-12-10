@@ -20,9 +20,10 @@ export const ProductsSection = styled.section`
   }
 `;
 
-export const EmptyMessage = styled.p`
-  font-size: 16px;
+export const Message = styled.p`
+  font-size: 22px;
   line-height: 26px;
-  font-weight: 500;
+  font-weight: 300;
   font-family: ${({ theme }) => theme.typography.fontFamilyAlt};
+  padding: 60px;
 `;

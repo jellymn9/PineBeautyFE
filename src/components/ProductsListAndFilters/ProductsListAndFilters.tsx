@@ -12,7 +12,7 @@ import { Loader } from "@/components/Loader/Loader";
 import ProductFilters from "@/components/ProductFilters/ProductFilters";
 import ProductsList from "@/components/ProductsList/ProductsList";
 import {
-  EmptyMessage,
+  Message,
   ProductsAndCategories,
   ProductsSection,
 } from "./ProductsListAndFiltersStyled";
@@ -43,26 +43,24 @@ const ProductsListAndFilters = () => {
   }, [reachBottom, dispatch, hasMore]);
 
   if (isError) {
-    return <div>{ERROR_MESSAGE}</div>;
+    return <Message>{ERROR_MESSAGE}</Message>;
   }
 
   return (
-    <>
+    <ProductsAndCategories>
+      <ProductFilters />
       {!products.length && isLoading ? (
         <Loader />
       ) : (
-        <ProductsAndCategories>
-          <ProductFilters />
-          <ProductsSection ref={productSectionRef}>
-            {products.length ? (
-              <ProductsList products={products} />
-            ) : (
-              <EmptyMessage>{EMPTY_MESSAGE}</EmptyMessage>
-            )}
-          </ProductsSection>
-        </ProductsAndCategories>
+        <ProductsSection ref={productSectionRef}>
+          {products.length ? (
+            <ProductsList products={products} />
+          ) : (
+            <Message>{EMPTY_MESSAGE}</Message>
+          )}
+        </ProductsSection>
       )}
-    </>
+    </ProductsAndCategories>
   );
 };
 
