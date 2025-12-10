@@ -5,17 +5,19 @@ import { db } from "@/firebase";
 import { CartDataFirebaseI, CartDataLocalI } from "@/utils/types/cartTypes";
 import { serverCartDateConversion } from "../dataMapper";
 
+type LoadingStatusT = "idle" | "loading" | "success" | "error";
+
 const initialCartState: CartDataLocalI = { items: {} };
 
 function useCart(userId: string | null) {
   const [cart, setCart] = useState<CartDataLocalI>(initialCartState);
-  const [loading, setLoading] = useState(true); // "initial load in progress"
+  const [status, setStatus] = useState<LoadingStatusT>("idle"); //first time loaded
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!userId) {
       setCart(initialCartState);
-      setLoading(false);
+      //setStatus("idle");
       setError(null);
       return;
     }
@@ -27,7 +29,7 @@ function useCart(userId: string | null) {
     (async () => {
       console.log("Loading cart for user:", userId);
       try {
-        setLoading(true);
+        setStatus("loading");
         setError(null);
 
         // Initial one-shot load
@@ -42,7 +44,7 @@ function useCart(userId: string | null) {
           setCart({ items: {} });
         }
 
-        setLoading(false);
+        setStatus("success");
 
         // After initial load, attach live listener
         unsubscribe = onSnapshot(
@@ -70,7 +72,7 @@ function useCart(userId: string | null) {
         console.error("Error loading cart:", err);
         setError("Failed to load cart.");
         setCart({ items: {} });
-        setLoading(false);
+        setStatus("error");
       }
     })();
 
@@ -82,7 +84,7 @@ function useCart(userId: string | null) {
     };
   }, [userId]);
 
-  return { cart, loading, error };
+  return { cart, status, error };
 }
 
 export { useCart };

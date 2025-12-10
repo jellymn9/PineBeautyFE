@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useMemo, useRef } from "react";
+import { createContext, ReactNode, useContext, useMemo } from "react";
 
 import { useAuth } from "./AuthContext";
 import {
@@ -37,7 +37,7 @@ export const CartProvider: React.FC<{
   const { user, isAuthLoading } = useAuth();
   const {
     cart: serverCart,
-    loading: serverLoading,
+    status: serverStatus,
     error: serverError,
   } = useCart(user?.uid || null);
   const {
@@ -47,24 +47,21 @@ export const CartProvider: React.FC<{
     decreaseAction,
   } = useLocalCart();
 
-  const userRef = useRef(user);
+  //const userRef = useRef(user);
 
   //let isServerLoading: boolean;
 
   const isServerLoading = useMemo(() => {
-    if (userRef.current === null && user !== null) {
-      userRef.current = user;
+    // if (userRef.current === null && user !== null) {
+    //   userRef.current = user;
+    //   return true;
+    // }
+    // return serverLoading; //change this logic nut n serverCart
+    if (serverStatus === "loading" || serverStatus === "idle") {
       return true;
     }
-    return serverLoading; //change this logic nut n serverCart
-  }, [user, serverLoading]);
-
-  // if (userRef.current === null && user !== null) {
-  //   userRef.current = user;
-  //   isServerLoading = true;
-  // } else {
-  //   isServerLoading = false; //change this logic
-  // }
+    return false;
+  }, [serverStatus]);
 
   let cart: Omit<CartContextTypeI, "isEmpty">;
 
