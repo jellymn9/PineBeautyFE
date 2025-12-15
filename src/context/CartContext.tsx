@@ -18,10 +18,10 @@ import {
 
 interface CartContextTypeI {
   cartItems: CartItemsUIT;
-  removeItem: (id: string) => void;
-  increase: (product: CartItemLocalT) => void;
-  decrease: (product: CartItemLocalT) => void;
-  addProduct: (product: NewItemT) => void;
+  removeItem: (id: string) => Promise<void>;
+  increase: (product: CartItemLocalT) => Promise<void>;
+  decrease: (product: CartItemLocalT) => Promise<void>;
+  addProduct: (product: NewItemT) => Promise<void>;
   isLoading: boolean;
   isEmpty: boolean;
   serverError?: string | null;
@@ -42,21 +42,12 @@ export const CartProvider: React.FC<{
   } = useCart(user?.uid || null);
   const {
     cart: localCart,
-    removeItem,
-    increaseAction,
-    decreaseAction,
+    removeItem: removeLocalItem,
+    increaseAction: increaseLocalAction,
+    decreaseAction: decreaseLocalAction,
   } = useLocalCart();
 
-  //const userRef = useRef(user);
-
-  //let isServerLoading: boolean;
-
   const isServerLoading = useMemo(() => {
-    // if (userRef.current === null && user !== null) {
-    //   userRef.current = user;
-    //   return true;
-    // }
-    // return serverLoading; //change this logic nut n serverCart
     if (serverStatus === "loading" || serverStatus === "idle") {
       return true;
     }
@@ -68,17 +59,17 @@ export const CartProvider: React.FC<{
   if (isAuthLoading) {
     cart = {
       cartItems: [],
-      removeItem: () => {},
-      increase: () => {},
-      decrease: () => {},
-      addProduct: () => {},
+      removeItem: async () => {},
+      increase: async () => {},
+      decrease: async () => {},
+      addProduct: async () => {},
       isLoading: true,
     };
   } else if (user) {
     cart = {
       cartItems: itemToArrAndSort(serverCart.items),
-      removeItem: (productId: string) => {
-        removeProductFromCart(user.uid, productId);
+      removeItem: async (productId: string) => {
+        await removeProductFromCart(user.uid, productId);
       },
       increase: async (product) => {
         await increaseCartItemQuantity(user.uid, product.id);
@@ -94,10 +85,13 @@ export const CartProvider: React.FC<{
   } else {
     cart = {
       cartItems: itemToArrAndSort(localCart.items),
-      removeItem: removeItem,
-      increase: increaseAction,
-      decrease: decreaseAction,
-      addProduct: increaseAction,
+      removeItem: async (productId: string) => await removeLocalItem(productId),
+      increase: async (product: CartItemLocalT) =>
+        await increaseLocalAction(product),
+      decrease: async (product: CartItemLocalT) =>
+        await decreaseLocalAction(product),
+      addProduct: async (product: NewItemT) =>
+        await increaseLocalAction(product),
       isLoading: false,
     };
   }

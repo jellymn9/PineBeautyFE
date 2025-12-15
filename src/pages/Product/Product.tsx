@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 
 import { useCartContext } from "@/context/CartContext";
+import { useToast } from "@/context/ToastContext";
 import { ProductI } from "@/utils/types/productTypes";
 import Accordion from "@/components/Accordion/Accordion";
 import Button from "@/components/Button/Button";
@@ -23,7 +24,6 @@ import {
   SecondaryContainer,
   NoProductMessage,
 } from "./ProductStyled";
-import { useToast } from "@/context/ToastContext";
 
 const DESC = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const NAME_ADDITION = " | 100% organic and cold pressed";
