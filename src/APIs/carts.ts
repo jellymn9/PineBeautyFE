@@ -68,7 +68,6 @@ export const addProductToCart = async (
       cartItems[productToAdd.id] = newItem;
     }
 
-    //throw new Error("Test error");
     await setOrUpdateCart(userId, { items: cartItems });
   } catch (e) {
     console.error("Error adding product to cart:", e);
@@ -199,7 +198,7 @@ export const getCart = async (
     }
   } catch (err) {
     console.error("Error fetching cart:", err);
-    return { items: {} }; //change this
+    throw err;
   }
 };
 
@@ -214,6 +213,6 @@ export const overwriteCart = async (
     return true;
   } catch (error) {
     console.error("Error overwriting cart:", error);
-    return false;
+    throw new Error("Error overwriting cart");
   }
 };
