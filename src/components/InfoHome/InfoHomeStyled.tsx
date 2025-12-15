@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import breakpoints from "@/utils/breakpoints";
 
 export const Container = styled.div`
   display: flex;
@@ -11,7 +10,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
 
     align-items: flex-start;
@@ -24,7 +23,7 @@ export const InfoContainer = styled.div`
   //flex-direction: column;
   justify-content: center;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
   }
 `;
@@ -37,12 +36,12 @@ export const Title = styled.h4`
   text-transform: uppercase;
   margin-bottom: 6px;
 
-  font-family: Montserrat-Variable;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   font-weight: 400;
 `;
 
 export const Description = styled.p`
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
   font-size: 16px;
   line-height: 26px;
 `;

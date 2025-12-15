@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import colors from "@/utils/colors";
-import breakpoints from "@/utils/breakpoints";
 
 export const Item = styled.li`
   display: flex;
@@ -13,7 +11,7 @@ export const ItemInnerContainer = styled.div`
   margin: 16px 0;
   align-items: flex-start;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
   }
 `;
@@ -25,7 +23,7 @@ export const ItemImg = styled.img`
   background: lightblue;
   text-align: center;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 180px;
     height: 180px;
   }
@@ -40,7 +38,7 @@ export const ItemPrice = styled.span`
 export const ItemDetails = styled.div`
   display: flex;
   flex-direction: column;
-  color: ${colors.gray};
+  color: ${({ theme }) => theme.colors.gray};
   font-size: 12px;
   line-height: 22px;
   grid-gap: 6px;
@@ -56,7 +54,7 @@ export const ItemDetailsAndActions = styled.div`
   justify-content: space-between;
   height: 180px;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding-left: 30px;
     padding-top: 0px;
   }
@@ -69,7 +67,7 @@ export const ItemName = styled.h3`
 
 export const HSeparator = styled.div`
   height: 2px;
-  background-color: ${colors.timberwolf};
+  background-color: ${({ theme }) => theme.colors.timberwolf};
 `;
 
 export const BtnWrapper = styled.div`
@@ -77,7 +75,7 @@ export const BtnWrapper = styled.div`
   margin-left: auto;
   margin-right: 0;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     margin-left: auto;
     margin-right: 0;
     align-self: flex-start;

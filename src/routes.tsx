@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 
-import { routes as routesC } from "@/utils/constants";
+import { ROUTES } from "@/utils/constants";
 import { getSingleProduct } from "@/APIs/products";
 
 import PageLayout from "@/components/Layout/Layout";
@@ -23,16 +23,16 @@ const routes: Array<RouteObject> = [
     element: <PageLayout />,
     children: [
       {
-        path: routesC.home,
+        path: ROUTES.home,
         element: withSuspense(<LazyHome />),
         errorElement: <Error />,
       },
       {
-        path: routesC.products,
+        path: ROUTES.products,
         element: withSuspense(<LazyProducts />),
       },
       {
-        path: routesC.product + "/:id",
+        path: ROUTES.product + "/:id",
         loader: async ({ params }) => {
           return await getSingleProduct(params.id);
         },
@@ -40,7 +40,7 @@ const routes: Array<RouteObject> = [
         errorElement: <div>Error element</div>,
       },
       {
-        path: routesC.profile,
+        path: ROUTES.profile,
         element: withSuspense(
           <PrivateRoute>
             <LazyProfile />
@@ -48,13 +48,13 @@ const routes: Array<RouteObject> = [
         ),
       },
       {
-        path: routesC.cart,
+        path: ROUTES.cart,
         element: withSuspense(<LazyCart />),
       },
     ],
   },
   {
-    path: routesC.signin,
+    path: ROUTES.signin,
     element: withSuspense(
       <AuthRoute>
         <LazySignIn />
@@ -62,7 +62,7 @@ const routes: Array<RouteObject> = [
     ),
   },
   {
-    path: routesC.signup,
+    path: ROUTES.signup,
     element: withSuspense(
       <AuthRoute>
         <LazySignUp />

@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import colors from "@/utils/colors";
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,37 +20,10 @@ export const BannerAndHeading = styled.div<{ $imageURL: string }>`
   align-items: center;
 `;
 
-export const ProductsSection = styled.section`
-  width: auto;
-
-  padding-bottom: 32px;
-  height: 721px;
-  overflow-y: scroll;
-
-  &&::-webkit-scrollbar {
-    //display: none;
-  }
-`;
-
 export const SectionHeading = styled.h1`
   padding-left: 10%;
-  color: ${colors.white};
-  font-family: Montserrat-Variable;
+  color: ${({ theme }) => theme.colors.white};
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   font-weight: 500;
   text-transform: uppercase;
-`;
-
-export const EmptyMessage = styled.p`
-  font-size: 16px;
-  line-height: 26px;
-  font-weight: 500;
-  font-family: DidactGothic-Regular;
-`;
-
-export const ProductsAndCategories = styled.div`
-  width: fit-content;
-
-  display: flex;
-  flex-direction: column;
-  align-self: center;
 `;

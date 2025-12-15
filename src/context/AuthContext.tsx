@@ -10,9 +10,8 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/firebase";
 
 type AuthContextType = {
-  isLoggedIn: boolean;
   user: User | null;
-  loading: boolean;
+  isAuthLoading: boolean;
 };
 
 type AuthProviderProps = {
@@ -23,21 +22,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [isAuthLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setLoading(false);
+      setAuthLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
   const value = {
-    isLoggedIn: !!user,
     user,
-    loading,
+    isAuthLoading,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

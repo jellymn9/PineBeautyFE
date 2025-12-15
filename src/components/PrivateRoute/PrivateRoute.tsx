@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
-import { routes as routesC } from "@/utils/constants";
+import { ROUTES } from "@/utils/constants";
 import { useAuth } from "@/context/AuthContext";
 
 interface PrivateRouteProps {
@@ -9,14 +9,14 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const { isLoggedIn } = useAuth();
+  const { user } = useAuth();
 
   const location = useLocation();
 
-  if (!isLoggedIn) {
+  if (!user) {
     return (
       <Navigate
-        to={routesC.signin}
+        to={ROUTES.signin}
         state={{ from: location.pathname }}
         replace
       />

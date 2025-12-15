@@ -1,26 +1,14 @@
 import { Search, ShoppingCart, User } from "lucide-react";
-import type { ProductCategoriesMappedT } from "./types";
 
-export const BasicCategories = {
+export const BASIC_CATEGORIES = {
   body: { name: "body", link: "/" },
   hair: { name: "hair", link: "/" },
   face: { name: "face", link: "/" },
 };
 
-export const ProductCategories: ProductCategoriesMappedT = {
-  SCRUBS_AND_MASKS: { name: "scrubs and masks", link: "/" },
-  NATURAL_DEODORANTS: { name: "natural deodorants", link: "/" },
-  HAIR_OILD_AND_SERUMS: { name: "hair oils and serums", link: "/" },
-  SOLID_SHAMPOOS_AND_HAIR_SOAPS: {
-    name: "solid shampoos and hair soaps",
-    link: "/",
-  },
-  EAU_DE_TOILETE: { name: "eau de toilete", link: "/" },
-};
+export const FOOTER_HEIGHT = 452;
 
-export const footerHeight = 452;
-
-export const routes = {
+export const ROUTES = {
   home: "/",
   products: "/products",
   product: "/product",
@@ -30,15 +18,15 @@ export const routes = {
   signup: "/signup",
 };
 
-export const navLinks = {
+export const NAV_LINKS = {
   textualLinks: [
-    { route: routes.home, name: "home" },
-    { route: routes.products, name: "products" },
+    { route: ROUTES.home, name: "home" },
+    { route: ROUTES.products, name: "products" },
     { route: "2", name: "contact" },
   ],
   iconLinks: [
     {
-      route: routes.profile,
+      route: ROUTES.profile,
       icon: <User size={22} strokeWidth={2} />,
       mobile: true,
     },
@@ -48,7 +36,7 @@ export const navLinks = {
       mobile: false,
     },
     {
-      route: routes.cart,
+      route: ROUTES.cart,
       icon: <ShoppingCart size={22} strokeWidth={2} />,
       mobile: false,
     },

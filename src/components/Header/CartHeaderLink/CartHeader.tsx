@@ -8,11 +8,10 @@ interface CartHeaderProps {
 }
 
 const CartHeader = memo(function ({ icon }: CartHeaderProps) {
-  const { cartItems } = useCartContext();
-  const isCartEmpty = !cartItems.length;
+  const { isEmpty } = useCartContext();
 
   return (
-    <CartInsertWrapper $isEmpty={isCartEmpty}>
+    <CartInsertWrapper $isEmpty={isEmpty}>
       <Dot />
       {icon}
     </CartInsertWrapper>

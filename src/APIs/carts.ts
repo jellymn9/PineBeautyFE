@@ -24,7 +24,12 @@ const setOrUpdateCart = async (
     return;
   }
   const cartRef = doc(db, "carts", userId);
-  await setDoc(cartRef, cartData, { merge: true });
+  try {
+    await setDoc(cartRef, cartData, { merge: true });
+  } catch (e) {
+    console.error("Error setting or updating cart:", e);
+    throw e;
+  }
 };
 
 export const addProductToCart = async (
@@ -35,34 +40,39 @@ export const addProductToCart = async (
     console.error("User ID and a valid product with an ID are required.");
     return;
   }
+  try {
+    const cartRef = doc(db, "carts", userId);
 
-  const cartRef = doc(db, "carts", userId);
-  const cartSnap = await getDoc(cartRef);
-  let cartItems: { [productId: string]: CartItemWriteT } = {};
+    const cartSnap = await getDoc(cartRef);
+    let cartItems: { [productId: string]: CartItemWriteT } = {};
 
-  if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartDataFirebaseI;
-    cartItems = currentCart.items ? { ...currentCart.items } : {};
+    if (cartSnap.exists()) {
+      const currentCart = cartSnap.data() as CartDataFirebaseI;
+      cartItems = currentCart.items ? { ...currentCart.items } : {};
+    }
+
+    const existingItem = cartItems[productToAdd.id];
+    if (existingItem) {
+      const quantity = existingItem.quantity + 1;
+      const updatedAt = serverTimestamp();
+
+      cartItems[productToAdd.id] = { ...existingItem, quantity, updatedAt };
+    } else {
+      const newItem: CartItemWriteT = {
+        ...productToAdd,
+        quantity: 1,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      };
+
+      cartItems[productToAdd.id] = newItem;
+    }
+
+    await setOrUpdateCart(userId, { items: cartItems });
+  } catch (e) {
+    console.error("Error adding product to cart:", e);
+    throw e;
   }
-
-  const existingItem = cartItems[productToAdd.id];
-  if (existingItem) {
-    const quantity = existingItem.quantity + 1;
-    const updatedAt = serverTimestamp();
-
-    cartItems[productToAdd.id] = { ...existingItem, quantity, updatedAt };
-  } else {
-    const newItem: CartItemWriteT = {
-      ...productToAdd,
-      quantity: 1,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-    };
-
-    cartItems[productToAdd.id] = newItem;
-  }
-
-  await setOrUpdateCart(userId, { items: cartItems });
 };
 
 export const removeProductFromCart = async (
@@ -73,21 +83,20 @@ export const removeProductFromCart = async (
     console.error("User ID and Product ID are required.");
     return;
   }
+  try {
+    const cartRef = doc(db, "carts", userId);
+    const cartSnap = await getDoc(cartRef);
 
-  const cartRef = doc(db, "carts", userId);
-  const cartSnap = await getDoc(cartRef);
+    if (cartSnap.exists()) {
+      const currentCart = cartSnap.data() as CartDataFirebaseI;
+      const updatedItems = { ...currentCart.items };
+      delete updatedItems[productId];
 
-  if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartDataFirebaseI;
-    const updatedItems = { ...currentCart.items };
-    delete updatedItems[productId];
-
-    try {
       await updateDoc(cartRef, { items: updatedItems });
-    } catch (e) {
-      console.error("Error updating cart items map:", e);
-      throw e;
     }
+  } catch (e) {
+    console.error("Error updating cart items map:", e);
+    throw e;
   }
 };
 
@@ -99,27 +108,31 @@ export const decreaseProductQuantity = async (
     console.error("User ID and Product ID are required.");
     return;
   }
+  try {
+    const cartRef = doc(db, "carts", userId);
+    const cartSnap = await getDoc(cartRef);
 
-  const cartRef = doc(db, "carts", userId);
-  const cartSnap = await getDoc(cartRef);
+    if (cartSnap.exists()) {
+      const currentCart = cartSnap.data() as CartDataWriteI;
+      const cartItems = { ...currentCart.items };
+      const existingItem = cartItems[productId];
 
-  if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartDataWriteI;
-    const cartItems = { ...currentCart.items };
-    const existingItem = cartItems[productId];
-
-    if (existingItem) {
-      if (existingItem.quantity > 1) {
-        cartItems[productId] = {
-          ...existingItem,
-          quantity: existingItem.quantity - 1,
-          updatedAt: serverTimestamp(),
-        };
-        await setOrUpdateCart(userId, { items: cartItems });
-      } else {
-        await removeProductFromCart(userId, productId);
+      if (existingItem) {
+        if (existingItem.quantity > 1) {
+          cartItems[productId] = {
+            ...existingItem,
+            quantity: existingItem.quantity - 1,
+            updatedAt: serverTimestamp(),
+          };
+          await setOrUpdateCart(userId, { items: cartItems });
+        } else {
+          await removeProductFromCart(userId, productId);
+        }
       }
     }
+  } catch (e) {
+    console.error("Error decreasing product quantity:", e);
+    throw e;
   }
 };
 
@@ -133,27 +146,35 @@ export const increaseCartItemQuantity = async (
     return;
   }
 
-  const cartRef = doc(db, "carts", userId);
-  const cartSnap = await getDoc(cartRef);
+  try {
+    const cartRef = doc(db, "carts", userId);
+    const cartSnap = await getDoc(cartRef);
 
-  if (cartSnap.exists()) {
-    const currentCart = cartSnap.data() as CartDataWriteI;
-    const cartItems = currentCart.items ? { ...currentCart.items } : {};
-    const existingItem = cartItems[productId];
+    if (cartSnap.exists()) {
+      const currentCart = cartSnap.data() as CartDataWriteI;
+      const cartItems = currentCart.items ? { ...currentCart.items } : {};
+      const existingItem = cartItems[productId];
 
-    if (existingItem) {
-      cartItems[productId] = {
-        ...existingItem,
-        quantity: existingItem.quantity + amount,
-        updatedAt: serverTimestamp(),
-      };
+      if (existingItem) {
+        cartItems[productId] = {
+          ...existingItem,
+          quantity: existingItem.quantity + amount,
+          updatedAt: serverTimestamp(),
+        };
 
-      await setOrUpdateCart(userId, { items: cartItems });
-    } else {
-      console.warn(
-        `Attempted to increase quantity for non-existent product ID: ${productId}`
-      );
+        await setOrUpdateCart(userId, { items: cartItems });
+      } else {
+        console.warn(
+          `Attempted to increase quantity for non-existent product ID: ${productId}`
+        );
+        throw new Error(
+          "Attempted to increase quantity for non-existent product ID."
+        );
+      }
     }
+  } catch (e) {
+    console.error("Error increasing product quantity:", e);
+    throw e;
   }
 };
 
@@ -177,7 +198,7 @@ export const getCart = async (
     }
   } catch (err) {
     console.error("Error fetching cart:", err);
-    return { items: {} };
+    throw err;
   }
 };
 
@@ -186,8 +207,12 @@ export const overwriteCart = async (
   mergedCartData: CartDataLocalI
 ): Promise<boolean> => {
   const cartRef = doc(db, "carts", userId);
+  try {
+    await setDoc(cartRef, mergedCartData);
 
-  await setDoc(cartRef, mergedCartData);
-
-  return true;
+    return true;
+  } catch (error) {
+    console.error("Error overwriting cart:", error);
+    throw new Error("Error overwriting cart");
+  }
 };

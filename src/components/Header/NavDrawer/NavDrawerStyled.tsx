@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import colors from "@/utils/colors";
 
 export const NavLinks = styled(Link)`
   text-decoration: none;
@@ -9,14 +8,14 @@ export const NavLinks = styled(Link)`
   //height: 42px;
   padding: 18px 10px;
   text-transform: uppercase;
-  font-family: Montserrat-Variable;
-  color: ${colors.black};
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
+  color: ${({ theme }) => theme.colors.black};
 `;
 
 export const HSeparator = styled.div`
   height: 1px;
   width: 100%;
-  background-color: ${colors.timberwolf};
+  background-color: ${({ theme }) => theme.colors.timberwolf};
 `;
 
 export const InputContainer = styled.div`

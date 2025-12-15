@@ -1,7 +1,6 @@
 import { Trash } from "lucide-react";
 import { formatPrice } from "@/helpers/formatters";
 import { CartItemLocalT } from "@/utils/types/cartTypes";
-import Button from "@/components/Button/Button";
 import Counter from "@/components/Counter/Counter";
 //import { removeProductFromCart } from "@/APIs/carts";
 //import { removeItemFromCartLS } from "@/helpers/cartHelper";
@@ -19,9 +18,12 @@ import {
 } from "./CartItemStyled";
 //import { User } from "firebase/auth";
 import { useCartContext } from "@/context/CartContext";
+import IconBtn from "../Button/IconBtn/IconBtn";
 
 interface CartItemPropsI {
   product: CartItemLocalT;
+  actionLoading: boolean;
+  handleLoading: React.Dispatch<React.SetStateAction<boolean>>;
   //user: User | null;
 }
 
@@ -30,7 +32,11 @@ const imageURL =
     ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
     : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
 
-export const CartItem = ({ product }: CartItemPropsI) => {
+export const CartItem = ({
+  product,
+  actionLoading,
+  handleLoading,
+}: CartItemPropsI) => {
   const { id, price, name, quantity } = product;
   const { removeItem } = useCartContext();
 
@@ -51,14 +57,15 @@ export const CartItem = ({ product }: CartItemPropsI) => {
             <Counter
               product={product}
               quantity={quantity}
+              actionLoading={actionLoading}
+              handleLoading={handleLoading}
               //userId={user?.uid || ""}
             />
           </ItemDetailsAndActions>
           <BtnWrapper>
-            <Button
-              variant="icon"
-              text=""
+            <IconBtn
               icon={<Trash size={22} strokeWidth={1.5} />}
+              label="Remove item"
               handleClick={handleRemove}
             />
           </BtnWrapper>

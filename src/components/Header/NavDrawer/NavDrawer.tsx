@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 
 import { useDrawer } from "@/context/DrawerContext";
-import { navLinks } from "@/utils/constants";
+import { NAV_LINKS } from "@/utils/constants";
 import { CloseButton } from "@/components/CloseBtn/CloseBtn";
 import Drawer from "@/components/Drawer/Drawer";
 import {
@@ -20,7 +20,7 @@ const NavDrawer = function () {
     <Drawer>
       <>
         <IconsContainer>
-          {navLinks.iconLinks.map(
+          {NAV_LINKS.iconLinks.map(
             ({ route, icon, mobile }) =>
               mobile && <Link to={route}>{icon}</Link>
           )}
@@ -33,7 +33,7 @@ const NavDrawer = function () {
           <Search />
         </InputContainer>
         <HSeparator />
-        {navLinks.textualLinks.map(({ route, name }) => (
+        {NAV_LINKS.textualLinks.map(({ route, name }) => (
           <>
             <NavLinks to={route}>{name}</NavLinks>
             <HSeparator />

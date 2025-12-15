@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import breakpoints from "@/utils/breakpoints";
 
 export const SliderMainContainer = styled.div`
   display: flex;
@@ -10,7 +9,7 @@ export const SliderMainContainer = styled.div`
 export const SliderContainer = styled.div`
   --card-container-width: 48.427vw;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     --card-container-width: 22.427vw;
   }
 

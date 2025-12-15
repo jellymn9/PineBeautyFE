@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BasicCategories } from "@/utils/constants";
+import { BASIC_CATEGORIES } from "@/utils/constants";
 import Checkbox, {
   CheckboxInputProps,
 } from "@/components/CustomInput/Checkbox";
@@ -39,7 +39,7 @@ const ProductFilters = function () {
     <FiltersContainer>
       <FiltersHeading>{heading}</FiltersHeading>
       <FiltersList>
-        {Object.values(BasicCategories).map(({ name }) => (
+        {Object.values(BASIC_CATEGORIES).map(({ name }) => (
           <Checkbox
             key={name}
             id={name}

@@ -1,27 +1,24 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import colors from "@/utils/colors";
-import breakpoints from "@/utils/breakpoints";
-
 export const Container = styled.div`
-  background-color: ${colors.ebony};
+  background-color: ${({ theme }) => theme.colors.ebony};
 
-  font-family: DidactGothic-Regular;
+  font-family: ${({ theme }) => theme.typography.fontFamilyAlt};
 `;
 
 export const FooterLink = styled(Link)`
   text-decoration: none;
-  color: ${colors.white};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 export const ProfileParagraph = styled.p`
-  color: ${colors.gray};
+  color: ${({ theme }) => theme.colors.gray};
   margin: 0;
 `;
 
 export const InfoItem = styled.span`
-  color: ${colors.white};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 export const InfoItemContainer = styled.div`
@@ -33,7 +30,7 @@ export const InfoItemContainer = styled.div`
 export const HSeparator = styled.div`
   // consider adding this to global style later..
   height: 2px;
-  background-color: ${colors.whiteTransparent1};
+  background-color: ${({ theme }) => theme.colors.whiteTransparent1};
 `;
 
 export const LinksContainer = styled.div`
@@ -41,7 +38,7 @@ export const LinksContainer = styled.div`
   justify-content: space-between;
   grid-gap: 50px;
 
-  @media screen and (min-width: ${breakpoints.tablet}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: auto;
   }
 `;

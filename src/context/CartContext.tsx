@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useMemo } from "react";
 
 import { useAuth } from "./AuthContext";
 import {
@@ -18,10 +18,13 @@ import {
 
 interface CartContextTypeI {
   cartItems: CartItemsUIT;
-  removeItem: (id: string) => void;
-  increase: (product: CartItemLocalT) => void;
-  decrease: (product: CartItemLocalT) => void;
-  addProduct: (product: NewItemT) => void;
+  removeItem: (id: string) => Promise<void>;
+  increase: (product: CartItemLocalT) => Promise<void>;
+  decrease: (product: CartItemLocalT) => Promise<void>;
+  addProduct: (product: NewItemT) => Promise<void>;
+  isLoading: boolean;
+  isEmpty: boolean;
+  serverError?: string | null;
 }
 
 export const CartContext = createContext<CartContextTypeI | undefined>(
@@ -31,40 +34,75 @@ export const CartContext = createContext<CartContextTypeI | undefined>(
 export const CartProvider: React.FC<{
   children: ReactNode;
 }> = ({ children }) => {
-  const { user } = useAuth();
-  const { cart: serverCart } = useCart(user?.uid || null);
+  const { user, isAuthLoading } = useAuth();
+  const {
+    cart: serverCart,
+    status: serverStatus,
+    error: serverError,
+  } = useCart(user?.uid || null);
   const {
     cart: localCart,
-    removeItem,
-    increaseAction,
-    decreaseAction,
+    removeItem: removeLocalItem,
+    increaseAction: increaseLocalAction,
+    decreaseAction: decreaseLocalAction,
   } = useLocalCart();
 
-  const cart: CartContextTypeI = user
-    ? {
-        cartItems: itemToArrAndSort(serverCart.items),
-        removeItem: (productId: string) => {
-          removeProductFromCart(user.uid, productId);
-        },
-        increase: (product) => {
-          increaseCartItemQuantity(user.uid, product.id);
-        },
-        decrease: (product) => {
-          decreaseProductQuantity(user.uid, product.id);
-        },
-        addProduct: (product) => {
-          addProductToCart(user.uid, product);
-        },
-      }
-    : {
-        cartItems: itemToArrAndSort(localCart.items),
-        removeItem: removeItem,
-        increase: increaseAction,
-        decrease: decreaseAction,
-        addProduct: increaseAction,
-      };
+  const isServerLoading = useMemo(() => {
+    if (serverStatus === "loading" || serverStatus === "idle") {
+      return true;
+    }
+    return false;
+  }, [serverStatus]);
 
-  return <CartContext.Provider value={cart}>{children}</CartContext.Provider>;
+  let cart: Omit<CartContextTypeI, "isEmpty">;
+
+  if (isAuthLoading) {
+    cart = {
+      cartItems: [],
+      removeItem: async () => {},
+      increase: async () => {},
+      decrease: async () => {},
+      addProduct: async () => {},
+      isLoading: true,
+    };
+  } else if (user) {
+    cart = {
+      cartItems: itemToArrAndSort(serverCart.items),
+      removeItem: async (productId: string) => {
+        await removeProductFromCart(user.uid, productId);
+      },
+      increase: async (product) => {
+        await increaseCartItemQuantity(user.uid, product.id);
+      },
+      decrease: async (product) => {
+        await decreaseProductQuantity(user.uid, product.id);
+      },
+      addProduct: async (product) => {
+        await addProductToCart(user.uid, product);
+      },
+      isLoading: isServerLoading,
+    };
+  } else {
+    cart = {
+      cartItems: itemToArrAndSort(localCart.items),
+      removeItem: async (productId: string) => await removeLocalItem(productId),
+      increase: async (product: CartItemLocalT) =>
+        await increaseLocalAction(product),
+      decrease: async (product: CartItemLocalT) =>
+        await decreaseLocalAction(product),
+      addProduct: async (product: NewItemT) =>
+        await increaseLocalAction(product),
+      isLoading: false,
+    };
+  }
+
+  const isEmpty = !cart.isLoading && cart.cartItems.length === 0;
+
+  return (
+    <CartContext.Provider value={{ ...cart, isEmpty, serverError }}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 export function useCartContext() {

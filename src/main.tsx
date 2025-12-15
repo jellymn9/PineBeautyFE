@@ -2,11 +2,13 @@ import React, { Profiler } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
 
 import { store } from "@/store";
 import routes from "@/routes";
-import { GlobalStyles } from "@/utils/globalStyles";
-import "./index.css";
+import { GlobalStyles } from "@/styles/globalStyles";
+//import "./index.css";
+import { theme } from "@/styles/theme";
 import { DrawerProvider } from "@/context/DrawerContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ToastProvider } from "@/context/ToastContext";
@@ -56,9 +58,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <DrawerProvider>
               <ToastProvider>
                 <Provider store={store}>
-                  <GlobalStyles />
-                  <Toast />
-                  <RouterProvider router={router} />
+                  <ThemeProvider theme={theme}>
+                    <GlobalStyles />
+                    <Toast />
+                    <RouterProvider router={router} />
+                  </ThemeProvider>
                 </Provider>
               </ToastProvider>
             </DrawerProvider>

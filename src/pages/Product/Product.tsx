@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 
 import { useCartContext } from "@/context/CartContext";
+import { useToast } from "@/context/ToastContext";
 import { ProductI } from "@/utils/types/productTypes";
 import Accordion from "@/components/Accordion/Accordion";
 import Button from "@/components/Button/Button";
@@ -24,27 +25,34 @@ import {
   NoProductMessage,
 } from "./ProductStyled";
 
-const desc = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
-const nameAddition = " | 100% organic and cold pressed";
-const contentsMl = "50ml"; // add to product
-const relatedProductsTitle = "Related products";
-const nonExistentProductMessage = "Product not found.";
+const DESC = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
+const NAME_ADDITION = " | 100% organic and cold pressed";
+const CONTENT_ML = "50ml"; // add to product
+const RELATED_PRODUCTS_TITLE = "Related products";
+const NON_EXISTENT_PRODUCT_MESSAGE = "Product not found.";
 
 function Product() {
   const product = useLoaderData() as ProductI | null;
   const { addProduct } = useCartContext();
+  const { showToast } = useToast();
 
   if (!product) {
-    return <NoProductMessage>{nonExistentProductMessage}</NoProductMessage>;
+    return <NoProductMessage>{NON_EXISTENT_PRODUCT_MESSAGE}</NoProductMessage>;
   }
 
-  const handleAdd = () =>
-    addProduct({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-    });
+  const handleAdd = async () => {
+    try {
+      await addProduct({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+      });
+      showToast("Product added to cart!", "success");
+    } catch (error) {
+      showToast("Failed to add product to cart.", "error");
+    }
+  };
 
   //temporary image
   const imageURL =
@@ -75,10 +83,10 @@ function Product() {
           </GalleryAndDescription>
           {/* <ProductInfoContainer> */}
           <ProductInfo>
-            <ProductName>{product.name + nameAddition}</ProductName>
+            <ProductName>{product.name + NAME_ADDITION}</ProductName>
             <ContentsContainer>
-              <ProductContents>contents | {contentsMl}</ProductContents>
-              <Button text={contentsMl} />
+              <ProductContents>contents | {CONTENT_ML}</ProductContents>
+              <Button text={CONTENT_ML} />
             </ContentsContainer>
             <Button
               styleVariant="primary"
@@ -86,14 +94,14 @@ function Product() {
               handleClick={() => handleAdd()}
             />
             <GeneralProductInfo />
-            <ProductDescription>{desc}</ProductDescription>
+            <ProductDescription>{DESC}</ProductDescription>
           </ProductInfo>
           {/* </ProductInfoContainer> */}
         </ProductSection>
       </SecondaryContainer>
       <ReviewsSection></ReviewsSection>
       <RelatedProductsSection>
-        <PineBeautyFavs heading={relatedProductsTitle} />
+        <PineBeautyFavs heading={RELATED_PRODUCTS_TITLE} />
       </RelatedProductsSection>
     </Container>
   );

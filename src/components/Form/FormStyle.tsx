@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import colors from "@/utils/colors";
 
 export const FormHeading = styled.h1`
   font-size: 36px;
@@ -14,7 +13,7 @@ export const FormCustom = styled.form`
 
 export const LabelCustom = styled.label`
   font-size: 18px;
-  color: ${colors.gray};
+  color: ${({ theme }) => theme.colors.gray};
 `;
 
 export const InputCustom = styled.input<{
@@ -26,16 +25,16 @@ export const InputCustom = styled.input<{
   font-size: 18px;
   letter-spacing: 0.01em;
   padding-left: 12px;
-  border: 1px solid ${colors.timberwolf};
+  border: 1px solid ${({ theme }) => theme.colors.timberwolf};
   border-radius: 6px;
-  font-family: Avenir;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 
-  outline: ${({ $isValidated, $customValid }) =>
+  outline: ${({ $isValidated, $customValid, theme }) =>
     !$isValidated
       ? ` none`
       : $customValid
-      ? `${colors.olivine} auto 2px`
-      : `${colors.imperialRed} auto 2px`};
+      ? `${theme.colors.olivine} auto 2px`
+      : `${theme.colors.imperialRed} auto 2px`};
 `;
 
 export const LabelInputWrapper = styled.div`
@@ -45,6 +44,6 @@ export const LabelInputWrapper = styled.div`
 `;
 
 export const FieldError = styled.span`
-  color: ${colors.imperialRed};
+  color: ${({ theme }) => theme.colors.imperialRed};
   font-size: 14px;
 `;
