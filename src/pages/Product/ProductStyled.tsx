@@ -13,6 +13,10 @@ export const SecondaryContainer = styled.div`
   flex-direction: column;
   width: fit-content;
   grid-gap: 24px;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ProductSection = styled.section`

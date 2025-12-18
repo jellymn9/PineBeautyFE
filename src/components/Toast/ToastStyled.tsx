@@ -27,6 +27,10 @@ export const ToastContainer = styled.div<{
 
   color: ${({ theme }) => theme.colors.black};
   font-size: 16px;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const InnerWrapper = styled.div`
