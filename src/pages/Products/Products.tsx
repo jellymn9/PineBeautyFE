@@ -1,5 +1,6 @@
 import { BannerAndHeading, Container, SectionHeading } from "./ProductsStyled";
 import ProductsListAndFilters from "@/components/ProductsListAndFilters/ProductsListAndFilters";
+import { Helmet } from "react-helmet-async";
 
 const productsHeading = "All products";
 
@@ -11,6 +12,13 @@ const IMAGE_URL =
 function Products() {
   return (
     <Container>
+      <Helmet>
+        <title>PineBeauty | Products</title>
+        <meta
+          name="description"
+          content="Explore PineBeauty's extensive range of sustainable skincare products designed to nourish your skin while caring for the planet."
+        />
+      </Helmet>
       <BannerAndHeading $imageURL={IMAGE_URL}>
         <SectionHeading>{productsHeading}</SectionHeading>
       </BannerAndHeading>

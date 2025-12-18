@@ -53,17 +53,22 @@ const Form = function <T extends FieldValues>({
       <FormCustom onSubmit={handleSubmit(onSubmit)}>
         {formFields.map(({ label, inputType, inputId, registerName }) => (
           <LabelInputWrapper key={label}>
-            <LabelCustom htmlFor="registerUsername">{label}</LabelCustom>
+            <LabelCustom htmlFor={inputId}>{label}</LabelCustom>
             <InputCustom
               type={inputType}
               id={inputId}
               {...register(registerName)}
               aria-invalid={errors[registerName] ? "true" : "false"}
+              aria-describedby={
+                errors[registerName] ? `${inputId}-error` : undefined
+              }
               $isValidated={registerName in touchedFields || isSubmitted}
               $customValid={!errors[registerName]}
             />
             {errors[registerName] && (
-              <FieldError>{String(errors[registerName]?.message)}</FieldError>
+              <FieldError id={`${inputId}-error`} role="alert">
+                {String(errors[registerName]?.message)}
+              </FieldError>
             )}
           </LabelInputWrapper>
         ))}

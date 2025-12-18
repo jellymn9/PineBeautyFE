@@ -17,4 +17,22 @@ export const ContentContainer = styled.main`
   display: flex;
   flex-direction: column;
   //overflow: hidden;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const SkipToMainLink = styled.a`
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: black;
+  color: white;
+  padding: 8px;
+  z-index: 1000;
+
+  &:focus {
+    top: 0;
+  }
 `;

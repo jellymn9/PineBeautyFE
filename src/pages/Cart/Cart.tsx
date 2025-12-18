@@ -1,4 +1,5 @@
 import { Loader } from "@/components/Loader/Loader";
+import { Helmet } from "react-helmet-async";
 import { calcSubtotalPrice } from "@/helpers/cartHelper";
 import { useCartContext } from "@/context/CartContext";
 
@@ -16,6 +17,10 @@ function Cart() {
 
   return (
     <Container>
+      <Helmet>
+        <title>PineBeauty | Cart</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <Heading>{TITLE}</Heading>
       {isLoading ? (
         LOADER

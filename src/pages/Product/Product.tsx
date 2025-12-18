@@ -1,4 +1,5 @@
 import { useLoaderData } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { useCartContext } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
@@ -24,6 +25,7 @@ import {
   SecondaryContainer,
   NoProductMessage,
 } from "./ProductStyled";
+import { useRef } from "react";
 
 const DESC = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const NAME_ADDITION = " | 100% organic and cold pressed";
@@ -35,6 +37,7 @@ function Product() {
   const product = useLoaderData() as ProductI | null;
   const { addProduct } = useCartContext();
   const { showToast } = useToast();
+  const basePageRef = useRef<HTMLDivElement>(null);
 
   if (!product) {
     return <NoProductMessage>{NON_EXISTENT_PRODUCT_MESSAGE}</NoProductMessage>;
@@ -64,7 +67,14 @@ function Product() {
 
   return (
     <Container>
-      <SecondaryContainer>
+      <Helmet>
+        <title>{product.name} | PineBeauty</title>
+        <meta
+          name="description"
+          content={`Learn more about ${product.name}, a product from PineBeauty.`}
+        />
+      </Helmet>
+      <SecondaryContainer ref={basePageRef} tabIndex={-1}>
         <Breadcrumbs />
         <ProductSection>
           <GalleryAndDescription>

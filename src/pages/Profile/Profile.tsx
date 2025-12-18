@@ -1,4 +1,5 @@
 import { ChevronRight } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase";
@@ -33,6 +34,10 @@ function Profile() {
 
   return (
     <ProfileContainer>
+      <Helmet>
+        <title>PineBeauty | My Profile</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <MyAccountHeader>
         <MyAccountHeaderTitle>My Account</MyAccountHeaderTitle>
         <Button

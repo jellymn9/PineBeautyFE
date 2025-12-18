@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
+import { HelmetProvider } from "react-helmet-async";
 
 import { store } from "@/store";
 import routes from "@/routes";
@@ -61,7 +62,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                   <ThemeProvider theme={theme}>
                     <GlobalStyles />
                     <Toast />
-                    <RouterProvider router={router} />
+                    <HelmetProvider>
+                      <RouterProvider router={router} />
+                    </HelmetProvider>
                   </ThemeProvider>
                 </Provider>
               </ToastProvider>
