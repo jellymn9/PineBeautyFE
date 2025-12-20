@@ -31,7 +31,7 @@ export const typography = {
   fontFamilyAlt: "'Didact Gothic', system-ui, sans-serif",
 
   /* Brand / marketing / special sections */
-  fontFamilyBrand: "'Avenir', 'Montserrat', system-ui, sans-serif",
+  fontFamilyBrand: "'Josefin Sans', 'Montserrat', system-ui, sans-serif",
   h1: {
     fontSize: "42px",
     lineHeight: "52px",

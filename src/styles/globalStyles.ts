@@ -3,11 +3,11 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyles = createGlobalStyle`
 
  /* ==============================
-     MONTSERRAT – VARIABLE (UI FONT)
+     MONTSERRAT – VARIABLE
      ============================== */
   @font-face {
     font-family: "Montserrat";
-    src: url("/fonts/Montserrat-Variable.woff2") format("woff2");
+    src: url("/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
@@ -18,35 +18,19 @@ export const GlobalStyles = createGlobalStyle`
      ============================== */
   @font-face {
     font-family: "Didact Gothic";
-    src: url("/fonts/DidactGothic-Regular.woff2") format("woff2");
+    src: url("/fonts/DidactGothic-Regular.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
 
   /* ==============================
-     AVENIR – REGULAR (CUSTOM)
+     JOSEFIN SANS – VARIABLE
      ============================== */
   @font-face {
-    font-family: "Avenir";
-    src: url("/fonts/Avenir-Regular.woff2") format("woff2");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Avenir";
-    src: url("/fonts/Avenir-Medium.woff2") format("woff2");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Avenir";
-    src: url("/fonts/Avenir-Bold.woff2") format("woff2");
-    font-weight: 700;
+    font-family: "Josefin Sans";
+    src: url("/fonts/JosefinSans-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 700;
     font-style: normal;
     font-display: swap;
   }
@@ -75,7 +59,6 @@ export const GlobalStyles = createGlobalStyle`
   h1 {
     font-size: 42px;
     line-height: 52px;
-    font-family: Avenir;
   }
 
   h2 {
@@ -105,7 +88,6 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   p {
-    font-family: Avenir;
     margin: 0;
   }
 
