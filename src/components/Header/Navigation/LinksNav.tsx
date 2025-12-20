@@ -12,6 +12,7 @@ import { useHoverBarAnimation } from "@/helpers/customHooks";
 const LinksNav = () => {
   const { hoverLinkWidth, translateStep, handleHover, handleMouseLeave } =
     useHoverBarAnimation();
+
   return (
     <LinksContainerNav>
       <BarAnimationContainer

@@ -59,7 +59,6 @@ export const GlobalStyles = createGlobalStyle`
   h1 {
     font-size: 42px;
     line-height: 52px;
-    font-family: Avenir;
   }
 
   h2 {
@@ -89,7 +88,6 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   p {
-    font-family: Avenir;
     margin: 0;
   }
 
