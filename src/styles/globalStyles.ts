@@ -28,7 +28,7 @@ export const GlobalStyles = createGlobalStyle`
      JOSEFIN SANS – VARIABLE
      ============================== */
   @font-face {
-    font-family: "Josefin Sans Variable";
+    font-family: "Josefin Sans";
     src: url("/src/assets/fonts/JosefinSans-VariableFont_wght.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
