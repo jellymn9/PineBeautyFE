@@ -23,6 +23,7 @@ import {
   GetProductsBatchT,
   CategoryT,
 } from "../utils/types/productTypes";
+import { toLowercaseArray } from "@/helpers/formatters";
 
 //import { RawProductT } from "../utils/types";
 
@@ -71,15 +72,17 @@ export const getProducts = async (
   try {
     const productsRef = collection(db, "products");
 
+    const lowerCaseCategories = toLowercaseArray(selectedCategories);
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const constraints: any[] = [];
 
     // filtering
-    if (selectedCategories.length === 1) {
-      constraints.push(where("category", "==", selectedCategories[0]));
-    } else if (selectedCategories.length > 1) {
+    if (lowerCaseCategories.length === 1) {
+      constraints.push(where("category", "==", lowerCaseCategories[0]));
+    } else if (lowerCaseCategories.length > 1) {
       constraints.push(
-        where("category", "in", selectedCategories.slice(0, 10))
+        where("category", "in", lowerCaseCategories.slice(0, 10))
       );
     }
 
@@ -97,6 +100,8 @@ export const getProducts = async (
       id: doc.id,
       ...doc.data(),
     })) as ProductI[];
+
+    console.log("fetched products: ", newProducts);
 
     const newLastVisible =
       querySnapshot.docs[querySnapshot.docs.length - 1] || null;

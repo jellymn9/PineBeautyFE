@@ -1,12 +1,14 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 
+export type CategoryT = "HAIR" | "BODY" | "FACE"; //"OIL" | "FLORAL_WATER" | "SOAP" | "CREAM";
+
 export interface ProductI extends DocumentData {
   id: string;
   name: string;
   price: number;
   currency: "USD" | "EUR" | "JPY" | "RSD";
   image: string;
-  category: "OIL" | "FLORAL_WATER" | "SOAP" | "CREAM";
+  category: CategoryT;
   productTypeName:
     | "SCRUBS_AND_MASKS"
     | "NATURAL_DEODORANTS"

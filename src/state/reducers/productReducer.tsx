@@ -4,6 +4,7 @@ import {
   ProductsApiResponseI,
   ProductsStateI,
   ProductI,
+  CategoryT,
 } from "@/utils/types/productTypes";
 import { getProducts } from "@/APIs/products";
 
@@ -18,14 +19,18 @@ const initialState: ProductsStateI = {
 //check out status logic..
 export const fetchProductsThunk = createAsyncThunk<
   ProductsApiResponseI,
-  { productsPerPage: number },
+  { productsPerPage: number; selectedCategories?: CategoryT[] },
   { state: RootState }
 >(
   "products/fetchProducts",
-  async ({ productsPerPage }, { getState }) => {
+  async ({ productsPerPage, selectedCategories }, { getState }) => {
     const state = getState();
 
-    const response = await getProducts(cursorSelector(state), productsPerPage);
+    const response = await getProducts(
+      cursorSelector(state),
+      productsPerPage,
+      selectedCategories
+    );
     return {
       list: response.list,
       hasMore: response.hasMore,
@@ -46,6 +51,12 @@ export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
+    resetQuery: (state) => {
+      state.cursor = null;
+      state.list = [];
+      state.hasMore = true;
+      state.status = "idle";
+    },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // getProducts: (state, action: PayloadAction<number>) => {
     //   return state;
@@ -77,4 +88,5 @@ export const productSlice = createSlice({
   },
 });
 
+export const { resetQuery } = productSlice.actions;
 export default productSlice.reducer;

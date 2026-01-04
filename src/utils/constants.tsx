@@ -1,6 +1,9 @@
 import { Search, ShoppingCart, User } from "lucide-react";
 
+export const PRODUCT_CATEGORIES = ["BODY", "HAIR", "FACE"]; // as const;
+
 export const BASIC_CATEGORIES = {
+  //is this redundant?
   body: { name: "body", link: "/" },
   hair: { name: "hair", link: "/" },
   face: { name: "face", link: "/" },

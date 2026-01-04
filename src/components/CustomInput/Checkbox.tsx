@@ -8,7 +8,7 @@ import {
 export interface CheckboxInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  checked?: true; //check out defaultCheck
+  checked: boolean;
   handleChange: (
     c: boolean,
     value: React.InputHTMLAttributes<HTMLInputElement>["value"] //change handling type here
@@ -19,7 +19,7 @@ const Checkbox = ({
   id,
   label,
   value,
-  checked = undefined,
+  checked = false,
   name,
   handleChange,
 }: CheckboxInputProps) => {
