@@ -55,7 +55,7 @@ const ProductFilters = function ({
               label={category}
               value={category}
               checked={categories.includes(category)}
-              handleChange={handleChange}
+              onCheckedChange={handleChange}
             />
           </FilterListItem>
         ))}
