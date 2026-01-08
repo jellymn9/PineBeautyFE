@@ -21,41 +21,94 @@ import {
   ProductI,
   GetProductT,
   GetProductsBatchT,
+  CategoryT,
 } from "../utils/types/productTypes";
+import { toLowercaseArray } from "@/helpers/formatters";
 
 //import { RawProductT } from "../utils/types";
 
+// export const getProducts = async (
+//   currentLastProduct: QueryDocumentSnapshot | null,
+//   productsPerPage = 20
+// ): Promise<ProductsApiResponseI> => {
+//   try {
+//     const productsRef = collection(db, "products");
+
+//     let q;
+//     if (!currentLastProduct) {
+//       q = query(productsRef, orderBy("name"), limit(productsPerPage));
+//     } else {
+//       q = query(
+//         productsRef,
+//         orderBy("name"),
+//         startAfter(currentLastProduct),
+//         limit(productsPerPage)
+//       );
+//     }
+
+//     const querySnapshot = await getDocs(q);
+
+//     const newProducts = querySnapshot.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     })) as Array<ProductI>;
+
+//     const newLastVisible =
+//       querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+//     const possiblyMore = querySnapshot.docs.length === productsPerPage;
+
+//     return { list: newProducts, cursor: newLastVisible, hasMore: possiblyMore };
+//   } catch (e) {
+//     console.log("error: ", e);
+//     throw e;
+//   }
+// };
+
 export const getProducts = async (
-  currentLastProduct: QueryDocumentSnapshot | null,
-  productsPerPage = 20
+  currentLastProduct: QueryDocumentSnapshot<DocumentData> | null,
+  productsPerPage = 20,
+  selectedCategories: CategoryT[] = []
 ): Promise<ProductsApiResponseI> => {
   try {
     const productsRef = collection(db, "products");
 
-    let q;
-    if (!currentLastProduct) {
-      q = query(productsRef, orderBy("name"), limit(productsPerPage));
-    } else {
-      q = query(
-        productsRef,
-        orderBy("name"),
-        startAfter(currentLastProduct),
-        limit(productsPerPage)
+    const lowerCaseCategories = toLowercaseArray(selectedCategories);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const constraints: any[] = [];
+
+    // filtering
+    if (lowerCaseCategories.length === 1) {
+      constraints.push(where("category", "==", lowerCaseCategories[0]));
+    } else if (lowerCaseCategories.length > 1) {
+      constraints.push(
+        where("category", "in", lowerCaseCategories.slice(0, 10))
       );
     }
 
+    // sorting + pagination
+    constraints.push(orderBy("name"));
+    if (currentLastProduct) {
+      constraints.push(startAfter(currentLastProduct));
+    }
+    constraints.push(limit(productsPerPage));
+
+    const q = query(productsRef, ...constraints);
     const querySnapshot = await getDocs(q);
 
     const newProducts = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    })) as Array<ProductI>;
+    })) as ProductI[];
+
+    console.log("fetched products: ", newProducts);
 
     const newLastVisible =
       querySnapshot.docs[querySnapshot.docs.length - 1] || null;
-    const possiblyMore = querySnapshot.docs.length === productsPerPage;
 
-    return { list: newProducts, cursor: newLastVisible, hasMore: possiblyMore };
+    const hasMore = querySnapshot.docs.length === productsPerPage;
+
+    return { list: newProducts, cursor: newLastVisible, hasMore };
   } catch (e) {
     console.log("error: ", e);
     throw e;

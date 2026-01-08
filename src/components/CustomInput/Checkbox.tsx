@@ -5,37 +5,49 @@ import {
   Label,
 } from "./InputStyled";
 
-export interface CheckboxInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export type CheckboxInputProps = {
   label: string;
-  checked?: true; //check out defaultCheck
-  handleChange: (
-    c: boolean,
-    value: React.InputHTMLAttributes<HTMLInputElement>["value"] //change handling type here
+  id: string;
+  name?: string;
+  value?: string;
+  checked?: boolean; // controlled
+  defaultChecked?: boolean; // uncontrolled
+  onCheckedChange?: (
+    checked: boolean,
+    value: string | (string & readonly string[]) | undefined
   ) => void;
-}
+} & Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "type" | "checked" | "defaultChecked"
+>;
 
 const Checkbox = ({
   id,
   label,
-  value,
-  checked = undefined,
   name,
-  handleChange,
+  value,
+  checked,
+  defaultChecked,
+  onCheckedChange,
+  ...rest
 }: CheckboxInputProps) => {
+  const isControlled = checked !== undefined;
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleChange(e.target.checked, value);
+    onCheckedChange?.(e.target.checked, value);
   };
 
   return (
     <CheckboxContainer>
       <Label htmlFor={id}>{label}</Label>
       <CheckboxInput
+        {...rest}
         type="checkbox"
         id={id}
         name={name}
         value={value}
-        checked={checked}
+        defaultChecked={isControlled ? undefined : defaultChecked}
+        checked={isControlled ? checked : undefined}
         onChange={(e) => onChange(e)}
       />
       <CheckedSign />

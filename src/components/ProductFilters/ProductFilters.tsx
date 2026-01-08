@@ -1,52 +1,63 @@
-import { useEffect, useState } from "react";
-import { BASIC_CATEGORIES } from "@/utils/constants";
+import { SetURLSearchParams } from "react-router-dom";
+import { PRODUCT_CATEGORIES } from "@/utils/constants";
 import Checkbox, {
   CheckboxInputProps,
 } from "@/components/CustomInput/Checkbox";
 import {
+  FilterListItem,
   FiltersContainer,
   FiltersHeading,
   FiltersList,
 } from "./ProductFiltersStyled";
 
-const heading = "Categories";
+interface ProductFiltersPropsI {
+  searchParams: URLSearchParams;
+  setSearchParams: SetURLSearchParams;
+}
 
-const ProductFilters = function () {
-  const [selectedCategories, setSelectedCategories] = useState<Array<string>>(
-    []
-  );
+const HEADING = "Categories";
 
-  useEffect(() => {
-    console.log("bla");
-  }, [selectedCategories]);
+const ProductFilters = function ({
+  setSearchParams,
+  searchParams,
+}: ProductFiltersPropsI) {
+  const categories = searchParams.getAll("category");
 
   const handleChange = (
-    isChecked: boolean,
+    _isChecked: boolean,
     value: CheckboxInputProps["value"]
   ) => {
-    //update selectedCategories
-    console.log(isChecked);
-    if (typeof value == "string") {
-      const newSelectedCategories = selectedCategories.includes(value)
-        ? selectedCategories.filter((c) => c !== value)
-        : [...selectedCategories, value];
+    if (typeof value !== "string") return;
 
-      setSelectedCategories(newSelectedCategories);
-    }
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      const current = next.getAll("category");
+
+      const updated = current.includes(value)
+        ? current.filter((c) => c !== value)
+        : [...current, value];
+
+      next.delete("category");
+      updated.forEach((c) => next.append("category", c));
+
+      return next; // new instance
+    });
   };
 
   return (
     <FiltersContainer>
-      <FiltersHeading>{heading}</FiltersHeading>
+      <FiltersHeading>{HEADING}</FiltersHeading>
       <FiltersList>
-        {Object.values(BASIC_CATEGORIES).map(({ name }) => (
-          <Checkbox
-            key={name}
-            id={name}
-            label={name}
-            value={name}
-            handleChange={handleChange}
-          />
+        {PRODUCT_CATEGORIES.map((category) => (
+          <FilterListItem key={category}>
+            <Checkbox
+              id={category}
+              label={category}
+              value={category}
+              checked={categories.includes(category)}
+              onCheckedChange={handleChange}
+            />
+          </FilterListItem>
         ))}
       </FiltersList>
     </FiltersContainer>
