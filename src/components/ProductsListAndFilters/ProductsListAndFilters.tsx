@@ -2,12 +2,14 @@ import { useEffect, useMemo, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useElementScroll } from "@/helpers/customHooks";
 import {
+  cursorSelector,
   hasMoreSelector,
   isErrorSelector,
   isPendingSelector,
   listProductsSelector,
 } from "@/state/selectors/productSelector";
 import {
+  fetchMoreProductsThunk,
   fetchProductsThunk,
   resetQuery,
 } from "@/state/reducers/productReducer";
@@ -35,6 +37,7 @@ const ProductsListAndFilters = () => {
   const isLoading = useAppSelector(isPendingSelector);
   const isError = useAppSelector(isErrorSelector);
   const hasMore = useAppSelector(hasMoreSelector);
+  const cursor = useAppSelector(cursorSelector);
   const { reachBottom } = useElementScroll(productSectionRef);
 
   const categories = useMemo(
@@ -54,15 +57,15 @@ const ProductsListAndFilters = () => {
 
   useEffect(() => {
     //console.log("has more", hasMore, "reach Bottom:", reachBottom);
-    if (reachBottom && hasMore) {
+    if (reachBottom && hasMore && !isLoading && cursor != null) {
       dispatch(
-        fetchProductsThunk({
+        fetchMoreProductsThunk({
           productsPerPage: PAGE_SIZE,
           selectedCategories: categories,
         })
       );
     }
-  }, [reachBottom, dispatch, hasMore, categories]);
+  }, [reachBottom, dispatch, hasMore, categories, isLoading, cursor]);
 
   if (isError) {
     return <Message>{ERROR_MESSAGE}</Message>;

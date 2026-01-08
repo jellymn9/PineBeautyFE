@@ -25,6 +25,8 @@ export interface ProductsStateI {
   hasMore: boolean;
   cursor: QueryDocumentSnapshot | null;
   status: "idle" | "pending" | "succeeded" | "failed";
+  currentRequestId: string | null;
+  //loadMoreRequestId: string | null;
 }
 
 export interface ProductsApiResponseI {

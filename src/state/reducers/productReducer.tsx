@@ -3,20 +3,22 @@ import { RootState } from "@/store";
 import {
   ProductsApiResponseI,
   ProductsStateI,
-  ProductI,
   CategoryT,
 } from "@/utils/types/productTypes";
 import { getProducts } from "@/APIs/products";
-
-import { cursorSelector } from "@/state/selectors/productSelector";
+import {
+  cursorSelector,
+  productsSelector,
+} from "@/state/selectors/productSelector";
 
 const initialState: ProductsStateI = {
   hasMore: true,
   cursor: null,
   status: "idle",
   list: [],
+  currentRequestId: null, // used only for first page correctness
 };
-//check out status logic..
+
 export const fetchProductsThunk = createAsyncThunk<
   ProductsApiResponseI,
   { productsPerPage: number; selectedCategories?: CategoryT[] },
@@ -31,20 +33,49 @@ export const fetchProductsThunk = createAsyncThunk<
       productsPerPage,
       selectedCategories
     );
+
     return {
       list: response.list,
       hasMore: response.hasMore,
       cursor: response.cursor,
     };
   }
-  // {
-  //   condition(arg, thunkApi) {
-  //     const { status } = productsSelector(thunkApi.getState());
-  //     if (status !== "pending") {
-  //       return false;
-  //     }
-  //   },
-  // }
+);
+
+export const fetchMoreProductsThunk = createAsyncThunk<
+  ProductsApiResponseI,
+  { productsPerPage: number; selectedCategories?: CategoryT[] },
+  { state: RootState }
+>(
+  "products/fetchMoreProducts",
+  async ({ productsPerPage, selectedCategories }, { getState }) => {
+    const state = getState();
+
+    const response = await getProducts(
+      cursorSelector(state),
+      productsPerPage,
+      selectedCategories
+    );
+
+    return {
+      list: response.list,
+      hasMore: response.hasMore,
+      cursor: response.cursor,
+    };
+  },
+  {
+    condition: (_, { getState }) => {
+      const { status } = productsSelector(getState());
+
+      if (status === "pending") return false;
+
+      // if (!hasMore) return false;
+
+      // if (cursor === null) return false;
+
+      return true;
+    },
+  }
 );
 
 export const productSlice = createSlice({
@@ -56,33 +87,43 @@ export const productSlice = createSlice({
       state.list = [];
       state.hasMore = true;
       state.status = "idle";
+      state.currentRequestId = null;
     },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // getProducts: (state, action: PayloadAction<number>) => {
-    //   return state;
-    // },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProductsThunk.pending, (state) => {
+      .addCase(fetchProductsThunk.pending, (state, action) => {
         state.status = "pending";
+        state.currentRequestId = action.meta.requestId;
       })
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
+        if (state.currentRequestId !== action.meta.requestId) return;
+
         state.status = "succeeded";
-        // Check out immer docs.
-        if (!action.payload.cursor && state.list.length === 0) {
-          state.list = action.payload.list;
-        } else {
-          const newList: Array<ProductI> = [
-            ...state.list,
-            ...action.payload.list,
-          ];
-          state.list = newList;
-        }
+        state.currentRequestId = null;
+
+        state.list = action.payload.list;
         state.cursor = action.payload.cursor;
         state.hasMore = action.payload.hasMore;
       })
-      .addCase(fetchProductsThunk.rejected, (state) => {
+      .addCase(fetchProductsThunk.rejected, (state, action) => {
+        if (state.currentRequestId !== action.meta.requestId) return;
+
+        state.status = "failed";
+        state.currentRequestId = null;
+      })
+
+      .addCase(fetchMoreProductsThunk.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(fetchMoreProductsThunk.fulfilled, (state, action) => {
+        state.status = "succeeded";
+
+        state.list.push(...action.payload.list);
+        state.cursor = action.payload.cursor;
+        state.hasMore = action.payload.hasMore;
+      })
+      .addCase(fetchMoreProductsThunk.rejected, (state) => {
         state.status = "failed";
       });
   },
