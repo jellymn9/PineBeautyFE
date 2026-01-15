@@ -1,10 +1,10 @@
-import LoaderSVG from "@/assets/loader.svg?react";
+import { Loader as LoaderLucide } from "lucide-react";
 import { LoaderWrapper } from "./LoaderStyled";
 
 export const Loader = () => {
   return (
     <LoaderWrapper>
-      <LoaderSVG width={280} height={280} />
+      <LoaderLucide width={280} height={280} />
     </LoaderWrapper>
   );
 };

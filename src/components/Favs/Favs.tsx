@@ -58,7 +58,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
                 price: 123,
                 currency: "EUR",
                 image: "",
-                category: "OIL",
+                category: "BODY",
                 productTypeName: "SCRUBS_AND_MASKS",
                 tags: [],
               }}
@@ -72,7 +72,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
                 price: 123,
                 currency: "EUR",
                 image: "",
-                category: "OIL",
+                category: "BODY",
                 productTypeName: "SCRUBS_AND_MASKS",
                 tags: [],
               }}
@@ -86,7 +86,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
                 price: 123,
                 currency: "EUR",
                 image: "",
-                category: "OIL",
+                category: "BODY",
                 productTypeName: "SCRUBS_AND_MASKS",
                 tags: [],
               }}
@@ -100,7 +100,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
                 price: 123,
                 currency: "EUR",
                 image: "",
-                category: "OIL",
+                category: "HAIR",
                 productTypeName: "SCRUBS_AND_MASKS",
                 tags: [],
               }}
@@ -114,7 +114,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
                 price: 123,
                 currency: "EUR",
                 image: "",
-                category: "OIL",
+                category: "BODY",
                 productTypeName: "SCRUBS_AND_MASKS",
                 tags: [],
               }}
@@ -128,7 +128,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
                 price: 123,
                 currency: "EUR",
                 image: "",
-                category: "OIL",
+                category: "BODY",
                 productTypeName: "SCRUBS_AND_MASKS",
                 tags: [],
               }}
@@ -142,7 +142,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
                 price: 123,
                 currency: "EUR",
                 image: "",
-                category: "OIL",
+                category: "BODY",
                 productTypeName: "SCRUBS_AND_MASKS",
                 tags: [],
               }}
@@ -156,7 +156,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
                 price: 123,
                 currency: "EUR",
                 image: "",
-                category: "OIL",
+                category: "BODY",
                 productTypeName: "SCRUBS_AND_MASKS",
                 tags: [],
               }}
@@ -170,7 +170,7 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
                 price: 123,
                 currency: "EUR",
                 image: "",
-                category: "OIL",
+                category: "BODY",
                 productTypeName: "SCRUBS_AND_MASKS",
                 tags: [],
               }}

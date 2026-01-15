@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon/Icon";
+//import Icon from "@/components/Icon/Icon";
 import {
   Container,
   ContainerBlock,
@@ -48,7 +48,7 @@ const HeaderDesktop = () => {
     <ContainerBlock>
       <Container $isSticky={isStickyHeader} $isActive={isScrollingUp}>
         <InnerContainer>
-          <Icon name="logo" width="75px" height="75px" />
+          {/* <Icon name="logo" width="75px" height="75px" /> */}
           <LinksNav />
         </InnerContainer>
       </Container>
