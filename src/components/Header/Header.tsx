@@ -2,7 +2,7 @@ import { useMediaQuery } from "@custom-react-hooks/use-media-query";
 import { ShoppingCart, Menu } from "lucide-react";
 
 import { useDrawer } from "@/context/DrawerContext";
-import Icon from "@/components/Icon/Icon";
+//import Icon from "@/components/Icon/Icon";
 import { MobileContainer } from "./HeaderStyled";
 import HeaderDesktop from "./HeaderDesktop/HeaderDesktop";
 import CartHeader from "./CartHeaderLink/CartHeader";
@@ -23,7 +23,7 @@ function Header() {
       {isTabletOrMobile ? (
         <MobileContainer>
           <Menu onClick={openDrawer} />
-          <Icon name="logo" width="55px" height="55px" />
+          {/* <Icon name="logo" width="55px" height="55px" /> */}
           <CartHeader icon={SHOPPING_CART} />
         </MobileContainer>
       ) : (
