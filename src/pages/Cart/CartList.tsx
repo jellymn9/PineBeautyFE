@@ -8,8 +8,12 @@ import { CartItemsUIT } from "@/utils/types/cartTypes";
 const emptyCart = "There are no products in the cart.";
 
 //const LOADER = <Loader />;
-const errorUI = (errorMessage: string) => <p>{errorMessage}</p>;
-const emptyCartUI = <p>{emptyCart}</p>;
+const errorUI = (errorMessage: string) => <p role="alert">{errorMessage}</p>;
+const emptyCartUI = (
+  <p role="status" aria-live="polite">
+    {emptyCart}
+  </p>
+);
 
 interface CartListPropI {
   //loading: boolean;

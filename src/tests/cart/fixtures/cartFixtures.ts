@@ -1,4 +1,9 @@
-import { CartItemBaseT, CartItemT } from "@/utils/types/cartTypes";
+import {
+  CartItemBaseT,
+  CartItemLocalT,
+  CartItemsUIT,
+  CartItemT,
+} from "@/utils/types/cartTypes";
 import { Timestamp } from "firebase/firestore";
 
 const cartItemBase: CartItemBaseT = {
@@ -15,6 +20,9 @@ export const cartItemGenerator = <T extends Date | Timestamp>({
 }: {
   id: string;
   date: T;
+  name?: string;
+  quantity?: number; //improve type
+  price?: number;
 }): CartItemT<T> => {
   return {
     ...cartItemBase,
@@ -36,4 +44,13 @@ export const cartItem2 = cartItemGenerator({
   date: cartItem2Date,
 });
 
-//export const cartState = (items: CartItemBaseT[] = []) => items;
+export const cartWithOneQty1 = (): CartItemsUIT => [
+  cartItemGenerator({
+    id: "item1",
+    name: "Rose Oil",
+    quantity: 1,
+    date: new Date(),
+  }),
+];
+
+export const cartEmpty = (): CartItemsUIT => [];
