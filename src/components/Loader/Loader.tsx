@@ -1,9 +1,17 @@
 import { Loader as LoaderLucide } from "lucide-react";
 import { LoaderWrapper } from "./LoaderStyled";
 
-export const Loader = () => {
+interface LoaderProps {
+  ariaLabel?: string;
+}
+
+export const Loader = ({ ariaLabel }: LoaderProps) => {
   return (
-    <LoaderWrapper>
+    <LoaderWrapper
+      role="status"
+      aria-live="polite"
+      aria-label={ariaLabel || "Loading content"}
+    >
       <LoaderLucide width={280} height={280} />
     </LoaderWrapper>
   );

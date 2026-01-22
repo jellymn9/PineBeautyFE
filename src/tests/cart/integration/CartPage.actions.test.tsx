@@ -8,6 +8,16 @@ describe("CartPage actions", () => {
   test("shows empty state when cart is empty", () => {
     renderWithCart(<Cart />, { initialItems: cartEmpty() });
 
-    expect(screen.getByRole("status")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent(
+      /There are no products in the cart/i,
+    );
+  });
+
+  test("shows loader when cart is loading", () => {
+    renderWithCart(<Cart />, { isLoading: true });
+
+    expect(
+      screen.getByRole("status", { name: /loading cart list/i }),
+    ).toBeInTheDocument();
   });
 });

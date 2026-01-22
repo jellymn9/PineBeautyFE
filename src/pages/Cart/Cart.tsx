@@ -8,7 +8,7 @@ import CartList from "./CartList";
 
 const TITLE = "Shopping Cart";
 
-const LOADER = <Loader />;
+const LOADER = <Loader ariaLabel="Loading cart list" />;
 
 function Cart() {
   const { cartItems, isLoading, isEmpty, serverError } = useCartContext();

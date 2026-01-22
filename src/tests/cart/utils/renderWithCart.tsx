@@ -1,8 +1,10 @@
 // src/tests/cart/renderWithCart.tsx
 import React, { useMemo, useState } from "react";
+import { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
 import { HelmetProvider } from "react-helmet-async";
 
+import { theme } from "@/styles/theme";
 import { CartContext } from "@/context/CartContext";
 import type {
   CartItemLocalT,
@@ -38,8 +40,8 @@ function MockCartProvider({
       increase: async (product: CartItemLocalT) => {
         setCartItems((prev) =>
           prev.map((x) =>
-            x.id === product.id ? { ...x, quantity: x.quantity + 1 } : x
-          )
+            x.id === product.id ? { ...x, quantity: x.quantity + 1 } : x,
+          ),
         );
       },
       decrease: async (product: CartItemLocalT) => {
@@ -49,7 +51,7 @@ function MockCartProvider({
               if (x.id !== product.id) return x;
               return { ...x, quantity: x.quantity - 1 };
             })
-            .filter((x) => x.quantity > 0)
+            .filter((x) => x.quantity > 0),
         );
       },
       addProduct: async (product: NewItemT) => {
@@ -57,7 +59,7 @@ function MockCartProvider({
           const exists = prev.find((x) => x.id === product.id);
           if (exists) {
             return prev.map((x) =>
-              x.id === product.id ? { ...x, quantity: x.quantity + 1 } : x
+              x.id === product.id ? { ...x, quantity: x.quantity + 1 } : x,
             );
           }
           return [
@@ -84,14 +86,16 @@ export function renderWithCart(ui: React.ReactElement, options: Options = {}) {
   const { initialItems = [], isLoading = false, serverError = null } = options;
 
   return render(
-    <HelmetProvider>
-      <MockCartProvider
-        initialItems={initialItems}
-        isLoading={isLoading}
-        serverError={serverError}
-      >
-        {ui}
-      </MockCartProvider>
-    </HelmetProvider>
+    <ThemeProvider theme={theme}>
+      <HelmetProvider>
+        <MockCartProvider
+          initialItems={initialItems}
+          isLoading={isLoading}
+          serverError={serverError}
+        >
+          {ui}
+        </MockCartProvider>
+      </HelmetProvider>
+    </ThemeProvider>,
   );
 }
