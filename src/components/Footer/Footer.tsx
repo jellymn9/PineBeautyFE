@@ -67,6 +67,12 @@ function Footer() {
         </Subscription>
         <IconAndLinksContainer>
           {/* <Icon name="logo" width="100px" height="100px" /> */}
+          <img
+            src="/src/assets/logo.svg"
+            alt="Pine Beauty Logo"
+            width="100"
+            height="100"
+          />
           <LinksSection />
         </IconAndLinksContainer>
       </Container>
