@@ -6,6 +6,7 @@ import { HelmetProvider } from "react-helmet-async";
 
 import { theme } from "@/styles/theme";
 import { CartContext } from "@/context/CartContext";
+import { ToastProvider } from "@/context/ToastContext";
 import type {
   CartItemLocalT,
   CartItemsUIT,
@@ -87,15 +88,17 @@ export function renderWithCart(ui: React.ReactElement, options: Options = {}) {
 
   return render(
     <ThemeProvider theme={theme}>
-      <HelmetProvider>
-        <MockCartProvider
-          initialItems={initialItems}
-          isLoading={isLoading}
-          serverError={serverError}
-        >
-          {ui}
-        </MockCartProvider>
-      </HelmetProvider>
+      <ToastProvider>
+        <HelmetProvider>
+          <MockCartProvider
+            initialItems={initialItems}
+            isLoading={isLoading}
+            serverError={serverError}
+          >
+            {ui}
+          </MockCartProvider>
+        </HelmetProvider>
+      </ToastProvider>
     </ThemeProvider>,
   );
 }

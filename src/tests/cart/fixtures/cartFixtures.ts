@@ -1,6 +1,5 @@
 import {
   CartItemBaseT,
-  CartItemLocalT,
   CartItemsUIT,
   CartItemT,
 } from "@/utils/types/cartTypes";
