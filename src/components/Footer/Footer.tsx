@@ -1,6 +1,6 @@
 //import * as yup from "yup";
 //import Icon from "../Icon/Icon";
-import Icon from "@/components/Icon/Icon";
+//import Icon from "@/components/Icon/Icon";
 import LinksSection from "@/components/Footer/LinksSection/LinksSection";
 import {
   CaptchaInfo,
@@ -66,7 +66,13 @@ function Footer() {
           <CaptchaInfo>{captchaInfo}</CaptchaInfo>
         </Subscription>
         <IconAndLinksContainer>
-          <Icon name="logo" width="100px" height="100px" />
+          {/* <Icon name="logo" width="100px" height="100px" /> */}
+          <img
+            src="/src/assets/logo.svg"
+            alt="Pine Beauty Logo"
+            width="100"
+            height="100"
+          />
           <LinksSection />
         </IconAndLinksContainer>
       </Container>

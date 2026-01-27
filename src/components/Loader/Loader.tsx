@@ -1,10 +1,18 @@
-import LoaderSVG from "@/assets/loader.svg?react";
+import { Loader as LoaderLucide } from "lucide-react";
 import { LoaderWrapper } from "./LoaderStyled";
 
-export const Loader = () => {
+interface LoaderProps {
+  ariaLabel?: string;
+}
+
+export const Loader = ({ ariaLabel }: LoaderProps) => {
   return (
-    <LoaderWrapper>
-      <LoaderSVG width={280} height={280} />
+    <LoaderWrapper
+      role="status"
+      aria-live="polite"
+      aria-label={ariaLabel || "Loading content"}
+    >
+      <LoaderLucide width={280} height={280} />
     </LoaderWrapper>
   );
 };
