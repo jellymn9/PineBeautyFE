@@ -1,9 +1,15 @@
 import { describe, expect, test } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { renderWithCart } from "@/tests/cart/utils/renderWithCart";
-import { cartEmpty, cartWithOneQty1 } from "@/tests/cart/fixtures/cartFixtures";
+import {
+  cartEmpty,
+  cartWithMultipleItems,
+  cartWithOneQty1,
+  cartWithOneQty2,
+} from "@/tests/cart/fixtures/cartFixtures";
 import Cart from "@/pages/Cart/Cart";
+import { calculateSubtotal } from "@/helpers/cartHelper";
 
 describe("CartPage list state", () => {
   test("shows empty state when cart is empty", () => {
@@ -21,6 +27,26 @@ describe("CartPage list state", () => {
       screen.getByRole("status", { name: /loading cart list/i }),
     ).toBeInTheDocument();
   });
+
+  test("displays cart items when cart has products", () => {
+    const cart = cartWithMultipleItems();
+    renderWithCart(<Cart />, { initialItems: cart });
+
+    const list = screen.getByRole("list");
+    const items = within(list).getAllByRole("listitem");
+
+    expect(items).toHaveLength(cart.length);
+  });
+
+  test("displays total price correctly", () => {
+    const cart = cartWithMultipleItems();
+    renderWithCart(<Cart />, { initialItems: cart });
+
+    const expectedTotal = calculateSubtotal(cart);
+    expect(screen.getByText(/proceed to checkout/i)).toHaveTextContent(
+      `${expectedTotal}`,
+    );
+  });
 });
 
 describe("CartPage actions", () => {
@@ -37,5 +63,33 @@ describe("CartPage actions", () => {
     expect(screen.getByRole("status")).toHaveTextContent(
       /There are no products in the cart/i,
     );
+  });
+
+  test("increases item quantity when increase button clicked", async () => {
+    const user = userEvent.setup();
+    const cart = cartWithOneQty1();
+
+    renderWithCart(<Cart />, { initialItems: cart });
+
+    await user.click(
+      screen.getByRole("button", { name: /increase quantity/i }),
+    );
+
+    expect(screen.getByLabelText("Quantity")).toHaveTextContent("2");
+  });
+
+  test("decreases item quantity without removing when quantity > 1", async () => {
+    const user = userEvent.setup();
+    const cart = cartWithOneQty2();
+
+    console.log("cart log:", JSON.stringify(cart, null, 2));
+
+    renderWithCart(<Cart />, { initialItems: cart });
+
+    await user.click(
+      screen.getByRole("button", { name: /decrease quantity/i }),
+    );
+    //screen.debug();
+    expect(screen.getByLabelText("Quantity")).toHaveTextContent("1");
   });
 });

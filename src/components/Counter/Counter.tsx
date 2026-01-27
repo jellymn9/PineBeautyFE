@@ -73,7 +73,9 @@ const Counter = ({
             handleClick={handleMinus}
             disabled={quantity === 0}
           />
-          <Amount>{quantity}</Amount>
+          <Amount value={quantity} aria-label="Quantity">
+            {quantity}
+          </Amount>
           <IconBtn
             icon={
               <Plus

@@ -16,6 +16,9 @@ const cartItemBase: CartItemBaseT = {
 export const cartItemGenerator = <T extends Date | Timestamp>({
   id,
   date,
+  name,
+  quantity,
+  price,
 }: {
   id: string;
   date: T;
@@ -26,6 +29,9 @@ export const cartItemGenerator = <T extends Date | Timestamp>({
   return {
     ...cartItemBase,
     id,
+    name: name || cartItemBase.name,
+    quantity: quantity !== undefined ? quantity : cartItemBase.quantity,
+    price: price !== undefined ? price : cartItemBase.price,
     createdAt: date,
     updatedAt: date,
   };
@@ -52,4 +58,36 @@ export const cartWithOneQty1 = (): CartItemsUIT => [
   }),
 ];
 
+export const cartWithOneQty2 = (): CartItemsUIT => [
+  cartItemGenerator({
+    id: "itemQty2",
+    name: "Rose Oil 2",
+    quantity: 2,
+    date: new Date(),
+  }),
+];
+
 export const cartEmpty = (): CartItemsUIT => [];
+
+export const cartWithMultipleItems = (): CartItemsUIT => {
+  const cartItem1 = cartItemGenerator({
+    id: "item1",
+    name: "Rose Oil",
+    quantity: 2,
+    date: new Date(),
+  });
+  const cartItem2 = cartItemGenerator({
+    id: "item2",
+    name: "Lavender Oil",
+    quantity: 1,
+    date: new Date(),
+  });
+  const cartItem3 = cartItemGenerator({
+    id: "item3",
+    name: "Jasmine Oil",
+    quantity: 3,
+    date: new Date(),
+  });
+
+  return [cartItem1, cartItem2, cartItem3];
+};

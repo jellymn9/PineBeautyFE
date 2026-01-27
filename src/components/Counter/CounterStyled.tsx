@@ -16,4 +16,4 @@ export const Container = styled.div`
   color: ${({ theme }) => theme.colors.black};
 `;
 
-export const Amount = styled.span``;
+export const Amount = styled.data``;
