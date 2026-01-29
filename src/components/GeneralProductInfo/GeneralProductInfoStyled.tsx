@@ -16,8 +16,8 @@ export const ColumnList = styled.ul`
 
 export const ListItem = styled.li`
   font-weight: 700;
-  font-size: 14px;
-  line-height: 24px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
 `;
 
 export const HorizontalList = styled.ul`
@@ -31,7 +31,8 @@ export const HorizontalList = styled.ul`
 `;
 
 export const ListTitle = styled.h5`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
   margin-top: 0px;
   margin-bottom: 6px;
 `;

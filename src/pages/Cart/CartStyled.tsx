@@ -26,8 +26,8 @@ export const InnerContainer = styled.div`
 `;
 
 export const Heading = styled.h2`
-  font-size: 22px;
-  line-height: 32px;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  line-height: ${({ theme }) => theme.lineHeights.xl};
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 
   padding-left: 20px;
@@ -45,7 +45,8 @@ export const Subtotal = styled.div`
 `;
 
 export const PriceColName = styled.p`
-  font-size: 18px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  line-height: ${({ theme }) => theme.lineHeights.lg};
   color: ${({ theme }) => theme.colors.gray};
   margin: 0;
   text-align: end;

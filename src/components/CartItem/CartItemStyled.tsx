@@ -31,16 +31,16 @@ export const ItemImg = styled.img`
 
 export const ItemPrice = styled.span`
   margin-top: 6px;
-  font-size: 16px;
-  line-height: 26px;
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  line-height: ${({ theme }) => theme.lineHeights.md};
 `;
 
 export const ItemDetails = styled.div`
   display: flex;
   flex-direction: column;
   color: ${({ theme }) => theme.colors.gray};
-  font-size: 12px;
-  line-height: 22px;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  line-height: ${({ theme }) => theme.lineHeights.xs};
   grid-gap: 6px;
 `;
 
@@ -61,8 +61,8 @@ export const ItemDetailsAndActions = styled.div`
 `;
 
 export const ItemName = styled.h3`
-  font-size: 16px;
-  line-height: 26px;
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  line-height: ${({ theme }) => theme.lineHeights.md};
 `;
 
 export const HSeparator = styled.div`

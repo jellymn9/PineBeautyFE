@@ -50,41 +50,10 @@ export const GlobalStyles = createGlobalStyle`
   margin: 0;
 }
 
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, h5 {
     margin: 0;
     letter-spacing: 0.02em;
     font-weight: 400;
-  }
-  
-  h1 {
-    font-size: 42px;
-    line-height: 52px;
-  }
-
-  h2 {
-    //font-size: 28px;
-    font-size: 14px;
-    //line-height: 38px;
-    line-height: 24px;
-  }
-
-  h3 {
-    font-size: 24px;
-    @media screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-        font-size: 18px;
-    }
-  }
-
-  h4 {
-    font-size: 18px;
-
-     @media screen and (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-        font-size: 14px;
-      }
-  }
-
-  h5 {
-    font-size: 16px;
   }
 
   p {

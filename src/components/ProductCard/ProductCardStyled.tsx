@@ -40,8 +40,8 @@ export const NameAndPriceContainer = styled.div`
 `;
 
 export const Name = styled.h4`
-  font-size: 14px;
-  line-height: 24px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
 
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
   font-weight: 500;
@@ -50,6 +50,6 @@ export const Name = styled.h4`
 
 export const Price = styled.span`
   text-wrap-mode: nowrap;
-  font-size: 12px;
-  line-height: 22px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
 `;

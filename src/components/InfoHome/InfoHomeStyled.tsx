@@ -42,6 +42,6 @@ export const Title = styled.h4`
 
 export const Description = styled.p`
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
-  font-size: 16px;
-  line-height: 26px;
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  line-height: ${({ theme }) => theme.lineHeights.md};
 `;

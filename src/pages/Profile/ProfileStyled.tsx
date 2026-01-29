@@ -25,7 +25,8 @@ export const MyAccountHeader = styled.header`
 export const MyAccountHeaderTitle = styled.h1`
   font-weight: 700;
   font-family: ${({ theme }) => theme.typography.fontFamilyBase};
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
 `;
 
 export const HSeparator = styled.div`
@@ -53,6 +54,7 @@ export const ProfileCard = styled.div`
 `;
 export const ProfileCardTitle = styled.h2`
   ${({ theme }) => theme.typography.fontFamilyBase};
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
   text-transform: uppercase;
 `;

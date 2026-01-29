@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const CheckboxContainer = styled.div`
-  --label-line-height: 24px;
+  --label-line-height: ${({ theme }) => theme.lineHeights.md};
   --checkbox-width-height: 18px;
   --checkbox-sign-w-h: 12px;
 
@@ -15,7 +15,7 @@ export const CheckboxContainer = styled.div`
 `;
 
 export const Label = styled.label`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   line-height: var(--label-line-height);
 `;
 

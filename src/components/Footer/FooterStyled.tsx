@@ -41,7 +41,8 @@ export const Subscription = styled.div`
 `;
 
 export const FormHeading = styled.h3`
-  font-size: 26px;
+  font-size: ${({ theme }) => theme.fontSizes["xl"]};
+  line-height: ${({ theme }) => theme.lineHeights["xl"]};
   font-weight: 400;
 `;
 
@@ -53,7 +54,7 @@ export const InputTemporarily = styled.input`
 `;
 
 export const CaptchaInfo = styled.i`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
 `;
 
 export const SubFooter = styled.div`
@@ -61,7 +62,7 @@ export const SubFooter = styled.div`
   font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   letter-spacing: 0.02em;
 
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   text-transform: uppercase;
   padding-bottom: 12px;
 `;
