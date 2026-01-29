@@ -23,7 +23,6 @@ function Header() {
       {isTabletOrMobile ? (
         <MobileContainer>
           <Menu onClick={openDrawer} />
-          {/* <Icon name="logo" width="55px" height="55px" /> */}
           <img
             src="/src/assets/logo.svg"
             alt="Pine Beauty Logo"

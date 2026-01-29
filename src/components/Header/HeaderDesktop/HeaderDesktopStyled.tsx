@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const ContainerBlock = styled.div`
   height: 135px;
+  z-index: 1000;
 `;
 
 export const Container = styled.header<{

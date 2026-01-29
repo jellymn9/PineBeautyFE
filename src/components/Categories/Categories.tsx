@@ -17,11 +17,11 @@ const categories = [
     name: "hair",
   },
   {
-    imageURL: imageURL + "/hairA3.jpg",
+    imageURL: imageURL + "/bodyA3.jpg",
     name: "body",
   },
   {
-    imageURL: imageURL + "/hairA3.jpg",
+    imageURL: imageURL + "/faceA3.jpg",
     name: "face",
   },
 ];

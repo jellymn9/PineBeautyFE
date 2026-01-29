@@ -54,7 +54,7 @@ export const SustainableAndPure = styled.div`
   background-color: ${({ theme }) => theme.colors.ebony};
   color: ${({ theme }) => theme.colors.whiteTransparent2};
 
-  padding: 60px 17vw;
+  padding: ${({ theme }) => theme.spacing["4xl"]} 17vw;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
   }
@@ -93,7 +93,7 @@ export const CleanBeautyContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 768px;
+  height: 680px;
 
   @media (min-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex-direction: row;
@@ -101,11 +101,18 @@ export const CleanBeautyContainer = styled.section`
 `;
 
 export const CleanBeautyText = styled.div`
+  box-sizing: border-box;
   width: 50%;
   height: 100%;
   color: ${({ theme }) => theme.colors.whiteTransparent2};
   background-color: ${(props) => props.theme.colors.ebony};
-  //margin: 80px 60px;
+  padding: 0 ${({ theme }) => theme.spacing["2xl"]};
+
+  align-content: center;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0 ${({ theme }) => theme.spacing["2xl"]};
+  }
 `;
 
 export const CleanBeautyImage = styled.img`

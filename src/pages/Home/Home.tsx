@@ -34,12 +34,13 @@ const sustainableAndPure = {
 //temporary image
 const imageURL =
   import.meta.env.MODE === "production"
-    ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
-    : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
+    ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/generic1.jpg"
+    : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/generic1.jpg";
 
-const heading = "Clean Beauty, Real Results";
-const description =
+const CLEAN_BEAUTY_HEADING = "Clean Beauty, Real Results";
+const CLEAN_BEAUTY_DESCRIPTION =
   "Discover the power of botanicals in their purest form. Our collectionharnesses ingredients that have nourished skin for centuries—cold-pressed oils, plant extracts, and mineral-rich clays sourced directly from nature. Each formula is crafted without synthetic fragrances, parabens, or harsh chemicals, because we believe beauty should never come at the cost of your wellbeing.";
+const CLEAN_BEAUTY_FLAG = "clean beuty guide";
 
 function Home() {
   return (
@@ -72,8 +73,9 @@ function Home() {
       <Categories />
       <CleanBeautyContainer>
         <CleanBeautyText>
-          <SustainableHeading>{heading}</SustainableHeading>
-          <SectionParagraph>{description}</SectionParagraph>
+          <SustainableFlag>{CLEAN_BEAUTY_FLAG}</SustainableFlag>
+          <SustainableHeading>{CLEAN_BEAUTY_HEADING}</SustainableHeading>
+          <SectionParagraph>{CLEAN_BEAUTY_DESCRIPTION}</SectionParagraph>
         </CleanBeautyText>
         <CleanBeautyImage src={imageURL} alt="Clean Beauty Product" />
       </CleanBeautyContainer>
