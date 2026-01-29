@@ -1,8 +1,10 @@
-import { colors, spacing, typography } from "./tokens";
+import { colors, fontSizes, lineHeights, spacing, typography } from "./tokens";
 
 export const theme = {
   colors,
   spacing,
+  fontSizes,
+  lineHeights,
   typography,
   breakpoints: {
     smallMobile: "320px",

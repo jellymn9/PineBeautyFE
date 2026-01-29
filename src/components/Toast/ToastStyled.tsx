@@ -26,7 +26,8 @@ export const ToastContainer = styled.div<{
   border-width: 2px;
 
   color: ${({ theme }) => theme.colors.black};
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  line-height: ${({ theme }) => theme.lineHeights.md};
 
   &:focus {
     outline: none;

@@ -34,15 +34,19 @@ export const FlagHeading = styled.p<{ marginBottom?: number }>`
   margin-bottom: ${({ marginBottom }) => marginBottom || 16}px;
   text-transform: uppercase;
   font-family: ${({ theme }) => theme.typography.fontFamilyBase};
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
 `;
 
 export const MainHeading = styled.h1`
-  font-size: 42px;
+  font-size: ${({ theme }) => theme.fontSizes["4xl"]};
+  line-height: ${({ theme }) => theme.lineHeights["4xl"]};
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 `;
 
 export const SectionParagraph = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  line-height: ${({ theme }) => theme.lineHeights.md};
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 `;
 
@@ -64,13 +68,15 @@ export const SustainableAndPure = styled.div`
 `;
 
 export const SustainableFlag = styled.p`
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  line-height: ${({ theme }) => theme.lineHeights.xs};
   text-transform: uppercase;
   font-family: ${({ theme }) => theme.typography.fontFamilyBase};
 `;
 
 export const SustainableHeading = styled.h3`
-  font-size: 24px;
+  font-size: ${({ theme }) => theme.fontSizes["xl"]};
+  line-height: ${({ theme }) => theme.lineHeights["xl"]};
   font-weight: 400;
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
   margin: 12px 0;
@@ -81,4 +87,29 @@ export const DecorativeSeparator = styled.div`
   width: 24px;
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.whiteTransparent1};
+`;
+
+export const CleanBeautyContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 768px;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex-direction: row;
+  }
+`;
+
+export const CleanBeautyText = styled.div`
+  width: 50%;
+  height: 100%;
+  color: ${({ theme }) => theme.colors.whiteTransparent2};
+  background-color: ${(props) => props.theme.colors.ebony};
+  //margin: 80px 60px;
+`;
+
+export const CleanBeautyImage = styled.img`
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
 `;

@@ -9,8 +9,8 @@ export const AuthFormsContainer = styled.div`
 `;
 
 export const FormHeading = styled.h1`
-  font-size: 36px;
-  line-height: 46px;
+  font-size: ${({ theme }) => theme.fontSizes["3xl"]};
+  line-height: ${({ theme }) => theme.lineHeights["3xl"]};
 `;
 
 export const FormCustom = styled.form`
@@ -20,14 +20,16 @@ export const FormCustom = styled.form`
 `;
 
 export const LabelCustom = styled.label`
-  font-size: 18px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  line-height: ${({ theme }) => theme.lineHeights.lg};
   color: ${({ theme }) => theme.colors.gray};
 `;
 
 export const InputCustom = styled.input`
   //line-height: 40px;
   padding: 8px 12px;
-  font-size: 18px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  line-height: ${({ theme }) => theme.lineHeights.lg};
   letter-spacing: 0.01em;
   padding-left: 12px;
   border: 1px solid ${({ theme }) => theme.colors.timberwolf};

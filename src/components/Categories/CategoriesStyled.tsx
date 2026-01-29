@@ -45,7 +45,8 @@ export const Category = styled.div<{ $imageURL: string }>`
   height: calc(77.042vw / 0.707);
 
   color: ${({ theme }) => theme.colors.white};
-  font-size: 22px;
+  font-size: ${({ theme }) => theme.fontSizes["xl"]};
+  line-height: ${({ theme }) => theme.lineHeights["xl"]};
   text-transform: uppercase;
   display: flex;
   justify-content: center;

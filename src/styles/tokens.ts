@@ -19,8 +19,45 @@ export const colors = {
 };
 
 export const spacing = {
-  sectionPadding: "60px",
-  sectionMargin: "40px",
+  xs: "4px",
+  sm: "8px",
+  md: "16px",
+  lg: "24px",
+  xl: "32px",
+  "2xl": "40px",
+  "3xl": "48px",
+  "4xl": "60px",
+  "5xl": "80px",
+  sectionPadding: "60px", // Keep for backward compatibility
+  sectionMargin: "40px", // Keep for backward compatibility
+};
+
+export const fontSizes = {
+  xs: "12px",
+  sm: "14px",
+  md: "16px",
+  lg: "18px",
+  xl: "24px",
+  "2xl": "28px",
+  "3xl": "32px",
+  "4xl": "42px",
+  "5xl": "48px",
+};
+
+export const lineHeights = {
+  xs: "18px", // pairs well with fontSizes.xs (12px)
+  sm: "20px", // pairs well with fontSizes.sm (14px)
+  md: "24px", // pairs well with fontSizes.md (16px)
+  lg: "28px", // pairs well with fontSizes.lg (18px)
+  xl: "32px", // pairs well with fontSizes.xl (24px)
+  "2xl": "38px", // pairs well with fontSizes["2xl"] (28px)
+  "3xl": "42px", // pairs well with fontSizes["3xl"] (32px)
+  "4xl": "52px", // pairs well with fontSizes["4xl"] (42px)
+  "5xl": "60px", // pairs well with fontSizes["5xl"] (48px)
+
+  tight: "1.2",
+  normal: "1.5",
+  relaxed: "1.75",
 };
 
 export const typography = {
@@ -32,11 +69,4 @@ export const typography = {
 
   /* Brand / marketing / special sections */
   fontFamilyBrand: "'Josefin Sans', 'Montserrat', system-ui, sans-serif",
-  h1: {
-    fontSize: "42px",
-    lineHeight: "52px",
-    fontWeight: 400,
-    letterSpacing: "0.02em",
-  },
-  // adjust h2–h5
 };
