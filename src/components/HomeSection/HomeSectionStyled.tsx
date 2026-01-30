@@ -17,6 +17,7 @@ export const HeadingAndSeparator = styled.div`
 `;
 
 export const Heading = styled.h2`
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   text-transform: uppercase;
 `;
