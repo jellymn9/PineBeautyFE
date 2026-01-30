@@ -9,12 +9,13 @@ export interface ProductI extends DocumentData {
   currency: "USD" | "EUR" | "JPY" | "RSD";
   image: string;
   category: CategoryT;
-  productTypeName:
-    | "SCRUBS_AND_MASKS"
-    | "NATURAL_DEODORANTS"
-    | "HAIR_OILD_AND_SERUMS"
-    | "SOLID_SHAMPOOS_AND_HAIR_SOAPS"
-    | "EAU_DE_TOILETE";
+  isBestSeller: boolean;
+  // productTypeName:
+  //   | "SCRUBS_AND_MASKS"
+  //   | "NATURAL_DEODORANTS"
+  //   | "HAIR_OILD_AND_SERUMS"
+  //   | "SOLID_SHAMPOOS_AND_HAIR_SOAPS"
+  //   | "EAU_DE_TOILETE";
   // Tags should be an array of strings
   tags: string[];
 }
