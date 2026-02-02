@@ -8,25 +8,28 @@ import {
   Price,
   ProductImage,
 } from "./ProductCardStyled";
+import { useState } from "react";
 
 interface ProductCardPropsI {
   product: ProductI;
 }
 
-const imageURL =
-  import.meta.env.MODE === "production"
-    ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
-    : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
-
+const imageURL = "/defaultProductImage.svg";
 // const addToCart = () => {
 //   return; // come back to this
 // };
 
 function ProductCard({ product }: ProductCardPropsI) {
+  const [imageError, setImageError] = useState(false);
+  console.log("product image", product.image);
   return (
     <Card className="keen-slider__slide">
       <Link to={`${ROUTES.product}/${product.id}`}>
-        <ProductImage $imageURL={imageURL} />
+        <ProductImage
+          src={imageError ? imageURL : product.image}
+          alt={product.name}
+          onError={() => setImageError(true)}
+        />
         <NameAndPriceContainer>
           <Name>{product.name} | 100% Organic & Cold Pressed</Name>
           <Price>
