@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { convertToPixels } from "@/helpers/layoutHelper";
+import { Link } from "react-router-dom";
 
 const mobileWidth = 100; // %
 const tabletWidth = 92.668; //vw
@@ -33,6 +34,8 @@ export const CategoriesContainer = styled.div`
     display: none;
   }
 `;
+
+export const CategoryLink = styled(Link)``;
 
 export const Category = styled.div<{ $imageURL: string }>`
   flex: 0 0 auto;

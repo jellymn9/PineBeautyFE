@@ -1,21 +1,5 @@
 //import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 
-export type IconNamesT = // turn to enum
-
-    | "delete"
-    | "clock"
-    | "email"
-    | "phone"
-    | "instagram"
-    | "facebook"
-    | "pinterest"
-    | "cart"
-    | "user"
-    | "logo"
-    | "search"
-    | "plus"
-    | "minus";
-
 export type ProductsTags =
   | "VEGAN_COSMETICS"
   | "ORGANIC_COSMETICS"
