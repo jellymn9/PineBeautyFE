@@ -108,19 +108,20 @@ export const ProductContents = styled.span`
   // create global style for this
   color: ${({ theme }) => theme.colors.blackTransparent1};
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  line-height: ${({ theme }) => theme.lineHeights.xs};
 `;
 
 export const ProductDescription = styled.p`
-  font-size: 14px;
-  line-height: 24px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
   margin: 0;
 `;
 
 export const Price = styled.b`
   color: ${({ theme }) => theme.colors.imperialRed};
-  font-size: 30px;
-  line-height: 40px;
+  font-size: ${({ theme }) => theme.fontSizes["2xl"]};
+  line-height: ${({ theme }) => theme.lineHeights["2xl"]};
 `;
 
 export const CounterAndAddBtnWrapper = styled.div`
@@ -132,7 +133,7 @@ export const CounterAndAddBtnWrapper = styled.div`
 export const NoProductMessage = styled.p`
   color: ${({ theme }) => theme.colors.blackTransparent1};
   text-align: center;
-  line-height: 48px;
-  font-size: 28px;
+  line-height: ${({ theme }) => theme.lineHeights["2xl"]};
+  font-size: ${({ theme }) => theme.fontSizes["2xl"]};
   padding: 36px;
 `;

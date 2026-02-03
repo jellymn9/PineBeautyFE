@@ -67,7 +67,7 @@ import { toLowercaseArray } from "@/helpers/formatters";
 export const getProducts = async (
   currentLastProduct: QueryDocumentSnapshot<DocumentData> | null,
   productsPerPage = 20,
-  selectedCategories: CategoryT[] = []
+  selectedCategories: CategoryT[] = [],
 ): Promise<ProductsApiResponseI> => {
   try {
     const productsRef = collection(db, "products");
@@ -82,7 +82,7 @@ export const getProducts = async (
       constraints.push(where("category", "==", lowerCaseCategories[0]));
     } else if (lowerCaseCategories.length > 1) {
       constraints.push(
-        where("category", "in", lowerCaseCategories.slice(0, 10))
+        where("category", "in", lowerCaseCategories.slice(0, 10)),
       );
     }
 
@@ -178,7 +178,7 @@ export const getSingleProduct: GetProductT = async (id?: string) => {
 };
 
 export const getProductsBatch: GetProductsBatchT = async (
-  ids: Array<string>
+  ids: Array<string>,
 ) => {
   if (ids.length === 0) {
     return [];
@@ -219,16 +219,22 @@ export const getProductsBatch: GetProductsBatchT = async (
   }
 };
 
-// export const getProductsBatch = async (ids: Array<string>) => {
-//   try {
-//     const products = await apiClient.post<{ products: Array<RawProductT> }>(
-//       endpoint.products,
-//       { ids }
-//     );
+export const getFavsProducts = async () => {
+  const bestSellers = query(
+    collection(db, "products"),
+    where("isBestSeller", "==", true),
+    limit(9),
+  );
 
-//     return products.data?.products;
-//   } catch (e) {
-//     console.log("error: ", e);
-//     throw e;
-//   }
-// };
+  try {
+    const snapshot = await getDocs(bestSellers);
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Array<ProductI>;
+    //console.log(snapshot);
+  } catch (e) {
+    console.error("Error getting best sellers:");
+    throw e; // change later
+  }
+};

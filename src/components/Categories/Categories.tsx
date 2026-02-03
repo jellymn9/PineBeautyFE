@@ -3,9 +3,11 @@ import HomeSection from "@/components/HomeSection/HomeSection";
 import {
   CategoriesContainer,
   Category,
+  CategoryLink,
   CustomScrollbar,
   CustomScrollThumb,
 } from "./CategoriesStyled";
+import { PRODUCT_CATEGORIES, ROUTES } from "@/utils/constants";
 
 const imageURL = import.meta.env.VITE_R2_DEV_BUCKET_URL;
 
@@ -13,15 +15,18 @@ const heading = "categories";
 
 const categories = [
   {
+    category: PRODUCT_CATEGORIES[1],
     imageURL: imageURL + "/hairA3.jpg",
     name: "hair",
   },
   {
-    imageURL: imageURL + "/hairA3.jpg",
+    category: PRODUCT_CATEGORIES[0],
+    imageURL: imageURL + "/bodyA3.jpg",
     name: "body",
   },
   {
-    imageURL: imageURL + "/hairA3.jpg",
+    category: PRODUCT_CATEGORIES[2],
+    imageURL: imageURL + "/faceA3.jpg",
     name: "face",
   },
 ];
@@ -54,8 +59,13 @@ const Categories = () => {
   return (
     <HomeSection heading={heading}>
       <CategoriesContainer onScroll={(e) => handleScroll(e)}>
-        {categories.map(({ imageURL, name }) => (
-          <Category $imageURL={imageURL}>{name}</Category>
+        {categories.map(({ imageURL, name, category }) => (
+          <CategoryLink
+            to={`${ROUTES.products}?category=${category}`}
+            key={name}
+          >
+            <Category $imageURL={imageURL}>{name}</Category>
+          </CategoryLink>
         ))}
       </CategoriesContainer>
       <CustomScrollbar>

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export const NavLinks = styled(Link)`
   text-decoration: none;
-  font-size: 12px;
-  line-height: 22px;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  line-height: ${({ theme }) => theme.lineHeights.xs};
   //height: 42px;
   padding: 18px 10px;
   text-transform: uppercase;

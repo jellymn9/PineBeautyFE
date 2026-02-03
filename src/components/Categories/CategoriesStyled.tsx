@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { convertToPixels } from "@/helpers/layoutHelper";
+import { Link } from "react-router-dom";
 
 const mobileWidth = 100; // %
 const tabletWidth = 92.668; //vw
@@ -34,6 +35,8 @@ export const CategoriesContainer = styled.div`
   }
 `;
 
+export const CategoryLink = styled(Link)``;
+
 export const Category = styled.div<{ $imageURL: string }>`
   flex: 0 0 auto;
 
@@ -45,7 +48,8 @@ export const Category = styled.div<{ $imageURL: string }>`
   height: calc(77.042vw / 0.707);
 
   color: ${({ theme }) => theme.colors.white};
-  font-size: 22px;
+  font-size: ${({ theme }) => theme.fontSizes["xl"]};
+  line-height: ${({ theme }) => theme.lineHeights["xl"]};
   text-transform: uppercase;
   display: flex;
   justify-content: center;

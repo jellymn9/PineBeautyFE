@@ -23,7 +23,8 @@ export const HoverBar = styled.div<{
   position: absolute;
   z-index: -1;
 
-  transition: width 0.4s cubic-bezier(0.215, 0.61, 0.355, 1),
+  transition:
+    width 0.4s cubic-bezier(0.215, 0.61, 0.355, 1),
     transform 0.3s linear;
 
   width: 0;
@@ -41,8 +42,8 @@ export const LinkStyled = styled(Link)`
   font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   letter-spacing: 0.02em;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
   background-color: transparent;
 `;
 
@@ -70,7 +71,9 @@ export const CircleAnimation = styled.div`
     background-color: ${({ theme }) => theme.colors.blackTransparent2};
     outline: 0px solid ${({ theme }) => theme.colors.blackTransparent2};
 
-    transition: outline 0.3s, opacity 0.3s;
+    transition:
+      outline 0.3s,
+      opacity 0.3s;
   }
 
   a:hover::before {

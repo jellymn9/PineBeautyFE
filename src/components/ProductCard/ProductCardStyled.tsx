@@ -17,17 +17,16 @@ export const Card = styled.article`
   }
 `;
 
-export const ProductImage = styled.div<{ $imageURL: string }>`
+export const ProductImage = styled.img`
   --aspect-ratio: 0.9;
 
   width: var(--card-container-width);
   //consider adding alternative to --card-container-width undefined value
   height: calc(var(--card-container-width) * var(--aspect-ratio));
-  background-image: url(${({ $imageURL }) => $imageURL});
   background-color: ${({ theme }) => theme.colors.babyPowder};
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  //background-repeat: no-repeat;
+  //background-size: contain;
+  //background-position: center;
 `;
 
 export const NameAndPriceContainer = styled.div`
@@ -40,8 +39,8 @@ export const NameAndPriceContainer = styled.div`
 `;
 
 export const Name = styled.h4`
-  font-size: 14px;
-  line-height: 24px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
 
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
   font-weight: 500;
@@ -50,6 +49,6 @@ export const Name = styled.h4`
 
 export const Price = styled.span`
   text-wrap-mode: nowrap;
-  font-size: 12px;
-  line-height: 22px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
 `;

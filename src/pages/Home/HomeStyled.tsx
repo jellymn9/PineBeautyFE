@@ -34,15 +34,19 @@ export const FlagHeading = styled.p<{ marginBottom?: number }>`
   margin-bottom: ${({ marginBottom }) => marginBottom || 16}px;
   text-transform: uppercase;
   font-family: ${({ theme }) => theme.typography.fontFamilyBase};
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
 `;
 
 export const MainHeading = styled.h1`
-  font-size: 42px;
+  font-size: ${({ theme }) => theme.fontSizes["4xl"]};
+  line-height: ${({ theme }) => theme.lineHeights["4xl"]};
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 `;
 
 export const SectionParagraph = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  line-height: ${({ theme }) => theme.lineHeights.md};
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
 `;
 
@@ -50,7 +54,7 @@ export const SustainableAndPure = styled.div`
   background-color: ${({ theme }) => theme.colors.ebony};
   color: ${({ theme }) => theme.colors.whiteTransparent2};
 
-  padding: 60px 17vw;
+  padding: ${({ theme }) => theme.spacing["4xl"]} 17vw;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
   }
@@ -64,13 +68,15 @@ export const SustainableAndPure = styled.div`
 `;
 
 export const SustainableFlag = styled.p`
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  line-height: ${({ theme }) => theme.lineHeights.xs};
   text-transform: uppercase;
   font-family: ${({ theme }) => theme.typography.fontFamilyBase};
 `;
 
 export const SustainableHeading = styled.h3`
-  font-size: 24px;
+  font-size: ${({ theme }) => theme.fontSizes["xl"]};
+  line-height: ${({ theme }) => theme.lineHeights["xl"]};
   font-weight: 400;
   font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
   margin: 12px 0;
@@ -81,4 +87,36 @@ export const DecorativeSeparator = styled.div`
   width: 24px;
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.whiteTransparent1};
+`;
+
+export const CleanBeautyContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 680px;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex-direction: row;
+  }
+`;
+
+export const CleanBeautyText = styled.div`
+  box-sizing: border-box;
+  width: 50%;
+  height: 100%;
+  color: ${({ theme }) => theme.colors.whiteTransparent2};
+  background-color: ${(props) => props.theme.colors.ebony};
+  padding: 0 ${({ theme }) => theme.spacing["2xl"]};
+
+  align-content: center;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0 ${({ theme }) => theme.spacing["2xl"]};
+  }
+`;
+
+export const CleanBeautyImage = styled.img`
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
 `;

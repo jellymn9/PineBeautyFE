@@ -19,8 +19,8 @@ export const InnerContainer = styled.div`
 
 export const ButtonText = styled.span`
   display: inline-block;
-  font-size: 12px;
-  line-height: 22px;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  line-height: ${({ theme }) => theme.lineHeights.xs};
   min-width: 74px;
   width: fit-content;
   text-transform: uppercase;

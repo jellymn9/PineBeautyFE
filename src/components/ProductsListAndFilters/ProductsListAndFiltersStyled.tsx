@@ -21,8 +21,8 @@ export const ProductsSection = styled.section`
 `;
 
 export const Message = styled.p`
-  font-size: 22px;
-  line-height: 26px;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  line-height: ${({ theme }) => theme.lineHeights.xl};
   font-weight: 300;
   font-family: ${({ theme }) => theme.typography.fontFamilyAlt};
   padding: 60px;
