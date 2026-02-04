@@ -1,30 +1,49 @@
-# React + TypeScript + Vite
+# PineBeauty Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application for PineBeauty - an online beauty products webshop. Built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+> ⚠️ **Note:** This project is currently under development.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React + TypeScript
+- Vite
+- Vitest for testing
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Getting Started
 
-- Configure the top-level `parserOptions` property like this:
+### Prerequisites
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+- Node.js (see `.nvmrc` for version)
+- Yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/jellymn9/PineBeautyFE.git
+cd PineBeautyFE
+
+# Install dependencies
+yarn install
+
+# Start development server
+yarn dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+The app will be available at `http://localhost:5173`
+
+## Available Scripts
+
+- `yarn dev` - Start development server
+- `yarn build` - Build for production
+- `yarn preview` - Preview production build
+- `yarn test` - Run tests
+
+## Project Status
+
+This is a work in progress. Features are actively being developed.
+
+## License
+
+Copyright © 2026 Jelena Mandžić. All rights reserved.
