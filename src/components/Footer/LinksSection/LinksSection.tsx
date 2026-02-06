@@ -1,6 +1,6 @@
 import { useMediaQuery } from "@custom-react-hooks/use-media-query";
 
-import Accordion from "@/components/Accordion/Accordion";
+import Accordion from "@/components/UI/Accordion/Accordion";
 import ContactInfo from "@/components/Footer/ContactInfo/ContactInfo";
 import LinksList from "@/components/Footer/Links/Links";
 import { Container, LinksContainer } from "./LinksSectionStyled";
@@ -117,7 +117,7 @@ const LinksSection = (): JSX.Element => {
       {isTablet ? (
         <LinksContainer>
           {data.map(({ heading, getChildComponent }) =>
-            getChildComponent(heading)
+            getChildComponent(heading),
           )}
         </LinksContainer>
       ) : (

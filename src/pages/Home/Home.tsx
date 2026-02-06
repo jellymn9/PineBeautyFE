@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import Button from "@/components/Button/Button";
+import Button from "@/components/UI/Button/Button";
 import Categories from "@/components/Categories/Categories";
 import Favs from "@/components/Favs/Favs";
 import InfoHome from "@/components/InfoHome/InfoHome";

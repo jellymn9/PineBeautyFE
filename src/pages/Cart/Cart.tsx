@@ -1,4 +1,4 @@
-import { Loader } from "@/components/Loader/Loader";
+import { Loader } from "@/components/UI/Loader/Loader";
 import { Helmet } from "react-helmet-async";
 import { calcSubtotalPrice } from "@/helpers/cartHelper";
 import { useCartContext } from "@/context/CartContext";

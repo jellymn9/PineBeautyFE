@@ -1,7 +1,7 @@
 //import { Loader } from "@/components/Loader/Loader";
 import { useState } from "react";
 import { ButtonWrapper, InnerContainer, List } from "./CartListStyled";
-import Button from "@/components/Button/Button";
+import Button from "@/components/UI/Button/Button";
 import { CartItem } from "@/components/CartItem/CartItem";
 import { CartItemsUIT } from "@/utils/types/cartTypes";
 

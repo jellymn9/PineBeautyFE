@@ -34,7 +34,7 @@ const InfoHome = () => {
     <Container>
       {infoData.map(({ heading, icon, description }) => {
         return (
-          <InfoContainer>
+          <InfoContainer key={heading}>
             {icon}
             <TileAndDescContainer>
               <Title>{heading}</Title>

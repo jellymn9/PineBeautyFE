@@ -2,7 +2,7 @@ import { SetURLSearchParams } from "react-router-dom";
 import { PRODUCT_CATEGORIES } from "@/utils/constants";
 import Checkbox, {
   CheckboxInputProps,
-} from "@/components/CustomInput/Checkbox";
+} from "@/components/UI/CustomInput/Checkbox";
 import {
   FilterListItem,
   FiltersContainer,
@@ -25,7 +25,7 @@ const ProductFilters = function ({
 
   const handleChange = (
     _isChecked: boolean,
-    value: CheckboxInputProps["value"]
+    value: CheckboxInputProps["value"],
   ) => {
     if (typeof value !== "string") return;
 

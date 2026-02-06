@@ -5,7 +5,7 @@ import { SubmitHandler } from "react-hook-form";
 
 import { ROUTES } from "@/utils/constants";
 import { AuthFormsContainer } from "./SignInStyled";
-import Form from "@/components/Form/Form";
+import Form from "@/components/UI/Form/Form";
 import { login } from "@/APIs/auth";
 import { getCart, overwriteCart } from "@/APIs/carts";
 import { clearCartLocal, mergeCartsLocal } from "@/helpers/cartHelper";

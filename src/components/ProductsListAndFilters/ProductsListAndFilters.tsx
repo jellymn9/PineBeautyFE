@@ -14,7 +14,7 @@ import {
   resetQuery,
 } from "@/state/reducers/productReducer";
 import { useAppDispatch, useAppSelector } from "@/withTypes";
-import { Loader } from "@/components/Loader/Loader";
+import { Loader } from "@/components/UI/Loader/Loader";
 import ProductFilters from "@/components/ProductFilters/ProductFilters";
 import ProductsList from "@/components/ProductsList/ProductsList";
 import {
@@ -42,7 +42,7 @@ const ProductsListAndFilters = () => {
 
   const categories = useMemo(
     () => searchParams.getAll("category") as CategoryT[],
-    [searchParams]
+    [searchParams],
   );
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const ProductsListAndFilters = () => {
       fetchProductsThunk({
         productsPerPage: PAGE_SIZE,
         selectedCategories: categories,
-      })
+      }),
     );
   }, [dispatch, categories]);
 
@@ -62,7 +62,7 @@ const ProductsListAndFilters = () => {
         fetchMoreProductsThunk({
           productsPerPage: PAGE_SIZE,
           selectedCategories: categories,
-        })
+        }),
       );
     }
   }, [reachBottom, dispatch, hasMore, categories, isLoading, cursor]);

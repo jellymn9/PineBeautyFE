@@ -13,7 +13,7 @@ import { theme } from "@/styles/theme";
 import { DrawerProvider } from "@/context/DrawerContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ToastProvider } from "@/context/ToastContext";
-import { Toast } from "@/components/Toast/Toast";
+import { Toast } from "@/components/UI/Toast/Toast";
 import { CartProvider } from "./context/CartContext";
 import { RootErrorBoundary } from "./components/Boundaries/RootErrorBoundary";
 
@@ -31,7 +31,7 @@ function onRender(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   startTime: unknown,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  commitTime: unknown
+  commitTime: unknown,
 ) {
   // Aggregate or log render timings...
   console.log(
@@ -46,7 +46,7 @@ function onRender(
     "startTime: ",
     startTime,
     "commitTime: ",
-    commitTime
+    commitTime,
   );
 }
 
@@ -73,5 +73,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </AuthProvider>
       </RootErrorBoundary>
     </Profiler>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

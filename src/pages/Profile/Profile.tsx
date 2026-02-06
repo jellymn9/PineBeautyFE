@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase";
 // import { useAuth } from "../../context/AuthContext";
-import Button from "@/components/Button/Button";
+import Button from "@/components/UI/Button/Button";
 import {
   HSeparator,
   MyAccountHeader,

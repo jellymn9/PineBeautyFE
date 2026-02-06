@@ -4,7 +4,7 @@ import { CartItemLocalT } from "@/utils/types/cartTypes";
 import { useCartContext } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
 import { useTheme } from "styled-components";
-import IconBtn from "../Button/IconBtn/IconBtn";
+import IconBtn from "../UI/Button/IconBtn/IconBtn";
 
 interface CounterPropsI {
   quantity: number;

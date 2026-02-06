@@ -5,7 +5,7 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import HomeSection from "@/components/HomeSection/HomeSection";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { Slider, SliderContainer, SliderMainContainer } from "./FavsStyled";
-import IconBtn from "../Button/IconBtn/IconBtn";
+import IconBtn from "../UI/Button/IconBtn/IconBtn";
 import { ProductI } from "@/utils/types/productTypes";
 import { getFavsProducts } from "@/APIs/products";
 

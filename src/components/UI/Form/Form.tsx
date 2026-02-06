@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, SubmitHandler, FieldValues, Path } from "react-hook-form";
 
-import Button from "@/components/Button/Button";
+import Button from "@/components/UI/Button/Button";
 import {
   FieldError,
   FormCustom,

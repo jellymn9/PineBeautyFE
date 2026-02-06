@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 
 import { useDrawer } from "@/context/DrawerContext";
 import { NAV_LINKS } from "@/utils/constants";
-import { CloseButton } from "@/components/CloseBtn/CloseBtn";
+import { CloseButton } from "@/components/UI/CloseBtn/CloseBtn";
 import Drawer from "@/components/Drawer/Drawer";
 import {
   HSeparator,
@@ -12,6 +12,7 @@ import {
   NavLinks,
   SearchInput,
 } from "./NavDrawerStyled";
+import React from "react";
 
 const NavDrawer = function () {
   const { closeDrawer } = useDrawer();
@@ -22,7 +23,11 @@ const NavDrawer = function () {
         <IconsContainer>
           {NAV_LINKS.iconLinks.map(
             ({ route, icon, mobile }) =>
-              mobile && <Link to={route}>{icon}</Link>
+              mobile && (
+                <Link to={route} key={route}>
+                  {icon}
+                </Link>
+              ),
           )}
           <CloseButton handleClose={closeDrawer} />
         </IconsContainer>
@@ -34,10 +39,10 @@ const NavDrawer = function () {
         </InputContainer>
         <HSeparator />
         {NAV_LINKS.textualLinks.map(({ route, name }) => (
-          <>
+          <React.Fragment key={route}>
             <NavLinks to={route}>{name}</NavLinks>
             <HSeparator />
-          </>
+          </React.Fragment>
         ))}
       </>
     </Drawer>

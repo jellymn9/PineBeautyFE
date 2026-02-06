@@ -18,7 +18,7 @@ import {
 } from "./CartItemStyled";
 //import { User } from "firebase/auth";
 import { useCartContext } from "@/context/CartContext";
-import IconBtn from "../Button/IconBtn/IconBtn";
+import IconBtn from "../UI/Button/IconBtn/IconBtn";
 
 interface CartItemPropsI {
   product: CartItemLocalT;
