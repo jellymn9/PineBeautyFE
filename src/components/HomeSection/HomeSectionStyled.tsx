@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: var(--section-padding) 0;
+  overflow-x: hidden;
 `;
 
 export const HeadingAndSeparator = styled.div`

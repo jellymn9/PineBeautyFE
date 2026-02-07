@@ -48,6 +48,7 @@ export const GlobalStyles = createGlobalStyle`
   width: 100%;
   height: 100%;
   margin: 0;
+  overflow-x: hidden;
 }
 
   h1, h2, h3, h4, h5 {
