@@ -1,5 +1,4 @@
 import { Search, ShoppingCart, User } from "lucide-react";
-import { head } from "node_modules/axios/index.d.cts";
 
 export const PRODUCT_CATEGORIES = ["BODY", "HAIR", "FACE"]; // as const;
 
