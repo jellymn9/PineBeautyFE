@@ -11,17 +11,14 @@ export const MainContainer = styled.div<{ $colorTheme: ColorThemeT }>`
 `;
 
 export const Container = styled.div<{ $isOpen: boolean }>`
-  display: flex;
-  flex-direction: column;
-  grid-gap: 6px;
-  height: auto;
-  max-height: calc(${headingHeight}px + 2 * ${headingPadding}px);
-  overflow-y: hidden;
-  transition: max-height 0.1s ease-in;
-  ${({ $isOpen }) => $isOpen && `max-height: 600px;`}
+  display: grid;
+  grid-template-rows: auto ${({ $isOpen }) => ($isOpen ? "1fr" : "0fr")};
+  transition: grid-template-rows 0.3s ease-out;
 `;
 
-export const HeadingContainer = styled.div`
+export const HeadingButton = styled.button`
+  all: unset;
+
   text-transform: uppercase;
   padding: ${headingPadding}px 0;
   height: ${headingHeight}px;
@@ -58,5 +55,10 @@ export const ChevronRightAnim = styled(ChevronRight)<{ $isOpen: boolean }>`
 `;
 
 export const ChildContainer = styled.div`
-  padding-bottom: 16px;
+  overflow: hidden;
+  min-height: 0;
+
+  > * {
+    padding-bottom: 16px;
+  }
 `;
