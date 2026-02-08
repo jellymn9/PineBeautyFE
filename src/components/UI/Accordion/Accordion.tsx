@@ -3,7 +3,7 @@ import { useState, Fragment } from "react";
 import { ColorThemeT } from "@/utils/types";
 import {
   Container,
-  HeadingContainer,
+  HeadingButton,
   MainContainer,
   HSeparator,
   HeadingInnerContiner,
@@ -39,7 +39,12 @@ const Accordion = function ({ data, colorTheme = "light" }: AccordionPropsI) {
       {data.map((singleItem) => (
         <Fragment key={singleItem.heading}>
           <Container $isOpen={singleItem.heading === isOpenId}>
-            <HeadingContainer onClick={() => handleOpen(singleItem.heading)}>
+            <HeadingButton
+              onClick={() => handleOpen(singleItem.heading)}
+              aria-expanded={singleItem.heading === isOpenId}
+              aria-controls={`panel-${singleItem.heading}`}
+              id={`button-${singleItem.heading}`}
+            >
               <HeadingInnerContiner>
                 <Heading>{singleItem.heading}</Heading>
                 <ChevronRightAnim
@@ -49,8 +54,14 @@ const Accordion = function ({ data, colorTheme = "light" }: AccordionPropsI) {
                   $isOpen={singleItem.heading === isOpenId}
                 />
               </HeadingInnerContiner>
-            </HeadingContainer>
-            <ChildContainer>{singleItem.childComponent}</ChildContainer>
+            </HeadingButton>
+            <ChildContainer
+              id={`panel-${singleItem.heading}`}
+              role="region"
+              aria-labelledby={`button-${singleItem.heading}`}
+            >
+              {singleItem.childComponent}
+            </ChildContainer>
           </Container>
           <HSeparator $colorTheme={colorTheme} />
         </Fragment>

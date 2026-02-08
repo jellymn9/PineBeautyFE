@@ -16,7 +16,9 @@ export const Container = styled.div<{ $isOpen: boolean }>`
   transition: grid-template-rows 0.3s ease-out;
 `;
 
-export const HeadingContainer = styled.div`
+export const HeadingButton = styled.button`
+  all: unset;
+
   text-transform: uppercase;
   padding: ${headingPadding}px 0;
   height: ${headingHeight}px;
