@@ -94,6 +94,7 @@ export const CleanBeautyContainer = styled.section`
   flex-direction: column;
   align-items: center;
   height: 680px;
+  overflow-y: hidden;
 
   @media (min-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex-direction: row;
@@ -106,7 +107,8 @@ export const CleanBeautyText = styled.div`
   height: 100%;
   color: ${({ theme }) => theme.colors.whiteTransparent2};
   background-color: ${(props) => props.theme.colors.ebony};
-  padding: 0 ${({ theme }) => theme.spacing["2xl"]};
+  padding: ${({ theme }) => theme.spacing["2xl"]}
+    ${({ theme }) => theme.spacing["2xl"]};
 
   align-content: center;
 
