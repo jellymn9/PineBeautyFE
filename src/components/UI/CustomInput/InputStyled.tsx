@@ -1,3 +1,4 @@
+import { buttonBase, buttonVariants } from "@/styles/mixins";
 import styled from "styled-components";
 
 export const CheckboxContainer = styled.div`
@@ -54,4 +55,33 @@ export const CheckboxInput = styled.input`
   &:checked ~ div {
     display: unset;
   }
+`;
+
+export const RadioInputLabel = styled.label`
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
+  ${buttonBase};
+  ${buttonVariants.outlined}
+
+  padding: 8px 16px;
+
+  &:has(input:checked) {
+    background-color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.white};
+  }
+
+  &:hover {
+    border-color: black;
+  }
+`;
+
+export const CustomRadioInput = styled.input`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 `;
