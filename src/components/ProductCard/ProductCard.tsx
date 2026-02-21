@@ -27,7 +27,7 @@ function ProductCard({
   productImage,
 }: ProductCardPropsI) {
   const [imageError, setImageError] = useState(false);
-  console.log("product image", productImage);
+
   return (
     <Card className="keen-slider__slide">
       <Link to={`${ROUTES.product}/${productId}`}>
