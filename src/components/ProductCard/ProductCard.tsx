@@ -21,7 +21,7 @@ const imageURL = "/defaultProductImage.svg";
 
 function ProductCard({ product }: ProductCardPropsI) {
   const [imageError, setImageError] = useState(false);
-  console.log("product image", product.image);
+
   return (
     <Card className="keen-slider__slide">
       <Link to={`${ROUTES.product}/${product.id}`}>

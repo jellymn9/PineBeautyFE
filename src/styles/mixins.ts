@@ -39,8 +39,10 @@ export const buttonVariants = {
       background: transparent;
       color: ${theme.colors.black};
       border-color: ${theme.colors.black};
+      padding: 18px 48px;
 
       &:hover {
+        background-color: ${theme.colors.blackTransparent2};
       }
 
       &:disabled {
