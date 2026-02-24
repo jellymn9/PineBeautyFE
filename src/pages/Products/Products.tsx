@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import {
   BannerAndHeading,
   BannerImage,
@@ -5,14 +6,13 @@ import {
   SectionHeading,
 } from "./ProductsStyled";
 import ProductsListAndFilters from "@/components/ProductsListAndFilters/ProductsListAndFilters";
-import { Helmet } from "react-helmet-async";
 
 const productsHeading = "All products";
 
-const IMAGE_URL =
-  import.meta.env.MODE === "production"
-    ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/banner3_1920x1080.jpg"
-    : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/banner3_1920x1080.jpg";
+// const IMAGE_URL =
+//   import.meta.env.MODE === "production"
+//     ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/banner3_1920x1080.jpg"
+//     : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/banner3_1920x1080.jpg";
 
 function Products() {
   return (
