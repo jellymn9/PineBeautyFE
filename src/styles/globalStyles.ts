@@ -7,10 +7,10 @@ export const GlobalStyles = createGlobalStyle`
      ============================== */
   @font-face {
     font-family: "Montserrat";
-    src: url("/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+    src: url("/fonts/Montserrat-VariableFont_wght.woff2") format("woff2");
     font-weight: 100 900;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
   }
 
   /* ==============================
@@ -18,10 +18,10 @@ export const GlobalStyles = createGlobalStyle`
      ============================== */
   @font-face {
     font-family: "Didact Gothic";
-    src: url("/fonts/DidactGothic-Regular.ttf") format("truetype");
+    src: url("/fonts/DidactGothic-Regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
   }
 
   /* ==============================
@@ -29,10 +29,10 @@ export const GlobalStyles = createGlobalStyle`
      ============================== */
   @font-face {
     font-family: "Josefin Sans";
-    src: url("/fonts/JosefinSans-VariableFont_wght.ttf") format("truetype");
+    src: url("/fonts/JosefinSans-VariableFont_wght.woff2") format("woff2");
     font-weight: 100 700;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
   }
 
   :root{
