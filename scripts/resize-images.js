@@ -35,6 +35,11 @@ async function processImage(file) {
 
     await base
       .clone()
+      .avif({ quality: 60 })
+      .toFile(join(outputDir, `${fileName}-${width}-mobile.avif`));
+
+    await base
+      .clone()
       .webp({ quality: 80 })
       .toFile(join(outputDir, `${fileName}-${width}-mobile.webp`));
 
@@ -55,6 +60,11 @@ async function processImage(file) {
       fit: "inside", // no cropping
       withoutEnlargement: true,
     });
+
+    await base
+      .clone()
+      .avif({ quality: 60 })
+      .toFile(join(outputDir, `${fileName}-${width}.avif`));
 
     await base
       .clone()
