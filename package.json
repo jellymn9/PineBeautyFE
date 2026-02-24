@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest --config vitest.config.ts",
     "test:ui": "vitest --ui --config vitest.config.ts",
-    "test:run": "vitest run --config vitest.config.ts"
+    "test:run": "vitest run --config vitest.config.ts",
+    "resize": "node scripts/resize-images.js"
   },
   "dependencies": {
     "@custom-react-hooks/use-media-query": "^1.5.1",
@@ -45,6 +46,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "jsdom": "^27.4.0",
+    "sharp": "^0.34.5",
     "typescript": "^5.2.2",
     "vite": "^7",
     "vitest": "^4.0.17"
