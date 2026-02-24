@@ -10,6 +10,7 @@ import {
   DecorativeSeparator,
   FlagHeading,
   Hero,
+  HeroImage,
   HeroInnerContainer,
   MainHeading,
   SectionParagraph,
@@ -53,6 +54,40 @@ function Home() {
         />
       </Helmet>
       <Hero>
+        <picture>
+          <source
+            media={"(max-width: 769px)"}
+            type="image/avif"
+            srcSet="/images/gen3-768-mobile.avif 768w, /images/gen3-480-mobile.avif 480w"
+            sizes="100vw"
+          />
+          <source
+            //media={"(min-width: 770px)"}
+            type="image/avif"
+            srcSet={
+              "/images/gen3-1920.avif 1920w, /images/gen3-1280.avif 1280w, /images/gen3-1024.avif 1024w"
+            }
+            sizes="100vw"
+          />
+          <source
+            media={"(max-width: 769px)"}
+            type="image/webp"
+            srcSet="/images/gen3-768-mobile.webp 768w, /images/gen3-480-mobile.webp 480w"
+            sizes="100vw"
+          />
+          <source
+            //media={"(min-width: 770px)"}
+            type="image/webp"
+            srcSet="/images/gen3-1920.webp 1920w, /images/gen3-1280.webp 1280w, /images/gen3-1024.webp 1024w"
+            sizes="100vw"
+          />
+          <HeroImage
+            alt="An image"
+            //width="500"
+            //height="500"
+            src="/images/gen3-1920.jpg"
+          />
+        </picture>
         <HeroInnerContainer>
           <div>
             <FlagHeading>{hero.flagHeading}</FlagHeading>

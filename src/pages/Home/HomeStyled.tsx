@@ -1,30 +1,36 @@
 import styled from "styled-components";
 
 export const Hero = styled.div`
-  background-image: url("gen3.jpg");
-  background-size: cover;
   padding: 9vw 3.889vw;
-  background-position: bottom;
   min-height: 466px;
+  position: relative;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
   }
   @media screen and (min-width: ${({ theme }) =>
       theme.breakpoints.smallDesktop}) {
-    background-image: url("gen3.jpg");
-    background-size: cover;
     padding: 9vw 3.889vw;
-    background-position: bottom;
   }
   @media screen and (min-width: ${({ theme }) =>
       theme.breakpoints.largeDesktop}) {
   }
 `;
 
+export const HeroImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+`;
+
 export const HeroInnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   grid-gap: 60px;
+  z-index: 100;
+  position: relative;
 
   height: 356px;
   justify-content: center;
