@@ -62,7 +62,6 @@ function Home() {
             sizes="100vw"
           />
           <source
-            //media={"(min-width: 770px)"}
             type="image/avif"
             srcSet={
               "/images/gen3-1920.avif 1920w, /images/gen3-1280.avif 1280w, /images/gen3-1024.avif 1024w"
@@ -76,15 +75,12 @@ function Home() {
             sizes="100vw"
           />
           <source
-            //media={"(min-width: 770px)"}
             type="image/webp"
             srcSet="/images/gen3-1920.webp 1920w, /images/gen3-1280.webp 1280w, /images/gen3-1024.webp 1024w"
             sizes="100vw"
           />
           <HeroImage
             alt="An image"
-            //width="500"
-            //height="500"
             src="/images/gen3-1920.jpg"
             fetchPriority="high"
           />
