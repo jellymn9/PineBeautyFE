@@ -6,18 +6,24 @@ export const Container = styled.div`
   grid-gap: 60px;
 `;
 
-export const BannerAndHeading = styled.div<{ $imageURL: string }>`
-  --banner-aspect-ratio: 1.777;
+export const BannerAndHeading = styled.div`
+  --banner-aspect-ratio: 2;
 
   width: 100vw;
   height: calc(100vw / var(--banner-aspect-ratio));
-  background-color: transparent;
-  background-image: url(${({ $imageURL }) => $imageURL});
-  background-repeat: no-repeat;
-  background-size: contain;
 
   display: flex;
   align-items: center;
+  position: relative;
+`;
+
+export const BannerImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 `;
 
 export const SectionHeading = styled.h1`
@@ -26,4 +32,5 @@ export const SectionHeading = styled.h1`
   font-family: ${({ theme }) => theme.typography.fontFamilyBase};
   font-weight: 500;
   text-transform: uppercase;
+  z-index: 10;
 `;
