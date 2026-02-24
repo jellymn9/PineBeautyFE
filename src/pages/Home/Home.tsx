@@ -86,6 +86,7 @@ function Home() {
             //width="500"
             //height="500"
             src="/images/gen3-1920.jpg"
+            fetchPriority="high"
           />
         </picture>
         <HeroInnerContainer>
