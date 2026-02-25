@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "@/utils/constants";
-import { ProductI } from "@/utils/types/productTypes";
 import {
   Card,
   Name,
@@ -11,30 +10,38 @@ import {
 import { useState } from "react";
 
 interface ProductCardPropsI {
-  product: ProductI;
+  productId: string;
+  productName: string;
+  productPrice: number;
+  productCurrency: string;
+  productImage: string;
 }
 
 const imageURL = "/defaultProductImage.svg";
-// const addToCart = () => {
-//   return; // come back to this
-// };
 
-function ProductCard({ product }: ProductCardPropsI) {
+function ProductCard({
+  productId,
+  productName,
+  productPrice,
+  productCurrency,
+  productImage,
+}: ProductCardPropsI) {
   const [imageError, setImageError] = useState(false);
-  console.log("product image", product.image);
+  console.log("product image", productImage);
   return (
     <Card className="keen-slider__slide">
-      <Link to={`${ROUTES.product}/${product.id}`}>
+      <Link to={`${ROUTES.product}/${productId}`}>
         <ProductImage
-          src={imageError ? imageURL : product.image}
-          alt={product.name}
+          loading="lazy"
+          src={imageError ? imageURL : productImage}
+          alt={productName}
           onError={() => setImageError(true)}
         />
         <NameAndPriceContainer>
-          <Name>{product.name} | 100% Organic & Cold Pressed</Name>
+          <Name>{productName} | 100% Organic & Cold Pressed</Name>
           <Price>
-            {product.currency}
-            {product.price}
+            {productCurrency}
+            {productPrice}
           </Price>
         </NameAndPriceContainer>
       </Link>
