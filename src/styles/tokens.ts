@@ -62,11 +62,13 @@ export const lineHeights = {
 
 export const typography = {
   fontFamilyBase:
-    "'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    "'Montserrat', 'Montserrat Fallback', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
 
   /* Secondary / alternative UI text */
-  fontFamilyAlt: "'Didact Gothic', system-ui, sans-serif",
+  fontFamilyAlt:
+    "'Didact Gothic', 'DidactGothic-Regular Fallback', system-ui, sans-serif",
 
   /* Brand / marketing / special sections */
-  fontFamilyBrand: "'Josefin Sans', 'Montserrat', system-ui, sans-serif",
+  fontFamilyBrand:
+    "'Josefin Sans', 'Josefin Sans Fallback', 'Montserrat', system-ui, sans-serif",
 };

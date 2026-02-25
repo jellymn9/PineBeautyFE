@@ -10,7 +10,15 @@ export const GlobalStyles = createGlobalStyle`
     src: url("/fonts/Montserrat-VariableFont_wght.woff2") format("woff2");
     font-weight: 100 900;
     font-style: normal;
-    font-display: block;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat Fallback';
+    src: local(Arial);
+    size-adjust: 100%;
+    ascent-override: normal;
+    descent-override: normal;
+    line-gap-override: normal;
   }
 
   /* ==============================
@@ -21,7 +29,15 @@ export const GlobalStyles = createGlobalStyle`
     src: url("/fonts/DidactGothic-Regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
-    font-display: block;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'DidactGothic-Regular Fallback';
+    src: local('Arial');
+    size-adjust: 104%;
+    ascent-override: 92%;
+    descent-override: 8%;
   }
 
   /* ==============================
@@ -32,8 +48,16 @@ export const GlobalStyles = createGlobalStyle`
     src: url("/fonts/JosefinSans-VariableFont_wght.woff2") format("woff2");
     font-weight: 100 700;
     font-style: normal;
-    font-display: block;
+    font-display: swap;
   }
+  @font-face {
+    font-family: 'Josefin Sans Fallback';
+    src: local(Arial);
+    size-adjust: 100%;
+    ascent-override: normal;
+    descent-override: normal;
+    line-gap-override: normal;
+ }
 
   :root{
     --section-padding: ${({ theme }) => theme.spacing.sectionPadding};
