@@ -11,7 +11,14 @@ function ProductsList({ products }: ProductsListPropsI) {
   return (
     <Container>
       {products.map((product) => (
-        <ProductCard product={product} key={product.id} />
+        <ProductCard
+          productId={product.id}
+          productName={product.name}
+          productPrice={product.price}
+          productCurrency={product.currency}
+          productImage={product.image}
+          key={product.id}
+        />
       ))}
     </Container>
   );
