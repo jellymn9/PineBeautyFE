@@ -5,4 +5,8 @@ export const MobileContainer = styled.div`
   justify-content: space-between;
   padding: 26px 16px;
   align-items: center;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: none;
+  }
 `;

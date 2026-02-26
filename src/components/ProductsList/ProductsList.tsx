@@ -1,4 +1,3 @@
-//import { RawProductT } from "../../utils/types";
 import { ProductI } from "@/utils/types/productTypes";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { Container } from "./ProductsListStyled";

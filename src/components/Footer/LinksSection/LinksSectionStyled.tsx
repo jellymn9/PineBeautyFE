@@ -34,11 +34,18 @@ export const HSeparator = styled.div`
 `;
 
 export const LinksContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  grid-gap: 50px;
+  display: none;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: flex;
+    justify-content: space-between;
+    grid-gap: 50px;
     width: auto;
+  }
+`;
+
+export const AccordionWrapper = styled.div`
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: none;
   }
 `;

@@ -48,12 +48,7 @@ const HeaderDesktop = () => {
     <ContainerBlock>
       <Container $isSticky={isStickyHeader} $isActive={isScrollingUp}>
         <InnerContainer>
-          <img
-            src="/src/assets/logo.svg"
-            alt="Pine Beauty Logo"
-            width="75"
-            height="75"
-          />
+          <img src="/logo.svg" alt="Pine Beauty Logo" width="75" height="75" />
           <LinksNav />
         </InnerContainer>
       </Container>
