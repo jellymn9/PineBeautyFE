@@ -59,9 +59,7 @@ function Product() {
 
   //temporary image
   const imageURL =
-    import.meta.env.MODE === "production"
-      ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/oilBottleCustomFormat.jpg"
-      : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/oilBottleCustomFormat.jpg";
+    import.meta.env.VITE_R2_BUCKET_URL + "/oilBottleCustomFormat.jpg";
 
   const images = [imageURL, imageURL, imageURL, imageURL, imageURL];
 
