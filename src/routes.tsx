@@ -6,12 +6,12 @@ import { getSingleProduct } from "@/APIs/products";
 import Error from "@/pages/Error/error";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import AuthRoute from "@/components/AuthRoute/AuthRoute";
+import Home from "@/pages/Home/Home";
+import Products from "@/pages/Products/Products";
 import { withSuspense } from "./utils/withSuspense";
 import {
-  LazyHome,
   LazyCart,
   LazyProduct,
-  LazyProducts,
   LazyProfile,
   LazySignIn,
   LazySignUp,
@@ -24,12 +24,12 @@ const routes: Array<RouteObject> = [
     children: [
       {
         path: ROUTES.home,
-        element: <LazyHome />,
+        element: <Home />,
         errorElement: <Error />,
       },
       {
         path: ROUTES.products,
-        element: <LazyProducts />,
+        element: <Products />,
       },
       {
         path: ROUTES.product + "/:id",
