@@ -48,7 +48,7 @@ function Products() {
           <BannerImage
             alt="Products Banner Image"
             src="/images/gen2-1920.jpg"
-            fetchPriority="high"
+            fetch-priority="high"
           />
         </picture>
         <SectionHeading>{productsHeading}</SectionHeading>

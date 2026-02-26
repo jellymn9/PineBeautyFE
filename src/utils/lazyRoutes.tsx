@@ -7,3 +7,4 @@ export const LazyCart = lazy(() => import("@/pages/Cart/Cart"));
 export const LazyProfile = lazy(() => import("@/pages/Profile/Profile"));
 export const LazySignIn = lazy(() => import("@/pages/Auth/SignIn/SignIn"));
 export const LazySignUp = lazy(() => import("@/pages/Auth/SignUp/SignUp"));
+export const LazyLayout = lazy(() => import("@/components/Layout/Layout"));

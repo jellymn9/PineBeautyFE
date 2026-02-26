@@ -3,7 +3,6 @@ import { RouteObject } from "react-router-dom";
 import { ROUTES } from "@/utils/constants";
 import { getSingleProduct } from "@/APIs/products";
 
-import PageLayout from "@/components/Layout/Layout";
 import Error from "@/pages/Error/error";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import AuthRoute from "@/components/AuthRoute/AuthRoute";
@@ -16,27 +15,28 @@ import {
   LazyProfile,
   LazySignIn,
   LazySignUp,
+  LazyLayout,
 } from "./utils/lazyRoutes";
 
 const routes: Array<RouteObject> = [
   {
-    element: <PageLayout />,
+    element: withSuspense(<LazyLayout />),
     children: [
       {
         path: ROUTES.home,
-        element: withSuspense(<LazyHome />),
+        element: <LazyHome />,
         errorElement: <Error />,
       },
       {
         path: ROUTES.products,
-        element: withSuspense(<LazyProducts />),
+        element: <LazyProducts />,
       },
       {
         path: ROUTES.product + "/:id",
         loader: async ({ params }) => {
           return await getSingleProduct(params.id);
         },
-        element: withSuspense(<LazyProduct />),
+        element: <LazyProduct />,
         errorElement: <div>Error element</div>,
       },
       {
@@ -44,12 +44,12 @@ const routes: Array<RouteObject> = [
         element: withSuspense(
           <PrivateRoute>
             <LazyProfile />
-          </PrivateRoute>
+          </PrivateRoute>,
         ),
       },
       {
         path: ROUTES.cart,
-        element: withSuspense(<LazyCart />),
+        element: <LazyCart />,
       },
     ],
   },
@@ -58,7 +58,7 @@ const routes: Array<RouteObject> = [
     element: withSuspense(
       <AuthRoute>
         <LazySignIn />
-      </AuthRoute>
+      </AuthRoute>,
     ),
   },
   {
@@ -66,7 +66,7 @@ const routes: Array<RouteObject> = [
     element: withSuspense(
       <AuthRoute>
         <LazySignUp />
-      </AuthRoute>
+      </AuthRoute>,
     ),
   },
 ];

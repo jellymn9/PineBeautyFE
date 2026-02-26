@@ -79,7 +79,7 @@ function Home() {
           <HeroImage
             alt="An image"
             src="/images/gen3-1920.jpg"
-            fetchPriority="high"
+            fetch-priority="high"
           />
         </picture>
         <HeroInnerContainer>
