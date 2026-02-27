@@ -9,7 +9,7 @@ import {
 } from "./CategoriesStyled";
 import { PRODUCT_CATEGORIES, ROUTES } from "@/utils/constants";
 
-const imageURL = import.meta.env.VITE_R2_DEV_BUCKET_URL;
+const imageURL = import.meta.env.VITE_R2_BUCKET_URL;
 
 const heading = "categories";
 

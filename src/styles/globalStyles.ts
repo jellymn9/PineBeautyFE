@@ -66,6 +66,10 @@ export const GlobalStyles = createGlobalStyle`
     height: inherit;
     min-height: 100vh;
   }
+  
+  #root {
+    min-height: inherit;
+  }
 
   body {
   min-height: 100vh;

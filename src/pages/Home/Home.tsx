@@ -33,10 +33,7 @@ const sustainableAndPure = {
 };
 
 //temporary image
-const imageURL =
-  import.meta.env.MODE === "production"
-    ? import.meta.env.VITE_R2_PROD_BUCKET_URL + "/generic1.jpg"
-    : import.meta.env.VITE_R2_DEV_BUCKET_URL + "/generic1.jpg";
+const imageURL = import.meta.env.VITE_R2_BUCKET_URL + "/generic1.jpg";
 
 const CLEAN_BEAUTY_HEADING = "Clean Beauty, Real Results";
 const CLEAN_BEAUTY_DESCRIPTION =

@@ -88,7 +88,13 @@ const PineBeautyFavs = ({ heading }: SliderPropsI) => {
           <SliderContainer ref={sliderRef} className="keen-slider">
             {favs.map((product) => (
               <Slider key={product.id} className="keen-slider__slide">
-                <ProductCard product={product} />
+                <ProductCard
+                  productId={product.id}
+                  productName={product.name}
+                  productPrice={product.price}
+                  productCurrency={product.currency}
+                  productImage={product.image}
+                />
               </Slider>
             ))}
           </SliderContainer>

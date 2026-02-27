@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
 export const ContainerBlock = styled.div`
-  height: 135px;
-  z-index: 1000;
+  display: none;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    height: 135px;
+    z-index: 1000;
+    display: block;
+  }
 `;
 
 export const Container = styled.header<{
