@@ -1,3 +1,4 @@
+import { getImagePath } from "@/helpers/formatters";
 import { GalleryContainer } from "./GalleryStyled";
 
 interface GalleryPropsI {
@@ -7,28 +8,45 @@ interface GalleryPropsI {
 const URLBase = import.meta.env.VITE_R2_BUCKET_URL;
 
 const Gallery = ({ imagesNames }: GalleryPropsI) => {
-  const [fisrtImage, ...restOfTheImages] = imagesNames;
+  const [firstImage, ...restOfTheImages] = imagesNames;
+
   return (
     <GalleryContainer>
       <picture>
         <source
           type="image/avif"
-          src={`${URLBase}/${fisrtImage}_558x502.avif`}
+          srcSet={getImagePath(URLBase, firstImage, "558x502", "avif")}
         />
         <source
           type="image/webp"
-          src={`${URLBase}/${fisrtImage}_558x502.webp`}
+          srcSet={getImagePath(URLBase, firstImage, "558x502", "webp")}
         />
         <img
-          src={`${URLBase}/${fisrtImage}_558x502.jpg`}
+          src={getImagePath(URLBase, firstImage, "558x502", "jpg")}
           alt="First image in gallery"
+          width="558"
+          height="502"
         />
       </picture>
+
       {restOfTheImages.map((image) => (
-        <picture>
-          <source type="image/avif" src={`${URLBase}/${image}_274x247.avif`} />
-          <source type="image/webp" src={`${URLBase}/${image}_274x247.webp`} />
-          <img src={`${URLBase}/${image}_274x247.jpg`} alt={`Image ${image}`} />
+        <picture key={image}>
+          <source
+            type="image/avif"
+            srcSet={getImagePath(URLBase, image, "274x247", "avif")}
+          />
+          <source
+            type="image/webp"
+            srcSet={getImagePath(URLBase, image, "274x247", "webp")}
+          />
+          <img
+            src={getImagePath(URLBase, image, "274x247", "jpg")}
+            alt={`Image ${image}`}
+            width="274"
+            height="247"
+            loading="lazy"
+            decoding="async"
+          />
         </picture>
       ))}
     </GalleryContainer>

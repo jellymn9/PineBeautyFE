@@ -1,21 +1,37 @@
 import { styled } from "styled-components";
 
 export const GalleryContainer = styled.div`
-  display: grid;
-  grid-template-columns: 20vw 20vw; //change later
-  gap: 10px;
-
-  picture:first-child {
-    grid-column: span 2;
+  display: flex;
+  overflow-x: scroll;
+  picture {
+    img {
+      height: 300px;
+    }
   }
 
+  gap: 10px;
+
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 20vw 20vw;
+    display: grid;
+    grid-template-columns: 274px; //20vw;
+
+    picture {
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
   }
 
   @media screen and (min-width: ${({ theme }) =>
       theme.breakpoints.largeDesktop}) {
-    grid-template-columns: 288px 288px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 274px 274px;
+
+    picture:first-child {
+      grid-column: span 2;
+    }
   }
 `;
 
