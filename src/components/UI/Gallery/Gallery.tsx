@@ -1,5 +1,6 @@
 import { getImagePath } from "@/helpers/formatters";
 import { GalleryContainer } from "./GalleryStyled";
+import defaultProductImage from "@/assets/defaultProductImage.svg";
 
 interface GalleryPropsI {
   imagesNames: Array<string>;
@@ -26,6 +27,7 @@ const Gallery = ({ imagesNames }: GalleryPropsI) => {
           alt="First image in gallery"
           width="558"
           height="502"
+          onError={(e) => (e.currentTarget.src = defaultProductImage)}
         />
       </picture>
 
@@ -46,6 +48,7 @@ const Gallery = ({ imagesNames }: GalleryPropsI) => {
             height="247"
             loading="lazy"
             decoding="async"
+            onError={(e) => (e.currentTarget.src = defaultProductImage)}
           />
         </picture>
       ))}
