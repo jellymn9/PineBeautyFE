@@ -14,6 +14,9 @@ export const toLowercaseArray = <T extends string>(arr: T[]): Array<T> =>
 export const getImagePath = (
   URLBase: string,
   name: string,
-  size: string,
   format: string,
-) => `${URLBase}/${name}_${size}.${format}`;
+  size = "",
+) =>
+  size
+    ? `${URLBase}/${name}_${size}.${format}`
+    : `${URLBase}/${name}.${format}`;
