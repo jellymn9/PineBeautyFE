@@ -8,6 +8,7 @@ export interface ProductI extends DocumentData {
   price: number;
   currency: "USD" | "EUR" | "JPY" | "RSD";
   image: string;
+  images: Array<string>;
   category: CategoryT;
   isBestSeller: boolean;
   // productTypeName:

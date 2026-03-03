@@ -32,7 +32,7 @@ const routes: Array<RouteObject> = [
         element: <Products />,
       },
       {
-        path: ROUTES.product + "/:id",
+        path: ROUTES.products + "/:id",
         loader: async ({ params }) => {
           return await getSingleProduct(params.id);
         },

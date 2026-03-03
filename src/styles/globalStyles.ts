@@ -62,19 +62,14 @@ export const GlobalStyles = createGlobalStyle`
   :root{
     --section-padding: ${({ theme }) => theme.spacing.sectionPadding};
     --section-margin: ${({ theme }) => theme.spacing.sectionMargin};
-    width: inherit;
-    height: inherit;
-    min-height: 100vh;
   }
   
   #root {
-    min-height: inherit;
+    min-height: 100vh;
   }
 
   body {
   min-height: 100vh;
-  width: 100%;
-  height: 100%;
   margin: 0;
   overflow-x: hidden;
 }

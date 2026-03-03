@@ -7,7 +7,7 @@ export const FOOTER_HEIGHT = 452;
 export const ROUTES = {
   home: "/",
   products: "/products",
-  product: "/product",
+  //product: "/product",
   cart: "/cart",
   profile: "/profile",
   signin: "/signin",

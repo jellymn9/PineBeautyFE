@@ -11,21 +11,21 @@ import PineBeautyFavs from "@/components/Favs/Favs";
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import {
   Container,
-  Gallery,
   ProductInfo,
   ProductDescription,
   ProductName,
   ProductSection,
   RelatedProductsSection,
   ReviewsSection,
-  ProductImage,
   GalleryAndDescription,
   ProductContents,
   ContentsContainer,
   SecondaryContainer,
   NoProductMessage,
+  AccordionWrapper,
 } from "./ProductStyled";
 import { useRef } from "react";
+import Gallery from "@/components/UI/Gallery/Gallery";
 
 const DESC = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const NAME_ADDITION = " | 100% organic and cold pressed";
@@ -57,12 +57,6 @@ function Product() {
     }
   };
 
-  //temporary image
-  const imageURL =
-    import.meta.env.VITE_R2_BUCKET_URL + "/oilBottleCustomFormat.jpg";
-
-  const images = [imageURL, imageURL, imageURL, imageURL, imageURL];
-
   return (
     <Container>
       <Helmet>
@@ -73,23 +67,20 @@ function Product() {
         />
       </Helmet>
       <SecondaryContainer ref={basePageRef} tabIndex={-1}>
-        <Breadcrumbs />
+        <Breadcrumbs dynamicLabel={product.name} />
         <ProductSection>
           <GalleryAndDescription>
-            <Gallery>
-              {images.map((imgURL) => (
-                <ProductImage src={imgURL} alt="" />
-              ))}
-            </Gallery>
-            <Accordion
-              colorTheme="dark"
-              data={[
-                { heading: "bla1", childComponent: <div>dhsshdhs</div> },
-                { heading: "bla2", childComponent: <div>dhsshdhs</div> },
-              ]}
-            />
+            <Gallery imagesNames={product.images} />
+            <AccordionWrapper $isShownMobile={false}>
+              <Accordion
+                colorTheme="dark"
+                data={[
+                  { heading: "bla1", childComponent: <div>dhsshdhs</div> },
+                  { heading: "bla2", childComponent: <div>dhsshdhs</div> },
+                ]}
+              />
+            </AccordionWrapper>
           </GalleryAndDescription>
-          {/* <ProductInfoContainer> */}
           <ProductInfo>
             <ProductName>{product.name + NAME_ADDITION}</ProductName>
             <ContentsContainer>
@@ -103,6 +94,15 @@ function Product() {
             />
             <GeneralProductInfo />
             <ProductDescription>{DESC}</ProductDescription>
+            <AccordionWrapper $isShownMobile={true}>
+              <Accordion
+                colorTheme="dark"
+                data={[
+                  { heading: "bla1", childComponent: <div>dhsshdhs</div> },
+                  { heading: "bla2", childComponent: <div>dhsshdhs</div> },
+                ]}
+              />
+            </AccordionWrapper>
           </ProductInfo>
           {/* </ProductInfoContainer> */}
         </ProductSection>
