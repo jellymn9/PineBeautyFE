@@ -26,7 +26,7 @@ function ProductCard({
 }: ProductCardPropsI) {
   return (
     <Card className="keen-slider__slide">
-      <Link to={`${ROUTES.product}/${productId}`}>
+      <Link to={`${ROUTES.products}/${productId}`}>
         <ProductImage
           loading="lazy"
           src={productImage}

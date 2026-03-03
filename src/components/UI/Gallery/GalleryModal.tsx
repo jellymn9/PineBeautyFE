@@ -17,6 +17,7 @@ const GalleryModal = ({
   return (
     <SingleImageModal onClick={onClose}>
       <GalleryImage
+        isModal
         URLBase={URLBase}
         defaultProductImage={defaultProductImage}
         imageName={imageName}

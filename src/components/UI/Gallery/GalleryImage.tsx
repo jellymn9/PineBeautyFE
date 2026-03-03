@@ -10,6 +10,7 @@ interface GalleryImagePropsI {
   height?: number;
   size?: string;
   lazy?: boolean;
+  isModal?: boolean;
 }
 
 const GalleryImage = ({
@@ -21,6 +22,7 @@ const GalleryImage = ({
   height,
   size,
   lazy,
+  isModal = false,
 }: GalleryImagePropsI) => (
   <picture>
     <source
@@ -39,6 +41,7 @@ const GalleryImage = ({
       loading={lazy ? "lazy" : "eager"}
       decoding="async"
       onError={(e) => (e.currentTarget.src = defaultProductImage)}
+      $isModal={isModal}
     />
   </picture>
 );

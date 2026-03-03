@@ -3,19 +3,30 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 60px;
+  //padding: 0 60px;
   align-self: center;
   padding-top: 24px;
+  width: 100%;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0 60px;
+  }
 `;
 
 export const SecondaryContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: fit-content;
+  width: 100%;
   grid-gap: 24px;
 
   &:focus {
     outline: none;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    align-self: center;
+    width: auto;
   }
 `;
 
@@ -38,28 +49,11 @@ export const GalleryAndDescription = styled.div`
   row-gap: 45px;
 `;
 
-export const Gallery = styled.div`
-  display: grid;
-  grid-template-columns: 20vw 20vw; //change later
-  gap: 10px;
-
-  img:first-child {
-    grid-column: span 2;
-  }
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 20vw 20vw;
-  }
-
-  @media screen and (min-width: ${({ theme }) =>
-      theme.breakpoints.largeDesktop}) {
-    grid-template-columns: 288px 288px;
-  }
-`;
-
 export const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
+
+  padding: 30px 60px;
 
   position: sticky;
   top: 135px; //header height, adapt later
@@ -68,6 +62,7 @@ export const ProductInfo = styled.div`
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 450px;
+    padding: 0;
   }
 `;
 
@@ -136,4 +131,14 @@ export const NoProductMessage = styled.p`
   line-height: ${({ theme }) => theme.lineHeights["2xl"]};
   font-size: ${({ theme }) => theme.fontSizes["2xl"]};
   padding: 36px;
+`;
+
+export const AccordionWrapper = styled.div<{ $isShownMobile?: boolean }>`
+  ${({ $isShownMobile }) => !$isShownMobile && "display: none;"}
+
+  padding: 30px 0;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0;
+  }
 `;

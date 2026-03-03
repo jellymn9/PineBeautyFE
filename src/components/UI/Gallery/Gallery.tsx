@@ -11,7 +11,8 @@ interface GalleryPropsI {
 const URLBase = import.meta.env.VITE_R2_BUCKET_URL;
 
 const Gallery = ({ imagesNames }: GalleryPropsI) => {
-  const [firstImage, ...restOfTheImages] = imagesNames;
+  const validImages = imagesNames.filter((name) => name.trim() !== ""); // TEMPORARY solution! until create proxy for R2
+  const [firstImage, ...restOfTheImages] = validImages;
   const [isImg, setIsImg] = useState("");
 
   const handleImageOpen = (imageName: string) => {
