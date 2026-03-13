@@ -9,11 +9,6 @@ import { register } from "@/APIs/auth";
 import { useState } from "react";
 
 const signUpSchema = yup.object({
-  // username: yup
-  //   .string()
-  //   .required("Username field is required.")
-  //   .min(4, "Username must be at least 4 characters.")
-  //   .max(12, "Username must be at most 12 characters."),
   email: yup.string().email().required("Email field is required."),
   password: yup.string().required("Password is required"),
   repeatPassword: yup
@@ -32,18 +27,11 @@ type FormFieldsT = {
 };
 
 const SignUp = () => {
-  //const { login } = useAuth();
   const navigate = useNavigate();
 
   const [isRegSuccess, setRegSuccess] = useState(true);
 
   const formFields: Array<FormFieldsT> = [
-    // {
-    //   label: "Username",
-    //   inputType: "text",
-    //   inputId: "registerUsername",
-    //   registerName: "username",
-    // },
     {
       label: "Email address",
       inputType: "email",

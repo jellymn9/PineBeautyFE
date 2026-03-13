@@ -14,10 +14,11 @@ import {
 } from "@/utils/types/cartTypes";
 import { db } from "@/firebase";
 import { serverCartDateConversion } from "@/helpers/dataMapper";
+import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
 
 const setOrUpdateCart = async (
   userId: string,
-  cartData: CartDataWriteI
+  cartData: CartDataWriteI,
 ): Promise<void> => {
   if (!userId) {
     console.error("User ID is required to set or update cart.");
@@ -28,13 +29,13 @@ const setOrUpdateCart = async (
     await setDoc(cartRef, cartData, { merge: true });
   } catch (e) {
     console.error("Error setting or updating cart:", e);
-    throw e;
+    throw handleFirebaseError(e);
   }
 };
 
 export const addProductToCart = async (
   userId: string,
-  productToAdd: NewItemT
+  productToAdd: NewItemT,
 ): Promise<void> => {
   if (!userId || !productToAdd || !productToAdd.id) {
     console.error("User ID and a valid product with an ID are required.");
@@ -71,13 +72,13 @@ export const addProductToCart = async (
     await setOrUpdateCart(userId, { items: cartItems });
   } catch (e) {
     console.error("Error adding product to cart:", e);
-    throw e;
+    throw handleFirebaseError(e);
   }
 };
 
 export const removeProductFromCart = async (
   userId: string,
-  productId: string
+  productId: string,
 ): Promise<void> => {
   if (!userId || !productId) {
     console.error("User ID and Product ID are required.");
@@ -96,13 +97,13 @@ export const removeProductFromCart = async (
     }
   } catch (e) {
     console.error("Error updating cart items map:", e);
-    throw e;
+    throw handleFirebaseError(e);
   }
 };
 
 export const decreaseProductQuantity = async (
   userId: string,
-  productId: string
+  productId: string,
 ): Promise<void> => {
   if (!userId || !productId) {
     console.error("User ID and Product ID are required.");
@@ -132,14 +133,14 @@ export const decreaseProductQuantity = async (
     }
   } catch (e) {
     console.error("Error decreasing product quantity:", e);
-    throw e;
+    throw handleFirebaseError(e);
   }
 };
 
 export const increaseCartItemQuantity = async (
   userId: string,
   productId: string,
-  amount: number = 1
+  amount: number = 1,
 ): Promise<void> => {
   if (!userId || !productId) {
     console.error("User ID and Product ID are required.");
@@ -165,21 +166,21 @@ export const increaseCartItemQuantity = async (
         await setOrUpdateCart(userId, { items: cartItems });
       } else {
         console.warn(
-          `Attempted to increase quantity for non-existent product ID: ${productId}`
+          `Attempted to increase quantity for non-existent product ID: ${productId}`,
         );
         throw new Error(
-          "Attempted to increase quantity for non-existent product ID."
+          "Attempted to increase quantity for non-existent product ID.",
         );
       }
     }
   } catch (e) {
     console.error("Error increasing product quantity:", e);
-    throw e;
+    throw handleFirebaseError(e);
   }
 };
 
 export const getCart = async (
-  userId: string | null
+  userId: string | null,
 ): Promise<CartDataLocalI> => {
   if (!userId) {
     return { items: {} };
@@ -198,13 +199,13 @@ export const getCart = async (
     }
   } catch (err) {
     console.error("Error fetching cart:", err);
-    throw err;
+    throw handleFirebaseError(err);
   }
 };
 
 export const overwriteCart = async (
   userId: string,
-  mergedCartData: CartDataLocalI
+  mergedCartData: CartDataLocalI,
 ): Promise<boolean> => {
   const cartRef = doc(db, "carts", userId);
   try {
@@ -213,6 +214,6 @@ export const overwriteCart = async (
     return true;
   } catch (error) {
     console.error("Error overwriting cart:", error);
-    throw new Error("Error overwriting cart");
+    throw handleFirebaseError(error);
   }
 };
