@@ -5,7 +5,7 @@ import {
   NotFoundError,
   PermissionError,
   AppError,
-} from "./AppError";
+} from "./appError";
 
 export const handleFirebaseError = (error: unknown): never => {
   if (error instanceof FirebaseError) {
