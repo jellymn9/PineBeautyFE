@@ -158,6 +158,6 @@ export const getFavsProducts = async () => {
     //console.log(snapshot);
   } catch (e) {
     console.error("Error getting best sellers:");
-    handleFirebaseError(e);
+    throw handleFirebaseError(e);
   }
 };
