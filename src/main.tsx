@@ -50,6 +50,15 @@ function onRender(
   );
 }
 
+window.addEventListener("unhandledrejection", (event) => {
+  console.error("Unhandled promise rejection:", event.reason);
+  // log to error tracking Sentry
+});
+
+window.addEventListener("error", (event) => {
+  console.error("Global error:", event.error);
+});
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Profiler id="App" onRender={onRender}>

@@ -8,6 +8,7 @@ import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import AuthRoute from "@/components/AuthRoute/AuthRoute";
 import Home from "@/pages/Home/Home";
 import Products from "@/pages/Products/Products";
+import NotFound from "@/pages/NotFound/NotFound";
 import { withSuspense } from "./utils/withSuspense";
 import {
   LazyCart,
@@ -68,6 +69,10 @@ const routes: Array<RouteObject> = [
         <LazySignUp />
       </AuthRoute>,
     ),
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ];
 

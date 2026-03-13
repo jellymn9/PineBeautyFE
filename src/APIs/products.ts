@@ -14,8 +14,6 @@ import {
 
 import { db } from "@/firebase";
 
-//import apiClient from "../utils/axios";
-//import endpoint from "./endpoints";
 import {
   ProductsApiResponseI,
   ProductI,
@@ -24,45 +22,7 @@ import {
   CategoryT,
 } from "../utils/types/productTypes";
 import { toLowercaseArray } from "@/helpers/formatters";
-
-//import { RawProductT } from "../utils/types";
-
-// export const getProducts = async (
-//   currentLastProduct: QueryDocumentSnapshot | null,
-//   productsPerPage = 20
-// ): Promise<ProductsApiResponseI> => {
-//   try {
-//     const productsRef = collection(db, "products");
-
-//     let q;
-//     if (!currentLastProduct) {
-//       q = query(productsRef, orderBy("name"), limit(productsPerPage));
-//     } else {
-//       q = query(
-//         productsRef,
-//         orderBy("name"),
-//         startAfter(currentLastProduct),
-//         limit(productsPerPage)
-//       );
-//     }
-
-//     const querySnapshot = await getDocs(q);
-
-//     const newProducts = querySnapshot.docs.map((doc) => ({
-//       id: doc.id,
-//       ...doc.data(),
-//     })) as Array<ProductI>;
-
-//     const newLastVisible =
-//       querySnapshot.docs[querySnapshot.docs.length - 1] || null;
-//     const possiblyMore = querySnapshot.docs.length === productsPerPage;
-
-//     return { list: newProducts, cursor: newLastVisible, hasMore: possiblyMore };
-//   } catch (e) {
-//     console.log("error: ", e);
-//     throw e;
-//   }
-// };
+import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
 
 export const getProducts = async (
   currentLastProduct: QueryDocumentSnapshot<DocumentData> | null,
@@ -111,46 +71,9 @@ export const getProducts = async (
     return { list: newProducts, cursor: newLastVisible, hasMore };
   } catch (e) {
     console.log("error: ", e);
-    throw e;
+    throw handleFirebaseError(e);
   }
 };
-
-// export const getProducts: GetProductsT = ({
-//   // go back to types here!
-//   isForward = true,
-//   page = 6,
-//   skip,
-//   cursor,
-// }) => {
-//   return apiClient
-//     .get<FetchProductsData>(endpoint.products, {
-//       params: {
-//         isForward: isForward ? "1" : "",
-//         page,
-//         skip,
-//         cursor: cursor ?? "",
-//       },
-//     })
-//     .then(({ data }) => {
-//       return data;
-//     })
-//     .catch((e) => {
-//       console.log("error: ", e);
-//       throw e;
-//     });
-// };
-
-// export const getSingleProduct: GetProductT = async (id?: string) => {
-//   // fix type later
-//   try {
-//     const product = await apiClient.get(endpoint.products + "/" + id);
-
-//     return product;
-//   } catch (e) {
-//     console.log("error: ", e);
-//     throw e;
-//   }
-// };
 
 export const getSingleProduct: GetProductT = async (id?: string) => {
   if (!id) {
@@ -173,7 +96,7 @@ export const getSingleProduct: GetProductT = async (id?: string) => {
     }
   } catch (e) {
     console.error("Error getting product:", e);
-    throw e;
+    throw handleFirebaseError(e);
   }
 };
 
@@ -215,7 +138,7 @@ export const getProductsBatch: GetProductsBatchT = async (
     return allProducts;
   } catch (e) {
     console.error("Error getting products batch:", e);
-    throw e;
+    throw handleFirebaseError(e);
   }
 };
 
@@ -235,6 +158,6 @@ export const getFavsProducts = async () => {
     //console.log(snapshot);
   } catch (e) {
     console.error("Error getting best sellers:");
-    throw e; // change later
+    throw handleFirebaseError(e);
   }
 };
