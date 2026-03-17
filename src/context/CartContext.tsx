@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useMemo } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 import { useAuth } from "./AuthContext";
 import {
@@ -15,6 +15,7 @@ import {
   CartItemsUIT,
   NewItemT,
 } from "@/utils/types/cartTypes";
+import { NetworkError } from "@/errors/appError";
 
 interface CartContextTypeI {
   cartItems: CartItemsUIT;
@@ -24,11 +25,11 @@ interface CartContextTypeI {
   addProduct: (product: NewItemT) => Promise<void>;
   isLoading: boolean;
   isEmpty: boolean;
-  serverError?: string | null;
+  error?: string | null;
 }
 
 export const CartContext = createContext<CartContextTypeI | undefined>(
-  undefined
+  undefined,
 );
 
 export const CartProvider: React.FC<{
@@ -45,14 +46,20 @@ export const CartProvider: React.FC<{
     removeItem: removeLocalItem,
     increaseAction: increaseLocalAction,
     decreaseAction: decreaseLocalAction,
+    error: localError,
   } = useLocalCart();
 
-  const isServerLoading = useMemo(() => {
-    if (serverStatus === "loading" || serverStatus === "idle") {
-      return true;
+  const [mutationError, setMutationError] = useState<string | null>(null);
+
+  const isServerLoading = serverStatus === "loading" || serverStatus === "idle";
+
+  const handleMutationError = (e: unknown) => {
+    if (e instanceof NetworkError) {
+      setMutationError("Connection issue, please try again.");
+    } else {
+      setMutationError("Failed to update cart.");
     }
-    return false;
-  }, [serverStatus]);
+  };
 
   let cart: Omit<CartContextTypeI, "isEmpty">;
 
@@ -69,37 +76,84 @@ export const CartProvider: React.FC<{
     cart = {
       cartItems: itemToArrAndSort(serverCart.items),
       removeItem: async (productId: string) => {
-        await removeProductFromCart(user.uid, productId);
+        try {
+          setMutationError(null);
+          await removeProductFromCart(user.uid, productId);
+        } catch (e) {
+          handleMutationError(e);
+        }
       },
       increase: async (product) => {
-        await increaseCartItemQuantity(user.uid, product.id);
+        try {
+          setMutationError(null);
+          await increaseCartItemQuantity(user.uid, product.id);
+        } catch (e) {
+          handleMutationError(e);
+        }
       },
       decrease: async (product) => {
-        await decreaseProductQuantity(user.uid, product.id);
+        try {
+          setMutationError(null);
+          await decreaseProductQuantity(user.uid, product.id);
+        } catch (e) {
+          handleMutationError(e);
+        }
       },
       addProduct: async (product) => {
-        await addProductToCart(user.uid, product);
+        try {
+          setMutationError(null);
+          await addProductToCart(user.uid, product);
+        } catch (e) {
+          handleMutationError(e);
+        }
       },
       isLoading: isServerLoading,
+      error: mutationError ?? serverError,
     };
   } else {
     cart = {
       cartItems: itemToArrAndSort(localCart.items),
-      removeItem: async (productId: string) => await removeLocalItem(productId),
-      increase: async (product: CartItemLocalT) =>
-        await increaseLocalAction(product),
-      decrease: async (product: CartItemLocalT) =>
-        await decreaseLocalAction(product),
-      addProduct: async (product: NewItemT) =>
-        await increaseLocalAction(product),
+      removeItem: async (productId: string) => {
+        try {
+          setMutationError(null);
+          await removeLocalItem(productId);
+        } catch (e) {
+          handleMutationError(e);
+        }
+      },
+      increase: async (product: CartItemLocalT) => {
+        try {
+          setMutationError(null);
+          await increaseLocalAction(product);
+        } catch (e) {
+          handleMutationError(e);
+        }
+      },
+      decrease: async (product: CartItemLocalT) => {
+        try {
+          setMutationError(null);
+          await decreaseLocalAction(product);
+        } catch (e) {
+          handleMutationError(e);
+        }
+      },
+      addProduct: async (product: NewItemT) => {
+        try {
+          setMutationError(null);
+          await increaseLocalAction(product);
+        } catch (e) {
+          handleMutationError(e);
+        }
+      },
       isLoading: false,
+      error: mutationError ?? localError,
     };
   }
 
   const isEmpty = !cart.isLoading && cart.cartItems.length === 0;
 
   return (
-    <CartContext.Provider value={{ ...cart, isEmpty, serverError }}>
+    <CartContext.Provider value={{ ...cart, isEmpty }}>
       {children}
     </CartContext.Provider>
   );

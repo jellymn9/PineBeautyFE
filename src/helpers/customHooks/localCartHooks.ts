@@ -5,29 +5,56 @@ import {
   plusAction,
   removeItemFromCartLS,
 } from "../cartHelper";
-import { CartItemLocalT, NewItemT } from "@/utils/types/cartTypes";
+import {
+  CartDataLocalI,
+  CartItemLocalT,
+  NewItemT,
+} from "@/utils/types/cartTypes";
+import { AppError } from "@/errors/appError";
+
+const emptyCart: CartDataLocalI = { items: {} };
 
 function useLocalCart() {
-  const [cart, setCart] = useState(getCartLocalObj());
+  const [error, setError] = useState<string | null>(null);
+  const [cart, setCart] = useState<CartDataLocalI>(() => {
+    try {
+      return getCartLocalObj();
+    } catch {
+      setError("Could not load your cart");
+      return emptyCart;
+    }
+  });
 
   const isEmpty = Object.keys(cart.items).length === 0;
 
   const removeItem = (id: string) => {
-    removeItemFromCartLS(id);
-    setCart(getCartLocalObj());
+    try {
+      removeItemFromCartLS(id);
+      setCart(getCartLocalObj());
+    } catch {
+      throw new AppError("Failed to update cart");
+    }
   };
 
   const increaseAction = (product: NewItemT) => {
-    plusAction(product);
-    setCart(getCartLocalObj());
+    try {
+      plusAction(product);
+      setCart(getCartLocalObj());
+    } catch {
+      throw new AppError("Failed to update cart");
+    }
   };
 
   const decreaseAction = (product: CartItemLocalT) => {
-    minusAction(product);
-    setCart(getCartLocalObj());
+    try {
+      minusAction(product);
+      setCart(getCartLocalObj());
+    } catch {
+      throw new AppError("Failed to update cart");
+    }
   };
 
-  return { cart, removeItem, increaseAction, decreaseAction, isEmpty };
+  return { cart, removeItem, increaseAction, decreaseAction, isEmpty, error };
 }
 
 export default useLocalCart;

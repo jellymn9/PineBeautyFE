@@ -7,7 +7,6 @@ import { CartItemsUIT } from "@/utils/types/cartTypes";
 
 const emptyCart = "There are no products in the cart.";
 
-//const LOADER = <Loader />;
 const errorUI = (errorMessage: string) => <p role="alert">{errorMessage}</p>;
 const emptyCartUI = (
   <p role="status" aria-live="polite">
@@ -16,14 +15,20 @@ const emptyCartUI = (
 );
 
 interface CartListPropI {
-  //loading: boolean;
   error?: string | null;
+  //error?: string | null;
   items: CartItemsUIT;
   isEmpty: boolean;
   formatedPrice: number;
 }
 
-const CartList = ({ error, items, isEmpty, formatedPrice }: CartListPropI) => {
+const CartList = ({
+  error,
+  items,
+  isEmpty,
+  formatedPrice,
+  //mutationError,
+}: CartListPropI) => {
   const [actionLoading, setActionLoading] = useState(false);
 
   if (error) {
