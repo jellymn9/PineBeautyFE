@@ -7,6 +7,7 @@ import Form from "@/components/UI/Form/Form";
 import { AuthFormsContainer } from "@/pages/Auth/SignIn/SignInStyled";
 import { register } from "@/APIs/auth";
 import { useState } from "react";
+import { AppError } from "@/errors/appError";
 
 const signUpSchema = yup.object({
   email: yup.string().email().required("Email field is required."),
@@ -29,7 +30,7 @@ type FormFieldsT = {
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const [isRegSuccess, setRegSuccess] = useState(true);
+  const [regError, setRegError] = useState("");
 
   const formFields: Array<FormFieldsT> = [
     {
@@ -54,13 +55,15 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<InputsT> = async (data) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       await register(data.email, data.password);
-      setRegSuccess(true);
 
       navigate(ROUTES.home);
-    } catch (_e) {
-      setRegSuccess(false);
+    } catch (e) {
+      if (e instanceof AppError) {
+        setRegError(e.message);
+      } else {
+        setRegError("Something went wrong, please try again");
+      }
     }
   };
 
@@ -73,9 +76,7 @@ const SignUp = () => {
         formFields={formFields}
         onSubmit={onSubmit}
       />
-      {!isRegSuccess && (
-        <div style={{ color: "red" }}>User registration fails!</div>
-      )}
+      {regError && <div style={{ color: "red" }}>{regError}</div>}
     </AuthFormsContainer>
   );
 };
