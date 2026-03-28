@@ -8,8 +8,13 @@ import { AuthFormsContainer } from "./SignInStyled";
 import Form from "@/components/UI/Form/Form";
 import { login } from "@/APIs/auth";
 import { getCart, overwriteCart } from "@/APIs/carts";
-import { clearCartLocal, mergeCartsLocal } from "@/helpers/cartHelper";
+import {
+  clearCartLocal,
+  getCartLocal,
+  mergeCartsLocal,
+} from "@/helpers/cartHelper";
 import { useToast } from "@/context/ToastContext";
+import { AppError } from "@/errors/appError";
 
 const signInSchema = yup.object({
   email: yup
@@ -29,7 +34,7 @@ type FormFieldsT = {
 };
 
 function SignIn() {
-  const [isLoginError, setLoginError] = useState(false);
+  const [loginError, setLoginError] = useState("");
 
   const { showToast } = useToast();
 
@@ -58,11 +63,17 @@ function SignIn() {
     try {
       const loginData = await login(data.email, data.password);
 
-      await mergeCarts(loginData.uid);
+      if (getCartLocal()) {
+        await mergeCarts(loginData.uid);
+      }
 
       navigate(location.state?.from ?? ROUTES.home);
     } catch (e) {
-      setLoginError(true);
+      if (e instanceof AppError) {
+        setLoginError(e.message);
+      } else {
+        setLoginError("Something went wrong, please try again");
+      }
     }
   };
 
@@ -90,7 +101,7 @@ function SignIn() {
         formFields={formFields}
         onSubmit={onSubmit}
       />
-      {isLoginError && <div style={{ color: "red" }}>User login fails!</div>}
+      {loginError && <div style={{ color: "red" }}>{loginError}</div>}
     </AuthFormsContainer>
   );
 }
