@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "@/utils/constants";
 import { SubmitHandler } from "react-hook-form";
 
@@ -29,6 +29,7 @@ type FormFieldsT = {
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [regError, setRegError] = useState("");
 
@@ -57,7 +58,7 @@ const SignUp = () => {
     try {
       await register(data.email, data.password);
 
-      navigate(ROUTES.home);
+      navigate(location.state?.from ?? ROUTES.home);
     } catch (e) {
       if (e instanceof AppError) {
         setRegError(e.message);
