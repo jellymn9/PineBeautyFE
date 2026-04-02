@@ -19,7 +19,7 @@ export const register = async (email: string, password: string) => {
     return userCredential.user;
   } catch (e) {
     console.error("User registration error:", e);
-    throw handleFirebaseError(e);
+    handleFirebaseError(e);
   }
 };
 

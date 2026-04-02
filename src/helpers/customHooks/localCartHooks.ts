@@ -11,6 +11,8 @@ import {
   NewItemT,
 } from "@/utils/types/cartTypes";
 import { AppError } from "@/errors/appError";
+import { ERROR_CODES } from "@/errors/errorCodes";
+import { mapCartErrorSafe } from "@/errors/cartErrors/cartErrorMapper";
 
 const emptyCart: CartDataLocalI = { items: {} };
 
@@ -19,8 +21,8 @@ function useLocalCart() {
   const [cart, setCart] = useState<CartDataLocalI>(() => {
     try {
       return getCartLocalObj();
-    } catch {
-      setError("Could not load your cart");
+    } catch (e) {
+      setError(mapCartErrorSafe(e, "load"));
       return emptyCart;
     }
   });
@@ -32,7 +34,7 @@ function useLocalCart() {
       removeItemFromCartLS(id);
       setCart(getCartLocalObj());
     } catch {
-      throw new AppError("Failed to update cart");
+      throw new AppError(ERROR_CODES.UNKNOWN);
     }
   };
 
@@ -41,7 +43,7 @@ function useLocalCart() {
       plusAction(product);
       setCart(getCartLocalObj());
     } catch {
-      throw new AppError("Failed to update cart");
+      throw new AppError(ERROR_CODES.UNKNOWN);
     }
   };
 
@@ -50,7 +52,7 @@ function useLocalCart() {
       minusAction(product);
       setCart(getCartLocalObj());
     } catch {
-      throw new AppError("Failed to update cart");
+      throw new AppError(ERROR_CODES.UNKNOWN);
     }
   };
 

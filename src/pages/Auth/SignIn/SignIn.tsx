@@ -14,7 +14,7 @@ import {
   mergeCartsLocal,
 } from "@/helpers/cartHelper";
 import { useToast } from "@/context/ToastContext";
-import { AppError } from "@/errors/appError";
+import { mapErrorToMessageSafe } from "@/errors/errorMapper";
 
 const signInSchema = yup.object({
   email: yup
@@ -69,11 +69,7 @@ function SignIn() {
 
       navigate(location.state?.from ?? ROUTES.home);
     } catch (e) {
-      if (e instanceof AppError) {
-        setLoginError(e.message);
-      } else {
-        setLoginError("Something went wrong, please try again");
-      }
+      setLoginError(mapErrorToMessageSafe(e));
     }
   };
 

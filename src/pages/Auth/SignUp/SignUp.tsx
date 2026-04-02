@@ -7,7 +7,7 @@ import Form from "@/components/UI/Form/Form";
 import { AuthFormsContainer } from "@/pages/Auth/SignIn/SignInStyled";
 import { register } from "@/APIs/auth";
 import { useState } from "react";
-import { AppError } from "@/errors/appError";
+import { mapErrorToMessageSafe } from "@/errors/errorMapper";
 
 const signUpSchema = yup.object({
   email: yup.string().email().required("Email field is required."),
@@ -60,11 +60,7 @@ const SignUp = () => {
 
       navigate(location.state?.from ?? ROUTES.home);
     } catch (e) {
-      if (e instanceof AppError) {
-        setRegError(e.message);
-      } else {
-        setRegError("Something went wrong, please try again");
-      }
+      setRegError(mapErrorToMessageSafe(e));
     }
   };
 

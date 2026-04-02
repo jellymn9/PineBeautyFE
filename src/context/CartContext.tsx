@@ -15,7 +15,9 @@ import {
   CartItemsUIT,
   NewItemT,
 } from "@/utils/types/cartTypes";
-import { NetworkError } from "@/errors/appError";
+import { AppError } from "@/errors/appError";
+import { mapCartErrorSafe } from "@/errors/cartErrors/cartErrorMapper";
+import { CartActionT } from "@/errors/cartErrors/cartErrorTypes";
 
 interface CartContextTypeI {
   cartItems: CartItemsUIT;
@@ -53,11 +55,11 @@ export const CartProvider: React.FC<{
 
   const isServerLoading = serverStatus === "loading" || serverStatus === "idle";
 
-  const handleMutationError = (e: unknown) => {
-    if (e instanceof NetworkError) {
-      setMutationError("Connection issue, please try again.");
+  const handleMutationError = (e: unknown, action: CartActionT) => {
+    if (e instanceof AppError) {
+      setMutationError(mapCartErrorSafe(e, action));
     } else {
-      setMutationError("Failed to update cart.");
+      setMutationError(mapCartErrorSafe(e, action));
     }
   };
 
@@ -80,7 +82,7 @@ export const CartProvider: React.FC<{
           setMutationError(null);
           await removeProductFromCart(user.uid, productId);
         } catch (e) {
-          handleMutationError(e);
+          handleMutationError(e, "remove");
         }
       },
       increase: async (product) => {
@@ -88,7 +90,7 @@ export const CartProvider: React.FC<{
           setMutationError(null);
           await increaseCartItemQuantity(user.uid, product.id);
         } catch (e) {
-          handleMutationError(e);
+          handleMutationError(e, "increase");
         }
       },
       decrease: async (product) => {
@@ -96,7 +98,7 @@ export const CartProvider: React.FC<{
           setMutationError(null);
           await decreaseProductQuantity(user.uid, product.id);
         } catch (e) {
-          handleMutationError(e);
+          handleMutationError(e, "decrease");
         }
       },
       addProduct: async (product) => {
@@ -104,7 +106,7 @@ export const CartProvider: React.FC<{
           setMutationError(null);
           await addProductToCart(user.uid, product);
         } catch (e) {
-          handleMutationError(e);
+          handleMutationError(e, "add");
         }
       },
       isLoading: isServerLoading,
@@ -118,7 +120,7 @@ export const CartProvider: React.FC<{
           setMutationError(null);
           await removeLocalItem(productId);
         } catch (e) {
-          handleMutationError(e);
+          handleMutationError(e, "remove");
         }
       },
       increase: async (product: CartItemLocalT) => {
@@ -126,7 +128,7 @@ export const CartProvider: React.FC<{
           setMutationError(null);
           await increaseLocalAction(product);
         } catch (e) {
-          handleMutationError(e);
+          handleMutationError(e, "increase");
         }
       },
       decrease: async (product: CartItemLocalT) => {
@@ -134,7 +136,7 @@ export const CartProvider: React.FC<{
           setMutationError(null);
           await decreaseLocalAction(product);
         } catch (e) {
-          handleMutationError(e);
+          handleMutationError(e, "decrease");
         }
       },
       addProduct: async (product: NewItemT) => {
@@ -142,7 +144,7 @@ export const CartProvider: React.FC<{
           setMutationError(null);
           await increaseLocalAction(product);
         } catch (e) {
-          handleMutationError(e);
+          handleMutationError(e, "add");
         }
       },
       isLoading: false,

@@ -1,5 +1,11 @@
+import { ErrorCodeT, ERROR_CODES } from "./errorCodes";
+
 export class AppError extends Error {
-  constructor(message: string) {
+  constructor(
+    public code: ErrorCodeT = ERROR_CODES.UNKNOWN,
+    message?: string,
+    public cause?: unknown,
+  ) {
     super(message);
     this.name = this.constructor.name;
   }

@@ -4,6 +4,7 @@ import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
 import { CartDataFirebaseI, CartDataLocalI } from "@/utils/types/cartTypes";
 import { serverCartDateConversion } from "../dataMapper";
+import { mapCartErrorSafe } from "@/errors/cartErrors/cartErrorMapper";
 
 type LoadingStatusT = "idle" | "loading" | "success" | "error";
 
@@ -62,14 +63,15 @@ function useCart(userId: string | null) {
           },
           (err) => {
             if (cancelled) return;
-            console.error("Error in cart listener:", err);
-            setError("Failed to keep cart in sync.");
-          }
+
+            setError(mapCartErrorSafe(err, "sync"));
+          },
         );
       } catch (err) {
         if (cancelled) return;
-        console.error("Error loading cart:", err);
-        setError("Failed to load cart.");
+
+        setError(mapCartErrorSafe(err, "load"));
+
         setCart({ items: {} });
         setStatus("error");
       }
