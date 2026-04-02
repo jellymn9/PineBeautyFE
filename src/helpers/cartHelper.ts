@@ -6,6 +6,7 @@ import {
 } from "@/utils/types/cartTypes";
 import { createNewItem, removeItem, updateItems } from "./cartHelperCore";
 import { AppError } from "@/errors/appError";
+import { ERROR_CODES } from "@/errors/errorCodes";
 
 export function reviveCartDates(obj: CartDataLocalI): CartDataLocalI {
   const items = Object.fromEntries(
@@ -36,28 +37,41 @@ export const getCartLocal = (): string | null => {
 
 export const getCartLocalObj = (): CartDataLocalI => {
   const cart = getCartLocal();
-  return cart ? reviveCartDates(JSON.parse(cart)) : { items: {} };
+
+  if (!cart) return { items: {} };
+
+  try {
+    return reviveCartDates(JSON.parse(cart));
+  } catch (e) {
+    throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
+  }
 };
 
 export const getCartItemsLocal = (): CartItemsLocalT => {
   const cart = getCartLocal();
-  return cart ? reviveCartDates(JSON.parse(cart)).items : {};
+  if (!cart) return {};
+
+  try {
+    return reviveCartDates(JSON.parse(cart)).items;
+  } catch (e) {
+    throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
+  }
 };
 
 export function clearCartLocal() {
   try {
     window.localStorage.removeItem("cart");
     return true;
-  } catch {
-    throw new AppError("Failed to clear cart");
+  } catch (e) {
+    throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
   }
 }
 
 export const setCartLocal = (cart: CartDataLocalI) => {
   try {
     window.localStorage.setItem("cart", JSON.stringify(cart));
-  } catch {
-    throw new AppError("Failed to save cart");
+  } catch (e) {
+    throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
   }
 };
 
