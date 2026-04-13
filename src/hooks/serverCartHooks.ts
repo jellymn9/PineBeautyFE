@@ -3,7 +3,7 @@ import { doc, getDoc, onSnapshot } from "firebase/firestore";
 
 import { db } from "@/firebase";
 import { CartDataFirebaseI, CartDataLocalI } from "@/utils/types/cartTypes";
-import { serverCartDateConversion } from "../dataMapper";
+import { serverCartDateConversion } from "../helpers/dataMapper";
 
 type LoadingStatusT = "idle" | "loading" | "success" | "error";
 

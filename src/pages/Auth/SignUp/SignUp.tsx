@@ -27,32 +27,32 @@ type FormFieldsT = {
   registerName: keyof InputsT;
 };
 
+const formFields: Array<FormFieldsT> = [
+  {
+    label: "Email address",
+    inputType: "email",
+    inputId: "registerEmail",
+    registerName: "email",
+  },
+  {
+    label: "Password",
+    inputType: "password",
+    inputId: "registerPassword",
+    registerName: "password",
+  },
+  {
+    label: "Repeat password",
+    inputType: "password",
+    inputId: "registerRepeatPassword",
+    registerName: "repeatPassword",
+  },
+];
+
 const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [regError, setRegError] = useState("");
-
-  const formFields: Array<FormFieldsT> = [
-    {
-      label: "Email address",
-      inputType: "email",
-      inputId: "registerEmail",
-      registerName: "email",
-    },
-    {
-      label: "Password",
-      inputType: "password",
-      inputId: "registerPassword",
-      registerName: "password",
-    },
-    {
-      label: "Repeat password",
-      inputType: "password",
-      inputId: "registerRepeatPassword",
-      registerName: "repeatPassword",
-    },
-  ];
 
   const onSubmit: SubmitHandler<InputsT> = async (data) => {
     try {

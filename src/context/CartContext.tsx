@@ -8,8 +8,8 @@ import {
   removeProductFromCart,
 } from "@/APIs/carts";
 import { itemToArrAndSort } from "@/helpers/dataMapper";
-import { useCart } from "@/helpers/customHooks/serverCartHooks";
-import useLocalCart from "@/helpers/customHooks/localCartHooks";
+import { useCart } from "@/hooks/serverCartHooks";
+import useLocalCart from "@/hooks/localCartHooks";
 import {
   CartItemLocalT,
   CartItemsUIT,
@@ -24,7 +24,7 @@ interface CartContextTypeI {
   addProduct: (product: NewItemT) => Promise<void>;
   isLoading: boolean;
   isEmpty: boolean;
-  error?: unknown; // 🔥 raw error
+  error?: unknown;
 }
 
 export const CartContext = createContext<CartContextTypeI | undefined>(

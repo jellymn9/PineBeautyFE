@@ -38,6 +38,9 @@ export const mapCartError = (
     case "remove":
       return "Failed to remove item from cart.";
 
+    case "merge":
+      return "Failed to merge carts.";
+
     case "increase":
     case "decrease":
     case "update":

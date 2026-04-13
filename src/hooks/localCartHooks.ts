@@ -4,7 +4,7 @@ import {
   minusAction,
   plusAction,
   removeItemFromCartLS,
-} from "../cartHelper";
+} from "../helpers/cartHelper";
 import {
   CartDataLocalI,
   CartItemLocalT,

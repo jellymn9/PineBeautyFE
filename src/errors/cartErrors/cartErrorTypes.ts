@@ -5,4 +5,5 @@ export type CartActionT =
   | "add"
   | "remove"
   | "increase"
-  | "decrease";
+  | "decrease"
+  | "merge";
