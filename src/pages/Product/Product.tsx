@@ -26,6 +26,7 @@ import {
 } from "./ProductStyled";
 import { useRef } from "react";
 import Gallery from "@/components/UI/Gallery/Gallery";
+import { mapCartErrorSafe } from "@/errors/cartErrors/cartErrorMapper";
 
 const DESC = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const NAME_ADDITION = " | 100% organic and cold pressed";
@@ -52,8 +53,8 @@ function Product() {
         image: product.image,
       });
       showToast("Product added to cart!", "success");
-    } catch (error) {
-      showToast("Failed to add product to cart.", "error");
+    } catch (e) {
+      showToast(mapCartErrorSafe(e, "add"), "error");
     }
   };
 

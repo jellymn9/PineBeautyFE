@@ -12,17 +12,17 @@ import {
 } from "@/utils/types/cartTypes";
 import { AppError } from "@/errors/appError";
 import { ERROR_CODES } from "@/errors/errorCodes";
-import { mapCartErrorSafe } from "@/errors/cartErrors/cartErrorMapper";
 
 const emptyCart: CartDataLocalI = { items: {} };
 
 function useLocalCart() {
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<unknown>(null);
+
   const [cart, setCart] = useState<CartDataLocalI>(() => {
     try {
       return getCartLocalObj();
     } catch (e) {
-      setError(mapCartErrorSafe(e, "load"));
+      setError(e);
       return emptyCart;
     }
   });
@@ -33,8 +33,8 @@ function useLocalCart() {
     try {
       removeItemFromCartLS(id);
       setCart(getCartLocalObj());
-    } catch {
-      throw new AppError(ERROR_CODES.UNKNOWN);
+    } catch (e) {
+      throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
     }
   };
 
@@ -42,8 +42,8 @@ function useLocalCart() {
     try {
       plusAction(product);
       setCart(getCartLocalObj());
-    } catch {
-      throw new AppError(ERROR_CODES.UNKNOWN);
+    } catch (e) {
+      throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
     }
   };
 
@@ -51,8 +51,8 @@ function useLocalCart() {
     try {
       minusAction(product);
       setCart(getCartLocalObj());
-    } catch {
-      throw new AppError(ERROR_CODES.UNKNOWN);
+    } catch (e) {
+      throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
     }
   };
 
