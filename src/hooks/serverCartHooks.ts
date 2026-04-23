@@ -3,7 +3,7 @@ import { doc, getDoc, onSnapshot } from "firebase/firestore";
 
 import { db } from "@/firebase";
 import { CartDataFirebaseI, CartDataLocalI } from "@/utils/types/cartTypes";
-import { serverCartDateConversion } from "../dataMapper";
+import { serverCartDateConversion } from "../helpers/dataMapper";
 
 type LoadingStatusT = "idle" | "loading" | "success" | "error";
 
@@ -11,13 +11,12 @@ const initialCartState: CartDataLocalI = { items: {} };
 
 function useCart(userId: string | null) {
   const [cart, setCart] = useState<CartDataLocalI>(initialCartState);
-  const [status, setStatus] = useState<LoadingStatusT>("idle"); //first time loaded
-  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<LoadingStatusT>("idle");
+  const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
     if (!userId) {
       setCart(initialCartState);
-      //setStatus("idle");
       setError(null);
       return;
     }
@@ -31,21 +30,18 @@ function useCart(userId: string | null) {
         setStatus("loading");
         setError(null);
 
-        // Initial one-shot load
         const initialSnap = await getDoc(cartRef);
         if (cancelled) return;
 
         if (initialSnap.exists()) {
           const cartData = initialSnap.data() as CartDataFirebaseI;
-          const cartDataConv = serverCartDateConversion(cartData);
-          setCart(cartDataConv);
+          setCart(serverCartDateConversion(cartData));
         } else {
           setCart({ items: {} });
         }
 
         setStatus("success");
 
-        // After initial load, attach live listener
         unsubscribe = onSnapshot(
           cartRef,
           (docSnap) => {
@@ -53,23 +49,20 @@ function useCart(userId: string | null) {
 
             if (docSnap.exists()) {
               const cartData = docSnap.data() as CartDataFirebaseI;
-              const cartDataConv = serverCartDateConversion(cartData);
-              setCart(cartDataConv);
+              setCart(serverCartDateConversion(cartData));
             } else {
               setCart({ items: {} });
             }
-            // no loading changes here, already "loaded"
           },
           (err) => {
             if (cancelled) return;
-            console.error("Error in cart listener:", err);
-            setError("Failed to keep cart in sync.");
-          }
+            setError(err);
+          },
         );
       } catch (err) {
         if (cancelled) return;
-        console.error("Error loading cart:", err);
-        setError("Failed to load cart.");
+
+        setError(err);
         setCart({ items: {} });
         setStatus("error");
       }
@@ -77,9 +70,7 @@ function useCart(userId: string | null) {
 
     return () => {
       cancelled = true;
-      if (unsubscribe) {
-        unsubscribe();
-      }
+      if (unsubscribe) unsubscribe();
     };
   }, [userId]);
 

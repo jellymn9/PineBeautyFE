@@ -5,8 +5,9 @@ import {
   NewItemT,
 } from "@/utils/types/cartTypes";
 import { createNewItem, removeItem, updateItems } from "./cartHelperCore";
+import { AppError } from "@/errors/appError";
+import { ERROR_CODES } from "@/errors/errorCodes";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function reviveCartDates(obj: CartDataLocalI): CartDataLocalI {
   const items = Object.fromEntries(
     Object.entries(obj.items || {}).map(([id, item]) => [
@@ -16,36 +17,63 @@ export function reviveCartDates(obj: CartDataLocalI): CartDataLocalI {
         createdAt: new Date(item.createdAt),
         updatedAt: new Date(item.updatedAt),
       },
-    ])
+    ]),
   );
 
   return { items };
 }
 
 export const calculateSubtotal = (
-  products: Array<{ price: number; quantity: number }>
+  products: Array<{ price: number; quantity: number }>,
 ) => {
   return products.reduce((acc, cur) => {
     return acc + cur.price * cur.quantity;
   }, 0);
 };
 
-export const getCartLocal = () => window.localStorage.getItem("cart") || null;
+export const getCartLocal = (): string | null => {
+  return window.localStorage.getItem("cart") || null;
+};
 
 export const getCartLocalObj = (): CartDataLocalI => {
   const cart = getCartLocal();
-  return cart ? reviveCartDates(JSON.parse(cart)) : { items: {} };
+
+  if (!cart) return { items: {} };
+
+  try {
+    return reviveCartDates(JSON.parse(cart));
+  } catch (e) {
+    throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
+  }
 };
 
 export const getCartItemsLocal = (): CartItemsLocalT => {
   const cart = getCartLocal();
-  return cart ? reviveCartDates(JSON.parse(cart)).items : {};
+  if (!cart) return {};
+
+  try {
+    return reviveCartDates(JSON.parse(cart)).items;
+  } catch (e) {
+    throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
+  }
 };
 
 export function clearCartLocal() {
-  window.localStorage.removeItem("cart");
-  return true;
+  try {
+    window.localStorage.removeItem("cart");
+    return true;
+  } catch (e) {
+    throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
+  }
 }
+
+export const setCartLocal = (cart: CartDataLocalI) => {
+  try {
+    window.localStorage.setItem("cart", JSON.stringify(cart));
+  } catch (e) {
+    throw new AppError(ERROR_CODES.UNKNOWN, undefined, e);
+  }
+};
 
 export const removeItemFromCartLS = (productId: string) => {
   cartActionWrapper(
@@ -55,13 +83,13 @@ export const removeItemFromCartLS = (productId: string) => {
     (items: CartItemsLocalT) => {
       const newItems = removeItem(items, productId);
       setCartLocal({ items: newItems });
-    }
+    },
   );
 };
 
 function cartActionWrapper(
   noCartCallback: () => void,
-  actionCallback: (items: CartItemsLocalT) => void
+  actionCallback: (items: CartItemsLocalT) => void,
 ) {
   const cartExistingItems = getCartItemsLocal();
   if (!getCartLocal()) {
@@ -72,11 +100,6 @@ function cartActionWrapper(
   return actionCallback(cartExistingItems);
 }
 
-export const setCartLocal = (cart: CartDataLocalI) => {
-  window.localStorage.setItem("cart", JSON.stringify(cart));
-};
-
-// action for "plus"
 export const plusAction = (cartItem: NewItemT) => {
   cartActionWrapper(
     () => {
@@ -88,11 +111,10 @@ export const plusAction = (cartItem: NewItemT) => {
     (items: CartItemsLocalT) => {
       const newItems = updateItems(items, cartItem, "plus", new Date());
       setCartLocal({ items: newItems });
-    }
+    },
   );
 };
 
-// action for "minus"
 export const minusAction = (cartItem: NewItemT) => {
   cartActionWrapper(
     () => {
@@ -106,7 +128,7 @@ export const minusAction = (cartItem: NewItemT) => {
       }
 
       setCartLocal({ items: newItems });
-    }
+    },
   );
 };
 

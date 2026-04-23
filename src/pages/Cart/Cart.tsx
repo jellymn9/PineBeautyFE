@@ -11,7 +11,7 @@ const TITLE = "Shopping Cart";
 const LOADER = <Loader ariaLabel="Loading cart list" />;
 
 function Cart() {
-  const { cartItems, isLoading, isEmpty, serverError } = useCartContext();
+  const { cartItems, isLoading, isEmpty, error } = useCartContext();
 
   const suubtotalPrice = calcSubtotalPrice(cartItems);
 
@@ -27,7 +27,8 @@ function Cart() {
       ) : (
         <CartList
           items={cartItems}
-          error={serverError}
+          error={error}
+          //mutationError={mutationError}
           isEmpty={isEmpty}
           formatedPrice={suubtotalPrice}
         />

@@ -4,10 +4,10 @@ import { ButtonWrapper, InnerContainer, List } from "./CartListStyled";
 import Button from "@/components/UI/Button/Button";
 import { CartItem } from "@/components/CartItem/CartItem";
 import { CartItemsUIT } from "@/utils/types/cartTypes";
+import { mapCartErrorSafe } from "@/errors/cartErrors/cartErrorMapper";
 
 const emptyCart = "There are no products in the cart.";
 
-//const LOADER = <Loader />;
 const errorUI = (errorMessage: string) => <p role="alert">{errorMessage}</p>;
 const emptyCartUI = (
   <p role="status" aria-live="polite">
@@ -16,18 +16,23 @@ const emptyCartUI = (
 );
 
 interface CartListPropI {
-  //loading: boolean;
-  error?: string | null;
+  error?: unknown;
   items: CartItemsUIT;
   isEmpty: boolean;
   formatedPrice: number;
 }
 
-const CartList = ({ error, items, isEmpty, formatedPrice }: CartListPropI) => {
+const CartList = ({
+  error,
+  items,
+  isEmpty,
+  formatedPrice,
+  //mutationError,
+}: CartListPropI) => {
   const [actionLoading, setActionLoading] = useState(false);
 
   if (error) {
-    return errorUI(error);
+    return errorUI(mapCartErrorSafe(error, "load"));
   }
   if (isEmpty) {
     return emptyCartUI;
