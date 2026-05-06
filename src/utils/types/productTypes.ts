@@ -1,8 +1,6 @@
-import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
+export type CategoryT = "HAIR" | "BODY" | "FACE";
 
-export type CategoryT = "HAIR" | "BODY" | "FACE"; //"OIL" | "FLORAL_WATER" | "SOAP" | "CREAM";
-
-export interface ProductI extends DocumentData {
+export interface ProductI {
   id: string;
   name: string;
   price: number;
@@ -11,13 +9,6 @@ export interface ProductI extends DocumentData {
   images: Array<string>;
   category: CategoryT;
   isBestSeller: boolean;
-  // productTypeName:
-  //   | "SCRUBS_AND_MASKS"
-  //   | "NATURAL_DEODORANTS"
-  //   | "HAIR_OILD_AND_SERUMS"
-  //   | "SOLID_SHAMPOOS_AND_HAIR_SOAPS"
-  //   | "EAU_DE_TOILETE";
-  // Tags should be an array of strings
   tags: string[];
 }
 
@@ -25,7 +16,7 @@ export interface ProductsStateI {
   //products: ProductsStateI;
   list: Array<ProductI>;
   hasMore: boolean;
-  cursor: QueryDocumentSnapshot | null;
+  cursor: { name: string; id: string } | null;
   status: "idle" | "pending" | "succeeded" | "failed";
   currentRequestId: string | null;
   //loadMoreRequestId: string | null;
@@ -33,7 +24,7 @@ export interface ProductsStateI {
 
 export interface ProductsApiResponseI {
   list: Array<ProductI>;
-  cursor: QueryDocumentSnapshot | null;
+  cursor: { name: string; id: string } | null;
   hasMore: boolean;
 }
 
