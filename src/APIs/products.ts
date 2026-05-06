@@ -5,7 +5,6 @@ import {
   startAfter,
   limit,
   getDocs,
-  QueryDocumentSnapshot,
   doc,
   getDoc,
   where,
@@ -25,7 +24,7 @@ import { toLowercaseArray } from "@/helpers/formatters";
 import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
 
 export const getProducts = async (
-  currentLastProduct: QueryDocumentSnapshot<DocumentData> | null,
+  currentLastProduct: { name: string; id: string } | null,
   productsPerPage = 20,
   selectedCategories: CategoryT[] = [],
 ): Promise<ProductsApiResponseI> => {
@@ -49,7 +48,7 @@ export const getProducts = async (
     // sorting + pagination
     constraints.push(orderBy("name"));
     if (currentLastProduct) {
-      constraints.push(startAfter(currentLastProduct));
+      constraints.push(startAfter(currentLastProduct.name));
     }
     constraints.push(limit(productsPerPage));
 
@@ -63,8 +62,11 @@ export const getProducts = async (
 
     console.log("fetched products: ", newProducts);
 
-    const newLastVisible =
-      querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+    const newLastVisibleDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    const newLastVisible = newLastVisibleDoc
+      ? { name: newLastVisibleDoc.data().name, id: newLastVisibleDoc.id }
+      : null;
 
     const hasMore = querySnapshot.docs.length === productsPerPage;
 
@@ -155,7 +157,6 @@ export const getFavsProducts = async () => {
       id: doc.id,
       ...doc.data(),
     })) as Array<ProductI>;
-    //console.log(snapshot);
   } catch (e) {
     console.error("Error getting best sellers:");
     throw handleFirebaseError(e);
