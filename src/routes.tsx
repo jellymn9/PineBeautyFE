@@ -18,6 +18,8 @@ import {
   LazySignUp,
   LazyLayout,
 } from "./utils/lazyRoutes";
+import OrderHistory from "./pages/Profile/OrderHistory";
+import AccountDetails from "./pages/Profile/AccountDetails";
 
 const routes: Array<RouteObject> = [
   {
@@ -47,6 +49,16 @@ const routes: Array<RouteObject> = [
             <LazyProfile />
           </PrivateRoute>,
         ),
+        children: [
+          {
+            path: "orders", //indlude later in ROUTES constants as subroutes
+            element: <OrderHistory />,
+          },
+          {
+            path: "account",
+            element: <AccountDetails />,
+          },
+        ],
       },
       {
         path: ROUTES.cart,

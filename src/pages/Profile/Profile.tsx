@@ -9,15 +9,16 @@ import {
   HSeparator,
   MyAccountHeader,
   MyAccountHeaderTitle,
-  ProfileCard,
-  ProfileCards,
-  ProfileCardTitle,
   ProfileContainer,
+  ProfileContent,
+  ProfileTabLink,
+  ProfileTabs,
 } from "./ProfileStyled";
+import { Outlet } from "react-router-dom";
 
 const tabs = [
-  { id: 1, title: "Order history" },
-  { id: 2, title: "Account details" },
+  { id: 1, title: "Order history", path: "orders" },
+  { id: 2, title: "Account details", path: "account" },
 ];
 
 function Profile() {
@@ -47,13 +48,18 @@ function Profile() {
         />
       </MyAccountHeader>
       <HSeparator />
-      <ProfileCards>
+
+      <ProfileTabs>
         {tabs.map((tab) => (
-          <ProfileCard key={tab.id}>
-            <ProfileCardTitle>{tab.title}</ProfileCardTitle>
-          </ProfileCard>
+          <ProfileTabLink key={tab.id} to={tab.path}>
+            {tab.title}
+          </ProfileTabLink>
         ))}
-      </ProfileCards>
+      </ProfileTabs>
+
+      <ProfileContent>
+        <Outlet />
+      </ProfileContent>
     </ProfileContainer>
   );
 }
