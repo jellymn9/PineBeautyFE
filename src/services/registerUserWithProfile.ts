@@ -1,5 +1,6 @@
 import { register } from "@/APIs/auth";
 import { createProfile } from "@/APIs/profile";
+import { reportError } from "@/monitoring/reportError";
 
 type RegisterUserWithProfileInput = {
   email: string;
@@ -20,13 +21,17 @@ export async function registerUserWithProfile(
     });
 
     return user;
-  } catch (e) {
-    console.error("Profile creation failed after successful registration", {
-      uid: user.uid,
-      email: user.email ?? data.email,
-      error: e,
+  } catch (error) {
+    reportError(error, {
+      feature: "auth",
+      action: "register_user_with_profile",
+      extra: {
+        uid: user.uid,
+        email: user.email ?? data.email,
+        stage: "profile_creation",
+      },
     });
 
-    throw e;
+    throw error;
   }
 }

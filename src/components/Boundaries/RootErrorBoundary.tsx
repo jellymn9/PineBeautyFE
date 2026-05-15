@@ -1,5 +1,6 @@
 import React from "react";
 import { RootFallbackUI } from "./RootFallbackUI";
+import { reportError } from "@/monitoring/reportError";
 
 type RootErrorBoundaryProps = {
   children: React.ReactNode;
@@ -19,9 +20,15 @@ export class RootErrorBoundary extends React.Component<
     return { hasError: true };
   }
 
-  componentDidCatch(error: unknown, info: unknown) {
+  componentDidCatch(error: unknown, info: React.ErrorInfo) {
     console.error("Root error boundary caught:", error, info);
-    // logging here (Sentry, Firebase, etc.)
+
+    reportError(error, {
+      feature: "root_error_boundary",
+      extra: {
+        componentStack: info.componentStack,
+      },
+    });
   }
 
   render() {

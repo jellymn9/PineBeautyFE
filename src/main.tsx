@@ -16,6 +16,11 @@ import { ToastProvider } from "@/context/ToastContext";
 import { Toast } from "@/components/UI/Toast/Toast";
 import { CartProvider } from "./context/CartContext";
 import { RootErrorBoundary } from "./components/Boundaries/RootErrorBoundary";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { initSentry } from "./monitoring/sentry";
+import { reportError } from "@/monitoring/reportError";
+
+initSentry();
 
 const router = createBrowserRouter(routes);
 
@@ -52,12 +57,29 @@ function onRender(
 
 window.addEventListener("unhandledrejection", (event) => {
   console.error("Unhandled promise rejection:", event.reason);
-  // log to error tracking Sentry
+
+  reportError(event.reason, {
+    feature: "global",
+    action: "unhandled_promise_rejection",
+  });
 });
 
 window.addEventListener("error", (event) => {
   console.error("Global error:", event.error);
+
+  reportError(event.error, {
+    feature: "global",
+    action: "window_error",
+    extra: {
+      message: event.message,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    },
+  });
 });
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -72,7 +94,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                     <GlobalStyles />
                     <Toast />
                     <HelmetProvider>
-                      <RouterProvider router={router} />
+                      <QueryClientProvider client={queryClient}>
+                        <RouterProvider router={router} />
+                      </QueryClientProvider>
                     </HelmetProvider>
                   </ThemeProvider>
                 </Provider>

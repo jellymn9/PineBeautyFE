@@ -8,6 +8,7 @@ import {
 
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/firebase";
+import { setSentryUser } from "@/monitoring/sentryUser";
 
 type AuthContextType = {
   user: User | null;
@@ -26,6 +27,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setSentryUser(user);
+
       setUser(user);
       setAuthLoading(false);
     });
