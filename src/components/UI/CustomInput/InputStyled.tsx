@@ -85,3 +85,15 @@ export const CustomRadioInput = styled.input`
   white-space: nowrap;
   border: 0;
 `;
+
+export const CustomTextInput = styled.input`
+  //line-height: 40px;
+  padding: 8px 12px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  line-height: ${({ theme }) => theme.lineHeights.lg};
+  letter-spacing: 0.01em;
+  padding-left: 12px;
+  border: 1px solid ${({ theme }) => theme.colors.timberwolf};
+  border-radius: 6px;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
+`;
