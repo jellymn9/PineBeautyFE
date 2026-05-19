@@ -10,15 +10,17 @@ export const shippingAddressSchema = yup.object({
   phone: yup.string().required(),
 });
 
-export const userProfileSchema = yup.object({
-  uid: yup.string().required(),
-  email: yup.string().email().required(),
-  displayName: yup.string().nullable().optional(),
-  role: yup
-    .mixed<"customer" | "admin">()
-    .oneOf(["customer", "admin"])
-    .required(),
-  defaultShippingAddress: shippingAddressSchema.optional(),
-  createdAt: yup.mixed<Timestamp>().required(),
-  updatedAt: yup.mixed<Timestamp>().required(),
-});
+export const userProfileSchema = yup
+  .object({
+    uid: yup.string().required(),
+    email: yup.string().email().required(),
+    displayName: yup.string().nullable().defined(),
+    role: yup
+      .mixed<"customer" | "admin">()
+      .oneOf(["customer", "admin"])
+      .required(),
+    defaultShippingAddress: shippingAddressSchema.default(undefined).optional(),
+    createdAt: yup.mixed<Timestamp>().required(),
+    updatedAt: yup.mixed<Timestamp>().required(),
+  })
+  .required();

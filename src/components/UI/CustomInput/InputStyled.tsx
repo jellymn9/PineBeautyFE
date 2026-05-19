@@ -87,13 +87,20 @@ export const CustomRadioInput = styled.input`
 `;
 
 export const CustomTextInput = styled.input`
-  //line-height: 40px;
   padding: 8px 12px;
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   line-height: ${({ theme }) => theme.lineHeights.lg};
   letter-spacing: 0.01em;
   padding-left: 12px;
   border: 1px solid ${({ theme }) => theme.colors.timberwolf};
   border-radius: 6px;
-  font-family: ${({ theme }) => theme.typography.fontFamilyBrand};
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
+
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.gray};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
 `;

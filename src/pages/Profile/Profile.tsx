@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet-async";
 
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase";
-// import { useAuth } from "../../context/AuthContext";
 import Button from "@/components/UI/Button/Button";
 import {
   HSeparator,
@@ -15,14 +14,32 @@ import {
   ProfileTabs,
 } from "./ProfileStyled";
 import { Outlet } from "react-router-dom";
+import { useProfile } from "@/queries/profile/useProfile";
+import { useAuth } from "@/context/AuthContext";
+import { Loader } from "@/components/UI/Loader/Loader";
+import { mapErrorToMessageSafe } from "@/errors/errorMapper";
 
-const tabs = [
+const TABS = [
   { id: 1, title: "Order history", path: "orders" },
   { id: 2, title: "Account details", path: "account" },
 ];
 
 function Profile() {
-  //const { logout } = useAuth();
+  const { user } = useAuth();
+  const {
+    data: profile,
+    isLoading,
+    isError,
+    error,
+  } = useProfile(user?.uid || "");
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return mapErrorToMessageSafe(error);
+  }
 
   const handleLogout = async () => {
     try {
@@ -50,7 +67,7 @@ function Profile() {
       <HSeparator />
 
       <ProfileTabs>
-        {tabs.map((tab) => (
+        {TABS.map((tab) => (
           <ProfileTabLink key={tab.id} to={tab.path}>
             {tab.title}
           </ProfileTabLink>
@@ -58,7 +75,7 @@ function Profile() {
       </ProfileTabs>
 
       <ProfileContent>
-        <Outlet />
+        <Outlet context={{ profile }} />
       </ProfileContent>
     </ProfileContainer>
   );

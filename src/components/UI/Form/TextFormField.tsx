@@ -6,7 +6,11 @@ import {
 } from "react-hook-form";
 
 import CustomInput from "../CustomInput/CustomInput";
-import { ErrorStyled } from "./FormFieldStyled";
+import {
+  ErrorStyled,
+  LabelCustom,
+  TextFormFieldWrapper,
+} from "./FormFieldStyled";
 
 type TextFormFieldProps<T extends FieldValues> = {
   label: string;
@@ -28,8 +32,8 @@ export function TextFormField<T extends FieldValues>({
   const errorId = error ? `${name}-error` : undefined;
 
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <TextFormFieldWrapper>
+      <LabelCustom htmlFor={name}>{label}</LabelCustom>
 
       <CustomInput
         id={name}
@@ -45,6 +49,6 @@ export function TextFormField<T extends FieldValues>({
           {String(error.message)}
         </ErrorStyled>
       )}
-    </div>
+    </TextFormFieldWrapper>
   );
 }
