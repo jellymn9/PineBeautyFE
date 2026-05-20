@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const ProfileContainer = styled.div`
@@ -57,4 +58,54 @@ export const ProfileCardTitle = styled.h2`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   line-height: ${({ theme }) => theme.lineHeights.sm};
   text-transform: uppercase;
+`;
+
+export const ProfileTabLink = styled(NavLink)`
+  position: relative;
+  padding: 0 0 14px;
+  font-family: ${({ theme }) => theme.typography.fontFamilyBase};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  line-height: ${({ theme }) => theme.lineHeights.sm};
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.active {
+    opacity: 1;
+  }
+
+  &.active::after {
+    transform: scaleX(1);
+  }
+`;
+
+export const ProfileContent = styled.div`
+  padding-top: 40px;
+`;
+
+export const ProfileTabs = styled.nav`
+  display: flex;
+  gap: 32px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.timberwolf};
+  margin-top: 32px;
 `;

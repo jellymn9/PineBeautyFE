@@ -1,44 +1,26 @@
+import { forwardRef } from "react";
+
 import { RadioInputLabel, CustomRadioInput } from "./InputStyled";
 
-type ControlledPropsT = {
-  checked: boolean;
-  onChange: (value: string) => void;
-  defaultChecked?: never;
-};
-
-type UncontrolledPropsT = {
-  checked?: never;
-  onChange?: never;
-  defaultChecked?: boolean;
-};
-
-type RadioInputPropsT = {
-  name: string;
-  value: string;
+type RadioInputPropsT = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "type"
+> & {
   label: string;
-} & (ControlledPropsT | UncontrolledPropsT);
-
-const RadioInput = ({
-  name,
-  value,
-  label,
-  onChange,
-  checked,
-  defaultChecked,
-}: RadioInputPropsT) => {
-  return (
-    <RadioInputLabel>
-      <CustomRadioInput
-        type="radio"
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={() => onChange?.(value)}
-        defaultChecked={defaultChecked}
-      />
-      {label}
-    </RadioInputLabel>
-  );
 };
+
+const RadioInput = forwardRef<HTMLInputElement, RadioInputPropsT>(
+  ({ label, ...props }, ref) => {
+    return (
+      <RadioInputLabel>
+        <CustomRadioInput ref={ref} type="radio" {...props} />
+
+        {label}
+      </RadioInputLabel>
+    );
+  },
+);
+
+RadioInput.displayName = "RadioInput";
 
 export default RadioInput;

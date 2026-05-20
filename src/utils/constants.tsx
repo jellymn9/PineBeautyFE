@@ -12,6 +12,8 @@ export const ROUTES = {
   profile: "/profile",
   signin: "/signin",
   signup: "/signup",
+  //orders: "/orders",
+  //account: "/account",
 };
 
 export const NAV_LINKS = {

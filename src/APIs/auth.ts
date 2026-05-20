@@ -1,11 +1,15 @@
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  User,
 } from "firebase/auth";
 import { auth } from "@/firebase";
 import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
 
-export const register = async (email: string, password: string) => {
+export const register = async (
+  email: string,
+  password: string,
+): Promise<User> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -15,7 +19,7 @@ export const register = async (email: string, password: string) => {
 
     return userCredential.user;
   } catch (e) {
-    handleFirebaseError(e);
+    throw handleFirebaseError(e);
   }
 };
 

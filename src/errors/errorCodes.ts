@@ -9,6 +9,10 @@ export const ERROR_CODES = {
 
   // Data
   NOT_FOUND: "NOT_FOUND",
+  INVALID_DATA: "INVALID_DATA",
+
+  // Validation
+  VALIDATION_ERROR: "VALIDATION_ERROR",
 
   // Network
   NETWORK_ERROR: "NETWORK_ERROR",

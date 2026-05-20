@@ -5,11 +5,12 @@ import { SubmitHandler } from "react-hook-form";
 
 import Form from "@/components/UI/Form/Form";
 import { AuthFormsContainer } from "@/pages/Auth/SignIn/SignInStyled";
-import { register } from "@/APIs/auth";
 import { useState } from "react";
 import { mapErrorToMessageSafe } from "@/errors/errorMapper";
+import { registerUserWithProfile } from "@/services/registerUserWithProfile";
 
 const signUpSchema = yup.object({
+  name: yup.string().required("Name field is required."),
   email: yup.string().email().required("Email field is required."),
   password: yup.string().required("Password is required"),
   repeatPassword: yup
@@ -28,6 +29,12 @@ type FormFieldsT = {
 };
 
 const formFields: Array<FormFieldsT> = [
+  {
+    label: "Name",
+    inputType: "text",
+    inputId: "registerName",
+    registerName: "name",
+  },
   {
     label: "Email address",
     inputType: "email",
@@ -56,7 +63,7 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<InputsT> = async (data) => {
     try {
-      await register(data.email, data.password);
+      await registerUserWithProfile(data);
 
       navigate(location.state?.from ?? ROUTES.home);
     } catch (e) {
