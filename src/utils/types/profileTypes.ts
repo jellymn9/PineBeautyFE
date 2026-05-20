@@ -12,3 +12,9 @@ export type CreateProfileInput = {
   email: string;
   displayName?: string;
 };
+
+export type UpdateProfileInput = {
+  uid: string;
+  displayName?: string | null;
+  defaultShippingAddress?: ShippingAddress;
+};

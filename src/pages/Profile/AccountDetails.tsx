@@ -1,12 +1,13 @@
 import * as yup from "yup";
 import { useOutletContext } from "react-router-dom";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import type { UserProfile } from "@/utils/types/profileTypes";
 import { TextFormField } from "@/components/UI/Form/TextFormField";
-import { FormStyled } from "./AccountDetailsStyled";
+import { Container, FormStyled } from "./AccountDetailsStyled";
 import Button from "@/components/UI/Button/Button";
+import { useUpdateProfile } from "@/queries/profile/useUpdateProfile";
 
 const accountDetailsSchema = yup.object({
   fullName: yup.string().required("Full name is required"),
@@ -69,8 +70,7 @@ const FIELDS = {
 
 export default function AccountDetails() {
   const { profile } = useOutletContext<{ profile: UserProfile }>();
-
-  console.log("Profile in AccountDetails: ", profile);
+  const { mutate: updateProfile, isPending } = useUpdateProfile();
 
   const {
     register,
@@ -91,8 +91,19 @@ export default function AccountDetails() {
     },
   });
 
-  const onSubmit: SubmitHandler<AccountDetailsInputs> = (data) => {
-    console.log(data);
+  const onSubmit = (data: AccountDetailsInputs) => {
+    updateProfile({
+      uid: profile.uid,
+      displayName: data.fullName,
+      defaultShippingAddress: {
+        fullName: data.fullName,
+        street: data.street,
+        city: data.city,
+        postalCode: data.postalCode,
+        country: data.country,
+        phone: data.phone,
+      },
+    });
   };
 
   const fields = Object.entries(FIELDS) as Array<
@@ -100,7 +111,7 @@ export default function AccountDetails() {
   >;
 
   return (
-    <div>
+    <Container>
       <FormStyled onSubmit={handleSubmit(onSubmit)}>
         {fields.map(([name, field]) => (
           <TextFormField<AccountDetailsInputs>
@@ -114,8 +125,12 @@ export default function AccountDetails() {
           />
         ))}
 
-        <Button type="submit" text="Save changes" />
+        <Button
+          type="submit"
+          text={isPending ? "Saving..." : "Save changes"}
+          disabled={isPending}
+        />
       </FormStyled>
-    </div>
+    </Container>
   );
 }
