@@ -1,59 +1,18 @@
-import * as yup from "yup";
-import { useLocation, useNavigate } from "react-router-dom";
-import { ROUTES } from "@/utils/constants";
-import { SubmitHandler } from "react-hook-form";
-
-import Form from "@/components/UI/Form/Form";
-import { AuthFormsContainer } from "@/pages/Auth/SignIn/SignInStyled";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { ROUTES } from "@/utils/constants";
 import { mapErrorToMessageSafe } from "@/errors/errorMapper";
 import { registerUserWithProfile } from "@/services/registerUserWithProfile";
 
-const signUpSchema = yup.object({
-  name: yup.string().required("Name field is required."),
-  email: yup.string().email().required("Email field is required."),
-  password: yup.string().required("Password is required"),
-  repeatPassword: yup
-    .string()
-    .oneOf([yup.ref("password")], "Passwords must match")
-    .required("Please confirm your password"),
-});
+import Button from "@/components/UI/Button/Button";
+import { TextFormField } from "@/components/UI/Form/TextFormField";
+import { AuthFormsContainer } from "@/pages/Auth/SignIn/SignInStyled";
 
-type InputsT = yup.InferType<typeof signUpSchema>;
-
-type FormFieldsT = {
-  label: string;
-  inputType: "text" | "email" | "password";
-  inputId: string;
-  registerName: keyof InputsT;
-};
-
-const formFields: Array<FormFieldsT> = [
-  {
-    label: "Name",
-    inputType: "text",
-    inputId: "registerName",
-    registerName: "name",
-  },
-  {
-    label: "Email address",
-    inputType: "email",
-    inputId: "registerEmail",
-    registerName: "email",
-  },
-  {
-    label: "Password",
-    inputType: "password",
-    inputId: "registerPassword",
-    registerName: "password",
-  },
-  {
-    label: "Repeat password",
-    inputType: "password",
-    inputId: "registerRepeatPassword",
-    registerName: "repeatPassword",
-  },
-];
+import { signUpSchema } from "@/utils//schemas/userSchema";
+import { SignUpInputsT } from "@/utils/types/userTypes";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -61,7 +20,16 @@ const SignUp = () => {
 
   const [regError, setRegError] = useState("");
 
-  const onSubmit: SubmitHandler<InputsT> = async (data) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpInputsT>({
+    mode: "onTouched",
+    resolver: yupResolver(signUpSchema),
+  });
+
+  const onSubmit: SubmitHandler<SignUpInputsT> = async (data) => {
     try {
       await registerUserWithProfile(data);
 
@@ -73,13 +41,48 @@ const SignUp = () => {
 
   return (
     <AuthFormsContainer>
-      <Form<InputsT>
-        schema={signUpSchema}
-        buttonText="Sign up"
-        heading="Sing up"
-        formFields={formFields}
-        onSubmit={onSubmit}
-      />
+      <h2>Sign up</h2>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextFormField<SignUpInputsT>
+          label="Name"
+          type="text"
+          placeholder="Enter your name"
+          register={register}
+          name="name"
+          error={errors.name}
+        />
+
+        <TextFormField<SignUpInputsT>
+          label="Email address"
+          type="email"
+          placeholder="Enter your email address"
+          register={register}
+          name="email"
+          error={errors.email}
+        />
+
+        <TextFormField<SignUpInputsT>
+          label="Password"
+          type="password"
+          placeholder="Enter your password"
+          register={register}
+          name="password"
+          error={errors.password}
+        />
+
+        <TextFormField<SignUpInputsT>
+          label="Repeat password"
+          type="password"
+          placeholder="Repeat your password"
+          register={register}
+          name="repeatPassword"
+          error={errors.repeatPassword}
+        />
+
+        <Button type="submit" text="Sign up" />
+      </form>
+
       {regError && <div style={{ color: "red" }}>{regError}</div>}
     </AuthFormsContainer>
   );
