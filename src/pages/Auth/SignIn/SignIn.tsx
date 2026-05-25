@@ -1,41 +1,64 @@
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { AuthFormsContainer } from "./SignInStyled";
-import Form from "@/components/UI/Form/Form";
-import { useSignIn, signInSchema, SignInInputsT } from "@/hooks/authHooks";
 
-type FormFieldsT = {
-  label: string;
-  inputType: "email" | "password";
-  inputId: string;
-  registerName: keyof SignInInputsT;
-};
+import Button from "@/components/UI/Button/Button";
+import { TextFormField } from "@/components/UI/Form/TextFormField";
 
-const FORM_FIELDS: Array<FormFieldsT> = [
-  {
+import { useSignIn } from "@/hooks/authHooks";
+import { SignInInputsT } from "@/utils/types/userTypes";
+import { signInSchema } from "@/utils/schemas/userSchema";
+
+const FIELDS = {
+  email: {
     label: "Email address",
-    inputType: "email",
-    inputId: "loginEmail",
-    registerName: "email",
+    type: "email" as const,
+    placeholder: "Enter your email",
   },
-  {
+  password: {
     label: "Password",
-    inputType: "password",
-    inputId: "loginPassword",
-    registerName: "password",
+    type: "password" as const,
+    placeholder: "Enter your password",
   },
-];
+};
 
 function SignIn() {
   const { onSubmit, loginError } = useSignIn();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInInputsT>({
+    mode: "onTouched",
+    resolver: yupResolver(signInSchema),
+  });
+
   return (
     <AuthFormsContainer>
-      <Form<SignInInputsT>
-        schema={signInSchema}
-        buttonText="Sign in"
-        heading="Sign in"
-        formFields={FORM_FIELDS}
-        onSubmit={onSubmit}
-      />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <TextFormField<SignInInputsT>
+          label={FIELDS.email.label}
+          type={FIELDS.email.type}
+          placeholder={FIELDS.email.placeholder}
+          register={register}
+          name="email"
+          error={errors.email}
+        />
+
+        <TextFormField<SignInInputsT>
+          label={FIELDS.password.label}
+          type={FIELDS.password.type}
+          placeholder={FIELDS.password.placeholder}
+          register={register}
+          name="password"
+          error={errors.password}
+        />
+
+        <Button type="submit" text="Sign in" />
+      </form>
+
       {loginError && <div style={{ color: "red" }}>{loginError}</div>}
     </AuthFormsContainer>
   );

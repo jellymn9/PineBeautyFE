@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SubmitHandler } from "react-hook-form";
-import * as yup from "yup";
 
 import { ROUTES } from "@/utils/constants";
 import { login } from "@/APIs/auth";
@@ -10,16 +9,7 @@ import { mergeCarts } from "@/services/cartService";
 import { useToast } from "@/context/ToastContext";
 import { mapErrorToMessageSafe } from "@/errors/errorMapper";
 import { mapCartErrorSafe } from "@/errors/cartErrors/cartErrorMapper";
-
-export const signInSchema = yup.object({
-  email: yup
-    .string()
-    .email("Invalid email format.")
-    .required("Email is required."),
-  password: yup.string().required("Password is required."),
-});
-
-export type SignInInputsT = yup.InferType<typeof signInSchema>;
+import { SignInInputsT } from "@/utils/types/userTypes";
 
 export function useSignIn() {
   const [loginError, setLoginError] = useState("");
