@@ -1,19 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useElementScroll } from "@/helpers/customHooks";
-import {
-  cursorSelector,
-  hasMoreSelector,
-  isErrorSelector,
-  isPendingSelector,
-  listProductsSelector,
-} from "@/state/selectors/productSelector";
-import {
-  fetchMoreProductsThunk,
-  fetchProductsThunk,
-  resetQuery,
-} from "@/state/reducers/productReducer";
-import { useAppDispatch, useAppSelector } from "@/withTypes";
 import { Loader } from "@/components/UI/Loader/Loader";
 import ProductFilters from "@/components/ProductFilters/ProductFilters";
 import ProductsList from "@/components/ProductsList/ProductsList";
@@ -23,21 +10,17 @@ import {
   ProductsSection,
 } from "./ProductsListAndFiltersStyled";
 import { CategoryT } from "@/utils/types/productTypes";
+import { useProducts } from "@/queries/products/useProducts";
 
 const PAGE_SIZE = 6;
 const EMPTY_MESSAGE = "There are no products available.";
 const ERROR_MESSAGE = "Sorry, an error occurred while loading products.";
 
 const ProductsListAndFilters = () => {
-  const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const productSectionRef = useRef<HTMLElement>(null);
+  const hasTriggeredAtBottom = useRef(false);
 
-  const products = useAppSelector(listProductsSelector);
-  const isLoading = useAppSelector(isPendingSelector);
-  const isError = useAppSelector(isErrorSelector);
-  const hasMore = useAppSelector(hasMoreSelector);
-  const cursor = useAppSelector(cursorSelector);
   const { reachBottom } = useElementScroll(productSectionRef);
 
   const categories = useMemo(
@@ -45,27 +28,32 @@ const ProductsListAndFilters = () => {
     [searchParams],
   );
 
-  useEffect(() => {
-    dispatch(resetQuery());
-    dispatch(
-      fetchProductsThunk({
-        productsPerPage: PAGE_SIZE,
-        selectedCategories: categories,
-      }),
-    );
-  }, [dispatch, categories]);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isError,
+    isFetchingNextPage,
+  } = useProducts(categories, PAGE_SIZE);
+
+  const products = data?.pages.flatMap((page) => page.list) ?? [];
 
   useEffect(() => {
-    //console.log("has more", hasMore, "reach Bottom:", reachBottom);
-    if (reachBottom && hasMore && !isLoading && cursor != null) {
-      dispatch(
-        fetchMoreProductsThunk({
-          productsPerPage: PAGE_SIZE,
-          selectedCategories: categories,
-        }),
-      );
+    if (!reachBottom) {
+      hasTriggeredAtBottom.current = false;
+      return;
     }
-  }, [reachBottom, dispatch, hasMore, categories, isLoading, cursor]);
+
+    if (
+      hasNextPage &&
+      !isFetchingNextPage &&
+      !hasTriggeredAtBottom.current
+    ) {
+      hasTriggeredAtBottom.current = true;
+      fetchNextPage();
+    }
+  }, [reachBottom, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isError) {
     return <Message>{ERROR_MESSAGE}</Message>;
@@ -77,17 +65,16 @@ const ProductsListAndFilters = () => {
         searchParams={searchParams}
         setSearchParams={setSearchParams}
       />
-      {!products.length && isLoading ? (
-        <Loader />
-      ) : (
-        <ProductsSection ref={productSectionRef}>
-          {products.length ? (
-            <ProductsList products={products} />
-          ) : (
-            <Message>{EMPTY_MESSAGE}</Message>
-          )}
-        </ProductsSection>
-      )}
+      <ProductsSection ref={productSectionRef}>
+        {!products.length && isLoading ? (
+          <Loader />
+        ) : products.length ? (
+          <ProductsList products={products} />
+        ) : (
+          <Message>{EMPTY_MESSAGE}</Message>
+        )}
+        {isFetchingNextPage && <Loader />}
+      </ProductsSection>
     </ProductsAndCategories>
   );
 };
