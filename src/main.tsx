@@ -1,13 +1,11 @@
 import React, { Profiler } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { store } from "@/store";
 import routes from "@/routes";
 import { GlobalStyles } from "@/styles/globalStyles";
 //import "./index.css";
@@ -91,17 +89,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <CartProvider>
               <DrawerProvider>
                 <ToastProvider>
-                  <Provider store={store}>
-                    <ThemeProvider theme={theme}>
-                      <GlobalStyles />
-                      <Toast />
-                      <HelmetProvider>
-                        <QueryClientProvider client={queryClient}>
-                          <RouterProvider router={router} />
-                        </QueryClientProvider>
-                      </HelmetProvider>
-                    </ThemeProvider>
-                  </Provider>
+                  <ThemeProvider theme={theme}>
+                    <GlobalStyles />
+                    <Toast />
+                    <HelmetProvider>
+                      <QueryClientProvider client={queryClient}>
+                        <RouterProvider router={router} />
+                      </QueryClientProvider>
+                    </HelmetProvider>
+                  </ThemeProvider>
                 </ToastProvider>
               </DrawerProvider>
             </CartProvider>
