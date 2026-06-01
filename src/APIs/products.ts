@@ -22,6 +22,8 @@ import {
 } from "../utils/types/productTypes";
 import { toLowercaseArray } from "@/helpers/formatters";
 import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
+import { ERROR_CODES } from "@/errors/errorCodes";
+import { NotFoundError } from "@/errors/appError";
 
 export const getProducts = async (
   currentLastProduct: { name: string; id: string } | null,
@@ -77,16 +79,11 @@ export const getProducts = async (
   }
 };
 
-export const getSingleProduct: GetProductT = async (id?: string) => {
-  if (!id) {
-    return null;
-  }
-
+export const getSingleProduct: GetProductT = async (id: string) => {
   try {
     const productRef = doc(db, "products", id);
 
     const productSnap = await getDoc(productRef);
-    console.log("p: ", productSnap.data());
 
     if (productSnap.exists()) {
       return {
@@ -94,7 +91,7 @@ export const getSingleProduct: GetProductT = async (id?: string) => {
         ...productSnap.data(),
       } as ProductI;
     } else {
-      return null;
+      throw new NotFoundError(ERROR_CODES.NOT_FOUND);
     }
   } catch (e) {
     console.error("Error getting product:", e);
