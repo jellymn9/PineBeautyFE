@@ -28,6 +28,6 @@ export interface ProductsApiResponseI {
   hasMore: boolean;
 }
 
-export type GetProductT = (id?: string) => Promise<ProductI | null>;
+export type GetProductT = (id: string) => Promise<ProductI>;
 
 export type GetProductsBatchT = (ids: Array<string>) => Promise<ProductI[]>;

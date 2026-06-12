@@ -1,7 +1,6 @@
 import { RouteObject } from "react-router-dom";
 
 import { ROUTES } from "@/utils/constants";
-import { getSingleProduct } from "@/APIs/products";
 
 import Error from "@/pages/Error/error";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
@@ -36,11 +35,7 @@ const routes: Array<RouteObject> = [
       },
       {
         path: ROUTES.products + "/:id",
-        loader: async ({ params }) => {
-          return await getSingleProduct(params.id);
-        },
         element: <LazyProduct />,
-        errorElement: <div>Error element</div>,
       },
       {
         path: ROUTES.profile,

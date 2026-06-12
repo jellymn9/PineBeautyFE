@@ -32,17 +32,12 @@ function useElementScroll(element: RefObject<HTMLElement>) {
       const elementScrollableHeight = current.scrollHeight;
       const elementHeight = current.clientHeight;
       const elementScrolledFromTop = current.scrollTop;
-      if (
-        elementScrollableHeight - elementHeight - elementScrolledFromTop == 0 &&
-        !reachBottom
-      ) {
-        setReachBottom(true);
-      } else if (reachBottom) {
-        setReachBottom(false);
-      }
+      const distanceFromBottom =
+        elementScrollableHeight - elementHeight - elementScrolledFromTop;
+
+      setReachBottom(distanceFromBottom <= 1);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [element.current, reachBottom]);
+  }, [element]);
 
   useEffect(() => {
     const current = element.current;
@@ -51,8 +46,7 @@ function useElementScroll(element: RefObject<HTMLElement>) {
     return () => {
       current !== null && current.removeEventListener("scroll", handleScroll);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handleScroll]);
+  }, [element, handleScroll]);
 
   return { reachBottom };
 }

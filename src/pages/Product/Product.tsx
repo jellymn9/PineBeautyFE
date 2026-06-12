@@ -1,9 +1,8 @@
-import { useLoaderData } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useParams } from "react-router-dom";
 
 import { useCartContext } from "@/context/CartContext";
 import { useToast } from "@/context/ToastContext";
-import { ProductI } from "@/utils/types/productTypes";
 import Accordion from "@/components/UI/Accordion/Accordion";
 import Button from "@/components/UI/Button/Button";
 import GeneralProductInfo from "@/components/GeneralProductInfo/GeneralProductInfo";
@@ -27,21 +26,31 @@ import {
 import { useRef } from "react";
 import Gallery from "@/components/UI/Gallery/Gallery";
 import { mapCartErrorSafe } from "@/errors/cartErrors/cartErrorMapper";
+import { useProduct } from "@/queries/product/useProduct";
+import { Loader } from "@/components/UI/Loader/Loader";
+import { mapErrorToMessageSafe } from "@/errors/errorMapper";
 
 const DESC = " Phasellus fermentum ligula lacinia purus ultricies tempor.";
 const NAME_ADDITION = " | 100% organic and cold pressed";
 const CONTENT_ML = "50ml"; // add to product
 const RELATED_PRODUCTS_TITLE = "Related products";
-const NON_EXISTENT_PRODUCT_MESSAGE = "Product not found.";
 
 function Product() {
-  const product = useLoaderData() as ProductI | null;
+  const { id } = useParams();
+
   const { addProduct } = useCartContext();
   const { showToast } = useToast();
   const basePageRef = useRef<HTMLDivElement>(null);
+  const { data: product, isLoading, isError, error } = useProduct(id);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (isError) {
+    return <div>{mapErrorToMessageSafe(error)}</div>;
+  }
   if (!product) {
-    return <NoProductMessage>{NON_EXISTENT_PRODUCT_MESSAGE}</NoProductMessage>;
+    return <NoProductMessage>Product not found.</NoProductMessage>;
   }
 
   const handleAdd = async () => {
