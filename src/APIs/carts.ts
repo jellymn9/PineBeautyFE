@@ -15,6 +15,7 @@ import {
 import { db } from "@/firebase";
 import { serverCartDateConversion } from "@/helpers/dataMapper";
 import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
+import { reportError } from "@/monitoring/reportError";
 
 const setOrUpdateCart = async (
   userId: string,
@@ -28,7 +29,15 @@ const setOrUpdateCart = async (
   try {
     await setDoc(cartRef, cartData, { merge: true });
   } catch (e) {
-    console.error("Error setting or updating cart:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "create_or_update_cart",
+      extra: {
+        userId,
+        cartData,
+      },
+    });
+
     throw handleFirebaseError(e);
   }
 };
@@ -71,7 +80,15 @@ export const addProductToCart = async (
 
     await setOrUpdateCart(userId, { items: cartItems });
   } catch (e) {
-    console.error("Error adding product to cart:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "add_product_to_cart",
+      extra: {
+        userId,
+        productToAdd,
+      },
+    });
+
     throw handleFirebaseError(e);
   }
 };
@@ -96,7 +113,15 @@ export const removeProductFromCart = async (
       await updateDoc(cartRef, { items: updatedItems });
     }
   } catch (e) {
-    console.error("Error updating cart items map:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "remove_product_from_cart",
+      extra: {
+        userId,
+        productId,
+      },
+    });
+
     throw handleFirebaseError(e);
   }
 };
@@ -132,7 +157,15 @@ export const decreaseProductQuantity = async (
       }
     }
   } catch (e) {
-    console.error("Error decreasing product quantity:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "decrease_product_quantity",
+      extra: {
+        userId,
+        productId,
+      },
+    });
+
     throw handleFirebaseError(e);
   }
 };
@@ -174,7 +207,16 @@ export const increaseCartItemQuantity = async (
       }
     }
   } catch (e) {
-    console.error("Error increasing product quantity:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "increase_product_quantity",
+      extra: {
+        userId,
+        productId,
+        amount,
+      },
+    });
+
     throw handleFirebaseError(e);
   }
 };
@@ -198,7 +240,14 @@ export const getCart = async (
       return { items: {} };
     }
   } catch (err) {
-    console.error("Error fetching cart:", err);
+    reportError(err, {
+      feature: "cart",
+      action: "get_cart",
+      extra: {
+        userId,
+      },
+    });
+
     throw handleFirebaseError(err);
   }
 };
@@ -213,7 +262,15 @@ export const overwriteCart = async (
 
     return true;
   } catch (error) {
-    console.error("Error overwriting cart:", error);
+    reportError(error, {
+      feature: "cart",
+      action: "overwrite_cart",
+      extra: {
+        userId,
+        cartData: mergedCartData,
+      },
+    });
+
     throw handleFirebaseError(error);
   }
 };

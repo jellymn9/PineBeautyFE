@@ -8,16 +8,17 @@ import {
   doc,
   getDoc,
   where,
-  DocumentData,
+  //DocumentData,
 } from "firebase/firestore";
 
 import { db } from "@/firebase";
 
+import { reportError } from "@/monitoring/reportError";
 import {
   ProductsApiResponseI,
   ProductI,
   GetProductT,
-  GetProductsBatchT,
+  //GetProductsBatchT,
   CategoryT,
 } from "../utils/types/productTypes";
 import { toLowercaseArray } from "@/helpers/formatters";
@@ -74,7 +75,12 @@ export const getProducts = async (
 
     return { list: newProducts, cursor: newLastVisible, hasMore };
   } catch (e) {
-    console.log("error: ", e);
+    reportError(e, {
+      feature: "products",
+      action: "get_products_list",
+      extra: { currentLastProduct, productsPerPage, selectedCategories },
+    });
+
     throw handleFirebaseError(e);
   }
 };
@@ -95,51 +101,63 @@ export const getSingleProduct: GetProductT = async (id: string) => {
     }
   } catch (e) {
     console.error("Error getting product:", e);
+    reportError(e, {
+      feature: "product",
+      action: "get_product",
+      extra: { id },
+    });
+
     throw handleFirebaseError(e);
   }
 };
 
-export const getProductsBatch: GetProductsBatchT = async (
-  ids: Array<string>,
-) => {
-  if (ids.length === 0) {
-    return [];
-  }
+// export const getProductsBatch: GetProductsBatchT = async (
+//   ids: Array<string>,
+// ) => {
+//   if (ids.length === 0) {
+//     return [];
+//   }
 
-  try {
-    const productsRef = collection(db, "products");
-    const allProducts: Array<ProductI> = [];
+//   try {
+//     const productsRef = collection(db, "products");
+//     const allProducts: Array<ProductI> = [];
 
-    // Firestore `in` operator has a limit of 10 items.
-    const chunks = [];
-    for (let i = 0; i < ids.length; i += 10) {
-      chunks.push(ids.slice(i, i + 10));
-    }
+//     // Firestore `in` operator has a limit of 10 items.
+//     const chunks = [];
+//     for (let i = 0; i < ids.length; i += 10) {
+//       chunks.push(ids.slice(i, i + 10));
+//     }
 
-    // Process each chunk with a separate query
-    const promises = chunks.map((chunk) => {
-      const q = query(productsRef, where("__name__", "in", chunk));
-      return getDocs(q);
-    });
+//     // Process each chunk with a separate query
+//     const promises = chunks.map((chunk) => {
+//       const q = query(productsRef, where("__name__", "in", chunk));
+//       return getDocs(q);
+//     });
 
-    const snapshots = await Promise.all(promises);
+//     const snapshots = await Promise.all(promises);
 
-    // Combine the results from all snapshots
-    snapshots.forEach((snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        allProducts.push({
-          id: doc.id,
-          ...(doc.data() as DocumentData),
-        } as ProductI);
-      });
-    });
+//     // Combine the results from all snapshots
+//     snapshots.forEach((snapshot) => {
+//       snapshot.docs.forEach((doc) => {
+//         allProducts.push({
+//           id: doc.id,
+//           ...(doc.data() as DocumentData),
+//         } as ProductI);
+//       });
+//     });
 
-    return allProducts;
-  } catch (e) {
-    console.error("Error getting products batch:", e);
-    throw handleFirebaseError(e);
-  }
-};
+//     return allProducts;
+//   } catch (e) {
+//     console.error("Error getting products batch:", e);
+//     reportError(e, {
+//       feature: "products",
+//       action: "get_favorite_products_batch",
+//       extra: { productsIds: ids },
+//     });
+
+//     throw handleFirebaseError(e);
+//   }
+// };
 
 export const getFavsProducts = async () => {
   const bestSellers = query(
@@ -156,6 +174,11 @@ export const getFavsProducts = async () => {
     })) as Array<ProductI>;
   } catch (e) {
     console.error("Error getting best sellers:");
+    reportError(e, {
+      feature: "products",
+      action: "get_favorite_products",
+    });
+
     throw handleFirebaseError(e);
   }
 };
