@@ -8,15 +8,15 @@ import {
   doc,
   getDoc,
   where,
-  //DocumentData,
 } from "firebase/firestore";
+import { ValidationError as YupValidationError } from "yup";
 
 import { db } from "@/firebase";
 
 import { reportError } from "@/monitoring/reportError";
 import {
   ProductsApiResponseI,
-  ProductI,
+  //ProductI,
   GetProductT,
   //GetProductsBatchT,
   CategoryT,
@@ -25,6 +25,8 @@ import { toLowercaseArray } from "@/helpers/formatters";
 import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
 import { ERROR_CODES } from "@/errors/errorCodes";
 import { NotFoundError } from "@/errors/appError";
+import { productSchema, productsSchema } from "@/utils/schemas/productsSchema";
+import { handleValidationError } from "@/errors/validationErrorHandler";
 
 export const getProducts = async (
   currentLastProduct: { name: string; id: string } | null,
@@ -58,12 +60,13 @@ export const getProducts = async (
     const q = query(productsRef, ...constraints);
     const querySnapshot = await getDocs(q);
 
-    const newProducts = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as ProductI[];
-
-    console.log("fetched products: ", newProducts);
+    const newProducts = await productsSchema.validate(
+      querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })),
+      { abortEarly: false, stripUnknown: true },
+    );
 
     const newLastVisibleDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
 
@@ -81,6 +84,10 @@ export const getProducts = async (
       extra: { currentLastProduct, productsPerPage, selectedCategories },
     });
 
+    if (e instanceof YupValidationError) {
+      handleValidationError(e);
+    }
+
     throw handleFirebaseError(e);
   }
 };
@@ -88,76 +95,39 @@ export const getProducts = async (
 export const getSingleProduct: GetProductT = async (id: string) => {
   try {
     const productRef = doc(db, "products", id);
-
     const productSnap = await getDoc(productRef);
 
-    if (productSnap.exists()) {
-      return {
-        id: productSnap.id,
-        ...productSnap.data(),
-      } as ProductI;
-    } else {
+    if (!productSnap.exists()) {
       throw new NotFoundError(ERROR_CODES.NOT_FOUND);
     }
+
+    const product = {
+      id: productSnap.id,
+      ...productSnap.data(),
+    };
+
+    return await productSchema.validate(product, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
   } catch (e) {
-    console.error("Error getting product:", e);
     reportError(e, {
       feature: "product",
       action: "get_product",
       extra: { id },
     });
 
+    if (e instanceof YupValidationError) {
+      handleValidationError(e);
+    }
+
+    if (e instanceof NotFoundError) {
+      throw e;
+    }
+
     throw handleFirebaseError(e);
   }
 };
-
-// export const getProductsBatch: GetProductsBatchT = async (
-//   ids: Array<string>,
-// ) => {
-//   if (ids.length === 0) {
-//     return [];
-//   }
-
-//   try {
-//     const productsRef = collection(db, "products");
-//     const allProducts: Array<ProductI> = [];
-
-//     // Firestore `in` operator has a limit of 10 items.
-//     const chunks = [];
-//     for (let i = 0; i < ids.length; i += 10) {
-//       chunks.push(ids.slice(i, i + 10));
-//     }
-
-//     // Process each chunk with a separate query
-//     const promises = chunks.map((chunk) => {
-//       const q = query(productsRef, where("__name__", "in", chunk));
-//       return getDocs(q);
-//     });
-
-//     const snapshots = await Promise.all(promises);
-
-//     // Combine the results from all snapshots
-//     snapshots.forEach((snapshot) => {
-//       snapshot.docs.forEach((doc) => {
-//         allProducts.push({
-//           id: doc.id,
-//           ...(doc.data() as DocumentData),
-//         } as ProductI);
-//       });
-//     });
-
-//     return allProducts;
-//   } catch (e) {
-//     console.error("Error getting products batch:", e);
-//     reportError(e, {
-//       feature: "products",
-//       action: "get_favorite_products_batch",
-//       extra: { productsIds: ids },
-//     });
-
-//     throw handleFirebaseError(e);
-//   }
-// };
 
 export const getFavsProducts = async () => {
   const bestSellers = query(
@@ -168,16 +138,24 @@ export const getFavsProducts = async () => {
 
   try {
     const snapshot = await getDocs(bestSellers);
-    return snapshot.docs.map((doc) => ({
+    const products = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    })) as Array<ProductI>;
+    }));
+
+    return await productsSchema.validate(products, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
   } catch (e) {
-    console.error("Error getting best sellers:");
     reportError(e, {
       feature: "products",
       action: "get_favorite_products",
     });
+
+    if (e instanceof YupValidationError) {
+      handleValidationError(e);
+    }
 
     throw handleFirebaseError(e);
   }
