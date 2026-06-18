@@ -5,6 +5,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { ValidationError as YupValidationError } from "yup";
 import {
   CartDataFirebaseI,
   CartDataLocalI,
@@ -15,20 +16,43 @@ import {
 import { db } from "@/firebase";
 import { serverCartDateConversion } from "@/helpers/dataMapper";
 import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
+import { reportError } from "@/monitoring/reportError";
+import {
+  cartItemsArraySchema,
+  newItemSchema,
+} from "@/utils/schemas/cartSchema";
+import { handleValidationError } from "@/errors/validationErrorHandler";
+import { ERROR_CODES } from "@/errors/errorCodes";
+import { NotFoundError } from "@/errors/appError";
 
 const setOrUpdateCart = async (
   userId: string,
   cartData: CartDataWriteI,
 ): Promise<void> => {
   if (!userId) {
-    console.error("User ID is required to set or update cart.");
     return;
   }
+
   const cartRef = doc(db, "carts", userId);
   try {
+    await cartItemsArraySchema.validate(Object.values(cartData.items), {
+      abortEarly: false,
+    });
     await setDoc(cartRef, cartData, { merge: true });
   } catch (e) {
-    console.error("Error setting or updating cart:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "create_or_update_cart",
+      extra: {
+        userId,
+        cartData,
+      },
+    });
+
+    if (e instanceof YupValidationError) {
+      handleValidationError(e);
+    }
+
     throw handleFirebaseError(e);
   }
 };
@@ -42,6 +66,10 @@ export const addProductToCart = async (
     return;
   }
   try {
+    await newItemSchema.validate(productToAdd, {
+      abortEarly: false,
+    });
+
     const cartRef = doc(db, "carts", userId);
 
     const cartSnap = await getDoc(cartRef);
@@ -71,7 +99,19 @@ export const addProductToCart = async (
 
     await setOrUpdateCart(userId, { items: cartItems });
   } catch (e) {
-    console.error("Error adding product to cart:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "add_product_to_cart",
+      extra: {
+        userId,
+        productToAdd,
+      },
+    });
+
+    if (e instanceof YupValidationError) {
+      handleValidationError(e);
+    }
+
     throw handleFirebaseError(e);
   }
 };
@@ -81,7 +121,6 @@ export const removeProductFromCart = async (
   productId: string,
 ): Promise<void> => {
   if (!userId || !productId) {
-    console.error("User ID and Product ID are required.");
     return;
   }
   try {
@@ -96,7 +135,15 @@ export const removeProductFromCart = async (
       await updateDoc(cartRef, { items: updatedItems });
     }
   } catch (e) {
-    console.error("Error updating cart items map:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "remove_product_from_cart",
+      extra: {
+        userId,
+        productId,
+      },
+    });
+
     throw handleFirebaseError(e);
   }
 };
@@ -106,7 +153,6 @@ export const decreaseProductQuantity = async (
   productId: string,
 ): Promise<void> => {
   if (!userId || !productId) {
-    console.error("User ID and Product ID are required.");
     return;
   }
   try {
@@ -132,7 +178,15 @@ export const decreaseProductQuantity = async (
       }
     }
   } catch (e) {
-    console.error("Error decreasing product quantity:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "decrease_product_quantity",
+      extra: {
+        userId,
+        productId,
+      },
+    });
+
     throw handleFirebaseError(e);
   }
 };
@@ -143,7 +197,6 @@ export const increaseCartItemQuantity = async (
   amount: number = 1,
 ): Promise<void> => {
   if (!userId || !productId) {
-    console.error("User ID and Product ID are required.");
     return;
   }
 
@@ -156,25 +209,32 @@ export const increaseCartItemQuantity = async (
       const cartItems = currentCart.items ? { ...currentCart.items } : {};
       const existingItem = cartItems[productId];
 
-      if (existingItem) {
-        cartItems[productId] = {
-          ...existingItem,
-          quantity: existingItem.quantity + amount,
-          updatedAt: serverTimestamp(),
-        };
-
-        await setOrUpdateCart(userId, { items: cartItems });
-      } else {
-        console.warn(
-          `Attempted to increase quantity for non-existent product ID: ${productId}`,
-        );
-        throw new Error(
-          "Attempted to increase quantity for non-existent product ID.",
+      if (!existingItem) {
+        throw new NotFoundError(
+          ERROR_CODES.NOT_FOUND,
+          "Cart item does not exist.",
         );
       }
+
+      cartItems[productId] = {
+        ...existingItem,
+        quantity: existingItem.quantity + amount,
+        updatedAt: serverTimestamp(),
+      };
+
+      await setOrUpdateCart(userId, { items: cartItems });
     }
   } catch (e) {
-    console.error("Error increasing product quantity:", e);
+    reportError(e, {
+      feature: "cart",
+      action: "increase_product_quantity",
+      extra: {
+        userId,
+        productId,
+        amount,
+      },
+    });
+
     throw handleFirebaseError(e);
   }
 };
@@ -198,7 +258,14 @@ export const getCart = async (
       return { items: {} };
     }
   } catch (err) {
-    console.error("Error fetching cart:", err);
+    reportError(err, {
+      feature: "cart",
+      action: "get_cart",
+      extra: {
+        userId,
+      },
+    });
+
     throw handleFirebaseError(err);
   }
 };
@@ -213,7 +280,15 @@ export const overwriteCart = async (
 
     return true;
   } catch (error) {
-    console.error("Error overwriting cart:", error);
+    reportError(error, {
+      feature: "cart",
+      action: "overwrite_cart",
+      extra: {
+        userId,
+        cartData: mergedCartData,
+      },
+    });
+
     throw handleFirebaseError(error);
   }
 };

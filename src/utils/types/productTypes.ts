@@ -1,4 +1,4 @@
-export type CategoryT = "HAIR" | "BODY" | "FACE";
+export type CategoryT = "hair" | "body" | "face";
 
 export interface ProductI {
   id: string;
@@ -9,7 +9,6 @@ export interface ProductI {
   images: Array<string>;
   category: CategoryT;
   isBestSeller: boolean;
-  tags: string[];
 }
 
 export interface ProductsStateI {
@@ -30,4 +29,4 @@ export interface ProductsApiResponseI {
 
 export type GetProductT = (id: string) => Promise<ProductI>;
 
-export type GetProductsBatchT = (ids: Array<string>) => Promise<ProductI[]>;
+// export type GetProductsBatchT = (ids: Array<string>) => Promise<ProductI[]>;

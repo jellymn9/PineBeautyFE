@@ -1,16 +1,19 @@
 import { doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { ValidationError as YupValidationError } from "yup";
-import { ValidationError } from "@/errors/appError";
 import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
 import {
   CreateProfileInput,
   UpdateProfileInput,
   UserProfile,
 } from "@/utils/types/profileTypes";
-import { userProfileSchema } from "@/utils/schemas/profileSchema";
-import { ERROR_CODES } from "@/errors/errorCodes";
+import {
+  createProfileWriteSchema,
+  updateProfileWriteSchema,
+  userProfileSchema,
+} from "@/utils/schemas/profileSchema";
 import { reportError } from "@/monitoring/reportError";
+import { handleValidationError } from "@/errors/validationErrorHandler";
 
 async function upsertProfile(uid: string, payload: Record<string, unknown>) {
   const profileRef = doc(db, "profiles", uid);
@@ -32,11 +35,7 @@ export async function getProfile(uid: string): Promise<UserProfile | null> {
     });
   } catch (e) {
     if (e instanceof YupValidationError) {
-      throw new ValidationError(
-        ERROR_CODES.INVALID_DATA,
-        "Invalid profile data received from database",
-        e,
-      );
+      handleValidationError(e);
     }
 
     throw handleFirebaseError(e);
@@ -44,16 +43,24 @@ export async function getProfile(uid: string): Promise<UserProfile | null> {
 }
 
 export async function createProfile(data: CreateProfileInput) {
-  const payload = {
+  const validatedPayload = {
     uid: data.uid,
     email: data.email,
     displayName: data.displayName ?? null,
     role: "customer" as const,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
   };
 
   try {
+    await createProfileWriteSchema.validate(validatedPayload, {
+      abortEarly: false,
+    });
+
+    const payload = {
+      ...validatedPayload,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    };
+
     await upsertProfile(data.uid, payload);
   } catch (error) {
     reportError(error, {
@@ -65,18 +72,30 @@ export async function createProfile(data: CreateProfileInput) {
       },
     });
 
+    if (error instanceof YupValidationError) {
+      handleValidationError(error);
+    }
+
     handleFirebaseError(error);
   }
 }
 
 export async function updateProfile(data: UpdateProfileInput) {
-  const payload = {
+  const validatedPayload = {
     displayName: data.displayName ?? null,
     defaultShippingAddress: data.defaultShippingAddress,
-    updatedAt: serverTimestamp(),
   };
 
   try {
+    await updateProfileWriteSchema.validate(validatedPayload, {
+      abortEarly: false,
+    });
+
+    const payload = {
+      ...validatedPayload,
+      updatedAt: serverTimestamp(),
+    };
+
     await upsertProfile(data.uid, payload);
   } catch (error) {
     reportError(error, {
@@ -86,6 +105,10 @@ export async function updateProfile(data: UpdateProfileInput) {
         uid: data.uid,
       },
     });
+
+    if (error instanceof YupValidationError) {
+      handleValidationError(error);
+    }
 
     handleFirebaseError(error);
   }
