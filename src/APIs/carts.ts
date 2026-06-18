@@ -5,6 +5,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { ValidationError as YupValidationError } from "yup";
 import {
   CartDataFirebaseI,
   CartDataLocalI,
@@ -16,17 +17,27 @@ import { db } from "@/firebase";
 import { serverCartDateConversion } from "@/helpers/dataMapper";
 import { handleFirebaseError } from "@/errors/firebaseErrorHandler";
 import { reportError } from "@/monitoring/reportError";
+import {
+  cartItemsArraySchema,
+  newItemSchema,
+} from "@/utils/schemas/cartSchema";
+import { handleValidationError } from "@/errors/validationErrorHandler";
+import { ERROR_CODES } from "@/errors/errorCodes";
+import { NotFoundError } from "@/errors/appError";
 
 const setOrUpdateCart = async (
   userId: string,
   cartData: CartDataWriteI,
 ): Promise<void> => {
   if (!userId) {
-    console.error("User ID is required to set or update cart.");
     return;
   }
+
   const cartRef = doc(db, "carts", userId);
   try {
+    await cartItemsArraySchema.validate(Object.values(cartData.items), {
+      abortEarly: false,
+    });
     await setDoc(cartRef, cartData, { merge: true });
   } catch (e) {
     reportError(e, {
@@ -37,6 +48,10 @@ const setOrUpdateCart = async (
         cartData,
       },
     });
+
+    if (e instanceof YupValidationError) {
+      handleValidationError(e);
+    }
 
     throw handleFirebaseError(e);
   }
@@ -51,6 +66,10 @@ export const addProductToCart = async (
     return;
   }
   try {
+    await newItemSchema.validate(productToAdd, {
+      abortEarly: false,
+    });
+
     const cartRef = doc(db, "carts", userId);
 
     const cartSnap = await getDoc(cartRef);
@@ -89,6 +108,10 @@ export const addProductToCart = async (
       },
     });
 
+    if (e instanceof YupValidationError) {
+      handleValidationError(e);
+    }
+
     throw handleFirebaseError(e);
   }
 };
@@ -98,7 +121,6 @@ export const removeProductFromCart = async (
   productId: string,
 ): Promise<void> => {
   if (!userId || !productId) {
-    console.error("User ID and Product ID are required.");
     return;
   }
   try {
@@ -131,7 +153,6 @@ export const decreaseProductQuantity = async (
   productId: string,
 ): Promise<void> => {
   if (!userId || !productId) {
-    console.error("User ID and Product ID are required.");
     return;
   }
   try {
@@ -176,7 +197,6 @@ export const increaseCartItemQuantity = async (
   amount: number = 1,
 ): Promise<void> => {
   if (!userId || !productId) {
-    console.error("User ID and Product ID are required.");
     return;
   }
 
@@ -189,22 +209,20 @@ export const increaseCartItemQuantity = async (
       const cartItems = currentCart.items ? { ...currentCart.items } : {};
       const existingItem = cartItems[productId];
 
-      if (existingItem) {
-        cartItems[productId] = {
-          ...existingItem,
-          quantity: existingItem.quantity + amount,
-          updatedAt: serverTimestamp(),
-        };
-
-        await setOrUpdateCart(userId, { items: cartItems });
-      } else {
-        console.warn(
-          `Attempted to increase quantity for non-existent product ID: ${productId}`,
-        );
-        throw new Error(
-          "Attempted to increase quantity for non-existent product ID.",
+      if (!existingItem) {
+        throw new NotFoundError(
+          ERROR_CODES.NOT_FOUND,
+          "Cart item does not exist.",
         );
       }
+
+      cartItems[productId] = {
+        ...existingItem,
+        quantity: existingItem.quantity + amount,
+        updatedAt: serverTimestamp(),
+      };
+
+      await setOrUpdateCart(userId, { items: cartItems });
     }
   } catch (e) {
     reportError(e, {
