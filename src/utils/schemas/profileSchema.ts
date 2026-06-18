@@ -24,3 +24,12 @@ export const userProfileSchema = yup
     updatedAt: yup.mixed<Timestamp>().required(),
   })
   .required();
+
+export const createProfileWriteSchema = userProfileSchema.omit([
+  "createdAt",
+  "updatedAt",
+]);
+
+export const updateProfileWriteSchema = userProfileSchema
+  .omit(["uid", "email", "role", "createdAt", "updatedAt"])
+  .partial();
