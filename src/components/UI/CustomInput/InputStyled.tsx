@@ -103,4 +103,8 @@ export const CustomTextInput = styled.input`
     color: ${({ theme }) => theme.colors.gray};
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
+  &:read-only {
+    background-color: ${({ theme }) => theme.colors.platinum};
+    border-color: ${({ theme }) => theme.colors.gray};
+  }
 `;

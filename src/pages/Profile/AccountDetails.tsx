@@ -8,13 +8,14 @@ import { TextFormField } from "@/components/UI/Form/TextFormField";
 import { Container, FormStyled } from "./AccountDetailsStyled";
 import Button from "@/components/UI/Button/Button";
 import { useUpdateProfile } from "@/queries/profile/useUpdateProfile";
+import {
+  LabelCustom,
+  TextFormFieldWrapper,
+} from "@/components/UI/Form/FormFieldStyled";
+import CustomInput from "@/components/UI/CustomInput/CustomInput";
 
 const accountDetailsSchema = yup.object({
   fullName: yup.string().required("Full name is required"),
-  email: yup
-    .string()
-    .email("Invalid email format")
-    .required("Email is required"),
   phone: yup.string().required("Phone number is required"),
   street: yup.string().required("Street is required"),
   city: yup.string().required("City is required"),
@@ -35,11 +36,6 @@ const FIELDS = {
     label: "Full name",
     type: "text",
     placeholder: "Enter your full name",
-  },
-  email: {
-    label: "Email",
-    type: "email",
-    placeholder: "Enter your email address",
   },
   phone: {
     label: "Phone",
@@ -82,7 +78,6 @@ export default function AccountDetails() {
     defaultValues: {
       fullName:
         profile?.defaultShippingAddress?.fullName ?? profile?.displayName ?? "",
-      email: profile?.email,
       phone: profile?.defaultShippingAddress?.phone ?? "",
       street: profile?.defaultShippingAddress?.street ?? "",
       city: profile?.defaultShippingAddress?.city ?? "",
@@ -113,6 +108,11 @@ export default function AccountDetails() {
   return (
     <Container>
       <FormStyled onSubmit={handleSubmit(onSubmit)}>
+        <TextFormFieldWrapper>
+          <LabelCustom htmlFor="email">Email</LabelCustom>
+
+          <CustomInput id="email" type="email" value={profile.email} readOnly />
+        </TextFormFieldWrapper>
         {fields.map(([name, field]) => (
           <TextFormField<AccountDetailsInputs>
             key={name}
