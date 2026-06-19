@@ -12,6 +12,7 @@ export const ROUTES = {
   profile: "/profile",
   signin: "/signin",
   signup: "/signup",
+  checkout: "/checkout",
   //orders: "/orders",
   //account: "/account",
 };

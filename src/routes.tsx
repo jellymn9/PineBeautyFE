@@ -1,4 +1,4 @@
-import { RouteObject } from "react-router-dom";
+import { Outlet, RouteObject } from "react-router-dom";
 
 import { ROUTES } from "@/utils/constants";
 
@@ -19,6 +19,9 @@ import {
 } from "./utils/lazyRoutes";
 import OrderHistory from "./pages/Profile/OrderHistory";
 import AccountDetails from "./pages/Profile/AccountDetails";
+import Shipping from "./pages/Checkout/Shipping/Shipping";
+import Review from "./pages/Checkout/Review/Review";
+import CartGuard from "./components/CartGuard/CartGuard";
 
 const routes: Array<RouteObject> = [
   {
@@ -58,6 +61,20 @@ const routes: Array<RouteObject> = [
       {
         path: ROUTES.cart,
         element: <LazyCart />,
+      },
+      {
+        path: ROUTES.checkout,
+        element: (
+          <PrivateRoute>
+            <CartGuard>
+              <Outlet />
+            </CartGuard>
+          </PrivateRoute>
+        ),
+        children: [
+          { path: "shipping", element: <Shipping /> },
+          { path: "review", element: <Review /> },
+        ],
       },
     ],
   },
