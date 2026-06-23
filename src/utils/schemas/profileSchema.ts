@@ -77,3 +77,16 @@ export const SHIPPING_ADDRESS_FIELDS = {
     placeholder: "Enter your country",
   },
 } satisfies Record<keyof ShippingAddressFormInputs, FieldConfig>;
+
+export const shippingAddressSessionSchema = yup.object({
+  fullName: yup.string().required(),
+  street: yup.string().required(),
+  city: yup.string().required(),
+  postalCode: yup.string().required(),
+  country: yup.string().required(),
+  phone: yup.string().required(),
+});
+
+export type ShippingAddressSessionData = yup.InferType<
+  typeof shippingAddressSessionSchema
+>;
