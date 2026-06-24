@@ -7,7 +7,7 @@ import {
   LinkStyled,
 } from "./LinksNavStyled";
 import CartHeader from "../CartHeaderLink/CartHeader";
-import { useHoverBarAnimation } from "@/helpers/customHooks";
+import { useHoverBarAnimation } from "@/hooks/customHooks";
 
 const LinksNav = () => {
   const { hoverLinkWidth, translateStep, handleHover, handleMouseLeave } =

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { removeItem } from "@/helpers/cartHelperCore";
+import { removeItem } from "@/helpers/cartHelpers/cartHelperCore";
 import { cartItem1, cartItem2 } from "../fixtures/cartFixtures";
 
 describe("cartHelperCore", () => {

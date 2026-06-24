@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useElementScroll } from "@/helpers/customHooks";
+import { useElementScroll } from "@/hooks/customHooks";
 import { Loader } from "@/components/UI/Loader/Loader";
 import ProductFilters from "@/components/ProductFilters/ProductFilters";
 import ProductsList from "@/components/ProductsList/ProductsList";
@@ -45,11 +45,7 @@ const ProductsListAndFilters = () => {
       return;
     }
 
-    if (
-      hasNextPage &&
-      !isFetchingNextPage &&
-      !hasTriggeredAtBottom.current
-    ) {
+    if (hasNextPage && !isFetchingNextPage && !hasTriggeredAtBottom.current) {
       hasTriggeredAtBottom.current = true;
       fetchNextPage();
     }

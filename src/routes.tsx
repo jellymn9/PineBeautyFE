@@ -1,4 +1,5 @@
-import { RouteObject } from "react-router-dom";
+import { Outlet, RouteObject } from "react-router-dom";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 import { ROUTES } from "@/utils/constants";
 
@@ -19,6 +20,9 @@ import {
 } from "./utils/lazyRoutes";
 import OrderHistory from "./pages/Profile/OrderHistory";
 import AccountDetails from "./pages/Profile/AccountDetails";
+import Shipping from "./pages/Checkout/Shipping/Shipping";
+import Review from "./pages/Checkout/Review/Review";
+import CartGuard from "./components/CartGuard/CartGuard";
 
 const routes: Array<RouteObject> = [
   {
@@ -58,6 +62,27 @@ const routes: Array<RouteObject> = [
       {
         path: ROUTES.cart,
         element: <LazyCart />,
+      },
+      {
+        path: ROUTES.checkout,
+        element: (
+          <PrivateRoute>
+            <CartGuard>
+              <PayPalScriptProvider
+                options={{
+                  clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
+                  currency: "USD",
+                }}
+              >
+                <Outlet />
+              </PayPalScriptProvider>
+            </CartGuard>
+          </PrivateRoute>
+        ),
+        children: [
+          { path: "shipping", element: <Shipping /> },
+          { path: "review", element: <Review /> },
+        ],
       },
     ],
   },

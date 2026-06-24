@@ -1,6 +1,6 @@
 import { Loader } from "@/components/UI/Loader/Loader";
 import { Helmet } from "react-helmet-async";
-import { calcSubtotalPrice } from "@/helpers/cartHelper";
+import { calcSubtotalPrice } from "@/helpers/cartHelpers/cartHelper";
 import { useCartContext } from "@/context/CartContext";
 
 import { Container, Heading } from "./CartStyled";
