@@ -38,7 +38,7 @@ function Profile() {
   }
 
   if (isError) {
-    return mapErrorToMessageSafe(error);
+    return <div>{mapErrorToMessageSafe(error)}</div>;
   }
 
   const handleLogout = async () => {

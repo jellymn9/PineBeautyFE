@@ -1,4 +1,5 @@
 import { Outlet, RouteObject } from "react-router-dom";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 import { ROUTES } from "@/utils/constants";
 
@@ -67,7 +68,14 @@ const routes: Array<RouteObject> = [
         element: (
           <PrivateRoute>
             <CartGuard>
-              <Outlet />
+              <PayPalScriptProvider
+                options={{
+                  clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
+                  currency: "USD",
+                }}
+              >
+                <Outlet />
+              </PayPalScriptProvider>
             </CartGuard>
           </PrivateRoute>
         ),

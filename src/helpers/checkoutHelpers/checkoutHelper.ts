@@ -23,23 +23,23 @@ export async function saveShippingAddress(address: ShippingAddressFormInputs) {
   }
 }
 
-export const getShippingAddressFromSession =
-  (): ShippingAddressFormInputs | null => {
-    const sessionAddress = getFromSessionStorage("shippingAddress");
-    if (!sessionAddress) {
-      return null;
+export const getShippingAddressFromSession = () => {
+  const sessionAddress = getFromSessionStorage("shippingAddress");
+  if (!sessionAddress) {
+    return null;
+  }
+  try {
+    const parsedAddress: ShippingAddressFormInputs = JSON.parse(sessionAddress);
+    shippingAddressSessionSchema.validateSync(parsedAddress, {
+      abortEarly: false,
+    });
+    console.log("Parsed shipping address from session:", parsedAddress);
+
+    return parsedAddress;
+  } catch (error) {
+    if (error instanceof YupValidationError) {
+      handleValidationError(error);
     }
-    try {
-      const parsedAddress: ShippingAddressFormInputs =
-        JSON.parse(sessionAddress);
-      shippingAddressSessionSchema.validateSync(parsedAddress, {
-        abortEarly: false,
-      });
-      return parsedAddress;
-    } catch (error) {
-      if (error instanceof YupValidationError) {
-        handleValidationError(error);
-      }
-      throw new AppError(ERROR_CODES.UNKNOWN, undefined, error);
-    }
-  };
+    throw new AppError(ERROR_CODES.UNKNOWN, undefined, error);
+  }
+};

@@ -31,7 +31,7 @@ const normalizeTimestamp = (date: Timestamp | null): Date => {
 };
 
 export const serverCartDateConversion = (
-  cart: CartDataFirebaseI
+  cart: CartDataFirebaseI,
 ): CartDataLocalI => {
   const items = { ...cart.items };
   const newItems: CartItemsLocalT = {};
@@ -56,3 +56,9 @@ export const itemToArrAndSort = (items: CartItemsLocalT): CartItemsUIT => {
     return a.id.localeCompare(b.id);
   });
 };
+
+export const toOrderItems = (cartItems: CartItemsUIT) =>
+  cartItems.map(({ id, ...rest }) => ({
+    productId: id,
+    ...rest,
+  }));

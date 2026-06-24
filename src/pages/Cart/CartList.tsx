@@ -5,6 +5,7 @@ import Button from "@/components/UI/Button/Button";
 import { CartItem } from "@/components/CartItem/CartItem";
 import { CartItemsUIT } from "@/utils/types/cartTypes";
 import { mapCartErrorSafe } from "@/errors/cartErrors/cartErrorMapper";
+import { useNavigate } from "react-router-dom";
 
 const emptyCart = "There are no products in the cart.";
 
@@ -30,6 +31,7 @@ const CartList = ({
   //mutationError,
 }: CartListPropI) => {
   const [actionLoading, setActionLoading] = useState(false);
+  const navigate = useNavigate();
 
   if (error) {
     return errorUI(mapCartErrorSafe(error, "load"));
@@ -58,7 +60,9 @@ const CartList = ({
             styleVariant="primary"
             text={`Proceed to checkout ${formatedPrice}`}
             disabled={actionLoading}
-            handleClick={() => {}}
+            handleClick={() => {
+              navigate("/checkout/shipping");
+            }}
           />
         </ButtonWrapper>
       </>
